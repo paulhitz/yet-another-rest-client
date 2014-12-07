@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>D&amp;B Services Client</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="This tool allows a user to easily test the status of various D&amp;B Services.">
+	<meta name="author" content="Paul Hitz">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://cdn.jsdelivr.net/highlight.js/8.4/styles/default.min.css">
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script src="http://cdn.jsdelivr.net/highlight.js/8.4/highlight.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default" role="navigation">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="#"><img alt="Logo" src="https://creditreports.dnb.com/wcsstore/ConsumerDirect/images/smbImages/ebimages/dnb_logo_50x50.gif" style="width: 40px; height: 40px; margin-right: 5px;"> D&amp;B Services Client</a>
+						</div>
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
+							<p class="navbar-text navbar-right" style="margin-top: 25px;">Developed by the Dublin Onboard Team</p>
+						</div>
+					</div>
+				</nav>
+		</div>
+	</div>
+
+	<p>This tool allows a user to easily test the status of various D&amp;B Services.</p>
+
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Settings</h3>
+				</div>
+
+				<div class="panel-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="env" class="col-sm-2 control-label">Environment:</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="env">
+									<option value="qa">QA</option>
+									<option value="stg">STG</option>
+									<option value="prod">Production (requires HTTPS)</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="services" class="col-sm-2 control-label">Select Service:</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="services">
+									<option value="auth">Authentication</option>
+									<option value="linkage">Linkage</option>
+									<option value="firm">Firmographics</option>
+									<option value="kyc">Custom Product (KYC)</option>
+									<option value="gbo">Custom Product (GBO)</option>
+									<option value="so">Custom Product (SO)</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="duns" class="col-sm-2 control-label">DUNS# (optional):</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="duns" placeholder="123456789" value="123456789">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+			<div class="panel panel-primary">
+				<div class="panel-heading" id="headingTwo">
+					<h4 class="panel-title">
+						<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							Advanced Settings (Optional)
+						</a>
+					</h4>
+				</div>
+
+				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="authenticationCookie" class="col-sm-2 control-label">Authentication Cookie:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="authenticationCookie" placeholder="Authentication Cookie">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="requestUrl" class="col-sm-2 control-label">Request URL:</label>
+								<div class="col-sm-10">
+									<input type="url" class="form-control" id="requestUrl" placeholder="Request URL">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="appId" class="col-sm-2 control-label">Application Id:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="appId" placeholder="User ID" value="36">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="userId" class="col-sm-2 control-label">User ID:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="userId" placeholder="User ID" value="teamjoly@dnb.com">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="password" class="col-sm-2 control-label">Password:</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" id="password" placeholder="Password" value="password">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="body" class="col-sm-2 control-label">Body:</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" rows="5" id="body"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal" style="margin-bottom: 30px;" onclick="$('#response').show();">Send Service Request</button>
+
+		</div>
+	</div>
+
+
+	<div id="response" class="row clearfix" style="display: none">
+		<div class="col-md-12 column">
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Response</h3>
+				</div>
+
+				<div class="panel-body">
+
+					<div class="well"><strong>Request URL:</strong> ...<br><strong>Authentication Cookie:</strong> ...</div>
+
+					<div role="tabpanel">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#json" aria-controls="json" role="tab" data-toggle="tab">Response Body</a></li>
+							<li role="presentation"><a href="#headers" aria-controls="headers" role="tab" data-toggle="tab">Response Headers</a></li>
+						</ul>
+						<div class="tab-content" style="margin-top: 5px;">
+							<div role="tabpanel" class="tab-pane active" id="json">
+								<pre><code>{"id":1713,"content":"Hello, World!"}</code></pre>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="headers">
+								<pre><code>
+{
+   "Accept-Language": "en-US,en;q=0.8",
+   "Host": "headers.jsontest.com",
+   "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+}
+								</code></pre>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script>hljs.initHighlightingOnLoad();</script>
+
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+							<span class="sr-only">45% Complete</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>
