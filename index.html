@@ -159,19 +159,12 @@
 							<li role="presentation" class="active"><a href="#json" aria-controls="json" role="tab" data-toggle="tab">Response Body</a></li>
 							<li role="presentation"><a href="#headers" aria-controls="headers" role="tab" data-toggle="tab">Response Headers</a></li>
 						</ul>
-						<div class="tab-content" style="margin-top: 5px;">
+						<div class="tab-content" style="margin-top: 5px;" ng-controller="CallService">
 							<div role="tabpanel" class="tab-pane active" id="json">
-								<pre><code>{"id":1713,"content":"Hello, World!"}</code></pre>
+								<pre><code>{{response}}</code></pre>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="headers">
-								<pre><code>
-{
-   "Accept-Language": "en-US,en;q=0.8",
-   "Host": "headers.jsontest.com",
-   "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
-   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-}
-								</code></pre>
+								<pre><code>{{headers}}</code></pre>
 							</div>
 						</div>
 					</div>
@@ -180,7 +173,7 @@
 
 		</div>
 	</div>
-	<script>hljs.initHighlightingOnLoad();</script>
+	<script>//hljs.initHighlightingOnLoad();</script>
 
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
@@ -200,6 +193,6 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-resource.min.js"></script>
-<script type="text/javascript" src="js/scripts.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>
