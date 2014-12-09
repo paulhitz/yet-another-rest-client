@@ -160,11 +160,11 @@
 							<li role="presentation"><a href="#headers" aria-controls="headers" role="tab" data-toggle="tab">Response Headers</a></li>
 						</ul>
 						<div class="tab-content" style="margin-top: 5px;" ng-controller="CallService">
-							<div role="tabpanel" class="tab-pane active" id="json">
-								<pre><code>{{response}}</code></pre>
+							<div role="tabpanel" class="tab-pane active json-content" id="json">
+								<pre><code>{{responseBody}}</code></pre>
 							</div>
-							<div role="tabpanel" class="tab-pane" id="headers">
-								<pre><code>{{headers}}</code></pre>
+							<div role="tabpanel" class="tab-pane json-content" id="headers">
+								<pre><code>{{responseHeaders}}</code></pre>
 							</div>
 						</div>
 					</div>

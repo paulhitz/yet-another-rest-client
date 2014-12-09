@@ -1,0 +1,6 @@
+
+.json-content {
+  max-height: 800px;
+  overflow: auto;
+  overflow-x: hidden;
+}
