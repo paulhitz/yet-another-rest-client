@@ -133,13 +133,13 @@
 				</div>
 			</div>
 
-			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal" style="margin-bottom: 30px;" onclick="$('#response').show();" ng-click="test();">Send Service Request</button>
+			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal" style="margin-bottom: 30px;" onclick="$('#response').show();" ng-click="authorise();">Send Service Request</button>
 
 		</div>
 	</div>
 
 
-	<div id="response" class="row clearfix" style="display: none">
+	<div id="response" class="row clearfix">
 		<div class="col-md-12 column">
 
 			<div class="panel panel-info">
@@ -148,9 +148,9 @@
 				</div>
 
 				<div class="panel-body">
-					<div class="well">
+					<div class="well" style="word-break: break-all;">
 						<strong>Request URL:</strong> {{service.requestUrl}}<br>
-						<strong>Authentication Cookie:</strong> {{service.authenticationCookie}}<br>
+						<strong>Authentication Cookie:</strong> {{service.authenticationCookie}} - {{authenticationCookie}}<br>
 						<strong>Test:</strong> {{data.message}}
 					</div>
 
@@ -159,7 +159,7 @@
 							<li role="presentation" class="active"><a href="#json" aria-controls="json" role="tab" data-toggle="tab">Response Body</a></li>
 							<li role="presentation"><a href="#headers" aria-controls="headers" role="tab" data-toggle="tab">Response Headers</a></li>
 						</ul>
-						<div class="tab-content" style="margin-top: 5px;" ng-controller="CallService">
+						<div class="tab-content" style="margin-top: 5px;">
 							<div role="tabpanel" class="tab-pane active json-content" id="json">
 								<pre><code>{{responseBody}}</code></pre>
 							</div>
