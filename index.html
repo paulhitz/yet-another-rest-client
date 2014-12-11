@@ -50,7 +50,7 @@
 							<label for="env" class="col-sm-2 control-label">Environment:</label>
 							<div class="col-sm-10">
 								<select class="form-control" id="env" >
-								    <option ng-repeat="env in environments" value="{{env}}">{{env}}</option>
+								    <option ng-repeat="env in environments" value="{{env.id}}">{{env.label}}</option>
 								</select>
 							</div>
 						</div>
@@ -58,7 +58,7 @@
 							<label for="services" class="col-sm-2 control-label">Select Service:</label>
 							<div class="col-sm-10">
 								<select class="form-control" id="services">
-									<option ng-repeat="service in services" value="{{service.name}}">{{service.name}}</option>
+									<option ng-repeat="service in services" value="{{service.id}}">{{service.label}}</option>
 								</select>
 							</div>
 						</div>

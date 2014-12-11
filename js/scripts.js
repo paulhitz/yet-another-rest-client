@@ -7,17 +7,16 @@ var clientApp = angular.module('clientApp', []);
 
 clientApp.controller('ClientController', function($scope, AuthService) {
 
-  //TODO add the env + services to the dropdowns.
-  console.log("envs = " + formData.environments);
-  console.log("services = " + formData.services);
-  console.log("services = " + formData.services[0].name);
-  $scope.environments = formData.environments;
-  $scope.services = formData.services;
+  //Populate the form.
+  $scope.environments = servicesConfig.environments;
+  $scope.services = servicesConfig.services;
 
 
-
-  //TODO pass in env?
   $scope.authorise = function() {
+      //TODO get the selected form details and resolve the service endpoint.
+      console.log("test selected = " + $scope.env);
+	  
+      //TODO pass in env?
 	  AuthService.getAuthCookie().then(
 		  function(payload) {
 			console.log("headers = " + payload.authorization);
