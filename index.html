@@ -61,7 +61,7 @@
 						<div class="form-group">
 							<label for="duns" class="col-sm-2 control-label">DUNS# (optional):</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="duns" placeholder="123456789" value="123456789">
+								<input type="text" class="form-control" id="duns" placeholder="123456789" value="" ng-model="duns">
 							</div>
 						</div>
 					</form>
@@ -122,7 +122,7 @@
 				</div>
 			</div>
 
-			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal" style="margin-bottom: 30px;" onclick="$('#response').show();" ng-click="authorise();">Send Service Request</button>
+			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal" style="margin-bottom: 30px;" onclick="$('#response').show();" ng-click="submit();">Send Service Request</button>
 
 		</div>
 	</div>

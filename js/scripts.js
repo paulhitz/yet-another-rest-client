@@ -13,15 +13,24 @@ clientApp.controller('ClientController', function($scope, AuthService) {
   $scope.services = servicesConfig.services;
   $scope.serviceSelected = servicesConfig.services[0].id;
 
+  
 
+  
+
+  $scope.submit = function() {
+
+    //Retrieve an Authorisation Token based on the selected environment.
+    $scope.authorise();
+
+	//Determine the configured endpoint.
+    var endpoint = configureServiceUrl($scope);
+	console.log("configured endpoint to call = " + endpoint);
+
+	//Call the endpoint.
+	//TODO
+  }
+  
   $scope.authorise = function() {
-      //TODO get the selected form details and resolve the service endpoint.
-      //console.log("service = " + $scope.serviceSelected);
-      //console.log("env = " + $scope.environmentSelected);
-	  //we have env, service. need endpoint.
-	  
-
-
 	  AuthService.getAuthCookie($scope.environmentSelected).then(
 		  function(payload) {
 			//console.log("headers = " + payload.authorization);
@@ -35,6 +44,32 @@ clientApp.controller('ClientController', function($scope, AuthService) {
 
 });
 
+
+/**
+ * Based on the selected environment and service, determine the correct URL to use.
+ */
+function configureServiceUrl($scope) {
+	var url = "";
+	var duns = servicesConfig.placeholderDuns;
+
+	//Determine the endpoint based on selected Environment and Service.
+	for (var i in servicesConfig.endpoints) {
+		var endpoint = servicesConfig.endpoints[i];
+		if (endpoint.env === $scope.environmentSelected && endpoint.service === $scope.serviceSelected) {
+			url = endpoint.url;
+			break;
+		}
+	}
+
+	//Replace the DUNS placeholder.
+	if ($scope.duns) {
+		duns = replaceAll($scope.duns, "-", "");
+	}
+	if (url) {
+		url = url.replace("{duns}", duns);
+	}
+	return url;
+}
 
 
 /**
@@ -74,7 +109,12 @@ clientApp.factory('AuthService', function($http, $q) {
  });
 
 
-
+ /**
+  * The name says it all.
+  */
+function replaceAll(input, target, replacement) {
+	return input.split(target).join(replacement);
+}
 
 
 

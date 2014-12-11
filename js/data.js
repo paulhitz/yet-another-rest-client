@@ -52,15 +52,15 @@ var servicesConfig = {
 	}, { 
 		"env" : "qa",
 		"service" : "linkage",
-		"url" : "http://services-ext-qa.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber=211528187&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
+		"url" : "http://services-ext-qa.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={duns}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
 	}, { 
 		"env" : "stg",
 		"service" : "linkage",
-		"url" : "http://services-ext-stg.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber=211528187&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
+		"url" : "http://services-ext-stg.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={duns}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
 	}, { 
 		"env" : "prod",
 		"service" : "linkage",
-		"url" : "http://services-ext-stg.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber=211528187&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
+		"url" : "http://services-ext-stg.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={duns}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
 	}, { 
 		"env" : "qa",
 		"service" : "firm",
@@ -76,15 +76,17 @@ var servicesConfig = {
 	}, { 
 		"env" : "qa",
 		"service" : "kyc",
-		"url" : "http://services-ext-qa.dnb.com/V2/organizations/343247870/products/KYC?ArchiveProductOptOutIndicator=true"
+		"url" : "http://services-ext-qa.dnb.com/V2/organizations/{duns}/products/KYC?ArchiveProductOptOutIndicator=true"
 	}, { 
 		"env" : "stg",
 		"service" : "kyc",
-		"url" : "http://services-ext-stg.dnb.com/V2.0/organizations/343247870/products/KYC?ArchiveProductOptOutIndicator=true"
+		"url" : "http://services-ext-stg.dnb.com/V2.0/organizations/{duns}/products/KYC?ArchiveProductOptOutIndicator=true"
 	}, { 
 		"env" : "prod",
 		"service" : "kyc",
-		"url" : "http://services-ext-stg.dnb.com/V2.0/organizations/343247870/products/KYC?ArchiveProductOptOutIndicator=true"
-	} ]
+		"url" : "http://services-ext-stg.dnb.com/V2.0/organizations/{duns}/products/KYC?ArchiveProductOptOutIndicator=true"
+	} ],
+	
+	"placeholderDuns" : "222228632"
 
 }
