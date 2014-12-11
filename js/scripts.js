@@ -9,17 +9,22 @@ clientApp.controller('ClientController', function($scope, AuthService) {
 
   //Populate the form.
   $scope.environments = servicesConfig.environments;
+  $scope.environmentSelected = servicesConfig.environments[0].id;
   $scope.services = servicesConfig.services;
+  $scope.serviceSelected = servicesConfig.services[0].id;
 
 
   $scope.authorise = function() {
       //TODO get the selected form details and resolve the service endpoint.
-      console.log("test selected = " + $scope.env);
+      //console.log("service = " + $scope.serviceSelected);
+      //console.log("env = " + $scope.environmentSelected);
+	  //we have env, service. need endpoint.
 	  
-      //TODO pass in env?
-	  AuthService.getAuthCookie().then(
+
+
+	  AuthService.getAuthCookie($scope.environmentSelected).then(
 		  function(payload) {
-			console.log("headers = " + payload.authorization);
+			//console.log("headers = " + payload.authorization);
 			$scope.authenticationCookie = payload.authorization;
 		  },
 		  function(error) {
@@ -32,35 +37,37 @@ clientApp.controller('ClientController', function($scope, AuthService) {
 
 
 
-
+/**
+ * Retrieves an Authentication Cookie for a specified environment.
+ */
 clientApp.factory('AuthService', function($http, $q) {
-  var cachedAuthCookie = "";
+  var cachedAuthCookies = [];
 
   return {
-    getAuthCookie: function() {
-      var deferred = $q.defer();
+    getAuthCookie: function(environment) {
+	  var deferred = $q.defer();
 
-	  if (cachedAuthCookie !== "") {
-	    deferred.resolve({authorization: cachedAuthCookie});
+	  if (typeof cachedAuthCookies[environment] !== 'undefined') {
+	    deferred.resolve({authorization: cachedAuthCookies[environment]});
 	  } else {
 		var AUTHENTICATION_REQUEST_CONFIG = { headers: {
 			'ApplicationId': '36',
 			'x-dnb-user': 'teamjoly@dnb.com',
 			'x-dnb-pwd': 'password'
 		}};
-		var STG_AUTHENTICATION_URL = 'http://services-ext-stg.dnb.com/rest/Authentication';
+		var STG_AUTHENTICATION_URL = 'http://services-ext-stg.dnb.com/rest/Authentication'; //TODO determine endpoint based on env
 
 		$http.get(STG_AUTHENTICATION_URL, AUTHENTICATION_REQUEST_CONFIG).
 		success(function(data, status, headers, config) {
-			cachedAuthCookie = headers('authorization');
+			cachedAuthCookies[environment] = headers('authorization');
 			deferred.resolve({authorization: headers('authorization')});
 		}).
 		error(function(msg, code) {
 			deferred.reject("Error Code: " + code);
 			//$log.error(msg, code);
 		});		
-	  }	 
-	 
+	  }
+
      return deferred.promise;
    }
   }

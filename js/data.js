@@ -34,7 +34,7 @@ var servicesConfig = {
 		"label" : "RDC Search"
 	}, { 
 		"id" : "pcs",
-		"label" : "ProdcutCatalogService"
+		"label" : "ProductCatalogService"
 	} ],
 
 	endpoints : [ {
