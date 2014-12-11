@@ -3,11 +3,20 @@ var clientApp = angular.module('clientApp', []);
 
 
 
+
+
 clientApp.controller('ClientController', function($scope, AuthService) {
 
+  //TODO add the env + services to the dropdowns.
+  console.log("envs = " + formData.environments);
+  console.log("services = " + formData.services);
+  console.log("services = " + formData.services[0].name);
+  $scope.environments = formData.environments;
+  $scope.services = formData.services;
 
 
 
+  //TODO pass in env?
   $scope.authorise = function() {
 	  AuthService.getAuthCookie().then(
 		  function(payload) {
@@ -90,7 +99,6 @@ function CallService($scope, $http) {
 
 	var serviceUrl = 'http://services-ext-stg.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber=211528187&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT';
 
-	//TODO consider using a $promise
     $http.get(serviceUrl, requestConfig).
 		success(function(data, status, headers, config) {
             $scope.responseBody = data;
@@ -132,7 +140,7 @@ function CallService($scope, $http) {
 
 
 function Authenticate3($http) {
-alert("4");
+
 	var AUTHENTICATION_REQUEST_CONFIG = { headers: {
 			'ApplicationId': '36',
 			'x-dnb-user': 'teamjoly@dnb.com',
@@ -145,59 +153,14 @@ alert("4");
 	
 	promise.then(
 	  function(payload) {
-	    alert("5");
 		console.log("headers = " + payload.headers('authorization'));
 		return payload.headers('authorization');
 	  },
 	  function(errorPayload) {
 		//TODO handle this
 	  });
-  
-alert("6");
 }
 
-
-function Authenticate2($http) {
-alert("1");
-	var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-			'ApplicationId': '36',
-			'x-dnb-user': 'teamjoly@dnb.com',
-			'x-dnb-pwd': 'password'
-		}
-	};
-	var STG_AUTHENTICATION_URL = 'http://services-ext-stg.dnb.com/rest/Authentication';
-
-    $http.get(STG_AUTHENTICATION_URL, AUTHENTICATION_REQUEST_CONFIG).
-		success(function(data, status, headers, config) {
-		    //TODO need to use a promise here. are they angular's version of callbacks?
-			console.log("headers = " + headers('authorization'));
-			return headers('authorization');
-        }).
-		error(function(data, status, headers, config) {
-		    //TODO handle this
-		});
-//alert("2");
-}
-
-function Authenticate($scope, $http) {
-
-	var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-			'ApplicationId': '36',
-			'x-dnb-user': 'teamjoly@dnb.com',
-			'x-dnb-pwd': 'password'
-		}
-	};
-	var STG_AUTHENTICATION_URL = 'http://services-ext-stg.dnb.com/rest/Authentication';
-	//var QA_AUTHENTICATION_URL = 'http://dbqlsegwb01.us.dnb.com:8080/rest/Authentication';
-
-    $http.get(STG_AUTHENTICATION_URL, AUTHENTICATION_REQUEST_CONFIG).
-		success(function(data, status, headers, config) {
-			$scope.authenticationCookie = headers('authorization');
-        }).
-		error(function(data, status, headers, config) {
-		
-		});
-}
 
 
 

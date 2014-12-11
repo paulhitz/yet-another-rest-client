@@ -49,10 +49,8 @@
 						<div class="form-group">
 							<label for="env" class="col-sm-2 control-label">Environment:</label>
 							<div class="col-sm-10">
-								<select class="form-control" id="env">
-									<option value="qa">QA</option>
-									<option value="stg">STG</option>
-									<option value="prod">Production (requires HTTPS)</option>
+								<select class="form-control" id="env" >
+								    <option ng-repeat="env in environments" value="{{env}}">{{env}}</option>
 								</select>
 							</div>
 						</div>
@@ -60,12 +58,7 @@
 							<label for="services" class="col-sm-2 control-label">Select Service:</label>
 							<div class="col-sm-10">
 								<select class="form-control" id="services">
-									<option value="auth">Authentication</option>
-									<option value="linkage">Linkage</option>
-									<option value="firm">Firmographics</option>
-									<option value="kyc">Custom Product (KYC)</option>
-									<option value="gbo">Custom Product (GBO)</option>
-									<option value="so">Custom Product (SO)</option>
+									<option ng-repeat="service in services" value="{{service.name}}">{{service.name}}</option>
 								</select>
 							</div>
 						</div>
@@ -193,6 +186,7 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-resource.min.js"></script>
+<script src="js/data.js"></script>
 <script src="js/scripts.js"></script>
 </body>
 </html>
