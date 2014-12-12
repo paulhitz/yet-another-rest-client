@@ -13,7 +13,6 @@
 
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script src="http://cdn.jsdelivr.net/highlight.js/8.4/highlight.min.js"></script>
 </head>
 
 <body>
@@ -146,14 +145,18 @@
 					<div role="tabpanel">
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active"><a href="#json" aria-controls="json" role="tab" data-toggle="tab">Response Body</a></li>
-							<li role="presentation"><a href="#headers" aria-controls="headers" role="tab" data-toggle="tab">Response Headers</a></li>
+							<li role="presentation"><a href="#responseHeaders" aria-controls="responseHeaders" role="tab" data-toggle="tab">Response Headers</a></li>
+							<li role="presentation"><a href="#requestHeaders" aria-controls="requestHeaders" role="tab" data-toggle="tab">Request Headers</a></li>
 						</ul>
 						<div class="tab-content" style="margin-top: 5px;">
 							<div role="tabpanel" class="tab-pane active json-content" id="json">
-								<pre><code>{{responseBody}}</code></pre>
+								<pre><code hljs source="responseBody"></code></pre>
 							</div>
-							<div role="tabpanel" class="tab-pane json-content" id="headers">
-								<pre><code>{{responseHeaders}}</code></pre>
+							<div role="tabpanel" class="tab-pane json-content" id="responseHeaders">
+								<pre><code hljs source="responseHeaders"></code></pre>
+							</div>
+							<div role="tabpanel" class="tab-pane json-content" id="requestHeaders">
+								<pre><code hljs source="requestHeaders"></code></pre>
 							</div>
 						</div>
 					</div>
@@ -162,7 +165,6 @@
 
 		</div>
 	</div>
-	<script>//hljs.initHighlightingOnLoad();</script>
 
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
@@ -182,6 +184,8 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-resource.min.js"></script>
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+<script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
 <script src="js/data.js"></script>
 <script src="js/scripts.js"></script>
 </body>

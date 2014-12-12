@@ -1,51 +1,45 @@
+var clientApp = angular.module('clientApp', ['hljs']);
 
-var clientApp = angular.module('clientApp', []);
+//TODO is this used?
+clientApp.config(function (hljsServiceProvider) {
+  hljsServiceProvider.setOptions({
+    // replace tab with 2 spaces
+    tabReplace: '  '
+  });
+});
 
 
-
-
-
+/**
+ *
+ */
 clientApp.controller('ClientController', function($scope, $http, AuthService) {
 
-  //Populate the form.
-  $scope.environments = servicesConfig.environments;
-  $scope.environmentSelected = servicesConfig.environments[0].id;
-  $scope.services = servicesConfig.services;
-  $scope.serviceSelected = servicesConfig.services[0].id;
+	//Populate the form.
+	$scope.environments = servicesConfig.environments;
+	$scope.environmentSelected = servicesConfig.environments[0].id;
+	$scope.services = servicesConfig.services;
+	$scope.serviceSelected = servicesConfig.services[0].id;
 
-  
+	//
+	$scope.submit = function() {
+		var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
 
-  
+		//Retrieve an Authorisation Token based on the selected environment.
+		AuthService.getAuthCookie(authEndpoint).then(
+			function(payload) {
+				$scope.authenticationCookie = payload.authorization;
 
-  $scope.submit = function() {
+				//Determine the configured endpoint.
+				$scope.requestUrl = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
 
-    //Retrieve an Authorisation Token based on the selected environment.
-    $scope.authorise();
-
-	//Determine the configured endpoint.
-    var endpoint = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
-	$scope.requestUrl = endpoint;
-	console.log("configured endpoint to call = " + endpoint);
-
-	//Call the endpoint.
-	//TODO this is being called before the auth promise is executed. move this below.
-	callService($scope, $http, endpoint);
-  }
-  
-  $scope.authorise = function() {
-      var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
-  
-	  AuthService.getAuthCookie(authEndpoint).then(
-		  function(payload) {
-			console.log("headers = " + payload.authorization);
-			$scope.authenticationCookie = payload.authorization;
-		  },
-		  function(error) {
-			console.log("error = " + error); //TODO handle this with error in the UI also.
-		  }
-	  );
-  }
-
+				//Call the endpoint.
+				callService($scope, $http);
+			},
+			function(error) {
+				console.log("error = " + error); //TODO handle this with error in the UI.
+			}
+		);
+	}
 });
 
 
@@ -80,37 +74,35 @@ function configureServiceUrl(environmentSelected, serviceSelected, dunsSelected)
  * Retrieves an Authentication Cookie for a specified environment.
  */
 clientApp.factory('AuthService', function($http, $q) {
-  var cachedAuthCookies = [];
+	var cachedAuthCookies = [];
 
-  return {
-    getAuthCookie: function(authEndpoint) {
-	  var deferred = $q.defer();
+	return {
+		getAuthCookie: function(authEndpoint) {
+			var deferred = $q.defer();
 
-	  if (typeof cachedAuthCookies[authEndpoint] !== 'undefined') {
-	    deferred.resolve({authorization: cachedAuthCookies[authEndpoint]});
-	  } else {
-		var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-			'ApplicationId': '36',
-			'x-dnb-user': 'teamjoly@dnb.com',
-			'x-dnb-pwd': 'password'
-		}};
+			if (typeof cachedAuthCookies[authEndpoint] !== 'undefined') {
+				deferred.resolve({authorization: cachedAuthCookies[authEndpoint]});
+			} else {
+				var AUTHENTICATION_REQUEST_CONFIG = { headers: {
+					'ApplicationId': '36',
+					'x-dnb-user': 'teamjoly@dnb.com',
+					'x-dnb-pwd': 'password'
+				}};
 
-		console.log("authEndpoint = " + authEndpoint);
-		$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
-		success(function(data, status, headers, config) {
-			cachedAuthCookies[authEndpoint] = headers('authorization');
-			deferred.resolve({authorization: headers('authorization')});
-		}).
-		error(function(msg, code) {
-			deferred.reject("Error Code: " + code);
-			//$log.error(msg, code);
-		});
-	  }
-
-     return deferred.promise;
-   }
-  }
- });
+				$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
+					success(function(data, status, headers, config) {
+						cachedAuthCookies[authEndpoint] = headers('authorization');
+						deferred.resolve({authorization: headers('authorization')});
+					}).
+					error(function(msg, code) {
+						deferred.reject("Error Code: " + code);
+						//$log.error(msg, code);
+					});
+			}
+			return deferred.promise;
+		}
+	}
+});
 
 
 /**
@@ -122,8 +114,7 @@ clientApp.factory('AuthService', function($http, $q) {
  * -remove magic number. e.g. the app id.
  * -can we reuse the auth service method?
  */
-function callService($scope, $http, endpoint) {
-	console.log("Calling service using auth token: " + $scope.authenticationCookie);
+function callService($scope, $http) {
 
 	var requestConfig = { headers: {
 			'Authorization': $scope.authenticationCookie,
@@ -131,18 +122,12 @@ function callService($scope, $http, endpoint) {
 		}
 	};
 
-    $http.get(endpoint, requestConfig).
+	$http.get($scope.requestUrl, requestConfig).
 		success(function(data, status, headers, config) {
-            $scope.responseBody = data;
-			$scope.responseHeaders = headers();
-            console.log(status);
-            console.log(JSON.stringify(config));
-        }).
+			populateView($scope, data, headers(), config, status);
+		}).
 		error(function(data, status, headers, config) {
-			$scope.responseBody = data;
-			$scope.responseHeaders = headers();
-            console.log(status);
-            console.log(JSON.stringify(config));
+			populateView($scope, data, headers(), config, status);
 		});
 }
 
@@ -155,6 +140,15 @@ function replaceAll(input, target, replacement) {
 }
 
 
+/**
+ *
+ */
+function populateView($scope, data, headers, config, status) {
+	headers['status'] = status;
+	$scope.responseBody = JSON.stringify(data, null, 2);
+	$scope.responseHeaders = JSON.stringify(headers, null, 2);
+	$scope.requestHeaders = JSON.stringify(config, null, 2);
+}
 
 
 
@@ -186,7 +180,7 @@ function Authenticate3($http) {
 	var STG_AUTHENTICATION_URL = 'http://services-ext-stg.dnb.com/rest/Authentication';
 
     var promise = $http.get(STG_AUTHENTICATION_URL, AUTHENTICATION_REQUEST_CONFIG);
-	
+
 	promise.then(
 	  function(payload) {
 		console.log("headers = " + payload.headers('authorization'));
