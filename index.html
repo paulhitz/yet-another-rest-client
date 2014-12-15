@@ -126,30 +126,16 @@
 		</div>
 	</div>
 
+	<div class="clearfix" ng-hide="displayResponse">
+		<progressbar class="progress-striped active" value="progressValue" ng-model="progress">{{progressLabel}}</progressbar>
+	</div>
+
 	<div class="clearfix">
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	</div>
 
-
-<div>
-    <script type="text/ng-template" id="modalTemplate">
-        <div class="modal-header">
-            <h3 class="modal-title">Processing...</h3>
-        </div>
-        <div class="modal-body">
-			Sending Request...
-            <progressbar class="progress-striped active" value="progressValue" ng-model="progress">{{progressLabel}}</progressbar>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-</div>
-
-
-
-	<div id="response" class="row clearfix">
-		<div class="col-md-12 column">
+	<div id="response" class="row clearfix" ng-show="displayResponse">
+		<div class="col-md-12 column" id="responseBody">
 
 			<div class="panel panel-info">
 				<div class="panel-heading">
@@ -160,7 +146,6 @@
 					<div class="well" style="word-break: break-all;">
 						<strong>Request URL:</strong> {{requestUrl}}<br>
 						<strong>Authentication Cookie:</strong> {{authenticationCookie}}<br>
-						<strong>Test:</strong> {{service.message}}
 					</div>
 
 					<div role="tabpanel">

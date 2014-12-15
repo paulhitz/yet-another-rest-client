@@ -1,4 +1,8 @@
 
+body {
+  /*min-height: 2000px;*/
+}
+
 .json-content {
   max-height: 800px;
   overflow: auto;
@@ -6,5 +10,9 @@
 }
 
 .progress {
-  margin-bottom: 0;
+  /*margin-bottom: 0;*/
+}
+
+.well {
+  font-size: 12px;
 }

@@ -1,5 +1,6 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs']);
 
+/*
 //TODO is this used?
 clientApp.config(function (hljsServiceProvider) {
   hljsServiceProvider.setOptions({
@@ -7,12 +8,12 @@ clientApp.config(function (hljsServiceProvider) {
     tabReplace: '  '
   });
 });
-
+*/
 
 /**
  *
  */
-clientApp.controller('ClientController', function($scope, $http, $modal, AuthService) {
+clientApp.controller('ClientController', function($scope, $http, $location, $anchorScroll, AuthService) {
 
 	//Populate the form.
 	$scope.environments = servicesConfig.environments;
@@ -20,49 +21,27 @@ clientApp.controller('ClientController', function($scope, $http, $modal, AuthSer
 	$scope.services = servicesConfig.services;
 	$scope.serviceSelected = servicesConfig.services[0].id;
 
-	//
-	$scope.alerts = [];
-	$scope.closeAlert = function(index) {
-		$scope.alerts.splice(index, 1);
-	};
-
-	//
-  $scope.open = function () {
-
-    var modalInstance = $modal.open({
-      templateUrl: 'modalTemplate',
-      controller: 'ModalInstanceCtrl'
-    });
-
-  };
-	//Modal issues:
-	//-how to close it?
-	//-breaks progress bar
-	//
-	
-	//
+	//Submit the configured Service Request.
 	$scope.submit = function() {
-		//Open Modal
-		
+		//Remove any previous errors/alerts and hide the previous response.
+		$scope.alerts = [];
+		$scope.displayResponse = false;
+
 		//Update Progress Bar.
-		updateProgressbar($scope, 10, 'Authorising... ');
-		$scope.open();
+		updateProgressbar($scope, 10, 'Authenticating... ');
 
 		//Retrieve an Authorisation Token based on the selected environment.
 		var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
 			function(payload) {
 				$scope.authenticationCookie = payload.authorization;
-//				$scope.dismiss("dsfdsf");
 
-
-				//Determine the configured endpoint.
+				//Determine the configured service endpoint.
 				$scope.requestUrl = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
 
 				//Call the endpoint.
-				updateProgressbar($scope, 50, 'Calling Service... ');
-				callService($scope, $http);
-				updateProgressbar($scope, 100, 'Response Received');
+				updateProgressbar($scope, 50, 'Making Service Request... ');
+				callService($scope, $http, $location, $anchorScroll);
 			},
 			function(error) {
 				var errorMessage = "An error occurred while authenticating... " + error.msg + ". Error Code: " + error.code;
@@ -70,6 +49,11 @@ clientApp.controller('ClientController', function($scope, $http, $modal, AuthSer
 			}
 		);
 	}
+
+	//Remove the selected alert/error.
+	$scope.closeAlert = function(index) {
+		$scope.alerts.splice(index, 1);
+	};
 });
 
 
@@ -137,7 +121,8 @@ clientApp.factory('AuthService', function($http, $q) {
 					}).
 					error(function(msg, code) {
 						deferred.reject({msg: msg, code: code});
-					});
+					}
+				);
 			}
 			return deferred.promise;
 		}
@@ -154,7 +139,7 @@ clientApp.factory('AuthService', function($http, $q) {
  * -remove magic number. e.g. the app id.
  * -can we reuse the auth service method?
  */
-function callService($scope, $http) {
+function callService($scope, $http, $location, $anchorScroll) {
 
 	var requestConfig = { headers: {
 			'Authorization': $scope.authenticationCookie,
@@ -165,10 +150,13 @@ function callService($scope, $http) {
 	$http.get($scope.requestUrl, requestConfig).
 		success(function(data, status, headers, config) {
 			populateView($scope, data, headers(), config, status);
+			displayView($scope, $location, $anchorScroll);
 		}).
 		error(function(data, status, headers, config) {
 			populateView($scope, data, headers(), config, status);
-		});
+			displayView($scope, $location, $anchorScroll);
+		}
+	);
 }
 
 
@@ -184,6 +172,7 @@ function replaceAll(input, target, replacement) {
  *
  */
 function populateView($scope, data, headers, config, status) {
+	updateProgressbar($scope, 100, 'Response Received');
 	headers['status'] = status;
 	$scope.responseBody = JSON.stringify(data, null, 2);
 	$scope.responseHeaders = JSON.stringify(headers, null, 2);
@@ -194,11 +183,21 @@ function populateView($scope, data, headers, config, status) {
 /**
  *
  */
+function displayView($scope, $location, $anchorScroll) {
+	$scope.displayResponse = true;
+	var old = $location.hash();
+    $location.hash('response');
+    $anchorScroll();
+    $location.hash(old);
+}
+
+
+/**
+ *
+ */
 function updateProgressbar($scope, value, label) {
 	$scope.progressValue = value;
 	$scope.progressLabel = label;
-	console.log("progress bar: " + label);
-	console.log("progress bar2: " + $scope.progressLabel);
 }
 
 
@@ -214,30 +213,6 @@ function updateProgressbar($scope, value, label) {
 
 
 
-
-
-
-
-
-clientApp.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
-
-
-  $scope.open = function () {
-
-    var modalInstance = $modal.open({
-      templateUrl: 'modalTemplate',
-      controller: 'ModalInstanceCtrl'
-    });
-
-  };
-});
-
-clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
-
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-});
 
 
 
