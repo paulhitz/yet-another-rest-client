@@ -122,7 +122,7 @@
 				</div>
 			</div>
 
-			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal" style="margin-bottom: 30px;" ng-click="submit();">Send Service Request</button>
+			<button type="button" class="btn btn-success pull-right" style="margin-bottom: 30px;" ng-click="submit();">Send Service Request</button>
 		</div>
 	</div>
 
@@ -130,9 +130,23 @@
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	</div>
 
-<div ng-controller="ProgressBarController">
-	<progressbar class="progress-striped active" value="dynamic">{{type}}</progressbar>
+
+<div>
+    <script type="text/ng-template" id="modalTemplate">
+        <div class="modal-header">
+            <h3 class="modal-title">Processing...</h3>
+        </div>
+        <div class="modal-body">
+			Sending Request...
+            <progressbar class="progress-striped active" value="progressValue" ng-model="progress">{{progressLabel}}</progressbar>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 </div>
+
+
 
 	<div id="response" class="row clearfix">
 		<div class="col-md-12 column">
@@ -173,20 +187,22 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="myModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-							<span class="sr-only">45% Complete</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>

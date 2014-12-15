@@ -12,7 +12,7 @@ clientApp.config(function (hljsServiceProvider) {
 /**
  *
  */
-clientApp.controller('ClientController', function($scope, $http, AuthService) {
+clientApp.controller('ClientController', function($scope, $http, $modal, AuthService) {
 
 	//Populate the form.
 	$scope.environments = servicesConfig.environments;
@@ -27,23 +27,46 @@ clientApp.controller('ClientController', function($scope, $http, AuthService) {
 	};
 
 	//
+  $scope.open = function () {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'modalTemplate',
+      controller: 'ModalInstanceCtrl'
+    });
+
+  };
+	//Modal issues:
+	//-how to close it?
+	//-breaks progress bar
+	//
+	
+	//
 	$scope.submit = function() {
-		var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
+		//Open Modal
+		
+		//Update Progress Bar.
+		updateProgressbar($scope, 10, 'Authorising... ');
+		$scope.open();
 
 		//Retrieve an Authorisation Token based on the selected environment.
+		var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
 			function(payload) {
 				$scope.authenticationCookie = payload.authorization;
+//				$scope.dismiss("dsfdsf");
+
 
 				//Determine the configured endpoint.
 				$scope.requestUrl = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
 
 				//Call the endpoint.
+				updateProgressbar($scope, 50, 'Calling Service... ');
 				callService($scope, $http);
+				updateProgressbar($scope, 100, 'Response Received');
 			},
 			function(error) {
-				error = 'An error occurred while authenticating. The authentication service could be down. Error Code: ' + error;
-				$scope.alerts.push({type: 'danger', msg: error});
+				var errorMessage = "An error occurred while authenticating... " + error.msg + ". Error Code: " + error.code;
+				$scope.alerts.push({type: 'danger', msg: errorMessage});
 			}
 		);
 	}
@@ -58,15 +81,6 @@ clientApp.controller('ToggleController', function($scope) {
 	$scope.toggle = function(status) {
 		$scope.status = !status;
 	}
-});
-
-
-/**
- * TODO 
- */
-clientApp.controller('ProgressBarController', function($scope) {
-	$scope.type = 'Authorising...';
-	$scope.dynamic = 90;
 });
 
 
@@ -122,9 +136,7 @@ clientApp.factory('AuthService', function($http, $q) {
 						deferred.resolve({authorization: headers('authorization')});
 					}).
 					error(function(msg, code) {
-						deferred.reject(code);
-						console.log("error msg = " + msg);
-						console.log("error code. " + code);
+						deferred.reject({msg: msg, code: code});
 					});
 			}
 			return deferred.promise;
@@ -156,8 +168,6 @@ function callService($scope, $http) {
 		}).
 		error(function(data, status, headers, config) {
 			populateView($scope, data, headers(), config, status);
-			console.log("error calling service. " + JSON.stringify(data, null, 2)); //TODO handle this correctly
-			console.log("error calling service. " + status); //TODO handle this correctly
 		});
 }
 
@@ -179,6 +189,62 @@ function populateView($scope, data, headers, config, status) {
 	$scope.responseHeaders = JSON.stringify(headers, null, 2);
 	$scope.requestHeaders = JSON.stringify(config, null, 2);
 }
+
+
+/**
+ *
+ */
+function updateProgressbar($scope, value, label) {
+	$scope.progressValue = value;
+	$scope.progressLabel = label;
+	console.log("progress bar: " + label);
+	console.log("progress bar2: " + $scope.progressLabel);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+clientApp.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
+
+
+  $scope.open = function () {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'modalTemplate',
+      controller: 'ModalInstanceCtrl'
+    });
+
+  };
+});
+
+clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+
+
+
+
+
+
 
 
 

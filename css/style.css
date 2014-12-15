@@ -4,3 +4,7 @@
   overflow: auto;
   overflow-x: hidden;
 }
+
+.progress {
+  margin-bottom: 0;
+}
