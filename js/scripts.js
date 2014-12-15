@@ -1,17 +1,7 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs']);
 
-/*
-//TODO is this used?
-clientApp.config(function (hljsServiceProvider) {
-  hljsServiceProvider.setOptions({
-    // replace tab with 2 spaces
-    tabReplace: '  '
-  });
-});
-*/
-
 /**
- *
+ * Main application controller. Populates the form and submits the Service Request.
  */
 clientApp.controller('ClientController', function($scope, $http, $location, $anchorScroll, AuthService) {
 
@@ -34,7 +24,7 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 		var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
 			function(payload) {
-				$scope.authenticationCookie = payload.authorization;
+				$scope.authenticationToken = payload.authorization;
 
 				//Determine the configured service endpoint.
 				$scope.requestUrl = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
@@ -58,10 +48,9 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 
 
 /**
- *
+ * Simple controller for toggling a value.
  */
 clientApp.controller('ToggleController', function($scope) {
-	//$scope.status = false;
 	$scope.toggle = function(status) {
 		$scope.status = !status;
 	}
@@ -96,17 +85,17 @@ function configureServiceUrl(environmentSelected, serviceSelected, dunsSelected)
 
 
 /**
- * Retrieves an Authentication Cookie for a specified environment.
+ * Retrieves an Authentication Token for a specified environment.
  */
 clientApp.factory('AuthService', function($http, $q) {
-	var cachedAuthCookies = [];
+	var cachedAuthTokens = [];
 
 	return {
 		getAuthCookie: function(authEndpoint) {
 			var deferred = $q.defer();
 
-			if (typeof cachedAuthCookies[authEndpoint] !== 'undefined') {
-				deferred.resolve({authorization: cachedAuthCookies[authEndpoint]});
+			if (typeof cachedAuthTokens[authEndpoint] !== 'undefined') {
+				deferred.resolve({authorization: cachedAuthTokens[authEndpoint]});
 			} else {
 				var AUTHENTICATION_REQUEST_CONFIG = { headers: {
 					'ApplicationId': '36',
@@ -116,7 +105,7 @@ clientApp.factory('AuthService', function($http, $q) {
 
 				$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
 					success(function(data, status, headers, config) {
-						cachedAuthCookies[authEndpoint] = headers('authorization');
+						cachedAuthTokens[authEndpoint] = headers('authorization');
 						deferred.resolve({authorization: headers('authorization')});
 					}).
 					error(function(msg, code) {
@@ -134,7 +123,6 @@ clientApp.factory('AuthService', function($http, $q) {
  * Call the specified endpoint and update the UI.
  *
  * TODO:
- * -the auth service requires different params
  * -consider using config() to setup the $httpProvider and include headers there.
  * -remove magic number. e.g. the app id.
  * -can we reuse the auth service method?
@@ -142,10 +130,9 @@ clientApp.factory('AuthService', function($http, $q) {
 function callService($scope, $http, $location, $anchorScroll) {
 
 	var requestConfig = { headers: {
-			'Authorization': $scope.authenticationCookie,
-			'ApplicationId': '36'
-		}
-	};
+		'Authorization': $scope.authenticationToken,
+		'ApplicationId': '36'
+	}};
 
 	$http.get($scope.requestUrl, requestConfig).
 		success(function(data, status, headers, config) {
@@ -161,7 +148,7 @@ function callService($scope, $http, $location, $anchorScroll) {
 
 
  /**
-  * The name says it all.
+  * Replace all occurrences of the target value with the replacement value.
   */
 function replaceAll(input, target, replacement) {
 	return input.split(target).join(replacement);
@@ -169,7 +156,7 @@ function replaceAll(input, target, replacement) {
 
 
 /**
- *
+ * Update the UI with the data received form the service.
  */
 function populateView($scope, data, headers, config, status) {
 	updateProgressbar($scope, 100, 'Response Received');
@@ -181,85 +168,23 @@ function populateView($scope, data, headers, config, status) {
 
 
 /**
- *
+ * Show the view and automatically scroll down to it. (scrolling is currently ineffective)
  */
 function displayView($scope, $location, $anchorScroll) {
 	$scope.displayResponse = true;
 	var old = $location.hash();
-    $location.hash('response');
-    $anchorScroll();
-    $location.hash(old);
+	$location.hash('response');
+	$anchorScroll();
+	$location.hash(old);
 }
 
 
 /**
- *
+ * Update the progress bar with a percentage and a current status label.
  */
 function updateProgressbar($scope, value, label) {
 	$scope.progressValue = value;
 	$scope.progressLabel = label;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function Authenticate3($http) {
-
-	var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-			'ApplicationId': '36',
-			'x-dnb-user': 'teamjoly@dnb.com',
-			'x-dnb-pwd': 'password'
-		}
-	};
-	var STG_AUTHENTICATION_URL = 'http://services-ext-stg.dnb.com/rest/Authentication';
-
-    var promise = $http.get(STG_AUTHENTICATION_URL, AUTHENTICATION_REQUEST_CONFIG);
-
-	promise.then(
-	  function(payload) {
-		console.log("headers = " + payload.headers('authorization'));
-		return payload.headers('authorization');
-	  },
-	  function(errorPayload) {
-		//TODO handle this
-	  });
 }
 
 
