@@ -1,4 +1,4 @@
-var clientApp = angular.module('clientApp', ['hljs']);
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs']);
 
 //TODO is this used?
 clientApp.config(function (hljsServiceProvider) {
@@ -21,6 +21,12 @@ clientApp.controller('ClientController', function($scope, $http, AuthService) {
 	$scope.serviceSelected = servicesConfig.services[0].id;
 
 	//
+	$scope.alerts = [];
+	$scope.closeAlert = function(index) {
+		$scope.alerts.splice(index, 1);
+	};
+
+	//
 	$scope.submit = function() {
 		var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
 
@@ -36,10 +42,31 @@ clientApp.controller('ClientController', function($scope, $http, AuthService) {
 				callService($scope, $http);
 			},
 			function(error) {
-				console.log("error = " + error); //TODO handle this with error in the UI.
+				error = 'An error occurred while authenticating. The authentication service could be down. Error Code: ' + error;
+				$scope.alerts.push({type: 'danger', msg: error});
 			}
 		);
 	}
+});
+
+
+/**
+ *
+ */
+clientApp.controller('ToggleController', function($scope) {
+	//$scope.status = false;
+	$scope.toggle = function(status) {
+		$scope.status = !status;
+	}
+});
+
+
+/**
+ * TODO 
+ */
+clientApp.controller('ProgressBarController', function($scope) {
+	$scope.type = 'Authorising...';
+	$scope.dynamic = 90;
 });
 
 
@@ -95,8 +122,9 @@ clientApp.factory('AuthService', function($http, $q) {
 						deferred.resolve({authorization: headers('authorization')});
 					}).
 					error(function(msg, code) {
-						deferred.reject("Error Code: " + code);
-						//$log.error(msg, code);
+						deferred.reject(code);
+						console.log("error msg = " + msg);
+						console.log("error code. " + code);
 					});
 			}
 			return deferred.promise;
@@ -128,6 +156,8 @@ function callService($scope, $http) {
 		}).
 		error(function(data, status, headers, config) {
 			populateView($scope, data, headers(), config, status);
+			console.log("error calling service. " + JSON.stringify(data, null, 2)); //TODO handle this correctly
+			console.log("error calling service. " + status); //TODO handle this correctly
 		});
 }
 
