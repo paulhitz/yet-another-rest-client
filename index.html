@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="clientApp">
+<html lang="en" ng-app="clientApp" ng-csp>
 <head>
 	<meta charset="utf-8">
 	<title>D&amp;B Services Client</title>
@@ -9,7 +9,8 @@
 
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
-	<link rel="stylesheet" href="http://cdn.jsdelivr.net/highlight.js/8.4/styles/default.min.css">
+	<link href="css/angular-csp.css" rel="stylesheet">
+	<link href="css/highlightjs-default.min.css" rel="stylesheet">
 
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -23,7 +24,7 @@
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<a class="navbar-brand" href="#"><img alt="Logo" src="https://creditreports.dnb.com/wcsstore/ConsumerDirect/images/smbImages/ebimages/dnb_logo_50x50.gif" style="width: 40px; height: 40px; margin-right: 5px;"> D&amp;B Services Client</a>
+						<a class="navbar-brand" href="#"><img alt="Logo" src="img/logo_38x38.png" style="margin-right: 5px;"> D&amp;B Services Client</a>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
 						<p class="navbar-text navbar-right" style="margin-top: 25px;">Developed by the Dublin Onboard Team</p>
@@ -171,29 +172,13 @@
 
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-	
-	
-	
 	
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular-resource.min.js"></script>
-<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
-<script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-resource.min.js"></script>
+<script src="js/highlight.min.js"></script>
+<script src="js/angular-highlightjs.min.js"></script>
 <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
 <script src="js/data.js"></script>
 <script src="js/scripts.js"></script>

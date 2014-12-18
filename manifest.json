@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "D&B Services Client",
+  "description": "This tool allows a user to easily test the status of various D&amp;B Services.",
+  "version": "1.0",
+  "author": "Paul Hitz",
+
+  "icons": { "16": "img/logo_16x16.png",
+             "48": "img/logo_48x48.png",
+             "128": "img/logo_128x128.png"
+  },
+
+  "background": {
+    "scripts": ["extension/background.js"]
+  },
+
+  "permissions": [
+    "http://services-ext-qa.dnb.com/",
+    "http://services-ext-stg.dnb.com/"
+  ],
+
+  "browser_action": {
+    "default_icon": {
+      "19": "img/logo_19x19.png",
+      "38": "img/logo_38x38.png"
+    }
+  }
+}
