@@ -1,11 +1,20 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs']);
 
+var ADVANCED_SETTINGS = {
+		"requestUrl" : "",
+		"appId" : "36",
+		"userId" : "teamjoly@dnb.com",
+		"password" : "password",
+		"payload" : ""
+	};
+
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
 clientApp.controller('ClientController', function($scope, $http, $location, $anchorScroll, AuthService) {
 
 	//Populate the form.
+	$scope.service = ADVANCED_SETTINGS;
 	$scope.environments = servicesConfig.environments;
 	$scope.environmentSelected = servicesConfig.environments[0].id;
 	$scope.services = servicesConfig.services;
@@ -27,7 +36,12 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 				$scope.authenticationToken = payload.authorization;
 
 				//Determine the configured service endpoint.
-				$scope.requestUrl = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
+				if (ADVANCED_SETTINGS.requestUrl) {
+					//If the user has entered a specific endpoint, just use that.
+					$scope.requestUrl =  ADVANCED_SETTINGS.requestUrl;
+				} else {
+					$scope.requestUrl = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
+				}
 
 				//Call the endpoint.
 				updateProgressbar($scope, 50, 'Making Service Request... ');
@@ -98,9 +112,9 @@ clientApp.factory('AuthService', function($http, $q) {
 				deferred.resolve({authorization: cachedAuthTokens[authEndpoint]});
 			} else {
 				var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-					'ApplicationId': '36',
-					'x-dnb-user': 'teamjoly@dnb.com',
-					'x-dnb-pwd': 'password'
+					'ApplicationId': ADVANCED_SETTINGS.appId,
+					'x-dnb-user': ADVANCED_SETTINGS.userId,
+					'x-dnb-pwd': ADVANCED_SETTINGS.password
 				}};
 
 				$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
@@ -121,29 +135,31 @@ clientApp.factory('AuthService', function($http, $q) {
 
 /**
  * Call the specified endpoint and update the UI.
- *
- * TODO:
- * -consider using config() to setup the $httpProvider and include headers there.
- * -remove magic number. e.g. the app id.
- * -can we reuse the auth service method?
  */
 function callService($scope, $http, $location, $anchorScroll) {
 
 	var requestConfig = { headers: {
 		'Authorization': $scope.authenticationToken,
-		'ApplicationId': '36'
+		'ApplicationId': ADVANCED_SETTINGS.appId
 	}};
 
-	$http.get($scope.requestUrl, requestConfig).
-		success(function(data, status, headers, config) {
-			populateView($scope, data, headers(), config, status);
-			displayView($scope, $location, $anchorScroll);
-		}).
-		error(function(data, status, headers, config) {
-			populateView($scope, data, headers(), config, status);
-			displayView($scope, $location, $anchorScroll);
-		}
-	);
+	//Determine if this should be a GET or POST request.
+	var promise;
+	if (ADVANCED_SETTINGS.payload) {
+		requestConfig.headers['Accept'] = "application/json";
+		requestConfig.headers['Content-Type'] = "application/json";
+		promise = $http.post($scope.requestUrl, ADVANCED_SETTINGS.payload, requestConfig);
+	} else {
+		promise = $http.get($scope.requestUrl, requestConfig);
+	}
+
+	promise.then(function(success) {
+		populateView($scope, success.data, success.headers(), success.config, success.status);
+		displayView($scope, $location, $anchorScroll);
+	}, function(error) {
+		populateView($scope, error.data, error.headers(), error.config, error.status);
+		displayView($scope, $location, $anchorScroll);
+	});
 }
 
 
@@ -156,7 +172,7 @@ function replaceAll(input, target, replacement) {
 
 
 /**
- * Update the UI with the data received form the service.
+ * Update the UI with the data received from the service.
  */
 function populateView($scope, data, headers, config, status) {
 	updateProgressbar($scope, 100, 'Response Received');
