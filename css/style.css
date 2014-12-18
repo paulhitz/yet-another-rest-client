@@ -1,6 +1,27 @@
+/*
+ * Various custom styles.
+ */
 
-body {
-  /*min-height: 2000px;*/
+.navbar {
+  border-top-width: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+header img {
+  margin-right: 5px;
+}
+
+.navbar-text {
+  margin-top: 24px;
+}
+
+article button.btn {
+  margin-bottom: 30px;
+}
+
+.tab-content {
+  margin-top: 5px;
 }
 
 .json-content {
@@ -9,10 +30,33 @@ body {
   overflow-x: hidden;
 }
 
-.progress {
-  /*margin-bottom: 0;*/
-}
-
 .well {
   font-size: 12px;
+  word-break: break-all;
 }
+
+
+/* 
+ * Sticky footer styles
+ */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 30px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-width: 1px;
+  border-style: solid;
+  border-bottom-width: 0;
+}
+.footer p {
+  font-size: smaller;
+  margin: 2px;
+}
+

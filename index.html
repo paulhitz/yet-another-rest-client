@@ -19,107 +19,96 @@
 <body>
 <div class="container" ng-controller="ClientController">
 
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<nav class="navbar navbar-default" role="navigation">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#"><img alt="Logo" src="img/logo_38x38.png" style="margin-right: 5px;"> D&amp;B Services Client</a>
-					</div>
-					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
-						<p class="navbar-text navbar-right" style="margin-top: 25px;">Developed by the Dublin Onboard Team</p>
-					</div>
-				</div>
-			</nav>
+	<header class="navbar navbar-default" role="navigation">
+		<div class="navbar-brand">
+			<img src="img/logo_38x38.png" alt="Logo"> D&amp;B Services Client
 		</div>
-	</div>
+		<div class="collapse navbar-collapse">
+			<p class="navbar-text navbar-right">Developed by the Dublin Onboard Team</p>
+		</div>
+	</header>
 
 	<p>This tool allows a user to easily test the status of various D&amp;B Services.</p>
 
-	<div class="row clearfix">
+	<article class="row clearfix">
 		<div class="col-md-12 column">
 
-			<div class="panel panel-primary">
+			<section class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">Settings</h3>
+					<h2 class="panel-title">Settings</h2>
 				</div>
 
-				<div class="panel-body">
-					<form class="form-horizontal" role="form">
+				<form class="form-horizontal panel-body" role="form">
+					<div class="form-group">
+						<label for="env" class="col-sm-2 control-label">Environment:</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="env" ng-model="environmentSelected" ng-options="env.id as env.label for env in environments"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="services" class="col-sm-2 control-label">Select Service:</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="services" ng-model="serviceSelected" ng-options="service.id as service.label for service in services" ng-disabled="service.requestUrl"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="duns" class="col-sm-2 control-label">DUNS# (optional):</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="duns" placeholder="123456789" value="" ng-model="duns">
+						</div>
+					</div>
+				</form>
+			</section>
+
+			<section class="panel panel-primary">
+				<div class="panel-heading" ng-controller="ToggleController">
+					<h2 class="panel-title">
+						<a data-toggle="collapse" href="#advanced" ng-click="toggle(status);">
+							Advanced Settings (Optional)
+							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status, 'glyphicon-chevron-right': !status}"></i>
+						</a>
+					</h2>
+				</div>
+
+				<div id="advanced" class="panel-collapse collapse">
+					<form class="form-horizontal panel-body" role="form" ng-model="service">
 						<div class="form-group">
-							<label for="env" class="col-sm-2 control-label">Environment:</label>
+							<label for="requestUrl" class="col-sm-2 control-label">Request URL:</label>
 							<div class="col-sm-10">
-								<select class="form-control" id="env" ng-model="environmentSelected" ng-options="env.id as env.label for env in environments"></select>
+								<input type="url" class="form-control" id="requestUrl" placeholder="Request URL" ng-model="service.requestUrl">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="services" class="col-sm-2 control-label">Select Service:</label>
+							<label for="appId" class="col-sm-2 control-label">Application Id:</label>
 							<div class="col-sm-10">
-								<select class="form-control" id="services" ng-model="serviceSelected" ng-options="service.id as service.label for service in services"></select>
+								<input type="text" class="form-control" id="appId" placeholder="User ID" ng-model="service.appId">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="duns" class="col-sm-2 control-label">DUNS# (optional):</label>
+							<label for="userId" class="col-sm-2 control-label">User ID:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="duns" placeholder="123456789" value="" ng-model="duns">
+								<input type="text" class="form-control" id="userId" placeholder="User ID" ng-model="service.userId">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password" class="col-sm-2 control-label">Password:</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" id="password" placeholder="Password" ng-model="service.password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="payload" class="col-sm-2 control-label">Payload:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="5" id="payload" placeholder="application/json" ng-model="service.payload"></textarea>
 							</div>
 						</div>
 					</form>
 				</div>
-			</div>
+			</section>
 
-
-			<div class="panel panel-primary">
-				<div class="panel-heading" id="headingTwo" ng-controller="ToggleController">
-					<h4 class="panel-title">
-						<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" ng-click="toggle(status);">
-							Advanced Settings (Optional)
-							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status, 'glyphicon-chevron-right': !status}"></i>
-						</a>
-					</h4>
-				</div>
-
-				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" ng-model="service">
-					<div class="panel-body">
-						<form class="form-horizontal" role="form">
-							<div class="form-group">
-								<label for="requestUrl" class="col-sm-2 control-label">Request URL:</label>
-								<div class="col-sm-10">
-									<input type="url" class="form-control" id="requestUrl" placeholder="Request URL" ng-model="service.requestUrl">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="appId" class="col-sm-2 control-label">Application Id:</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="appId" placeholder="User ID" value="36" ng-model="service.appId">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="userId" class="col-sm-2 control-label">User ID:</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="userId" placeholder="User ID" value="teamjoly@dnb.com" ng-model="service.userId">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Password:</label>
-								<div class="col-sm-10">
-									<input type="password" class="form-control" id="password" placeholder="Password" value="password" ng-model="service.password">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="payload" class="col-sm-2 control-label">Payload:</label>
-								<div class="col-sm-10">
-									<textarea class="form-control" rows="5" id="payload" placeholder="application/json" ng-model="service.payload"></textarea>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-
-			<button type="button" class="btn btn-success pull-right" style="margin-bottom: 30px;" ng-click="submit();">Send Service Request</button>
+			<button type="button" class="btn btn-success pull-right" ng-click="submit();" ng-disabled="processing">Send Service Request</button>
 		</div>
-	</div>
+	</article>
 
 	<div class="clearfix" ng-hide="displayResponse">
 		<progressbar class="progress-striped active" value="progressValue" ng-model="progress">{{progressLabel}}</progressbar>
@@ -130,26 +119,25 @@
 	</div>
 
 	<div id="response" class="row clearfix" ng-show="displayResponse">
-		<div class="col-md-12 column" id="responseBody">
-
-			<div class="panel panel-info">
+		<div id="responseBody" class="col-md-12 column">
+			<section class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title">Response</h3>
+					<h2 class="panel-title">Response</h2>
 				</div>
 
 				<div class="panel-body">
-					<div class="well" style="word-break: break-all;">
+					<div class="well">
 						<strong>Request URL:</strong> {{requestUrl}}<br>
 						<strong>Authentication Token:</strong> {{authenticationToken}}<br>
 					</div>
 
 					<div role="tabpanel">
 						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#json" aria-controls="json" role="tab" data-toggle="tab">Response Body</a></li>
-							<li role="presentation"><a href="#responseHeaders" aria-controls="responseHeaders" role="tab" data-toggle="tab">Response Headers</a></li>
-							<li role="presentation"><a href="#requestHeaders" aria-controls="requestHeaders" role="tab" data-toggle="tab">Request Headers</a></li>
+							<li role="presentation" class="active"><a href="#json" role="tab" data-toggle="tab">Response Body</a></li>
+							<li role="presentation"><a href="#responseHeaders" role="tab" data-toggle="tab">Response Headers</a></li>
+							<li role="presentation"><a href="#requestHeaders" role="tab" data-toggle="tab">Request Headers</a></li>
 						</ul>
-						<div class="tab-content" style="margin-top: 5px;">
+						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active json-content" id="json">
 								<pre><code hljs source="responseBody"></code></pre>
 							</div>
@@ -162,11 +150,17 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
+			</section>
 		</div>
 	</div>
-	
+
+	<footer class="row footer navbar-default">
+		<div class="container">
+			<p class="text-muted pull-left">Developed by the Dublin <a href="http://onboard.dnb.com/">Onboard</a> Team.</p>
+			<p class="pull-right"><a href="#top" target="_self">Back To Top</a></p>
+		</div>
+	</footer>
+
 </div>
 
 <script src="js/angular.min.js"></script>

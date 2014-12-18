@@ -25,6 +25,7 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 		//Remove any previous errors/alerts and hide the previous response.
 		$scope.alerts = [];
 		$scope.displayResponse = false;
+		$scope.processing = true;
 
 		//Update Progress Bar.
 		updateProgressbar($scope, 10, 'Authenticating... ');
@@ -50,6 +51,7 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 			function(error) {
 				var errorMessage = "An error occurred while authenticating... " + error.msg + ". Error Code: " + error.code;
 				$scope.alerts.push({type: 'danger', msg: errorMessage});
+				$scope.processing = false;
 			}
 		);
 	}
@@ -192,6 +194,7 @@ function displayView($scope, $location, $anchorScroll) {
 	$location.hash('response');
 	$anchorScroll();
 	$location.hash(old);
+	$scope.processing = false;
 }
 
 

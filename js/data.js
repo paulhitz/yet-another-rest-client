@@ -29,7 +29,7 @@ var servicesConfig = {
 	}, {
 		"id" : "rdc_search",
 		"label" : "ComplianceCheck Service / RDC Search (v1.0)"
-		}, {
+	}, {
 		"id" : "list_portfolio",
 		"label" : "List Portfolio"
 	} ],
@@ -97,7 +97,7 @@ var servicesConfig = {
 	}, {
 		"env" : "stg",
 		"service" : "rdc_search",
-		"url" : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={duns}"		
+		"url" : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={duns}"
 	}, {
 		"env" : "qa",
 		"service" : "list_portfolio",
@@ -106,6 +106,14 @@ var servicesConfig = {
 		"env" : "stg",
 		"service" : "list_portfolio",
 		"url" : "http://services-ext-stg.dnb.com/rest/PortfolioService/V2/ListPortfolioAsset"
+	}, {
+		"env" : "qa",
+		"service" : "headers",
+		"url" : "http://headers.jsontest.com/"
+	}, {
+		"env" : "stg",
+		"service" : "headers",
+		"url" : "http://headers.jsontest.com/"
 	} ],
 
 	//Use this DUNs if none is provided.
