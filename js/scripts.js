@@ -1,12 +1,13 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs']);
 
+/* The default settings to use. */
 var ADVANCED_SETTINGS = {
-		"requestUrl" : "",
-		"appId" : "36",
-		"userId" : "teamjoly@dnb.com",
-		"password" : "password",
-		"payload" : ""
-	};
+	"requestUrl" : "",
+	"appId" : "36",
+	"userId" : "teamjoly@dnb.com",
+	"password" : "password",
+	"payload" : ""
+};
 
 /**
  * Main application controller. Populates the form and submits the Service Request.
@@ -31,7 +32,7 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 		updateProgressbar($scope, 10, 'Authenticating... ');
 
 		//Retrieve an Authorisation Token based on the selected environment.
-		var authEndpoint = configureServiceUrl($scope.environmentSelected, "auth");
+		var authEndpoint = clientApp.configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
 			function(payload) {
 				$scope.authenticationToken = payload.authorization;
@@ -41,12 +42,12 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 					//If the user has entered a specific endpoint, just use that.
 					$scope.requestUrl =  ADVANCED_SETTINGS.requestUrl;
 				} else {
-					$scope.requestUrl = configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
+					$scope.requestUrl = clientApp.configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
 				}
 
 				//Call the endpoint.
 				updateProgressbar($scope, 50, 'Making Service Request... ');
-				callService($scope, $http, $location, $anchorScroll);
+				clientApp.callService($scope, $http, $location, $anchorScroll);
 			},
 			function(error) {
 				var errorMessage = "An error occurred while authenticating... " + error.msg + ". Error Code: " + error.code;
@@ -61,43 +62,6 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 		$scope.alerts.splice(index, 1);
 	};
 });
-
-
-/**
- * Simple controller for toggling a value.
- */
-clientApp.controller('ToggleController', function($scope) {
-	$scope.toggle = function(status) {
-		$scope.status = !status;
-	}
-});
-
-
-/**
- * Based on the selected environment and service, determine the correct URL to use.
- */
-function configureServiceUrl(environmentSelected, serviceSelected, dunsSelected) {
-	var url = "";
-	var duns = servicesConfig.placeholderDuns;
-
-	//Determine the endpoint based on selected Environment and Service.
-	for (var i in servicesConfig.endpoints) {
-		var endpoint = servicesConfig.endpoints[i];
-		if (endpoint.env === environmentSelected && endpoint.service === serviceSelected) {
-			url = endpoint.url;
-			break;
-		}
-	}
-
-	//Replace the DUNS placeholder.
-	if (dunsSelected) {
-		duns = replaceAll(dunsSelected, "-", "");
-	}
-	if (url) {
-		url = url.replace("{duns}", duns);
-	}
-	return url;
-}
 
 
 /**
@@ -136,10 +100,36 @@ clientApp.factory('AuthService', function($http, $q) {
 
 
 /**
+ * Based on the selected environment and service, determine the correct URL to use.
+ */
+clientApp.configureServiceUrl = function (environmentSelected, serviceSelected, dunsSelected) {
+	var url = "";
+	var duns = servicesConfig.placeholderDuns;
+
+	//Determine the endpoint based on selected Environment and Service.
+	for (var i in servicesConfig.endpoints) {
+		var endpoint = servicesConfig.endpoints[i];
+		if (endpoint.env === environmentSelected && endpoint.service === serviceSelected) {
+			url = endpoint.url;
+			break;
+		}
+	}
+
+	//Replace the DUNS placeholder.
+	if (dunsSelected) {
+		duns = replaceAll(dunsSelected, "-", "");
+	}
+	if (url) {
+		url = url.replace("{duns}", duns);
+	}
+	return url;
+};
+
+
+/**
  * Call the specified endpoint and update the UI.
  */
-function callService($scope, $http, $location, $anchorScroll) {
-
+clientApp.callService = function ($scope, $http, $location, $anchorScroll) {
 	var requestConfig = { headers: {
 		'Authorization': $scope.authenticationToken,
 		'ApplicationId': ADVANCED_SETTINGS.appId
@@ -162,7 +152,17 @@ function callService($scope, $http, $location, $anchorScroll) {
 		populateView($scope, error.data, error.headers(), error.config, error.status);
 		displayView($scope, $location, $anchorScroll);
 	});
-}
+};
+
+
+/**
+ * Simple controller for toggling a value.
+ */
+clientApp.controller('ToggleController', function($scope) {
+	$scope.toggle = function(status) {
+		$scope.status = !status;
+	}
+});
 
 
  /**
@@ -186,15 +186,17 @@ function populateView($scope, data, headers, config, status) {
 
 
 /**
- * Show the view and automatically scroll down to it. (scrolling is currently ineffective)
+ * Show the view and automatically scroll down to it.
  */
 function displayView($scope, $location, $anchorScroll) {
 	$scope.displayResponse = true;
+	$scope.processing = false;
+
+	//Attempt to scroll to the response. This has issues.
 	var old = $location.hash();
 	$location.hash('response');
 	$anchorScroll();
 	$location.hash(old);
-	$scope.processing = false;
 }
 
 

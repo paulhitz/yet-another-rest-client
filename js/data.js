@@ -1,3 +1,6 @@
+/*
+ * Used to populate the UI and determine the endpoint to call.
+ */
 var servicesConfig = {
 
 	environments : [ {
