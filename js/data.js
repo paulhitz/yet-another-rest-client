@@ -34,7 +34,7 @@ var servicesConfig = {
 		"label" : "ComplianceCheck Service / RDC Search (v1.0)"
 	}, {
 		"id" : "list_portfolio",
-		"label" : "List Portfolio"
+		"label" : "ListPortfolio"
 	} ],
 
 	endpoints : [ {
