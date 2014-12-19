@@ -28,7 +28,7 @@ The ListPortfolio Service requires a JSON payload.
 New Services can be added by modifying data.js
 
 
-** Screenshot **
+**Screenshot**
 
-![Screenshot](https://github.com/paulhitz/SimpleRestClient/raw/master/resources/img/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/paulhitz/SimpleRestClient/master/img/screenshot.png)
 
