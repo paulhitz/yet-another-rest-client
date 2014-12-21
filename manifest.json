@@ -17,7 +17,8 @@
 
   "permissions": [
     "http://services-ext-qa.dnb.com/",
-    "http://services-ext-stg.dnb.com/"
+    "http://services-ext-stg.dnb.com/",
+	"clipboardWrite"
   ],
 
   "browser_action": {

@@ -149,6 +149,19 @@
 							</div>
 						</div>
 					</div>
+
+					<div id="copy-buttons">
+						<button type="button" class="btn btn-primary" data-ng-click="copy(requestUrl);">
+							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Request
+						</button>
+						<button type="button" class="btn btn-primary" data-ng-click="copy(responseBody);">
+							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Response
+						</button>
+						<br>
+						<span class="label label-success" data-ng-show="copyMessage">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{copyMessage}}
+						</span>
+					</div>
 				</div>
 			</section>
 		</div>

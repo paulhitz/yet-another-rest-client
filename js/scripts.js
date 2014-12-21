@@ -25,6 +25,7 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 	$scope.submit = function() {
 		//Remove any previous errors/alerts and hide the previous response.
 		$scope.alerts = [];
+		$scope.copyMessage = "";
 		$scope.displayResponse = false;
 		$scope.processing = true;
 
@@ -60,6 +61,12 @@ clientApp.controller('ClientController', function($scope, $http, $location, $anc
 	//Remove the selected alert/error.
 	$scope.closeAlert = function(index) {
 		$scope.alerts.splice(index, 1);
+	};
+
+	//Copy the request or response to the clipboard.
+	$scope.copy = function(text) {
+		$scope.copyMessage = "Successfully copied to the Clipboard.";
+		copyToClipboard(text);
 	};
 });
 
@@ -209,6 +216,17 @@ function updateProgressbar($scope, value, label) {
 }
 
 
+/**
+ * Copies the specified text to the clipboard.
+ */
+function copyToClipboard(text) {
+	var copyFrom = $('<textarea/>');
+    copyFrom.text(text);
+    $('body').append(copyFrom);
+    copyFrom.select();
+    document.execCommand('copy', true);
+    copyFrom.remove();
+}
 
 
 

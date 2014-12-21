@@ -109,14 +109,6 @@ var servicesConfig = {
 		"env" : "stg",
 		"service" : "list_portfolio",
 		"url" : "http://services-ext-stg.dnb.com/rest/PortfolioService/V2/ListPortfolioAsset"
-	}, {
-		"env" : "qa",
-		"service" : "headers",
-		"url" : "http://headers.jsontest.com/"
-	}, {
-		"env" : "stg",
-		"service" : "headers",
-		"url" : "http://headers.jsontest.com/"
 	} ],
 
 	//Use this DUNs if none is provided.
