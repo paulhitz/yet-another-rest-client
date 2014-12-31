@@ -1,7 +1,7 @@
 /*
- * Used to populate the UI and determine the endpoint to call.
+ * Constants used to populate the UI and to determine the endpoint to call.
  */
-var servicesConfig = {
+angular.module('clientApp').constant('SERVICES_CONFIG', {
 
 	environments : [ {
 		"id" : "qa",
@@ -113,4 +113,16 @@ var servicesConfig = {
 
 	//Use this DUNs if none is provided.
 	"placeholderDuns" : "222228632"
-}
+});
+
+
+/**
+ * The default advanced settings to use. 
+ */
+angular.module('clientApp').value('advancedSettings', {
+	requestUrl : "",
+	appId : "36",
+	userId : "teamjoly@dnb.com",
+	password : "password",
+	payload : ""
+});
