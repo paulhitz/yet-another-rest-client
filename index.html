@@ -110,8 +110,8 @@
 		</div>
 	</article>
 
-	<div class="clearfix" data-ng-hide="displayResponse">
-		<progressbar class="progress-striped active" value="progressValue" data-ng-model="progress">{{progressLabel}}</progressbar>
+	<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse">
+		<progressbar class="progress-striped active" value="progress.value">{{progress.label}}</progressbar>
 	</div>
 
 	<div class="clearfix">

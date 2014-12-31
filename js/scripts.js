@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, advancedSettings, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, progressbarService, advancedSettings, SERVICES_CONFIG) {
 
 	//Populate the form.
 	$scope.service = advancedSettings;
@@ -22,9 +22,9 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 		$scope.processing = true;
 
 		//Update Progress Bar.
-		clientAppHelper.updateProgressbar($scope, 10, 'Authenticating... ');
+		$scope.progress = progressbarService.getProgressState('START');
 
-		//Retrieve an Authorisation Token based on the selected environment.#
+		//Retrieve an Authorisation Token based on the selected environment.
 		//TODO Consider using an interceptor for authentication and handling the callService success/failure here. 
 		var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
@@ -40,7 +40,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 				}
 
 				//Call the endpoint.
-				clientAppHelper.updateProgressbar($scope, 50, 'Making Service Request... ');
+				$scope.progress = progressbarService.getProgressState('IN_PROGRESS');
 				clientAppHelper.callService($scope);
 			},
 			function(error) {
@@ -112,7 +112,7 @@ clientApp.controller('ToggleController', function($scope) {
 /**
  * Various helper functions for the application. TODO move this to it's own js file for easy testing. What naming convention is used?
  */
-clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, advancedSettings, SERVICES_CONFIG) {
+clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, progressbarService, advancedSettings, SERVICES_CONFIG) {
 	var helper = this;
 
 	/**
@@ -170,18 +170,10 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Update the progress bar with a percentage and a current status label.
-	 */
-	helper.updateProgressbar = function($scope, value, label) {
-		$scope.progressValue = value;
-		$scope.progressLabel = label;
-	};
-
-	/**
 	 * Update the UI with the data received from the service.
 	 */
 	helper.populateView = function($scope, response) {
-		helper.updateProgressbar($scope, 100, 'Response Received');
+		$scope.progress = progressbarService.getProgressState('COMPLETE');
 		response.headers().status = response.status;
 		$scope.responseBody = JSON.stringify(response.data, null, 2);
 		$scope.responseHeaders = JSON.stringify(response.headers(), null, 2);
@@ -200,6 +192,25 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		$location.hash('response');
 		$anchorScroll();
 		$location.hash(old);
+	};
+});
+
+
+/**
+ * Service for managing the progress bar. 
+ */
+clientApp.service('progressbarService', function() {
+	var PROGRESS_STATES = {
+		START: { value: 10, label: 'Authenticating... ' },
+		IN_PROGRESS: { value: 50, label: 'Making Service Request... ' },
+		COMPLETE: { value: 100, label: 'Response Received' }
+	};
+
+	/**
+	 * Return details about the specified state (percentage and a status label).
+	 */
+	this.getProgressState = function(progress) {
+		return PROGRESS_STATES[progress];
 	};
 });
 
