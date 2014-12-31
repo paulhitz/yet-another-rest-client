@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, progressbarService, advancedSettings, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 
 	//Populate the form.
 	$scope.service = advancedSettings;
@@ -22,14 +22,14 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 		$scope.processing = true;
 
 		//Update Progress Bar.
-		$scope.progress = progressbarService.getProgressState('START');
+		$scope.progress = ProgressbarService.getProgressState('START');
 
 		//Retrieve an Authorisation Token based on the selected environment.
 		//TODO Consider using an interceptor for authentication and handling the callService success/failure here. 
 		var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
-			function(payload) {
-				$scope.authenticationToken = payload.authorization;
+			function(success) {
+				$scope.authenticationToken = success.authorization;
 
 				//Determine the configured service endpoint.
 				if (advancedSettings.requestUrl) {
@@ -40,7 +40,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 				}
 
 				//Call the endpoint.
-				$scope.progress = progressbarService.getProgressState('IN_PROGRESS');
+				$scope.progress = ProgressbarService.getProgressState('IN_PROGRESS');
 				clientAppHelper.callService($scope);
 			},
 			function(error) {
@@ -67,42 +67,40 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 /**
  * Retrieves an Authentication Token for a specified environment.
  */
-clientApp.factory('AuthService', function($http, $q, advancedSettings) {
+clientApp.service('AuthService', function($http, $q, advancedSettings) {
 	var cachedAuthTokens = [];
 
-	return {
-		getAuthCookie: function(authEndpoint) {
-			var deferred = $q.defer();
+	this.getAuthCookie = function(authEndpoint) {
+		var deferred = $q.defer();
 
-			if (typeof cachedAuthTokens[authEndpoint] !== 'undefined') {
-				deferred.resolve({authorization: cachedAuthTokens[authEndpoint]});
-			} else {
-				var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-					'ApplicationId': advancedSettings.appId,
-					'x-dnb-user': advancedSettings.userId,
-					'x-dnb-pwd': advancedSettings.password
-				}};
+		if (typeof cachedAuthTokens[authEndpoint] !== 'undefined') {
+			deferred.resolve({authorization: cachedAuthTokens[authEndpoint]});
+		} else {
+			var AUTHENTICATION_REQUEST_CONFIG = { headers: {
+				'ApplicationId': advancedSettings.appId,
+				'x-dnb-user': advancedSettings.userId,
+				'x-dnb-pwd': advancedSettings.password
+			}};
 
-				$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
-					success(function(data, status, headers, config) {
-						cachedAuthTokens[authEndpoint] = headers('authorization');
-						deferred.resolve({authorization: headers('authorization')});
-					}).
-					error(function(msg, code) {
-						deferred.reject({msg: msg, code: code});
-					}
-				);
-			}
-			return deferred.promise;
+			$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
+				success(function(data, status, headers, config) {
+					cachedAuthTokens[authEndpoint] = headers('authorization');
+					deferred.resolve({authorization: headers('authorization')});
+				}).
+				error(function(msg, code) {
+					deferred.reject({msg: msg, code: code});
+				}
+			);
 		}
-	}
+		return deferred.promise;
+	};
 });
 
 
 /**
  * Simple controller for toggling a value.
  */
-clientApp.controller('ToggleController', function($scope) {
+clientApp.controller('ToggleCtrl', function($scope) {
 	$scope.toggle = function(status) {
 		$scope.status = !status;
 	}
@@ -112,13 +110,13 @@ clientApp.controller('ToggleController', function($scope) {
 /**
  * Various helper functions for the application. TODO move this to it's own js file for easy testing. What naming convention is used?
  */
-clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, progressbarService, advancedSettings, SERVICES_CONFIG) {
+clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	var helper = this;
 
 	/**
 	 * Based on the selected environment and service, determine the correct URL to use.
 	 */
-	helper.configureServiceUrl = function (environmentSelected, serviceSelected, dunsSelected) {
+	helper.configureServiceUrl = function(environmentSelected, serviceSelected, dunsSelected) {
 		var url = "";
 		var duns = SERVICES_CONFIG.placeholderDuns;
 
@@ -144,7 +142,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	/**
 	 * Call the specified endpoint and update the UI.
 	 */
-	helper.callService = function ($scope) {
+	helper.callService = function($scope) {
 		var requestConfig = { headers: {
 			'Authorization': $scope.authenticationToken,
 			'ApplicationId': advancedSettings.appId
@@ -173,7 +171,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	 * Update the UI with the data received from the service.
 	 */
 	helper.populateView = function($scope, response) {
-		$scope.progress = progressbarService.getProgressState('COMPLETE');
+		$scope.progress = ProgressbarService.getProgressState('COMPLETE');
 		response.headers().status = response.status;
 		$scope.responseBody = JSON.stringify(response.data, null, 2);
 		$scope.responseHeaders = JSON.stringify(response.headers(), null, 2);
@@ -199,7 +197,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 /**
  * Service for managing the progress bar. 
  */
-clientApp.service('progressbarService', function() {
+clientApp.service('ProgressbarService', function() {
 	var PROGRESS_STATES = {
 		START: { value: 10, label: 'Authenticating... ' },
 		IN_PROGRESS: { value: 50, label: 'Making Service Request... ' },
