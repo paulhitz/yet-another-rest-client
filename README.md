@@ -13,7 +13,7 @@ The complete request URL is provided so it can easily be copied and pasted.
 
 **Installation**
 
-The tool is packaged as a Chrome extension. Installation is trivial. Simply download the CRX file and drop it into the Chrome extensions page. 
+The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  https://chrome.google.com/webstore/detail/db-services-rest-client/ekgojcdjjjlillgeidgniapfmilgbppm?hl=en&gl=IE
 
 
 **POST / GET**
