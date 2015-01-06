@@ -24,6 +24,9 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 		//Update Progress Bar.
 		$scope.progress = ProgressbarService.getProgressState('START');
 
+		//Delete cookies that can interfere with authentication.
+		clientAppHelper.deleteCookies();
+
 		//Retrieve an Authorisation Token based on the selected environment.
 		//TODO Consider using an interceptor for authentication and handling the callService success/failure here. 
 		var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
@@ -46,6 +49,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 			function(error) {
 				var errorMessage = "An error occurred while authenticating... " + error.msg + ". Error Code: " + error.code;
 				$scope.alerts.push({type: 'danger', msg: errorMessage});
+				$scope.alerts.push({type: 'info', msg: "You may want to try Incognito Mode or clear your cache. An existing application session can break authentication."});
 				$scope.processing = false;
 			}
 		);
@@ -190,6 +194,16 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		$location.hash('response');
 		$anchorScroll();
 		$location.hash(old);
+	};
+
+	/**
+	 * Delete cookies that can interfere with authentication.
+	 */
+	helper.deleteCookies = function() {
+		chrome.cookies.remove({"url": "http://dnb.com", "name": "userid"});
+		chrome.cookies.remove({"url": "http://dnb.com", "name": "dnb_loginid"});
+		chrome.cookies.remove({"url": "http://dnb.com", "name": "redirect"});
+		chrome.cookies.remove({"url": "http://dnb.com", "name": "ObSSOCookie"});
 	};
 });
 
