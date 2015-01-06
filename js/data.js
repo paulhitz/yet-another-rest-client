@@ -33,6 +33,9 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		id : "rdc_search",
 		label : "ComplianceCheck Service / RDC Search (v1.0)"
 	}, {
+		id : "portfolio_assets",
+		label : "Portfolio Assets"
+	}, {
 		id : "list_portfolio",
 		label : "ListPortfolio"
 	} ],
@@ -109,6 +112,14 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "stg",
 		service : "list_portfolio",
 		url : "http://services-ext-stg.dnb.com/rest/PortfolioService/V2/ListPortfolioAsset"
+	}, {
+		env : "qa",
+		service : "portfolio_assets",
+		url : "http://services-ext-qa.dnb.com/V2/assets?OrderTransactionTypeCode=0&CandidateMaximumQuantity=10&SortBasisText=PortfolioAssetID&SortDirectionText=Ascending&CandidateDisplayStartSequenceNumber=1&ApplicationTransactionID=f9fc47c5-6733-4325-bbbe-157deb0520ba&DNBProductID=ComplianceReport"
+	}, {
+		env : "stg",
+		service : "portfolio_assets",
+		url : "http://services-ext-stg.dnb.com/V2/assets?OrderTransactionTypeCode=0&CandidateMaximumQuantity=10&SortBasisText=PortfolioAssetID&SortDirectionText=Ascending&CandidateDisplayStartSequenceNumber=1&ApplicationTransactionID=f9fc47c5-6733-4325-bbbe-157deb0520ba&DNBProductID=ComplianceReport"
 	} ],
 
 	//Use this DUNs if none is provided.
