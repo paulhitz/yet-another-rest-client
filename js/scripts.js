@@ -5,6 +5,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
  * Main application controller. Populates the form and submits the Service Request.
  */
 clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
+	$scope.version = chrome.runtime.getManifest()['version'];
 
 	//Populate the form.
 	$scope.service = advancedSettings;

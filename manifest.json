@@ -3,7 +3,7 @@
 
   "name": "D&B Services REST Client",
   "description": "This tool allows a user to easily test the status of various D&B REST Services.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Paul Hitz",
 
   "icons": { "16": "img/logo_16x16.png",
