@@ -13,31 +13,37 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 
 	services : [ {
 		id : "pcs",
-		label : "ProductCatalogService (v2)"
+		label : "Product Catalog Service (v2)"
 	}, {
 		id : "linkage",
-		label : "Linkage"
+		label : "Linkage Service (v2)"
 	}, {
 		id : "firm",
-		label : "Firmographics (v2.0)"
+		label : "Firmographics Product Service (v2.0)"
 	}, {
 		id : "kyc",
-		label : "Custom Product (KYC)"
+		label : "Custom Product Service (KYC)"
 	}, {
 		id : "gbo",
-		label : "Custom Product (GBO)"
+		label : "Custom Product Service (GBO)"
 	}, {
 		id : "so",
-		label : "Custom Product (Simple Ownership)"
+		label : "Custom Product Service (Simple Ownership)"
 	}, {
 		id : "rdc_search",
 		label : "ComplianceCheck Service / RDC Search (v1.0)"
 	}, {
+		id : "match",
+		label : "Match (REST version)"
+	}, {
+		id : "investigation",
+		label : "Investigation Service (POST)"
+	}, {
 		id : "portfolio_assets",
-		label : "Portfolio Assets"
+		label : "List Portfolio Asset (GET)"
 	}, {
 		id : "list_portfolio",
-		label : "ListPortfolio"
+		label : "List Portfolio Service (POST)"
 	} ],
 
 	endpoints : [ {
@@ -106,12 +112,28 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={duns}"
 	}, {
 		env : "qa",
+		service : "match",
+		url : "http://services-ext-qa.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={duns}"
+	}, {
+		env : "stg",
+		service : "match",
+		url : "http://services-ext-stg.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={duns}"
+	}, {
+		env : "qa",
 		service : "list_portfolio",
 		url : "http://services-ext-qa.dnb.com/rest/PortfolioService/V2/ListPortfolioAsset"
 	}, {
 		env : "stg",
 		service : "list_portfolio",
 		url : "http://services-ext-stg.dnb.com/rest/PortfolioService/V2/ListPortfolioAsset"
+	}, {
+		env : "qa",
+		service : "investigation",
+		url : "http://services-ext-qa.dnb.com/rest/InvestigationService/V2/PlaceInvestigation"
+	}, {
+		env : "stg",
+		service : "investigation",
+		url : "http://services-ext-stg.dnb.com/rest/InvestigationService/V2/PlaceInvestigation"
 	}, {
 		env : "qa",
 		service : "portfolio_assets",
