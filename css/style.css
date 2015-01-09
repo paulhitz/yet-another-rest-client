@@ -40,6 +40,21 @@ article button.btn {
   text-align: center;
 }
 
+.help {
+  float: right;
+  padding-top: 3px;
+  font-size: 24px;
+}
+
+.inline-input {
+  display: inline;
+  width: 96%;
+}
+
+.tooltip-inner {
+  text-align: justify;
+}
+
 
 /* 
  * Sticky footer styles
@@ -51,7 +66,7 @@ html {
 body {
   margin-bottom: 30px;
 }
-.footer {
+footer {
   position: absolute;
   bottom: 0;
   border-top-left-radius: 40px;
@@ -60,7 +75,7 @@ body {
   border-style: solid;
   border-bottom-width: 0;
 }
-.footer p {
+footer p {
   font-size: smaller;
   margin: 2px;
 }
