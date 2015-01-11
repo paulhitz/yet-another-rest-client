@@ -5,7 +5,9 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
  * Main application controller. Populates the form and submits the Service Request.
  */
 clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
-	$scope.version = chrome.runtime.getManifest()['version'];
+	if (typeof chrome != 'undefined') {
+		$scope.version = chrome.runtime.getManifest()['version'];
+	}
 
 	//Populate the form.
 	$scope.service = advancedSettings;
@@ -13,6 +15,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 	$scope.environmentSelected = SERVICES_CONFIG.environments[0].id;
 	$scope.services = SERVICES_CONFIG.services;
 	$scope.serviceSelected = SERVICES_CONFIG.services[0].id;
+	$scope.placeholderDuns = SERVICES_CONFIG.placeholderDuns;
 
 	//Submit the configured Service Request.
 	$scope.submit = function() {
@@ -48,8 +51,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 				clientAppHelper.callService($scope);
 			},
 			function(error) {
-				var errorMessage = "An error occurred while authenticating... " + error.msg + ". Error Code: " + error.code;
-				$scope.alerts.push({type: 'danger', msg: errorMessage});
+				$scope.alerts.push({type: 'danger', msg: "An error occurred while authenticating."});
 				$scope.alerts.push({type: 'info', msg: "You may want to try Incognito Mode or clear your cache. An existing application session can break authentication."});
 				$scope.processing = false;
 			}
@@ -201,10 +203,12 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	 * Delete cookies that can interfere with authentication.
 	 */
 	helper.deleteCookies = function() {
-		chrome.cookies.remove({"url": "http://dnb.com", "name": "userid"});
-		chrome.cookies.remove({"url": "http://dnb.com", "name": "dnb_loginid"});
-		chrome.cookies.remove({"url": "http://dnb.com", "name": "redirect"});
-		chrome.cookies.remove({"url": "http://dnb.com", "name": "ObSSOCookie"});
+		if (typeof chrome != 'undefined') {
+			chrome.cookies.remove({"url": "http://dnb.com", "name": "userid"});
+			chrome.cookies.remove({"url": "http://dnb.com", "name": "dnb_loginid"});
+			chrome.cookies.remove({"url": "http://dnb.com", "name": "redirect"});
+			chrome.cookies.remove({"url": "http://dnb.com", "name": "ObSSOCookie"});
+		}
 	};
 });
 

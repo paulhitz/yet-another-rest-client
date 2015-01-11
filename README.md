@@ -30,5 +30,5 @@ New Services can be added by modifying data.js
 
 **Screenshot**
 
-![Screenshot](https://raw.githubusercontent.com/paulhitz/SimpleRestClient/master/img/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/paulhitz/SimpleRestClient/master/img/screenshots/screenshot.png)
 
