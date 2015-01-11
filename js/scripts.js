@@ -6,7 +6,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
  */
 clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	if (typeof chrome != 'undefined') {
-		$scope.version = chrome.runtime.getManifest()['version'];
+		$scope.version = "v" + chrome.runtime.getManifest()['version'];
 	}
 
 	//Populate the form.
