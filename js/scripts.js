@@ -12,7 +12,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 	//Populate the form.
 	$scope.service = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;
-	$scope.environmentSelected = SERVICES_CONFIG.environments[0].id;
+	$scope.environmentSelected = SERVICES_CONFIG.environments[1].id;
 	$scope.services = SERVICES_CONFIG.services;
 	$scope.serviceSelected = SERVICES_CONFIG.services[0].id;
 	$scope.placeholderDuns = SERVICES_CONFIG.placeholderDuns;
