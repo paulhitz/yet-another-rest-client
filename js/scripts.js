@@ -32,7 +32,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 		clientAppHelper.deleteCookies();
 
 		//Retrieve an Authorisation Token based on the selected environment.
-		//TODO Consider using an interceptor for authentication and handling the callService success/failure here. 
+		//TODO Consider using an interceptor for authentication and handling the callService success/failure here.
 		var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
 			function(success) {
@@ -214,7 +214,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 
 
 /**
- * Service for managing the progress bar. 
+ * Service for managing the progress bar.
  */
 clientApp.service('ProgressbarService', function() {
 	var PROGRESS_STATES = {
