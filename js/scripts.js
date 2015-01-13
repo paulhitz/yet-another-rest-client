@@ -6,13 +6,13 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
  */
 clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	if (typeof chrome != 'undefined') {
-		$scope.version = chrome.runtime.getManifest()['version'];
+		$scope.version = "v" + chrome.runtime.getManifest()['version'];
 	}
 
 	//Populate the form.
 	$scope.service = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;
-	$scope.environmentSelected = SERVICES_CONFIG.environments[0].id;
+	$scope.environmentSelected = SERVICES_CONFIG.environments[1].id;
 	$scope.services = SERVICES_CONFIG.services;
 	$scope.serviceSelected = SERVICES_CONFIG.services[0].id;
 	$scope.placeholderDuns = SERVICES_CONFIG.placeholderDuns;
@@ -32,7 +32,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 		clientAppHelper.deleteCookies();
 
 		//Retrieve an Authorisation Token based on the selected environment.
-		//TODO Consider using an interceptor for authentication and handling the callService success/failure here. 
+		//TODO Consider using an interceptor for authentication and handling the callService success/failure here.
 		var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
 		AuthService.getAuthCookie(authEndpoint).then(
 			function(success) {
@@ -214,7 +214,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 
 
 /**
- * Service for managing the progress bar. 
+ * Service for managing the progress bar.
  */
 clientApp.service('ProgressbarService', function() {
 	var PROGRESS_STATES = {
