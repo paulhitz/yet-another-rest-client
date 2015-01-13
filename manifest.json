@@ -23,12 +23,13 @@
   "permissions": [
     "http://services-ext-qa.dnb.com/",
     "http://services-ext-stg.dnb.com/",
+    "https://maxcvservices.dnb.com/",
     "clipboardWrite",
     "cookies",
     "http://*.dnb.com/"
   ],
 
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
 
   "browser_action": {
     "default_icon": {
