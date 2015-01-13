@@ -1,10 +1,8 @@
 {
-  //Required Settings.
   "manifest_version": 2,
   "name": "D&B Services REST Client",
-  "version": "1.0.3",
+  "version": "1.0.4",
 
-  //Optional Settings.
   "description": "This tool allows a user to easily test the status of various D&B REST Services.",
   "short_name": "D&B Services",
   "author": "Paul Hitz",
