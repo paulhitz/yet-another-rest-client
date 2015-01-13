@@ -42,6 +42,18 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		id : "investigation",
 		label : "Investigation Service (POST)"
 	}, {
+		id : "monitoring_register",
+		label : "ComplianceCheck Monitoring - Register (POST)"
+	}, {
+		id : "monitoring_alerts",
+		label : "ComplianceCheck Monitoring - Alerts"
+	}, {
+		id : "monitoring_data",
+		label : "ComplianceCheck Monitoring - Data"
+	}, {
+		id : "monitoring_list",
+		label : "ComplianceCheck Monitoring - List"
+	}, {
 		id : "portfolio_assets",
 		label : "List Portfolio Asset (GET)"
 	}, {
@@ -181,6 +193,54 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "prod",
 		service : "investigation",
 		url : "https://maxcvservices.dnb.com/rest/InvestigationService/V2/PlaceInvestigation"
+	}, {
+		env : "qa",
+		service : "monitoring_register",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects"
+	}, {
+		env : "stg",
+		service : "monitoring_register",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects"
+	}, {
+		env : "prod",
+		service : "monitoring_register",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects"
+	}, {
+		env : "qa",
+		service : "monitoring_alerts",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={duns}&ApplicationTransactionID=onboard"
+	}, {
+		env : "stg",
+		service : "monitoring_alerts",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={duns}&ApplicationTransactionID=onboard"
+	}, {
+		env : "prod",
+		service : "monitoring_alerts",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={duns}&ApplicationTransactionID=onboard"
+	}, {
+		env : "qa",
+		service : "monitoring_data",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
+	}, {
+		env : "stg",
+		service : "monitoring_data",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
+	}, {
+		env : "prod",
+		service : "monitoring_data",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
+	}, {
+		env : "qa",
+		service : "monitoring_list",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects"
+	}, {
+		env : "stg",
+		service : "monitoring_list",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects"
+	}, {
+		env : "prod",
+		service : "monitoring_list",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects"
 	}, {
 		env : "qa",
 		service : "portfolio_assets",
