@@ -220,7 +220,7 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "monitoring_data",
-		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
 	}, {
 		env : "stg",
 		service : "monitoring_data",
