@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	if (typeof chrome != 'undefined') {
 		$scope.version = "v" + chrome.runtime.getManifest()['version'];
 	}
@@ -52,8 +52,9 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 				clientAppHelper.callService($scope);
 			},
 			function(error) {
+				$log.error(error);
 				$scope.alerts.push({type: 'danger', msg: "An error occurred while authenticating."});
-				$scope.alerts.push({type: 'info', msg: "Please check the user ID and password. If the problem persists, you may want to try Incognito Mode or clear your cache."});
+				$scope.alerts.push({type: 'info', msg: "Please check the user ID and password. If the problem persists, you may want to try Incognito Mode or clear your cache. If the issue is solely with a particular environment, then the Authentication Service for that environment may be down."});
 				$scope.processing = false;
 			}
 		);
