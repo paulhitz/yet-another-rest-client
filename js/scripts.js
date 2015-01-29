@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	if (typeof chrome != 'undefined') {
 		$scope.version = "v" + chrome.runtime.getManifest()['version'];
 	}
@@ -16,6 +16,7 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 	$scope.services = SERVICES_CONFIG.services;
 	$scope.serviceSelected = SERVICES_CONFIG.services[0].id;
 	$scope.placeholderDuns = SERVICES_CONFIG.placeholderDuns;
+	$scope.alerts = [];
 
 	//Submit the configured Service Request.
 	$scope.submit = function() {
@@ -51,8 +52,9 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 				clientAppHelper.callService($scope);
 			},
 			function(error) {
+				$log.error(error);
 				$scope.alerts.push({type: 'danger', msg: "An error occurred while authenticating."});
-				$scope.alerts.push({type: 'info', msg: "You may want to try Incognito Mode or clear your cache. An existing application session can break authentication."});
+				$scope.alerts.push({type: 'info', msg: "Please check the user ID and password. If the problem persists, you may want to try Incognito Mode or clear your cache. If the issue is solely with a particular environment, then the Authentication Service for that environment may be down."});
 				$scope.processing = false;
 			}
 		);
@@ -67,6 +69,17 @@ clientApp.controller('ClientAppCtrl', function($scope, AuthService, clientAppHel
 	$scope.copy = function(text) {
 		$scope.copyMessage = "Successfully copied to the Clipboard.";
 		utils.copyToClipboard(text);
+	};
+
+	//Display a warning if the production environment is selected and remove credentials.
+	$scope.changeEnvironment = function(env) {
+		if (env === SERVICES_CONFIG.environments[2].id) {
+			$scope.alerts.push({type: 'warning', msg: "Please be careful using the PRODUCTION environment. A valid production user and password need to be specified. To avoid locking the account, the STG/QA credentials have been removed."});
+			$scope.service.userId = "";
+			$scope.service.password = "";
+		} else {
+			$scope.alerts = [];
+		}
 	};
 });
 

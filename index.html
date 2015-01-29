@@ -8,6 +8,7 @@
 	<meta name="author" content="Paul Hitz">
 
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/angular-csp.css" rel="stylesheet">
 	<link href="css/highlightjs-default.min.css" rel="stylesheet">
@@ -42,7 +43,7 @@
 					<div class="form-group">
 						<label for="env" class="col-md-2 control-label">Environment:</label>
 						<div class="col-md-10">
-							<select class="form-control" id="env" data-ng-model="environmentSelected" data-ng-options="env.id as env.label for env in environments"></select>
+							<select class="form-control" id="env" data-ng-model="environmentSelected" data-ng-options="env.id as env.label for env in environments" data-ng-change="changeEnvironment(environmentSelected);"></select>
 						</div>
 					</div>
 					<div class="form-group">

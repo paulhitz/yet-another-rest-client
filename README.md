@@ -3,7 +3,7 @@ D&B Services REST Client
 
 This tool allows various D&B REST Services to be tested.
 
-Either the QA or STG environment can be used and automatic authentication will take place.
+Either the QA, STG or Production environment can be used and automatic authentication will take place.
 
 The response from the service will be displayed along with any headers in the request/response.
 
@@ -20,7 +20,7 @@ The tool is packaged as a Chrome extension. Installation is trivial. It can be i
 
 If a payload is selected in the advanced settings then a POST request will be used. Otherwise GET is always used.
 
-The ListPortfolio Service requires a JSON payload.
+Some services require a JSON payload. E.g. ListPortfolio
 
 
 **Developer Notes**

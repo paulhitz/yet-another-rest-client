@@ -8,12 +8,22 @@
   border-top-right-radius: 0;
 }
 
-header img {
+.container .navbar-default {
+  background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+}
+
+header .navbar-brand img {
   margin-right: 5px;
+  display: inline;
+}
+
+header .navbar-brand {
+  height: auto;
 }
 
 .navbar-text {
   margin-top: 24px;
+  margin-right: 0;
 }
 
 article button.btn {
@@ -38,6 +48,10 @@ article button.btn {
 
 #copy-buttons {
   text-align: center;
+}
+
+#copy-buttons .label {
+  font-weight: normal;
 }
 
 .help {
@@ -66,7 +80,7 @@ html {
 body {
   margin-bottom: 30px;
 }
-footer {
+footer.navbar-default {
   position: absolute;
   bottom: 0;
   border-top-left-radius: 40px;
