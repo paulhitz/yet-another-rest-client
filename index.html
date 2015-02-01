@@ -32,14 +32,14 @@
 	<p>This tool allows a user to easily test the status of various D&amp;B REST Services.</p>
 
 	<article class="row clearfix">
-		<div class="col-md-12 column">
+		<form class="col-md-12 column">
 
 			<section class="panel panel-primary">
 				<div class="panel-heading">
 					<h2 class="panel-title">Settings</h2>
 				</div>
 
-				<form class="form-horizontal panel-body" role="form">
+				<div class="form-horizontal panel-body" role="form">
 					<div class="form-group">
 						<label for="env" class="col-md-2 control-label">Environment:</label>
 						<div class="col-md-10">
@@ -58,7 +58,7 @@
 							<input type="text" class="form-control" id="duns" placeholder="{{placeholderDuns}}" value="" data-ng-model="duns">
 						</div>
 					</div>
-				</form>
+				</div>
 			</section>
 
 			<section class="panel panel-primary">
@@ -72,7 +72,7 @@
 				</div>
 
 				<div id="advanced" class="panel-collapse collapse">
-					<form class="form-horizontal panel-body" role="form" data-ng-model="service">
+					<div class="form-horizontal panel-body" role="form" data-ng-model="service">
 						<div class="form-group">
 							<label for="requestUrl" class="col-md-2 control-label">Request URL:</label>
 							<div class="col-md-10">
@@ -108,12 +108,12 @@
 								<span class="glyphicon glyphicon-question-sign help" aria-hidden="true" data-tooltip="The payload to use for the POST request. This is usually in JSON format. Specifying a payload will automatically make this a POST request."></span>
 							</div>
 						</div>
-					</form>
+					</div>
 				</div>
 			</section>
 
-			<button type="button" class="btn btn-success pull-right" data-ng-click="submit();" data-ng-disabled="processing">Send Service Request</button>
-		</div>
+			<button type="submit" class="btn btn-success pull-right" data-ng-click="submit();" data-ng-disabled="processing">Send Service Request</button>
+		</form>
 	</article>
 
 	<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse">
