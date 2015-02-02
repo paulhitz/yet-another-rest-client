@@ -69,6 +69,11 @@ article button.btn {
   text-align: justify;
 }
 
+input.ng-invalid, input.ng-invalid:focus {
+  border-color: #a94442;
+  background-color: #fadbe0
+}
+
 
 /*
  * Sticky footer styles
