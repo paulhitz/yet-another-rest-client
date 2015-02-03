@@ -65,7 +65,7 @@
 				<div class="panel-heading" data-ng-controller="ToggleCtrl">
 					<h2 class="panel-title">
 						<a data-toggle="collapse" href="#advanced" data-ng-click="toggle(status);">
-							Advanced Settings (Optional)
+							Advanced Settings
 							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': status, 'glyphicon-chevron-right': !status}"></i>
 						</a>
 					</h2>
@@ -83,21 +83,21 @@
 						<div class="form-group">
 							<label for="appId" class="col-md-2 control-label">Application ID:</label>
 							<div class="col-md-10">
-								<input type="text" class="form-control inline-input" id="appId" placeholder="User ID" data-ng-model="service.appId">
+								<input type="text" class="form-control inline-input" id="appId" placeholder="User ID" data-ng-model="service.appId" required>
 								<span class="glyphicon glyphicon-question-sign help" aria-hidden="true" data-tooltip="The Application ID is sent with all service requests. Some IDs may not be enabled for all services."></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="userId" class="col-md-2 control-label">User ID:</label>
 							<div class="col-md-10">
-								<input type="text" class="form-control inline-input" id="userId" placeholder="User ID" data-ng-model="service.userId" required="true">
+								<input type="text" class="form-control inline-input" id="userId" placeholder="User ID" data-ng-model="service.userId" required>
 								<span class="glyphicon glyphicon-question-sign help" aria-hidden="true" data-tooltip="The User ID to use for authenticating."></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="password" class="col-md-2 control-label">Password:</label>
 							<div class="col-md-10">
-								<input type="password" class="form-control inline-input" id="password" placeholder="Password" data-ng-model="service.password" required="true">
+								<input type="password" class="form-control inline-input" id="password" placeholder="Password" data-ng-model="service.password" required>
 								<span class="glyphicon glyphicon-question-sign help" aria-hidden="true" data-tooltip="The password to use for authenticating."></span>
 							</div>
 						</div>
