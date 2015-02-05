@@ -17,10 +17,6 @@ header .navbar-brand img {
   display: inline;
 }
 
-header .navbar-brand {
-  height: auto;
-}
-
 .navbar-text {
   margin-top: 24px;
   margin-right: 0;
