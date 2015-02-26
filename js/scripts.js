@@ -168,15 +168,52 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			'ApplicationId': advancedSettings.appId
 		}};
 
+
+		
+		
+
+//TODO add support for the request method to use. in progress.
+//TODO how to use delete and put methods???
+var promise;
+switch (advancedSettings.requestMethod) {
+	case "post":
+		console.log("request method = post");
+		requestConfig.headers['Accept'] = "application/json";
+		requestConfig.headers['Content-Type'] = "application/json";
+		promise = $http.post($scope.requestUrl, advancedSettings.payload, requestConfig);
+		break;
+	case "put":
+		console.log("request method = put");
+		requestConfig.headers['Accept'] = "application/json";
+		requestConfig.headers['Content-Type'] = "application/json";
+		promise = $http.post($scope.requestUrl, advancedSettings.payload, requestConfig);
+		break;
+	case "delete":
+		console.log("request method = del");
+		promise = $http.delete($scope.requestUrl, requestConfig);
+		break;
+	case "get":
+	default:
+		console.log("request method = get");
+		promise = $http.get($scope.requestUrl, requestConfig);
+}
+
+
+
+
+
+
+
+
 		//Determine if this should be a GET or POST request.
-		var promise;
-		if (advancedSettings.payload) {
-			requestConfig.headers['Accept'] = "application/json";
-			requestConfig.headers['Content-Type'] = "application/json";
-			promise = $http.post($scope.requestUrl, advancedSettings.payload, requestConfig);
-		} else {
-			promise = $http.get($scope.requestUrl, requestConfig);
-		}
+		// var promise;
+		// if (advancedSettings.payload) {
+			// requestConfig.headers['Accept'] = "application/json";
+			// requestConfig.headers['Content-Type'] = "application/json";
+			// promise = $http.post($scope.requestUrl, advancedSettings.payload, requestConfig);
+		// } else {
+			// promise = $http.get($scope.requestUrl, requestConfig);
+		// }
 
 		promise.then(function(success) {
 			helper.populateView($scope, success);

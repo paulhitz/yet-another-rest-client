@@ -280,6 +280,7 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
  */
 angular.module('clientApp').value('advancedSettings', {
 	requestUrl : "",
+	requestMethod : "get",
 	appId : "36",
 	userId : "teamjoly@dnb.com",
 	password : "password",

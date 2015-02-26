@@ -116,7 +116,7 @@
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip-html-unsafe="The Request URL allows you to enter your own custom endpoint. <br><br>It will still be authenticated against the selected environment."></span>
 									<label for="requestMethod" class="col-md-1 control-label">Method:</label>
 									<div class="col-md-2">
-										<select class="form-control" name="requestMethod" id="requestMethod">
+										<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="service.requestMethod">
 											<option value="get">GET</option>
 											<option value="post">POST</option>
 											<option value="put">PUT</option>
