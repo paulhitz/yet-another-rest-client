@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "D&B Services REST Client",
-  "version": "1.0.7",
+  "version": "1.0.8",
 
   "description": "This tool allows a user to easily test the status of various D&B REST Services.",
   "short_name": "D&B Services",
