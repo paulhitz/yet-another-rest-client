@@ -45,23 +45,32 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		id : "investigation",
 		label : "Investigation Service (POST)"
 	}, {
-		id : "monitoring_register",
-		label : "ComplianceCheck Monitoring - Register (POST)"
-	}, {
-		id : "monitoring_alerts",
-		label : "ComplianceCheck Monitoring - Alerts"
-	}, {
-		id : "monitoring_data",
-		label : "ComplianceCheck Monitoring - Data"
-	}, {
-		id : "monitoring_list",
-		label : "ComplianceCheck Monitoring - List"
-	}, {
 		id : "portfolio_assets",
 		label : "List Portfolio Asset (GET)"
 	}, {
 		id : "list_portfolio",
 		label : "List Portfolio Service (POST)"
+	}, {
+		id : "gms_reg",
+		label : "GMS Monitoring - Registration (GET/POST/PUT)"
+	}, {
+		id : "gms_profile_create",
+		label : "GMS Monitoring - Profile List/Create (GET/POST)"
+	}, {
+		id : "gms_profile_param",
+		label : "GMS Monitoring - Profile Get/Update/Delete (GET/PUT/DELETE)"
+	}, {
+		id : "gms_notice_list",
+		label : "GMS Monitoring - Change Notice List (GET)"
+	}, {
+		id : "gms_notice_param",
+		label : "GMS Monitoring - Change Notice Update (PUT)"
+	}, {
+		id : "gms_subject",
+		label : "GMS Monitoring - Subject (GET)"
+	}, {
+		id : "gms_events",
+		label : "GMS Monitoring - Change Events (GET)"
 	} ],
 
 	endpoints : [ {
@@ -210,52 +219,88 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		url : "https://maxcvservices.dnb.com/rest/InvestigationService/V2/PlaceInvestigation"
 	}, {
 		env : "qa",
-		service : "monitoring_register",
-		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects"
+		service : "gms_reg",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
-		service : "monitoring_register",
-		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects"
+		service : "gms_reg",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
-		service : "monitoring_register",
-		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects"
+		service : "gms_reg",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
-		service : "monitoring_alerts",
-		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={duns}&ApplicationTransactionID=onboard"
+		service : "gms_profile_create",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
-		service : "monitoring_alerts",
-		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={duns}&ApplicationTransactionID=onboard"
+		service : "gms_profile_create",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringprofiles?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
-		service : "monitoring_alerts",
-		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={duns}&ApplicationTransactionID=onboard"
+		service : "gms_profile_create",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
-		service : "monitoring_data",
-		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
+		service : "gms_profile_param",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
-		service : "monitoring_data",
-		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
+		service : "gms_profile_param",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
-		service : "monitoring_data",
-		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects/{duns}?ComplianceDataModuleID=ALERTS&ApplicationTransactionID=onboard"
+		service : "gms_profile_param",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
-		service : "monitoring_list",
-		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects"
+		service : "gms_notice_list",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
 	}, {
 		env : "stg",
-		service : "monitoring_list",
-		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects"
+		service : "gms_notice_list",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
 	}, {
 		env : "prod",
-		service : "monitoring_list",
-		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects"
+		service : "gms_notice_list",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
+	}, {
+		env : "qa",
+		service : "gms_notice_param",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changenotices/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "stg",
+		service : "gms_notice_param",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changenotices/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "prod",
+		service : "gms_notice_param",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changenotices/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "qa",
+		service : "gms_subject",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{duns}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "stg",
+		service : "gms_subject",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{duns}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "prod",
+		service : "gms_subject",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{duns}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "qa",
+		service : "gms_events",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changeevents/{duns}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "stg",
+		service : "gms_events",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changeevents/{duns}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "prod",
+		service : "gms_events",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changeevents/{duns}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "portfolio_assets",
