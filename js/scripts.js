@@ -168,16 +168,26 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			'ApplicationId': advancedSettings.appId
 		}};
 
-		//Determine if this should be a GET or POST request.
+		//Determine the request method to use (GET/POST/PUT/DELETE).
 		var promise;
-		if (advancedSettings.payload) {
-			requestConfig.headers['Accept'] = "application/json";
-			requestConfig.headers['Content-Type'] = "application/json";
-			promise = $http.post($scope.requestUrl, advancedSettings.payload, requestConfig);
-		} else {
-			promise = $http.get($scope.requestUrl, requestConfig);
+		switch (advancedSettings.requestMethod) {
+			case "post":
+				helper.addPayloadHeaders(requestConfig.headers);
+				promise = $http.post($scope.requestUrl, advancedSettings.payload, requestConfig);
+				break;
+			case "put":
+				helper.addPayloadHeaders(requestConfig.headers);
+				promise = $http.put($scope.requestUrl, advancedSettings.payload, requestConfig);
+				break;
+			case "delete":
+				promise = $http.delete($scope.requestUrl, requestConfig);
+				break;
+			case "get":
+			default:
+				promise = $http.get($scope.requestUrl, requestConfig);
 		}
 
+		//Handle the response.
 		promise.then(function(success) {
 			helper.populateView($scope, success);
 			helper.displayView($scope);
@@ -185,6 +195,14 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			helper.populateView($scope, error);
 			helper.displayView($scope);
 		});
+	};
+
+	/**
+	 * Add request headers indicating the type of payload. Used by POST/PUT operations.
+	 */
+	helper.addPayloadHeaders = function(headers) {
+		headers['Accept'] = "application/json";
+		headers['Content-Type'] = "application/json";
 	};
 
 	/**

@@ -17,10 +17,6 @@ header .navbar-brand img {
   display: inline;
 }
 
-header .navbar-brand {
-  height: auto;
-}
-
 .navbar-text {
   margin-top: 24px;
   margin-right: 0;
@@ -55,14 +51,13 @@ article button.btn {
 }
 
 .help {
-  float: right;
   padding-top: 3px;
   font-size: 24px;
+  text-align: center;
 }
 
-.inline-input {
-  display: inline;
-  width: 96%;
+div.col-md-11, div.col-md-7, div.col-md-2  {
+  padding-right: 0;
 }
 
 .tooltip-inner {
@@ -71,7 +66,7 @@ article button.btn {
 
 input.ng-invalid, input.ng-invalid:focus {
   border-color: #a94442;
-  background-color: #fadbe0
+  background-color: #fadbe0;
 }
 
 
