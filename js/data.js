@@ -63,6 +63,9 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		id : "gms_notice_list",
 		label : "GMS Monitoring - Change Notice List (GET)"
 	}, {
+		id : "gms_notice_list_count",
+		label : "GMS Monitoring - Change Notice List Count (GET)"
+	}, {
 		id : "gms_notice_param",
 		label : "GMS Monitoring - Change Notice Update (PUT)"
 	}, {
@@ -256,14 +259,26 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "gms_notice_list",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_notice_list",
-		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
 		service : "gms_notice_list",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "qa",
+		service : "gms_notice_list_count",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
+	}, {
+		env : "stg",
+		service : "gms_notice_list_count",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
+	}, {
+		env : "prod",
+		service : "gms_notice_list_count",
 		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changenotices?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41&GetCountOnlyIndicator=1"
 	}, {
 		env : "qa",
