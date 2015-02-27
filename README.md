@@ -16,9 +16,9 @@ The complete request URL is provided so it can easily be copied and pasted.
 The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  https://chrome.google.com/webstore/detail/db-services-rest-client/ekgojcdjjjlillgeidgniapfmilgbppm?hl=en&gl=IE
 
 
-**POST / GET**
+**POST / GET / PUT / DELETE**
 
-If a payload is selected in the advanced settings then a POST request will be used. Otherwise GET is always used.
+Requests use GET by default. POST/PUT requests should specify a payload.
 
 Some services require a JSON payload. E.g. ListPortfolio
 
