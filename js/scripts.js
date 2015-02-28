@@ -191,6 +191,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		promise.then(function(success) {
 			helper.populateView($scope, success);
 			helper.displayView($scope);
+			helper.storeResponseDetails($scope.requestUrl, success.data);
 		}, function(error) {
 			helper.populateView($scope, error);
 			helper.displayView($scope);
@@ -203,6 +204,26 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	helper.addPayloadHeaders = function(headers) {
 		headers['Accept'] = "application/json";
 		headers['Content-Type'] = "application/json";
+	};
+
+	/**
+	 * Persist the request/response so we have a history of them.
+	 */
+	helper.storeResponseDetails = function(requestUrl, response) {
+		//Retrieve the current history (if any).
+		var history = JSON.parse(localStorage.getItem("restclient.history"));
+		if (history === null) {
+			history = [];
+		}
+
+		//Construct the new entry and save it.
+		var entry = {
+			'date': Date(),
+			'request': requestUrl,
+			'response': response
+		};
+		history[history.length] = entry;
+		localStorage["restclient.history"] = JSON.stringify(history);
 	};
 
 	/**
