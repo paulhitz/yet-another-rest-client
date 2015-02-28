@@ -210,20 +210,13 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	 * Persist the request/response so we have a history of them.
 	 */
 	helper.storeResponseDetails = function(requestUrl, response) {
-		//Retrieve the current history (if any).
-		var history = JSON.parse(localStorage.getItem("restclient.history"));
-		if (history === null) {
-			history = [];
-		}
-
 		//Construct the new entry and save it.
 		var entry = {
 			'date': Date(),
 			'request': requestUrl,
 			'response': response
 		};
-		history[history.length] = entry;
-		localStorage["restclient.history"] = JSON.stringify(history);
+		localStorage["restclient.history." + Date.now()] = JSON.stringify(entry);
 	};
 
 	/**
