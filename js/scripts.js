@@ -191,7 +191,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		promise.then(function(success) {
 			helper.populateView($scope, success);
 			helper.displayView($scope);
-			helper.storeResponseDetails($scope.requestUrl, success.data);
+			helper.storeResponseDetails($scope.requestUrl, success.data, advancedSettings.requestMethod);
 		}, function(error) {
 			helper.populateView($scope, error);
 			helper.displayView($scope);
@@ -209,12 +209,13 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	/**
 	 * Persist the request/response so we have a history of them.
 	 */
-	helper.storeResponseDetails = function(requestUrl, response) {
+	helper.storeResponseDetails = function(requestUrl, response, requestMethod) {
 		//Construct the new entry and save it.
 		var entry = {
 			'date': Date(),
 			'request': requestUrl,
-			'response': response
+			'response': response,
+			'method': requestMethod
 		};
 		localStorage["restclient.history." + Date.now()] = JSON.stringify(entry);
 	};
