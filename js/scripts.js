@@ -217,7 +217,15 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			'response': response,
 			'method': requestMethod
 		};
-		localStorage["restclient.history." + Date.now()] = JSON.stringify(entry);
+		var key = "restclient.history." + Date.now();
+		localStorage[key] = JSON.stringify(entry);
+
+		//Also use Chrome Storage to persist it.
+		if (typeof chrome != 'undefined') {
+			var keyValue = {};
+			keyValue[key] = entry;
+			chrome.storage.local.set(keyValue);
+		}
 	};
 
 	/**
