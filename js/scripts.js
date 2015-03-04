@@ -154,7 +154,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			duns = utils.replaceAll(dunsSelected, "-", "");
 		}
 		if (url) {
-			url = url.replace("{duns}", duns);
+			url = url.replace("{placeholder}", duns);
 		}
 		return url;
 	};

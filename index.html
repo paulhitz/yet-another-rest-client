@@ -53,9 +53,14 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="duns" class="col-md-2 control-label">DUNS# (optional):</label>
+						<label for="duns" class="col-md-2 control-label">Parameter (optional):</label>
 						<div class="col-md-10">
-							<input type="text" class="form-control" id="duns" placeholder="{{placeholderDuns}}" value="" data-ng-model="duns">
+							<div class="row">
+								<div class="col-md-11">
+									<input type="text" class="form-control" id="duns" placeholder="{{placeholderDuns}}" value="" data-ng-model="duns">
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="An optional parameter to send with the Service. E.g. a DUNS# or a Search Term. {{placeholderDuns}} is used by default."></span>
+							</div>
 						</div>
 					</div>
 				</div>

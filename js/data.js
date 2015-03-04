@@ -111,111 +111,111 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "pcs",
-		url : "http://services-ext-qa.dnb.com/rest/ProductCatalogService/V2/ListAvailableProduct?DUNSNumber={duns}"
+		url : "http://services-ext-qa.dnb.com/rest/ProductCatalogService/V2/ListAvailableProduct?DUNSNumber={placeholder}"
 	}, {
 		env : "stg",
 		service : "pcs",
-		url : "http://services-ext-stg.dnb.com/rest/ProductCatalogService/V2/ListAvailableProduct?DUNSNumber={duns}"
+		url : "http://services-ext-stg.dnb.com/rest/ProductCatalogService/V2/ListAvailableProduct?DUNSNumber={placeholder}"
 	}, {
 		env : "prod",
 		service : "pcs",
-		url : "https://maxcvservices.dnb.com/rest/ProductCatalogService/V2/ListAvailableProduct?DUNSNumber={duns}"
+		url : "https://maxcvservices.dnb.com/rest/ProductCatalogService/V2/ListAvailableProduct?DUNSNumber={placeholder}"
 	}, {
 		env : "qa",
 		service : "linkage",
-		url : "http://services-ext-qa.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={duns}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
+		url : "http://services-ext-qa.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={placeholder}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
 	}, {
 		env : "stg",
 		service : "linkage",
-		url : "http://services-ext-stg.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={duns}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
+		url : "http://services-ext-stg.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={placeholder}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
 	}, {
 		env : "prod",
 		service : "linkage",
-		url : "https://maxcvservices.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={duns}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
+		url : "https://maxcvservices.dnb.com/rest/LinkageService/V2/OrderProduct?DUNSNumber={placeholder}&CountryISOAlpha2Code=GB&DNBProductID=LNK_FF_MNRT"
 	}, {
 		env : "qa",
 		service : "firm",
-		url : "http://services-ext-qa.dnb.com/V2/organizations/{duns}/products/DCP_PREM_ONBRD?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-qa.dnb.com/V2/organizations/{placeholder}/products/DCP_PREM_ONBRD?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "stg",
 		service : "firm",
-		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{duns}/products/DCP_PREM_ONBRD?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{placeholder}/products/DCP_PREM_ONBRD?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "prod",
 		service : "firm",
-		url : "https://maxcvservices.dnb.com/V2.0/organizations/{duns}/products/DCP_PREM_ONBRD?ArchiveProductOptOutIndicator=true"
+		url : "https://maxcvservices.dnb.com/V2.0/organizations/{placeholder}/products/DCP_PREM_ONBRD?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "qa",
 		service : "gbo",
-		url : "http://services-ext-qa.dnb.com/V2/organizations/{duns}/products/GBO?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-qa.dnb.com/V2/organizations/{placeholder}/products/GBO?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "stg",
 		service : "gbo",
-		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{duns}/products/GBO?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{placeholder}/products/GBO?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "prod",
 		service : "gbo",
-		url : "https://maxcvservices.dnb.com/V2/organizations/{duns}/products/GBO?ArchiveProductOptOutIndicator=true&ApplicationTransactionID=onboard"
+		url : "https://maxcvservices.dnb.com/V2/organizations/{placeholder}/products/GBO?ArchiveProductOptOutIndicator=true&ApplicationTransactionID=onboard"
 	}, {
 		env : "qa",
 		service : "so",
-		url : "http://services-ext-qa.dnb.com/V2/organizations/{duns}/products/SMPL_OWNSHP?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-qa.dnb.com/V2/organizations/{placeholder}/products/SMPL_OWNSHP?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "stg",
 		service : "so",
-		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{duns}/products/SMPL_OWNSHP?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{placeholder}/products/SMPL_OWNSHP?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "prod",
 		service : "so",
-		url : "https://maxcvservices.dnb.com/V2/organizations/{duns}/products/SMPL_OWNSHP?ArchiveProductOptOutIndicator=true&ApplicationTransactionID=onboard"
+		url : "https://maxcvservices.dnb.com/V2/organizations/{placeholder}/products/SMPL_OWNSHP?ArchiveProductOptOutIndicator=true&ApplicationTransactionID=onboard"
 	}, {
 		env : "qa",
 		service : "kyc",
-		url : "http://services-ext-qa.dnb.com/V2/organizations/{duns}/products/KYC?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-qa.dnb.com/V2/organizations/{placeholder}/products/KYC?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "stg",
 		service : "kyc",
-		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{duns}/products/KYC?ArchiveProductOptOutIndicator=true"
+		url : "http://services-ext-stg.dnb.com/V2.0/organizations/{placeholder}/products/KYC?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "prod",
 		service : "kyc",
-		url : "https://maxcvservices.dnb.com/V2/organizations/{duns}/products/KYC?ArchiveProductOptOutIndicator=true"
+		url : "https://maxcvservices.dnb.com/V2/organizations/{placeholder}/products/KYC?ArchiveProductOptOutIndicator=true"
 	}, {
 		env : "qa",
 		service : "rdc_search",
-		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={duns}"
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={placeholder}"
 	}, {
 		env : "stg",
 		service : "rdc_search",
-		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={duns}"
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={placeholder}"
 	}, {
 		env : "prod",
 		service : "rdc_search",
-		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={duns}"
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={placeholder}"
 	}, {
 		env : "qa",
 		service : "match",
-		url : "http://services-ext-qa.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={duns}"
+		url : "http://services-ext-qa.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={placeholder}"
 	}, {
 		env : "stg",
 		service : "match",
-		url : "http://services-ext-stg.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={duns}"
+		url : "http://services-ext-stg.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={placeholder}"
 	}, {
 		env : "prod",
 		service : "match",
-		url : "https://maxcvservices.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={duns}"
+		url : "https://maxcvservices.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={placeholder}"
 	}, {
 		env : "qa",
 		service : "global",
-		url : "http://services-ext-qa.dnb.com/V4.0/organizations?ExactLocationFindIndicator=true&InclusionDataDescription-1=IncludeUndeliverableAddressSubject&InclusionDataDescription-2=IncludeIncompleteData&InclusionDataDescription-3=IncludeOutofBusiness&SearchModeDescription=Basic&candidateMaximumQuantity=250&candidatePerPageMaximumQuantity=250&findcompany=true&httpClient.connectTimeout=10000&httpClient.socketTimeout=10000&keywordText={duns}"
+		url : "http://services-ext-qa.dnb.com/V4.0/organizations?ExactLocationFindIndicator=true&InclusionDataDescription-1=IncludeUndeliverableAddressSubject&InclusionDataDescription-2=IncludeIncompleteData&InclusionDataDescription-3=IncludeOutofBusiness&SearchModeDescription=Basic&candidateMaximumQuantity=250&candidatePerPageMaximumQuantity=250&findcompany=true&httpClient.connectTimeout=10000&httpClient.socketTimeout=10000&keywordText={placeholder}"
 	}, {
 		env : "stg",
 		service : "global",
-		url : "http://services-ext-stg.dnb.com/V4.0/organizations?ExactLocationFindIndicator=true&InclusionDataDescription-1=IncludeUndeliverableAddressSubject&InclusionDataDescription-2=IncludeIncompleteData&InclusionDataDescription-3=IncludeOutofBusiness&SearchModeDescription=Basic&candidateMaximumQuantity=250&candidatePerPageMaximumQuantity=250&findcompany=true&httpClient.connectTimeout=10000&httpClient.socketTimeout=10000&keywordText={duns}"
+		url : "http://services-ext-stg.dnb.com/V4.0/organizations?ExactLocationFindIndicator=true&InclusionDataDescription-1=IncludeUndeliverableAddressSubject&InclusionDataDescription-2=IncludeIncompleteData&InclusionDataDescription-3=IncludeOutofBusiness&SearchModeDescription=Basic&candidateMaximumQuantity=250&candidatePerPageMaximumQuantity=250&findcompany=true&httpClient.connectTimeout=10000&httpClient.socketTimeout=10000&keywordText={placeholder}"
 	}, {
 		env : "prod",
 		service : "global",
-		url : "https://maxcvservices.dnb.com/V4.0/organizations?ExactLocationFindIndicator=true&InclusionDataDescription-1=IncludeUndeliverableAddressSubject&InclusionDataDescription-2=IncludeIncompleteData&InclusionDataDescription-3=IncludeOutofBusiness&SearchModeDescription=Basic&candidateMaximumQuantity=250&candidatePerPageMaximumQuantity=250&findcompany=true&httpClient.connectTimeout=10000&httpClient.socketTimeout=10000&keywordText={duns}"
+		url : "https://maxcvservices.dnb.com/V4.0/organizations?ExactLocationFindIndicator=true&InclusionDataDescription-1=IncludeUndeliverableAddressSubject&InclusionDataDescription-2=IncludeIncompleteData&InclusionDataDescription-3=IncludeOutofBusiness&SearchModeDescription=Basic&candidateMaximumQuantity=250&candidatePerPageMaximumQuantity=250&findcompany=true&httpClient.connectTimeout=10000&httpClient.socketTimeout=10000&keywordText={placeholder}"
 	}, {
 		env : "qa",
 		service : "list_portfolio",
@@ -267,15 +267,15 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "gms_profile_param",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_profile_param",
-		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
 		service : "gms_profile_param",
-		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "gms_notice_list",
@@ -303,39 +303,39 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "gms_notice_param",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changenotices/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changenotices/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_notice_param",
-		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changenotices/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changenotices/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
 		service : "gms_notice_param",
-		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changenotices/{duns}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changenotices/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "gms_subject",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{duns}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{placeholder}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_subject",
-		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{duns}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{placeholder}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
 		service : "gms_subject",
-		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{duns}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringsubjects/{placeholder}?DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "gms_events",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changeevents/{duns}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/changeevents/{placeholder}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_events",
-		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changeevents/{duns}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/changeevents/{placeholder}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
 		service : "gms_events",
-		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changeevents/{duns}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changeevents/{placeholder}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=Cirrus1&CustomerID=778899002&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "portfolio_assets",
