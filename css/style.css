@@ -62,6 +62,7 @@ div.col-md-11, div.col-md-7, div.col-md-2  {
 
 .tooltip-inner {
   text-align: justify;
+  width: 100px;
 }
 
 input.ng-invalid, input.ng-invalid:focus {
