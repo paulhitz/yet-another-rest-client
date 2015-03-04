@@ -16,64 +16,84 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 
 	services : [ {
 		id : "pcs",
-		label : "Product Catalog Service (v2)"
+		label : "Product Catalog Service (v2)",
+		group : "Common"
 	}, {
 		id : "linkage",
-		label : "Linkage Service (v2)"
+		label : "Linkage Service (v2)",
+		group : "Common"
 	}, {
 		id : "firm",
-		label : "Firmographics Product Service (v2.0)"
+		label : "Firmographics Product Service (v2.0)",
+		group : "Common"
 	}, {
 		id : "kyc",
-		label : "Custom Product Service (KYC)"
+		label : "KYC (Know Your Customer)",
+		group : "Custom Product Service"
 	}, {
 		id : "gbo",
-		label : "Custom Product Service (GBO)"
+		label : "GBO (Global Beneficial Ownership)",
+		group : "Custom Product Service"
 	}, {
 		id : "so",
-		label : "Custom Product Service (Simple Ownership)"
+		label : "SO (Simple Ownership)",
+		group : "Custom Product Service"
 	}, {
 		id : "rdc_search",
-		label : "ComplianceCheck Service / RDC Search (v1.0)"
+		label : "ComplianceCheck Service / RDC Search (v1.0)",
+		group : "Search"
 	}, {
 		id : "match",
-		label : "Match (REST version)"
+		label : "Match (REST version)",
+		group : "Search"
 	}, {
 		id : "global",
-		label : "Global Name Search / Entity List Service (v4.0)"
-	}, {
-		id : "investigation",
-		label : "Investigation Service (POST)"
+		label : "Global Name Search / Entity List Service (v4.0)",
+		group : "Search"
 	}, {
 		id : "portfolio_assets",
-		label : "List Portfolio Asset (GET)"
+		label : "List Portfolio Asset (GET)",
+		group : "Portfolio"
 	}, {
 		id : "list_portfolio",
-		label : "List Portfolio Service (POST)"
+		label : "List Portfolio Service (POST)",
+		group : "Portfolio"
 	}, {
 		id : "gms_reg",
-		label : "GMS Monitoring - Registration (GET/POST/PUT)"
+		label : "Registration (GET/POST/PUT)",
+		group : "GMS Monitoring"
 	}, {
 		id : "gms_profile_create",
-		label : "GMS Monitoring - Profile List/Create (GET/POST)"
+		label : "Profile List/Create (GET/POST)",
+		group : "GMS Monitoring"
 	}, {
 		id : "gms_profile_param",
-		label : "GMS Monitoring - Profile Get/Update/Delete (GET/PUT/DELETE)"
+		label : "Profile Get/Update/Delete (GET/PUT/DELETE)",
+		group : "GMS Monitoring"
 	}, {
 		id : "gms_notice_list",
-		label : "GMS Monitoring - Change Notice List (GET)"
+		label : "Change Notice List (GET)",
+		group : "GMS Monitoring"
 	}, {
 		id : "gms_notice_list_count",
-		label : "GMS Monitoring - Change Notice List Count (GET)"
+		label : "Change Notice List Count (GET)",
+		group : "GMS Monitoring"
 	}, {
 		id : "gms_notice_param",
-		label : "GMS Monitoring - Change Notice Update (PUT)"
+		label : "Change Notice Update (PUT)",
+		group : "GMS Monitoring"
 	}, {
 		id : "gms_subject",
-		label : "GMS Monitoring - Subject (GET)"
+		label : "Subject (GET)",
+		group : "GMS Monitoring"
 	}, {
 		id : "gms_events",
-		label : "GMS Monitoring - Change Events (GET)"
+		label : "Change Events (GET)",
+		group : "GMS Monitoring"
+	}, {
+		id : "investigation",
+		label : "Investigation Service (POST)",
+		group : "Miscellaneous"
 	} ],
 
 	endpoints : [ {
