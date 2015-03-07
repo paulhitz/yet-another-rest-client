@@ -56,8 +56,9 @@ header .navbar-brand img {
   text-align: center;
 }
 
-div.col-md-11, div.col-md-7, div.col-md-2  {
+div.col-md-11, div.col-md-7, div.col-md-2, div.col-md-4, div.col-md-3, label.alignRight {
   padding-right: 0;
+  text-align: right;
 }
 
 .tooltip-inner {
