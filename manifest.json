@@ -19,7 +19,7 @@
   "incognito": "split",
 
   "permissions": [
-    "*://*.dnb.com/",
+    "<all_urls>",
     "clipboardWrite",
     "cookies",
     "storage"

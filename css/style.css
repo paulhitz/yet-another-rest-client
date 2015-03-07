@@ -22,7 +22,7 @@ header .navbar-brand img {
   margin-right: 0;
 }
 
-article button.btn {
+#submitFormButton {
   margin-bottom: 30px;
 }
 
@@ -68,6 +68,10 @@ div.col-md-11, div.col-md-7, div.col-md-2  {
 input.ng-invalid, input.ng-invalid:focus {
   border-color: #a94442;
   background-color: #fadbe0;
+}
+
+input.form-control[disabled] {
+  border-color: #ccc;
 }
 
 

@@ -94,6 +94,10 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		id : "investigation",
 		label : "Investigation Service (POST)",
 		group : "Miscellaneous"
+	}, {
+		id : "date_test",
+		label : "JSONTest.com Date/Time",
+		group : "External (No Authentication Required)"
 	} ],
 
 	endpoints : [ {
@@ -348,10 +352,14 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "prod",
 		service : "portfolio_assets",
 		url : "https://maxcvservices.dnb.com/V2/assets?OrderTransactionTypeCode=0&CandidateMaximumQuantity=10&SortBasisText=PortfolioAssetID&SortDirectionText=Ascending&CandidateDisplayStartSequenceNumber=1&ApplicationTransactionID=f9fc47c5-6733-4325-bbbe-157deb0520ba&DNBProductID=ComplianceReport"
+	}, {
+		env : "",
+		service : "date_test",
+		url : "http://date.jsontest.com/"
 	} ],
 
-	//Use this DUNs if none is provided.
-	placeholderDuns : "222228632"
+	//Use this DUNS# if no specific parameter is provided.
+	placeholder : "222228632"
 });
 
 
@@ -364,5 +372,6 @@ angular.module('clientApp').value('advancedSettings', {
 	appId : "36",
 	userId : "teamjoly@dnb.com",
 	password : "password",
+	autoAuthenticate : true,
 	payload : ""
 });
