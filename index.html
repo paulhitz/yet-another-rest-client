@@ -42,20 +42,32 @@
 				<div class="form-horizontal panel-body" role="form">
 					<div class="form-group">
 						<label for="env" class="col-md-2 control-label">Environment:</label>
-						<div class="col-md-10">
+						<div class="col-md-6">
 							<select class="form-control" id="env" data-ng-model="environmentSelected" data-ng-options="env.id as env.label for env in environments" data-ng-change="changeEnvironment(environmentSelected);"></select>
+						</div>
+						<label for="autoAuthenticate" class="col-md-2 control-label">Auto-Authenticate:</label>
+						<div class="col-md-2">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-default" ng-model="autoAuthenticate" btn-radio="true" id="autoAuthenticate">Enabled</button>
+								<button type="button" class="btn btn-default" ng-model="autoAuthenticate" btn-radio="false">Disabled</button>
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="services" class="col-md-2 control-label">Select Service:</label>
 						<div class="col-md-10">
-							<select class="form-control" id="services" data-ng-model="serviceSelected" data-ng-options="service.id as service.label for service in services" data-ng-disabled="service.requestUrl"></select>
+							<select class="form-control" id="services" data-ng-model="serviceSelected" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="service.requestUrl"></select>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="duns" class="col-md-2 control-label">DUNS# (optional):</label>
+						<label for="parameter" class="col-md-2 control-label">Parameter (optional):</label>
 						<div class="col-md-10">
-							<input type="text" class="form-control" id="duns" placeholder="{{placeholderDuns}}" value="" data-ng-model="duns">
+							<div class="row">
+								<div class="col-md-11">
+									<input type="text" class="form-control" id="parameter" placeholder="{{placeholder}}" value="" data-ng-model="parameter">
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="An optional parameter to send with the Service. E.g. a DUNS# or a Search Term. {{placeholder}} is used by default."></span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -78,7 +90,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<input type="text" class="form-control" id="appId" placeholder="User ID" data-ng-model="service.appId" required>
+										<input type="text" class="form-control" id="appId" placeholder="User ID" data-ng-model="service.appId" data-ng-disabled="!autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Application ID is sent with all service requests. Some IDs may not be enabled for all services."></span>
 								</div>
@@ -89,7 +101,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="service.userId" required>
+										<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="service.userId" data-ng-disabled="!autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The User ID to use for authenticating."></span>
 								</div>
@@ -100,7 +112,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="service.password" required>
+										<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="service.password" data-ng-disabled="!autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The password to use for authenticating."></span>
 								</div>
@@ -142,7 +154,7 @@
 				</div>
 			</section>
 
-			<button type="submit" class="btn btn-success pull-right" data-ng-click="submit();" data-ng-disabled="processing">Send Service Request</button>
+			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing">Send Service Request</button>
 		</form>
 	</article>
 
@@ -204,7 +216,7 @@
 	</div>
 
 	<footer class="row navbar-default container">
-		<p class="text-muted pull-left">Developed by the Dublin <a href="http://onboard.dnb.com/">Onboard</a> Team.</p>
+		<p class="text-muted pull-left">Developed by the Dublin <a href="http://onboard.dnb.com/" target="_blank">Onboard</a> Team.</p>
 		<p class="pull-right">
 			<a popover-trigger="mouseenter" popover-title="Request History" popover="You can view all your previous request/responses by opening the Chrome DevTools (F12) and navigating to Resources / Local Storage.">Request History</a> | 
 			<a href="#top" target="_self">Back To Top</a>

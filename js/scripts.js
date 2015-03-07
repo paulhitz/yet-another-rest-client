@@ -13,9 +13,10 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 	$scope.service = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;
 	$scope.environmentSelected = SERVICES_CONFIG.environments[1].id;
+	$scope.autoAuthenticate = advancedSettings.autoAuthenticate;
 	$scope.services = SERVICES_CONFIG.services;
 	$scope.serviceSelected = SERVICES_CONFIG.services[0].id;
-	$scope.placeholderDuns = SERVICES_CONFIG.placeholderDuns;
+	$scope.placeholder = SERVICES_CONFIG.placeholder;
 	$scope.alerts = [];
 
 	//Submit the configured Service Request.
@@ -29,35 +30,26 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		//Update Progress Bar.
 		$scope.progress = ProgressbarService.getProgressState('START');
 
-		//Delete cookies that can interfere with authentication.
-		clientAppHelper.deleteCookies();
+		if ($scope.autoAuthenticate) {
+			//Delete cookies that can interfere with authentication.
+			clientAppHelper.deleteCookies();
 
-		//Retrieve an Authorisation Token based on the selected environment.
-		//TODO Consider using an interceptor for authentication and handling the callService success/failure here.
-		var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
-		AuthService.getAuthCookie(authEndpoint).then(
-			function(success) {
-				$scope.authenticationToken = success.authorization;
-
-				//Determine the configured service endpoint.
-				if (advancedSettings.requestUrl) {
-					//If the user has entered a specific endpoint, just use that.
-					$scope.requestUrl = advancedSettings.requestUrl;
-				} else {
-					$scope.requestUrl = clientAppHelper.configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.duns);
+			//Retrieve an Authentication Token based on the selected environment.
+			var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
+			AuthService.getAuthCookie(authEndpoint).then(
+				function(success) {
+					clientAppHelper.configureAndCallService($scope, success.authorization, advancedSettings.requestUrl);
+				},
+				function(error) {
+					$log.error(error);
+					$scope.alerts.push({type: 'danger', msg: "An error occurred while authenticating."});
+					$scope.alerts.push({type: 'info', msg: "Please check the user ID and password. If the problem persists, you may want to try Incognito Mode or clear your cache. If the issue is solely with a particular environment, then the Authentication Service for that environment may be down."});
+					$scope.processing = false;
 				}
-
-				//Call the endpoint.
-				$scope.progress = ProgressbarService.getProgressState('IN_PROGRESS');
-				clientAppHelper.callService($scope);
-			},
-			function(error) {
-				$log.error(error);
-				$scope.alerts.push({type: 'danger', msg: "An error occurred while authenticating."});
-				$scope.alerts.push({type: 'info', msg: "Please check the user ID and password. If the problem persists, you may want to try Incognito Mode or clear your cache. If the issue is solely with a particular environment, then the Authentication Service for that environment may be down."});
-				$scope.processing = false;
-			}
-		);
+			);
+		} else {
+			clientAppHelper.configureAndCallService($scope, "<Auto-Authentication Disabled>", advancedSettings.requestUrl);
+		}
 	}
 
 	//Remove the selected alert/error.
@@ -128,7 +120,7 @@ clientApp.controller('ToggleCtrl', function($scope) {
 
 
 /**
- * Various helper functions for the application. TODO move this to it's own js file for easy testing. What naming convention is used?
+ * Various helper functions for the application.
  */
 clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	var helper = this;
@@ -136,37 +128,59 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	/**
 	 * Based on the selected environment and service, determine the correct URL to use.
 	 */
-	helper.configureServiceUrl = function(environmentSelected, serviceSelected, dunsSelected) {
+	helper.configureServiceUrl = function(environmentSelected, serviceSelected, parameter) {
 		var url = "";
-		var duns = SERVICES_CONFIG.placeholderDuns;
 
 		//Determine the endpoint based on selected Environment and Service.
 		for (var i in SERVICES_CONFIG.endpoints) {
 			var endpoint = SERVICES_CONFIG.endpoints[i];
-			if (endpoint.env === environmentSelected && endpoint.service === serviceSelected) {
+			if (endpoint.service === serviceSelected && (endpoint.env === "" || endpoint.env === environmentSelected)) {
 				url = endpoint.url;
 				break;
 			}
 		}
 
-		//Replace the DUNS placeholder.
-		if (dunsSelected) {
-			duns = utils.replaceAll(dunsSelected, "-", "");
+		//Remove dashes from the optional parameter and add it to the URL.
+		var placeholder = SERVICES_CONFIG.placeholder;
+		if (parameter) {
+			placeholder = utils.replaceAll(parameter, "-", "");
 		}
 		if (url) {
-			url = url.replace("{duns}", duns);
+			url = url.replace("{placeholder}", placeholder);
 		}
 		return url;
+	};
+
+	/**
+	 * Determine the service endpoint to use and call the service.
+	 */
+	helper.configureAndCallService = function($scope, token) {
+		$scope.authenticationToken = token;
+
+		//Determine the configured service endpoint.
+		if (advancedSettings.requestUrl) {
+			//If the user has entered a specific endpoint, just use that.
+			$scope.requestUrl = advancedSettings.requestUrl;
+		} else {
+			$scope.requestUrl = helper.configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.parameter);
+		}
+
+		//Call the endpoint.
+		$scope.progress = ProgressbarService.getProgressState('IN_PROGRESS');
+		helper.callService($scope);
 	};
 
 	/**
 	 * Call the specified endpoint and update the UI.
 	 */
 	helper.callService = function($scope) {
-		var requestConfig = { headers: {
-			'Authorization': $scope.authenticationToken,
-			'ApplicationId': advancedSettings.appId
-		}};
+		var requestConfig = { headers: {} };
+		if ($scope.autoAuthenticate) {
+			requestConfig = { headers: {
+				'Authorization': $scope.authenticationToken,
+				'ApplicationId': advancedSettings.appId
+			}};
+		}
 
 		//Determine the request method to use (GET/POST/PUT/DELETE).
 		var promise;
@@ -217,7 +231,15 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			'response': response,
 			'method': requestMethod
 		};
-		localStorage["restclient.history." + Date.now()] = JSON.stringify(entry);
+		var key = "restclient.history." + Date.now();
+		localStorage[key] = JSON.stringify(entry);
+
+		//Also use Chrome Storage to persist it.
+		if (typeof chrome != 'undefined') {
+			var keyValue = {};
+			keyValue[key] = entry;
+			chrome.storage.local.set(keyValue);
+		}
 	};
 
 	/**
