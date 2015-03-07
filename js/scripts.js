@@ -134,7 +134,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		//Determine the endpoint based on selected Environment and Service.
 		for (var i in SERVICES_CONFIG.endpoints) {
 			var endpoint = SERVICES_CONFIG.endpoints[i];
-			if (endpoint.env === "" || (endpoint.env === environmentSelected && endpoint.service === serviceSelected)) {
+			if (endpoint.service === serviceSelected && (endpoint.env === "" || endpoint.env === environmentSelected)) {
 				url = endpoint.url;
 				break;
 			}

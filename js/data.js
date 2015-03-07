@@ -98,6 +98,14 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		id : "date_test",
 		label : "JSONTest.com Date/Time",
 		group : "External (No Authentication Required)"
+	}, {
+		id : "open_company",
+		label : "OpenCorporates - Companies Search",
+		group : "External (No Authentication Required)"
+	}, {
+		id : "open_officer",
+		label : "OpenCorporates - Officers Search",
+		group : "External (No Authentication Required)"
 	} ],
 
 	endpoints : [ {
@@ -356,6 +364,14 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "",
 		service : "date_test",
 		url : "http://date.jsontest.com/"
+	}, {
+		env : "",
+		service : "open_company",
+		url : "https://api.opencorporates.com/v0.3/companies/search?q={placeholder}&current_status=Active&order=score"
+	}, {
+		env : "",
+		service : "open_officer",
+		url : "https://api.opencorporates.com/v0.3/officers/search?q={placeholder}&order=score"
 	} ],
 
 	//Use this DUNS# if no specific parameter is provided.
