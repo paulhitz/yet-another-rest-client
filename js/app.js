@@ -298,3 +298,46 @@ clientApp.service('ProgressbarService', function() {
 	};
 });
 
+
+/**
+ * 
+ */
+clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
+	$scope.open = function () {
+		var modalInstance = $modal.open({
+			templateUrl: 'myModalContent.html',
+			controller: 'ModalInstanceCtrl',
+			backdropClass: 'newServiceModal'
+		});
+	}
+	
+});
+
+clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
+
+	//
+	$scope.ok = function () {
+		if (typeof chrome != 'undefined') {
+			chrome.storage.sync.get("custom_services", function (items) {
+			    var services = items.custom_services;
+				if (!services) {
+					services = [];
+				}
+				//TODO should we check if the service name exists already? or always assume they want to overwrite it?
+				services.push({name : $scope.newServiceName, url : $scope.newServiceUrl});
+
+				chrome.storage.sync.set({'custom_services': services}, function() {
+					console.log('Settings saved');
+					alert("The service (" + $scope.newServiceName + ") has been added.");
+					//TODO now add the new service to the list of services/endpoints. Do we care about environment?
+					$modalInstance.close();
+				});
+			});
+		}
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+});
+

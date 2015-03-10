@@ -48,8 +48,11 @@
 					</div>
 					<div class="form-group">
 						<label for="services" class="col-md-2 control-label">Select Service:</label>
-						<div class="col-md-10">
+						<div class="col-md-7">
 							<select class="form-control" id="services" data-ng-model="serviceSelected" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="service.requestUrl"></select>
+						</div>
+						<div class="col-md-3" data-ng-controller="AddServiceModalCtrl">
+							<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add New Service</button>
 						</div>
 					</div>
 					<div class="form-group">
@@ -89,8 +92,8 @@
 									<label for="autoAuthenticate" class="col-md-3 control-label alignRight">Auto-Authenticate:</label>
 									<div class="col-md-3">
 										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-default" ng-model="service.autoAuthenticate" btn-radio="true" id="autoAuthenticate">Enabled</button>
-											<button type="button" class="btn btn-default" ng-model="service.autoAuthenticate" btn-radio="false">Disabled</button>
+											<button type="button" class="btn btn-default" data-ng-model="service.autoAuthenticate" btn-radio="true" id="autoAuthenticate">Enabled</button>
+											<button type="button" class="btn btn-default" data-ng-model="service.autoAuthenticate" btn-radio="false">Disabled</button>
 										</div>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="Automatically authenticate against the selected environment. Authentication is required for all D&B Services."></span>
@@ -233,5 +236,31 @@
 <script src="js/app.js"></script>
 <script src="js/data.js"></script>
 <script src="js/common.js"></script>
+
+
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h4 class="modal-title">Add User-Defined Service</h4>
+        </div>
+        <div class="modal-body">
+            <p>You can add or edit a User-Defined Service below...</p>
+			<ng-form role="form">
+				<div class="form-v panel-body">
+					<div class="form-group">
+						<label for="newServiceName" class="control-label">Service Name:</label>
+						<input type="text" class="form-control" id="newServiceName" placeholder="The name to appear in the dropdown" data-ng-model="newServiceName">
+						<label for="newServiceUrl" class="control-label">URL:</label>
+						<input type="url" class="form-control" id="newServiceUrl" placeholder="http..." data-ng-model="newServiceUrl">
+					</div>
+				</div>
+			</ng-form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName">Save</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+
 </body>
 </html>

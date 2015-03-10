@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "D&B Services REST Client",
-  "version": "1.1.1",
+  "version": "1.1.2",
 
   "description": "This tool allows a user to easily test the status of various D&B REST Services.",
   "short_name": "D&B Services",
@@ -22,7 +22,8 @@
     "<all_urls>",
     "clipboardWrite",
     "cookies",
-    "storage"
+    "storage",
+	"unlimitedStorage"
   ],
 
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
