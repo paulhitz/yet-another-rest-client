@@ -24,8 +24,8 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		group : "Common"
 	}, {
 		id : "firm",
-		label : "Firmographics Product Service (v2.0)",
-		group : "Common"
+		label : "Firmographics (DCP_PREM_ONBRD)",
+		group : "Custom Product Service"
 	}, {
 		id : "kyc",
 		label : "KYC (Know Your Customer)",

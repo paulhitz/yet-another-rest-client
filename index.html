@@ -189,7 +189,7 @@
 							<li role="presentation"><a href="#responseHeaders" role="tab" data-toggle="tab">Response Headers</a></li>
 							<li role="presentation"><a href="#requestHeaders" role="tab" data-toggle="tab">Request Headers</a></li>
 						</ul>
-						<div class="tab-content">
+						<div class="tab-content" id="json-tabs">
 							<div role="tabpanel" class="tab-pane active json-content" id="json">
 								<pre><code data-hljs data-source="responseBody"></code></pre>
 							</div>
@@ -222,6 +222,7 @@
 	<footer class="row navbar-default container">
 		<p class="text-muted pull-left">Developed by the Dublin <a href="http://onboard.dnb.com/" target="_blank">Onboard</a> Team.</p>
 		<p class="pull-right">
+			<a href="mailto:hitzp@dnb.com">Contact</a> | 
 			<a popover-trigger="mouseenter" popover-title="Request History" popover="You can view all your previous request/responses by opening the Chrome DevTools (F12) and navigating to Resources / Local Storage.">Request History</a> | 
 			<a href="#top" target="_self">Back To Top</a>
 		</p>
@@ -237,30 +238,43 @@
 <script src="js/data.js"></script>
 <script src="js/common.js"></script>
 
-
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h4 class="modal-title">Add User-Defined Service</h4>
-        </div>
-        <div class="modal-body">
-            <p>You can add or edit a User-Defined Service below...</p>
-			<ng-form role="form">
-				<div class="form-v panel-body">
-					<div class="form-group">
-						<label for="newServiceName" class="control-label">Service Name:</label>
-						<input type="text" class="form-control" id="newServiceName" placeholder="The name to appear in the dropdown" data-ng-model="newServiceName">
-						<label for="newServiceUrl" class="control-label">URL:</label>
-						<input type="url" class="form-control" id="newServiceUrl" placeholder="http..." data-ng-model="newServiceUrl">
+<script type="text/ng-template" id="myModalContent.html">
+	<div class="modal-header">
+		<h4 class="modal-title">User-Defined Services</h4>
+	</div>
+	<div class="modal-body">
+		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<ng-form role="form">
+			<div role="tabpanel">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#add_service" role="tab" data-toggle="tab">Add Service</a></li>
+					<li role="presentation"><a href="#delete_service" role="tab" data-toggle="tab">Delete Service</a></li>
+				</ul>
+				<div class="tab-content" id="modal-tabs">
+					<div role="tabpanel" class="tab-pane active" id="add_service">
+						<p>You can add a new User-Defined Service below. Use <strong>{placeholder}</strong> to indicate where a replacement value should be added. Only a single placeholder is supported.</p>
+						<div class="form-v panel-body">
+							<div class="form-group">
+								<label for="newServiceName" class="control-label">Service Name:</label>
+								<input type="text" class="form-control" id="newServiceName" placeholder="The name to appear in the dropdown" data-ng-model="newServiceName">
+								<label for="newServiceUrl" class="control-label">URL:</label>
+								<input type="text" class="form-control" id="newServiceUrl" placeholder="E.g. http://echo.jsontest.com/key/{placeholder}" data-ng-model="newServiceUrl">
+							</div>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="delete_service">
+						<p>Select a service below and press the delete button to remove the service. This action cannot be undone.</p>
 					</div>
 				</div>
-			</ng-form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName">Save</button>
-            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-
+			</div>
+		</ng-form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName">Save</button>
+		<button class="btn btn-danger" ng-click="delete()" data-ng-disabled="true">Delete</button>
+		<button class="btn btn-default" ng-click="cancel()">Close</button>
+	</div>
+</script>
 
 </body>
 </html>

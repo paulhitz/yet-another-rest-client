@@ -7,6 +7,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
 clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	if (typeof chrome != 'undefined') {
 		$scope.version = "v" + chrome.runtime.getManifest()['version'];
+		clientAppHelper.addUserDefinedServices($scope);
 	}
 
 	//Populate the form.
@@ -277,6 +278,20 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "ObSSOCookie"});
 		}
 	};
+
+	/**
+	 * Add custom services that the user has previously saved.
+	 */
+	helper.addUserDefinedServices = function($scope) {
+		chrome.storage.sync.get(null, function (services) {
+			for (key in services) {
+				var service = services[key];
+				SERVICES_CONFIG.services.unshift(service.serviceName);
+				SERVICES_CONFIG.endpoints.unshift(service.endpoint);
+			}
+			$scope.$apply();
+		});
+	};
 });
 
 
@@ -307,33 +322,52 @@ clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
 		var modalInstance = $modal.open({
 			templateUrl: 'myModalContent.html',
 			controller: 'ModalInstanceCtrl',
-			backdropClass: 'newServiceModal'
+			backdropClass: 'newServiceModal',
+			backdrop: 'static'
 		});
 	}
 	
 });
 
-clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
+/**
+ *
+ */
+clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, SERVICES_CONFIG) {
+	$scope.alerts = [];
 
-	//
 	$scope.ok = function () {
 		if (typeof chrome != 'undefined') {
-			chrome.storage.sync.get("custom_services", function (items) {
-			    var services = items.custom_services;
-				if (!services) {
-					services = [];
-				}
-				//TODO should we check if the service name exists already? or always assume they want to overwrite it?
-				services.push({name : $scope.newServiceName, url : $scope.newServiceUrl});
 
-				chrome.storage.sync.set({'custom_services': services}, function() {
-					console.log('Settings saved');
-					alert("The service (" + $scope.newServiceName + ") has been added.");
-					//TODO now add the new service to the list of services/endpoints. Do we care about environment?
-					$modalInstance.close();
-				});
+			//Prepare the data for storage.
+			var currentDate = Date.now();
+			var newServiceName = {id : currentDate, label : $scope.newServiceName, group : "User Entered"};
+			var newEndpoint = {env : "", service : currentDate, url : $scope.newServiceUrl};
+
+			//Update the UI.
+			$scope.newServiceName = "";
+			$scope.newServiceUrl = "";
+			SERVICES_CONFIG.services.unshift(newServiceName);
+			SERVICES_CONFIG.endpoints.unshift(newEndpoint);
+
+			//Add the new service to Chrome (Sync) Storage.
+			var key = "restclient.service." + currentDate;
+			var keyValue = {};
+			keyValue[key] = { serviceName : newServiceName, endpoint : newEndpoint };
+			chrome.storage.sync.set(keyValue, function() {
+				console.log('Settings saved');
+				$scope.alerts = [{type: 'success', msg: "The service (" + newServiceName.label + ") has been added. It will now appear in the Service dropdown."}];
+				$scope.$apply();
+				//$modalInstance.close();
 			});
+		} else {
+			$scope.alerts = [{type: 'danger', msg: "This operation isn't supported in this browser."}];
 		}
+	};
+
+	$scope.delete = function () {
+		//TODO delete the selected service.
+		//chrome.storage.sync.remove
+		$modalInstance.dismiss('cancel');
 	};
 
 	$scope.cancel = function () {
