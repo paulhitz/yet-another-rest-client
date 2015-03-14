@@ -264,6 +264,10 @@
 					</div>
 					<div role="tabpanel" class="tab-pane" id="delete_service">
 						<p>Select a service below and press the delete button to remove the service. This action cannot be undone.</p>
+						<div class="form-group">
+							<label for="customServices" class="control-label">Service Name:</label>
+							<select class="form-control" id="customServices" data-ng-model="customServiceSelected" data-ng-options="custom.id as custom.label for custom in customServices"></select>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -271,7 +275,7 @@
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName">Save</button>
-		<button class="btn btn-danger" ng-click="delete()" data-ng-disabled="true">Delete</button>
+		<button class="btn btn-danger" ng-click="delete(customServiceSelected)" data-ng-disabled="false">Delete</button>
 		<button class="btn btn-default" ng-click="cancel()">Close</button>
 	</div>
 </script>

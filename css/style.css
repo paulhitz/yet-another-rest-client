@@ -93,6 +93,11 @@ input.form-control[disabled] {
   height: 100%;
 }
 
+select#customServices {
+  width: inherit;
+  display: inline;
+}
+
 
 /*
  * Sticky footer styles
