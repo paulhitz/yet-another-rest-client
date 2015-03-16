@@ -342,12 +342,15 @@ clientApp.service('ProgressbarService', function() {
 TODO Still to do...
 -handle scenarios where there are no services or they're all deleted.
 -tidy the code.
--hide/disable the delete/save button depending on active tab.
 -what to initially select in the dropdown? and after a deletion?
 -improve the ui.
 
 
 */
+
+
+
+
 
 /**
  * 
@@ -360,8 +363,7 @@ clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
 			backdropClass: 'newServiceModal',
 			backdrop: 'static'
 		});
-	}
-	
+	};
 });
 
 /**
@@ -370,10 +372,17 @@ clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
 clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clientAppHelper, SERVICES_CONFIG) {
 	$scope.alerts = [];
 
+	//
+	$scope.showAddButton = false;
+	$scope.toggleButtons = function (current) {
+		$scope.showAddButton = !current;
+	};
+
 	//Populate the dropdown with the list of custom services.
 	if (!$scope.customServices) {
 		$scope.customServices = clientAppHelper.getCustomServices();
 	}
+	$scope.customServiceSelected = $scope.customServices[0].id;
 
 	//Add the new service to Chrome storage and the application dropdowns.
 	$scope.ok = function () {
@@ -407,12 +416,12 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 
 	//Delete the specified custom service from Chrome storage and the application dropdowns.
 	$scope.delete = function (customServiceSelected) {
-
+console.log("customServiceSelected = " + customServiceSelected);
 		//Identify and remove the service from the application dropdowns.
 		var serviceToDelete = clientAppHelper.findServiceById(customServiceSelected, $scope.customServices);
 		$scope.customServices.splice($scope.customServices.indexOf(serviceToDelete), 1);
 		SERVICES_CONFIG.services.splice(SERVICES_CONFIG.services.indexOf(serviceToDelete), 1);
-		//TODO handle deleting all services are having no services.
+		//TODO handle deleting all services or having no services.
 
 		//Remove it from Chrome storage.
 		var key = "restclient.service." + customServiceSelected;

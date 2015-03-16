@@ -30,12 +30,12 @@ header .navbar-brand img {
   margin-bottom: 30px;
 }
 
-div #json-tabs {
+div#json-tabs {
   margin-top: 5px;
   margin-bottom: 10px;
 }
 
-div #modal-tabs {
+#modal-tabs .tab-content {
   border-style: solid;
   border-width: 1px;
   border-color: #ddd;
@@ -91,6 +91,11 @@ input.form-control[disabled] {
 
 .newServiceModal {
   height: 100%;
+}
+
+.modal-header {
+  background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
+  color: #fff;
 }
 
 select#customServices {

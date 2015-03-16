@@ -239,45 +239,41 @@
 <script src="js/common.js"></script>
 
 <script type="text/ng-template" id="myModalContent.html">
+<div id="modal-tabs">
 	<div class="modal-header">
 		<h4 class="modal-title">User-Defined Services</h4>
 	</div>
 	<div class="modal-body">
 		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<ng-form role="form">
-			<div role="tabpanel">
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#add_service" role="tab" data-toggle="tab">Add Service</a></li>
-					<li role="presentation"><a href="#delete_service" role="tab" data-toggle="tab">Delete Service</a></li>
-				</ul>
-				<div class="tab-content" id="modal-tabs">
-					<div role="tabpanel" class="tab-pane active" id="add_service">
-						<p>You can add a new User-Defined Service below. Use <strong>{placeholder}</strong> to indicate where a replacement value should be added. Only a single placeholder is supported.</p>
-						<div class="form-v panel-body">
-							<div class="form-group">
-								<label for="newServiceName" class="control-label">Service Name:</label>
-								<input type="text" class="form-control" id="newServiceName" placeholder="The name to appear in the dropdown" data-ng-model="newServiceName">
-								<label for="newServiceUrl" class="control-label">URL:</label>
-								<input type="text" class="form-control" id="newServiceUrl" placeholder="E.g. http://echo.jsontest.com/key/{placeholder}" data-ng-model="newServiceUrl">
-							</div>
-						</div>
-					</div>
-					<div role="tabpanel" class="tab-pane" id="delete_service">
-						<p>Select a service below and press the delete button to remove the service. This action cannot be undone.</p>
+			<tabset justified="true">
+				<tab heading="Add Service" select="toggleButtons(showAddButton)">
+					<p>You can add a new User-Defined Service below. Use <strong>{placeholder}</strong> to indicate where a replacement value should be added. Only a single placeholder is supported.</p>
+					<div class="form-v panel-body">
 						<div class="form-group">
-							<label for="customServices" class="control-label">Service Name:</label>
-							<select class="form-control" id="customServices" data-ng-model="customServiceSelected" data-ng-options="custom.id as custom.label for custom in customServices"></select>
+							<label for="newServiceName" class="control-label">Service Name:</label>
+							<input type="text" class="form-control" id="newServiceName" placeholder="The name to appear in the dropdown" data-ng-model="$parent.newServiceName">
+							<label for="newServiceUrl" class="control-label">URL:</label>
+							<input type="text" class="form-control" id="newServiceUrl" placeholder="E.g. http://echo.jsontest.com/key/{placeholder}" data-ng-model="$parent.newServiceUrl">
 						</div>
 					</div>
-				</div>
-			</div>
+				</tab>
+				<tab heading="Delete Service" select="toggleButtons(showAddButton)">
+					<p>Select a service below and press the delete button to remove the service. This action cannot be undone.</p>
+					<div class="form-group">
+						<label for="customServices" class="control-label">Service Name:</label>
+						<select class="form-control" id="customServices" data-ng-model="$parent.customServiceSelected" data-ng-options="custom.id as custom.label for custom in customServices"></select>
+					</div>
+				</tab>
+			</tabset>
 		</ng-form>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-primary" ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName">Save</button>
-		<button class="btn btn-danger" ng-click="delete(customServiceSelected)" data-ng-disabled="false">Delete</button>
+		<button class="btn btn-primary" ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName" ng-show="showAddButton">Save</button>
+		<button class="btn btn-danger" ng-click="delete(customServiceSelected)" data-ng-disabled="customServiceSelected == '1426266880440' || customServices == []" ng-hide="showAddButton">Delete</button>
 		<button class="btn btn-default" ng-click="cancel()">Close</button>
 	</div>
+</div>
 </script>
 
 </body>
