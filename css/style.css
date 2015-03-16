@@ -98,6 +98,11 @@ input.form-control[disabled] {
   color: #fff;
 }
 
+.modal-body {
+  padding-bottom: 0;
+  margin-bottom: -1px;
+}
+
 select#customServices {
   width: inherit;
   display: inline;
