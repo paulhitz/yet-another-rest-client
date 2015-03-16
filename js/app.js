@@ -6,14 +6,15 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
  */
 clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	if (typeof chrome != 'undefined') {
+		$scope.chromeSupport = true;
 		$scope.version = "v" + chrome.runtime.getManifest()['version'];
+		clientAppHelper.addUserDefinedServices($scope);
 	}
 
 	//Populate the form.
 	$scope.service = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;
 	$scope.environmentSelected = SERVICES_CONFIG.environments[1].id;
-	$scope.autoAuthenticate = advancedSettings.autoAuthenticate;
 	$scope.services = SERVICES_CONFIG.services;
 	$scope.serviceSelected = SERVICES_CONFIG.services[0].id;
 	$scope.placeholder = SERVICES_CONFIG.placeholder;
@@ -30,7 +31,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		//Update Progress Bar.
 		$scope.progress = ProgressbarService.getProgressState('START');
 
-		if ($scope.autoAuthenticate) {
+		if (advancedSettings.autoAuthenticate) {
 			//Delete cookies that can interfere with authentication.
 			clientAppHelper.deleteCookies();
 
@@ -51,11 +52,6 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 			clientAppHelper.configureAndCallService($scope, "<Auto-Authentication Disabled>", advancedSettings.requestUrl);
 		}
 	}
-
-	//Remove the selected alert/error.
-	$scope.closeAlert = function(index) {
-		$scope.alerts.splice(index, 1);
-	};
 
 	//Copy the request or response to the clipboard.
 	$scope.copy = function(text) {
@@ -132,8 +128,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		var url = "";
 
 		//Determine the endpoint based on selected Environment and Service.
-		for (var i in SERVICES_CONFIG.endpoints) {
-			var endpoint = SERVICES_CONFIG.endpoints[i];
+		for (var endpoint of SERVICES_CONFIG.endpoints) {
 			if (endpoint.service === serviceSelected && (endpoint.env === "" || endpoint.env === environmentSelected)) {
 				url = endpoint.url;
 				break;
@@ -175,7 +170,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	 */
 	helper.callService = function($scope) {
 		var requestConfig = { headers: {} };
-		if ($scope.autoAuthenticate) {
+		if (advancedSettings.autoAuthenticate) {
 			requestConfig = { headers: {
 				'Authorization': $scope.authenticationToken,
 				'ApplicationId': advancedSettings.appId
@@ -278,6 +273,47 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "ObSSOCookie"});
 		}
 	};
+
+	/**
+	 * Add custom services that the user has previously saved.
+	 */
+	helper.addUserDefinedServices = function($scope) {
+		chrome.storage.sync.get(null, function (services) {
+			for (key in services) {
+				var service = services[key];
+				SERVICES_CONFIG.services.unshift(service.serviceName);
+				SERVICES_CONFIG.endpoints.unshift(service.endpoint);
+			}
+			$scope.$apply();
+		});
+	};
+
+	/**
+	 * Retrieve the Custom Services. Avoids going to Chrome Storage again.
+	 */
+	helper.getCustomServices = function() {
+		var customServices = [];
+		for (var service of SERVICES_CONFIG.services) {
+			if (service.group === "Custom") {
+				customServices.push(service);
+			}
+		}
+		return customServices;
+	};
+
+	/**
+	 * Return the service object with the specified id from the array. 
+	 */
+	helper.findServiceById = function(id, services) {
+		var serviceToDelete = {};
+		for (var service of services) {
+			if (service.id === id) {
+				serviceToDelete = service;
+				break;
+			}
+		}
+		return serviceToDelete;
+	};
 });
 
 
@@ -296,6 +332,85 @@ clientApp.service('ProgressbarService', function() {
 	 */
 	this.getProgressState = function(progress) {
 		return PROGRESS_STATES[progress];
+	};
+});
+
+
+/**
+ * Open an AngularJS-powered custom modal window. Use a partial view and a controller for the modal instance.
+ */
+clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
+	$scope.open = function () {
+		var modalInstance = $modal.open({
+			templateUrl: 'partials/customServicesModal.html',
+			controller: 'ModalInstanceCtrl',
+			backdropClass: 'newServiceModal',
+			backdrop: 'static'
+		});
+	};
+});
+
+/**
+ * Controller for the Custom Service functionality. Allows a user to add or delete a custom service.
+ */
+clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clientAppHelper, SERVICES_CONFIG) {
+	$scope.alerts = [];
+
+	//Enable or disable the Add/Delete buttons.
+	$scope.showAddButton = false;
+	$scope.toggleButtons = function (current) {
+		$scope.showAddButton = !current;
+	};
+
+	//Populate the dropdown with the list of custom services.
+	if (!$scope.customServices) {
+		$scope.customServices = clientAppHelper.getCustomServices();
+		$scope.customServices.unshift({"id" : 0, "label" : "Please select a service..."});
+	}
+	$scope.customServiceSelected = $scope.customServices[0].id;
+
+	//Add the new service to Chrome storage and the application dropdowns.
+	$scope.ok = function () {
+		//Prepare the data for storage.
+		var timestamp = Date.now();
+		var newServiceName = {id : timestamp, label : $scope.newServiceName, group : "Custom"};
+		var newEndpoint = {env : "", service : timestamp, url : $scope.newServiceUrl};
+
+		//Update the UI.
+		$scope.newServiceName = "";
+		$scope.newServiceUrl = "";
+		$scope.customServices.push(newServiceName);
+		SERVICES_CONFIG.services.unshift(newServiceName);
+		SERVICES_CONFIG.endpoints.unshift(newEndpoint);
+
+		//Add the new service to Chrome (Sync) Storage.
+		var key = "restclient.service." + timestamp;
+		var keyValue = {};
+		keyValue[key] = { serviceName : newServiceName, endpoint : newEndpoint };
+		chrome.storage.sync.set(keyValue, function() {
+			$scope.alerts = [{type: 'success', msg: "The service (" + newServiceName.label + ") has been added. It will now appear in the Service dropdown."}];
+			$scope.$apply();
+		});
+	};
+
+	//Delete the specified custom service from Chrome storage and the application dropdowns.
+	$scope.delete = function (customServiceSelected) {
+		//Identify and remove the service from the application dropdowns.
+		var serviceToDelete = clientAppHelper.findServiceById(customServiceSelected, $scope.customServices);
+		$scope.customServices.splice($scope.customServices.indexOf(serviceToDelete), 1);
+		SERVICES_CONFIG.services.splice(SERVICES_CONFIG.services.indexOf(serviceToDelete), 1);
+		$scope.customServiceSelected = $scope.customServices[0].id;
+
+		//Remove it from Chrome storage.
+		var key = "restclient.service." + customServiceSelected;
+		chrome.storage.sync.remove(key, function() {
+			$scope.alerts = [{type: 'success', msg: "The selected service has been deleted."}];
+			$scope.$apply();
+		});
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
 	};
 });
 
