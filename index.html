@@ -258,7 +258,7 @@
 						</div>
 					</div>
 				</tab>
-				<tab heading="Delete Service" select="toggleButtons(showAddButton)">
+				<tab heading="Delete Service" select="toggleButtons(showAddButton)" disabled="customServices.length == 1">
 					<p>Select a service below and press the delete button to remove the service. This action cannot be undone.</p>
 					<div class="form-group">
 						<label for="customServices" class="control-label">Service Name:</label>
@@ -270,7 +270,7 @@
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName" ng-show="showAddButton">Save</button>
-		<button class="btn btn-danger" ng-click="delete(customServiceSelected)" data-ng-disabled="customServiceSelected == '1426266880440' || customServices == []" ng-hide="showAddButton">Delete</button>
+		<button class="btn btn-danger" ng-click="delete(customServiceSelected)" data-ng-disabled="customServiceSelected == '0'" ng-hide="showAddButton">Delete</button>
 		<button class="btn btn-default" ng-click="cancel()">Close</button>
 	</div>
 </div>

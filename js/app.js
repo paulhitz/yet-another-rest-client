@@ -340,12 +340,8 @@ clientApp.service('ProgressbarService', function() {
 
 /*
 TODO Still to do...
--handle scenarios where there are no services or they're all deleted.
 -tidy the code.
--what to initially select in the dropdown? and after a deletion?
 -improve the ui.
-
-
 */
 
 
@@ -381,6 +377,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 	//Populate the dropdown with the list of custom services.
 	if (!$scope.customServices) {
 		$scope.customServices = clientAppHelper.getCustomServices();
+		$scope.customServices.unshift({"id" : 0, "label" : "Please select a service..."});
 	}
 	$scope.customServiceSelected = $scope.customServices[0].id;
 
@@ -396,7 +393,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 			//Update the UI.
 			$scope.newServiceName = "";
 			$scope.newServiceUrl = "";
-			$scope.customServices.unshift(newServiceName);
+			$scope.customServices.push(newServiceName);
 			SERVICES_CONFIG.services.unshift(newServiceName);
 			SERVICES_CONFIG.endpoints.unshift(newEndpoint);
 
@@ -405,7 +402,6 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 			var keyValue = {};
 			keyValue[key] = { serviceName : newServiceName, endpoint : newEndpoint };
 			chrome.storage.sync.set(keyValue, function() {
-				console.log('Settings saved');
 				$scope.alerts = [{type: 'success', msg: "The service (" + newServiceName.label + ") has been added. It will now appear in the Service dropdown."}];
 				$scope.$apply();
 			});
@@ -416,12 +412,11 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 
 	//Delete the specified custom service from Chrome storage and the application dropdowns.
 	$scope.delete = function (customServiceSelected) {
-console.log("customServiceSelected = " + customServiceSelected);
 		//Identify and remove the service from the application dropdowns.
 		var serviceToDelete = clientAppHelper.findServiceById(customServiceSelected, $scope.customServices);
 		$scope.customServices.splice($scope.customServices.indexOf(serviceToDelete), 1);
 		SERVICES_CONFIG.services.splice(SERVICES_CONFIG.services.indexOf(serviceToDelete), 1);
-		//TODO handle deleting all services or having no services.
+		$scope.customServiceSelected = $scope.customServices[0].id;
 
 		//Remove it from Chrome storage.
 		var key = "restclient.service." + customServiceSelected;
