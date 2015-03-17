@@ -49,7 +49,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 				}
 			);
 		} else {
-			clientAppHelper.configureAndCallService($scope, "<Auto-Authentication Disabled>", advancedSettings.requestUrl);
+			clientAppHelper.configureAndCallService($scope, "(Automatic Authentication Disabled)", advancedSettings.requestUrl);
 		}
 	}
 
@@ -179,6 +179,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 
 		//Determine the request method to use (GET/POST/PUT/DELETE).
 		var promise;
+		$scope.timerStart = Date.now();
 		switch (advancedSettings.requestMethod) {
 			case "post":
 				helper.addPayloadHeaders(requestConfig.headers);
@@ -200,7 +201,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		promise.then(function(success) {
 			helper.populateView($scope, success);
 			helper.displayView($scope);
-			helper.storeResponseDetails($scope.requestUrl, success.data, advancedSettings.requestMethod);
+			helper.storeResponseDetails($scope, success.data, advancedSettings.requestMethod);
 		}, function(error) {
 			helper.populateView($scope, error);
 			helper.displayView($scope);
@@ -218,13 +219,14 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	/**
 	 * Persist the request/response so we have a history of them.
 	 */
-	helper.storeResponseDetails = function(requestUrl, response, requestMethod) {
+	helper.storeResponseDetails = function($scope, response, requestMethod) {
 		//Construct the new entry and save it.
 		var entry = {
 			'date': Date(),
-			'request': requestUrl,
+			'request': $scope.requestUrl,
 			'response': response,
-			'method': requestMethod
+			'method': requestMethod,
+			'timer': $scope.timerEnd - $scope.timerStart
 		};
 		var key = "restclient.history." + Date.now();
 		localStorage[key] = JSON.stringify(entry);
@@ -241,6 +243,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	 * Update the UI with the data received from the service.
 	 */
 	helper.populateView = function($scope, response) {
+		$scope.timerEnd = Date.now();
 		$scope.progress = ProgressbarService.getProgressState('COMPLETE');
 		response.headers().status = response.status;
 		$scope.responseBody = JSON.stringify(response.data, null, 2);
