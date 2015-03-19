@@ -6,13 +6,15 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
  */
 clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
 	if (typeof chrome != 'undefined') {
+		//Chrome specific operations.
 		$scope.chromeSupport = true;
 		$scope.version = "v" + chrome.runtime.getManifest()['version'];
 		clientAppHelper.addUserDefinedServices($scope);
+		clientAppHelper.retrieveSavedCredentials();
 	}
 
 	//Populate the form.
-	$scope.service = advancedSettings;
+	$scope.settings = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;
 	$scope.environmentSelected = SERVICES_CONFIG.environments[1].id;
 	$scope.services = SERVICES_CONFIG.services;
@@ -32,6 +34,13 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		$scope.progress = ProgressbarService.getProgressState('START');
 
 		if (advancedSettings.autoAuthenticate) {
+			if (!clientAppHelper.areCredentialsPresent()) {
+				$scope.alerts.push({type: 'danger', msg: "You need to enter an application ID, user ID and a password for automatic authentication. See 'Advanced Settings'."});
+				$scope.processing = false;
+				return;
+			}
+			clientAppHelper.persistCredentials($scope.environmentSelected);
+
 			//Delete cookies that can interfere with authentication.
 			clientAppHelper.deleteCookies();
 
@@ -59,12 +68,10 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		utils.copyToClipboard(text);
 	};
 
-	//Display a warning if the production environment is selected and remove credentials.
+	//Display a warning if the production environment is selected.
 	$scope.changeEnvironment = function(env) {
 		if (env === SERVICES_CONFIG.environments[2].id) {
-			$scope.alerts.push({type: 'warning', msg: "Please be careful using the PRODUCTION environment. A valid production user and password need to be specified. To avoid locking the account, the STG/QA credentials have been removed."});
-			$scope.service.userId = "";
-			$scope.service.password = "";
+			$scope.alerts.push({type: 'warning', msg: "Please be careful using the PRODUCTION environment. A valid application ID, production user and password need to be specified."});
 		} else {
 			$scope.alerts = [];
 		}
@@ -278,14 +285,59 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
+	 * 
+	 */
+	helper.areCredentialsPresent = function() {
+		return advancedSettings.appId && advancedSettings.userId && advancedSettings.password;
+	};
+
+	/**
+	 * 
+	 */
+	helper.persistCredentials = function(env) {
+		//TODO check if the credentials have changed since the previous time
+		console.log("checking credentials for " + env);
+		
+		
+		if (true) { //TODO check if they're the same or not.
+			var credentials = {
+				'date': Date(),
+				'env': env,
+				'appId': advancedSettings.appId,
+				'userId': advancedSettings.userId,
+				'password': advancedSettings.password
+			};
+			var keyValue = {};
+			keyValue["restclient.credentials." + env] = credentials;
+			chrome.storage.sync.set(keyValue);
+		}
+	};
+
+	/**
+	 * 
+	 */
+	helper.retrieveSavedCredentials = function() {
+		var keys = ["restclient.credentials.qa", "restclient.credentials.stg", "restclient.credentials.prod"];
+		chrome.storage.sync.get(keys, function (environments) {
+			for (var key in environments) {
+				var credentials = environments[key];
+				console.log("found credentials = " + JSON.stringify(credentials));
+				//TODO do something with these credentials. how do we update the ui etc?
+			}
+		});
+	};
+
+	/**
 	 * Add custom services that the user has previously saved.
 	 */
 	helper.addUserDefinedServices = function($scope) {
 		chrome.storage.sync.get(null, function (services) {
-			for (key in services) {
+			for (var key in services) {
 				var service = services[key];
-				SERVICES_CONFIG.services.unshift(service.serviceName);
-				SERVICES_CONFIG.endpoints.unshift(service.endpoint);
+				if (service.serviceName && service.endpoint) {
+					SERVICES_CONFIG.services.unshift(service.serviceName);
+					SERVICES_CONFIG.endpoints.unshift(service.endpoint);
+				}
 			}
 			$scope.$apply();
 		});

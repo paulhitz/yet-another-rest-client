@@ -80,20 +80,20 @@
 				</div>
 
 				<div id="advanced" class="panel-collapse collapse">
-					<div class="form-horizontal panel-body" role="form" data-ng-model="service">
+					<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
 						<div class="form-group">
 							<label for="appId" class="col-md-2 control-label">Application ID:</label>
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="User ID" data-ng-model="service.appId" data-ng-disabled="!service.autoAuthenticate" required>
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.appId" data-ng-disabled="!settings.autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Application ID is sent with all service requests. Some IDs may not be enabled for all services."></span>
 									<label for="autoAuthenticate" class="col-md-3 control-label alignRight">Auto-Authenticate:</label>
 									<div class="col-md-3">
 										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-default" data-ng-model="service.autoAuthenticate" data-btn-radio="true" id="autoAuthenticate">Enabled</button>
-											<button type="button" class="btn btn-default" data-ng-model="service.autoAuthenticate" data-btn-radio="false">Disabled</button>
+											<button type="button" class="btn btn-default" data-ng-model="settings.autoAuthenticate" data-btn-radio="true" id="autoAuthenticate">Enabled</button>
+											<button type="button" class="btn btn-default" data-ng-model="settings.autoAuthenticate" data-btn-radio="false">Disabled</button>
 										</div>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="Automatically authenticate against the selected environment. Authentication is required for all D&amp;B Services."></span>
@@ -105,7 +105,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="service.userId" data-ng-disabled="!service.autoAuthenticate" required>
+										<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="settings.userId" data-ng-disabled="!settings.autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The User ID to use for authenticating."></span>
 								</div>
@@ -116,7 +116,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="service.password" data-ng-disabled="!service.autoAuthenticate" required>
+										<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="settings.password" data-ng-disabled="!settings.autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The password to use for authenticating."></span>
 								</div>
@@ -127,12 +127,12 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-7">
-										<input type="url" class="form-control" id="requestUrl" placeholder="Request URL (i.e. http://<configured_endpoint>)" data-ng-model="service.requestUrl">
+										<input type="url" class="form-control" id="requestUrl" placeholder="Request URL (i.e. http://<configured_endpoint>)" data-ng-model="settings.requestUrl">
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip-html-unsafe="The Request URL allows you to enter your own custom endpoint. <br><br>It will still be authenticated against the selected environment."></span>
 									<label for="requestMethod" class="col-md-1 control-label">Method:</label>
 									<div class="col-md-2">
-										<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="service.requestMethod">
+										<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
 											<option value="get">GET</option>
 											<option value="post">POST</option>
 											<option value="put">PUT</option>
@@ -148,7 +148,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="service.payload"></textarea>
+										<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload"></textarea>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The payload to use for POST and PUT requests. This is usually in JSON format."></span>
 								</div>
