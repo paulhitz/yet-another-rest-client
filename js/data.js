@@ -385,9 +385,14 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 angular.module('clientApp').value('advancedSettings', {
 	requestUrl : "",
 	requestMethod : "get",
-	appId : "36",
-	userId : "teamjoly@dnb.com",
-	password : "password",
 	autoAuthenticate : true,
 	payload : ""
+});
+
+
+//TODO make it an array? an empty array to start.
+angular.module('clientApp').value('credentials', {
+	qa : {appId: "36", userId: "teamjoly-test@dnb.com", password: "password"},
+	stg : {},
+	prod : {}
 });

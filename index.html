@@ -86,7 +86,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.appId" data-ng-disabled="!settings.autoAuthenticate" required>
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId" data-ng-disabled="!settings.autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Application ID is sent with all service requests. Some IDs may not be enabled for all services."></span>
 									<label for="autoAuthenticate" class="col-md-3 control-label alignRight">Auto-Authenticate:</label>
@@ -105,7 +105,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="settings.userId" data-ng-disabled="!settings.autoAuthenticate" required>
+										<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="settings.credentials.userId" data-ng-disabled="!settings.autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The User ID to use for authenticating."></span>
 								</div>
@@ -116,7 +116,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="settings.password" data-ng-disabled="!settings.autoAuthenticate" required>
+										<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="settings.credentials.password" data-ng-disabled="!settings.autoAuthenticate" required>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The password to use for authenticating."></span>
 								</div>

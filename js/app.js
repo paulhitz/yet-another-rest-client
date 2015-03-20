@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
 	if (typeof chrome != 'undefined') {
 		//Chrome specific operations.
 		$scope.chromeSupport = true;
@@ -68,8 +68,11 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		utils.copyToClipboard(text);
 	};
 
-	//Display a warning if the production environment is selected.
 	$scope.changeEnvironment = function(env) {
+		//Change the credentials to match the environment.
+		advancedSettings.credentials = credentials[env];
+
+		//Display a warning if the production environment is selected.
 		if (env === SERVICES_CONFIG.environments[2].id) {
 			$scope.alerts.push({type: 'warning', msg: "Please be careful using the PRODUCTION environment. A valid application ID, production user and password need to be specified."});
 		} else {
@@ -92,9 +95,9 @@ clientApp.service('AuthService', function($http, $q, advancedSettings) {
 			deferred.resolve({authorization: cachedAuthTokens[authEndpoint]});
 		} else {
 			var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-				'ApplicationId': advancedSettings.appId,
-				'x-dnb-user': advancedSettings.userId,
-				'x-dnb-pwd': advancedSettings.password
+				'ApplicationId': advancedSettings.credentials.appId,
+				'x-dnb-user': advancedSettings.credentials.userId,
+				'x-dnb-pwd': advancedSettings.credentials.password
 			}};
 
 			$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
@@ -125,7 +128,7 @@ clientApp.controller('ToggleCtrl', function($scope) {
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
+clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
 	var helper = this;
 
 	/**
@@ -229,11 +232,11 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	helper.storeResponseDetails = function($scope, response, requestMethod) {
 		//Construct the new entry and save it.
 		var entry = {
-			'date': Date(),
-			'request': $scope.requestUrl,
-			'response': response,
-			'method': requestMethod,
-			'timer': $scope.timerEnd - $scope.timerStart
+			date: Date(),
+			request: $scope.requestUrl,
+			response: response,
+			method: requestMethod,
+			timer: $scope.timerEnd - $scope.timerStart
 		};
 		var key = "restclient.history." + Date.now();
 		localStorage[key] = JSON.stringify(entry);
@@ -285,27 +288,29 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * 
+	 * Check if the necessary credentials have been provided.
 	 */
 	helper.areCredentialsPresent = function() {
-		return advancedSettings.appId && advancedSettings.userId && advancedSettings.password;
+		return advancedSettings.credentials.appId 
+			&& advancedSettings.credentials.userId 
+			&& advancedSettings.credentials.password;
 	};
 
 	/**
-	 * 
+	 * Persist the credentials if they've changed.
 	 */
 	helper.persistCredentials = function(env) {
 		//TODO check if the credentials have changed since the previous time
 		console.log("checking credentials for " + env);
 		
 		
-		if (true) { //TODO check if they're the same or not.
+		if (true) { //TODO check if they're the same or not. Also do we need the date and env here?
 			var credentials = {
-				'date': Date(),
-				'env': env,
-				'appId': advancedSettings.appId,
-				'userId': advancedSettings.userId,
-				'password': advancedSettings.password
+				date: Date(),
+				env: env,
+				appId: advancedSettings.credentials.appId,
+				userId: advancedSettings.credentials.userId,
+				password: advancedSettings.credentials.password
 			};
 			var keyValue = {};
 			keyValue["restclient.credentials." + env] = credentials;
@@ -314,16 +319,18 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * 
+	 * Retrieve the stored credentials and set them for the current environment.
 	 */
 	helper.retrieveSavedCredentials = function() {
 		var keys = ["restclient.credentials.qa", "restclient.credentials.stg", "restclient.credentials.prod"];
 		chrome.storage.sync.get(keys, function (environments) {
 			for (var key in environments) {
-				var credentials = environments[key];
-				console.log("found credentials = " + JSON.stringify(credentials));
-				//TODO do something with these credentials. how do we update the ui etc?
+				//Use the stored credentials object to set the credentials for each environment.
+				var currentCredentials = environments[key];
+				credentials[currentCredentials.env] = currentCredentials;
 			}
+			console.log("credentials = " + JSON.stringify(credentials));
+			advancedSettings.credentials = credentials.stg; //TODO should we have a separate function that determines the current env and sets this?
 		});
 	};
 
