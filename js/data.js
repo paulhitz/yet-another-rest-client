@@ -1,4 +1,4 @@
-/*
+/**
  * Constants used to populate the UI and to determine the endpoint to call.
  */
 angular.module('clientApp').constant('SERVICES_CONFIG', {
@@ -255,19 +255,19 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "gms_reg",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_reg",
-		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
 		service : "gms_reg",
-		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/registrations?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "gms_profile_create",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_profile_create",
@@ -275,19 +275,19 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "prod",
 		service : "gms_profile_create",
-		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "gms_profile_param",
-		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "stg",
 		service : "gms_profile_param",
-		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "prod",
 		service : "gms_profile_param",
-		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly-j1@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/monitoringprofiles/{placeholder}?ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=42&UserID=teamjoly@dnb.com&CustomerID=778899001&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
 	}, {
 		env : "qa",
 		service : "gms_notice_list",
@@ -390,9 +390,8 @@ angular.module('clientApp').value('advancedSettings', {
 });
 
 
-//TODO make it an array? an empty array to start.
-angular.module('clientApp').value('credentials', {
-	qa : {appId: "36", userId: "teamjoly-test@dnb.com", password: "password"},
-	stg : {},
-	prod : {}
-});
+/**
+ * The credentials used for authentication. If available, these are populated from Chrome Storage.
+ * If necessary, there is also an option to hard-code them here.
+ */
+angular.module('clientApp').value('credentials', {});

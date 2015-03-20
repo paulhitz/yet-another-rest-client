@@ -21,14 +21,14 @@
 				<p>Select a custom service below and press the delete button to remove the service. This action cannot be undone.</p>
 				<div class="form-group">
 					<label for="customServices" class="control-label">Service Name:</label>
-					<select class="form-control" id="customServices" data-ng-model="$parent.customServiceSelected" data-ng-options="custom.id as custom.label for custom in customServices"></select>
+					<select class="form-control" id="customServices" data-ng-model="$parent.selectedCustomService" data-ng-options="custom.id as custom.label for custom in customServices"></select>
 				</div>
 			</tab>
 		</tabset>
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!newServiceUrl || !newServiceName" data-ng-show="showAddButton">Save</button>
-		<button class="btn btn-danger" data-ng-click="delete(customServiceSelected)" data-ng-disabled="customServiceSelected == '0'" data-ng-hide="showAddButton">Delete</button>
+		<button class="btn btn-danger" data-ng-click="delete(selectedCustomService)" data-ng-disabled="selectedCustomService == '0'" data-ng-hide="showAddButton">Delete</button>
 		<button class="btn btn-default" data-ng-click="cancel()">Close</button>
 	</div>
 </form>
