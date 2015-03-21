@@ -67,7 +67,11 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 
 	$scope.changeEnvironment = function(env) {
 		//Change the credentials to match the environment.
-		advancedSettings.credentials = JSON.parse(JSON.stringify(credentials[env]));
+		if (credentials[env]) {
+			advancedSettings.credentials = JSON.parse(JSON.stringify(credentials[env]));
+		} else {
+			advancedSettings.credentials = {};
+		}
 
 		//Display a warning if the production environment is selected.
 		if (env === SERVICES_CONFIG.environments[2].id) {
@@ -240,7 +244,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		localStorage[key] = JSON.stringify(entry);
 
 		//Also use Chrome Storage to persist it. It allows objects to be persisted.
-		if (typeof chrome != 'undefined') {
+		if (typeof chrome !== 'undefined') {
 			var keyValue = {};
 			keyValue[key] = entry;
 			chrome.storage.local.set(keyValue);
@@ -274,10 +278,11 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Delete cookies that can interfere with authentication.
+	 * Delete cookies that can interfere with authentication. 
+	 * NOTE: This will likely mess up any open OAM application sessions.
 	 */
 	helper.deleteCookies = function() {
-		if (typeof chrome != 'undefined') {
+		if (typeof chrome !== 'undefined') {
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "userid"});
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "dnb_loginid"});
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "redirect"});
@@ -289,7 +294,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	 * Perform some Chrome specific operations that will only work in Chrome.
 	 */
 	helper.performChromeOperations = function($scope) {
-		if (typeof chrome != 'undefined') {
+		if (typeof chrome !== 'undefined') {
 			$scope.chromeSupport = true;
 			$scope.version = "v" + chrome.runtime.getManifest()['version'];
 			helper.addUserDefinedServices($scope);
@@ -313,7 +318,8 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		//Check if the credentials have changed.
 		var initialCredentials = credentials[env];
 		var currentCredentials = advancedSettings.credentials;
-		if (initialCredentials.appId !== currentCredentials.appId
+		if (typeof initialCredentials === 'undefined'
+				|| initialCredentials.appId !== currentCredentials.appId
 				|| initialCredentials.userId !== currentCredentials.userId
 				|| initialCredentials.password !== currentCredentials.password) {
 			//Persist the updated credentials (include some other relevant data).
@@ -322,6 +328,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			var keyValue = {};
 			keyValue["restclient.credentials." + env] = currentCredentials;
 			chrome.storage.sync.set(keyValue);
+			credentials[env] = currentCredentials;
 		}
 	};
 
@@ -339,7 +346,9 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 
 			//Set the initial credential in the UI.
 			//Clone rather than pass by reference so we can determine later if the credentials have been modified.
-			advancedSettings.credentials = JSON.parse(JSON.stringify(credentials[selectedEnvironment]));
+			if (credentials[selectedEnvironment]) {
+				advancedSettings.credentials = JSON.parse(JSON.stringify(credentials[selectedEnvironment]));
+			}
 		});
 	};
 
