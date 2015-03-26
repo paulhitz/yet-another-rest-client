@@ -4,21 +4,19 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
-	if (typeof chrome != 'undefined') {
-		$scope.chromeSupport = true;
-		$scope.version = "v" + chrome.runtime.getManifest()['version'];
-		clientAppHelper.addUserDefinedServices($scope);
-	}
-
+clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils,
+												ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
 	//Populate the form.
-	$scope.service = advancedSettings;
+	$scope.settings = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;
-	$scope.environmentSelected = SERVICES_CONFIG.environments[1].id;
+	$scope.selectedEnvironment = SERVICES_CONFIG.environments[1].id;
 	$scope.services = SERVICES_CONFIG.services;
-	$scope.serviceSelected = SERVICES_CONFIG.services[0].id;
+	$scope.selectedService = SERVICES_CONFIG.services[0].id;
 	$scope.placeholder = SERVICES_CONFIG.placeholder;
 	$scope.alerts = [];
+
+	//Chrome specific operations.
+	clientAppHelper.performChromeOperations($scope);
 
 	//Submit the configured Service Request.
 	$scope.submit = function() {
@@ -32,19 +30,27 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		$scope.progress = ProgressbarService.getProgressState('START');
 
 		if (advancedSettings.autoAuthenticate) {
+			//Check that they've supplied credentials. If so, persist them.
+			if (!clientAppHelper.areCredentialsPresent()) {
+				$scope.alerts.push({type: 'danger', msg: "You need to enter an application ID, user ID and a password for automatic authentication. See 'Advanced Settings'."});
+				$scope.processing = false;
+				return;
+			}
+			clientAppHelper.persistCredentials($scope.selectedEnvironment);
+
 			//Delete cookies that can interfere with authentication.
 			clientAppHelper.deleteCookies();
 
 			//Retrieve an Authentication Token based on the selected environment.
-			var authEndpoint = clientAppHelper.configureServiceUrl($scope.environmentSelected, "auth");
+			var authEndpoint = clientAppHelper.configureServiceUrl($scope.selectedEnvironment, "auth");
 			AuthService.getAuthCookie(authEndpoint).then(
 				function(success) {
 					clientAppHelper.configureAndCallService($scope, success.authorization, advancedSettings.requestUrl);
 				},
 				function(error) {
 					$log.error(error);
-					$scope.alerts.push({type: 'danger', msg: "An error occurred while authenticating."});
-					$scope.alerts.push({type: 'info', msg: "Please check the user ID and password. If the problem persists, you may want to try Incognito Mode or clear your cache. If the issue is solely with a particular environment, then the Authentication Service for that environment may be down."});
+					$scope.alerts.push({type: 'danger', msg: "An error occurred while authenticating. Please check the Application ID, User ID and Password."});
+					$scope.alerts.push({type: 'info', msg: "If the problem persists, you may want to try Incognito Mode or try clearing your cache. If the issue is solely with a particular environment, then the Authentication Service for that environment may be down."});
 					$scope.processing = false;
 				}
 			);
@@ -59,12 +65,17 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		utils.copyToClipboard(text);
 	};
 
-	//Display a warning if the production environment is selected and remove credentials.
 	$scope.changeEnvironment = function(env) {
+		//Change the credentials to match the environment.
+		if (credentials[env]) {
+			advancedSettings.credentials = JSON.parse(JSON.stringify(credentials[env]));
+		} else {
+			advancedSettings.credentials = {};
+		}
+
+		//Display a warning if the production environment is selected.
 		if (env === SERVICES_CONFIG.environments[2].id) {
-			$scope.alerts.push({type: 'warning', msg: "Please be careful using the PRODUCTION environment. A valid production user and password need to be specified. To avoid locking the account, the STG/QA credentials have been removed."});
-			$scope.service.userId = "";
-			$scope.service.password = "";
+			$scope.alerts.push({type: 'warning', msg: "Please be careful using the PRODUCTION environment. A valid application ID, production user and password need to be specified."});
 		} else {
 			$scope.alerts = [];
 		}
@@ -85,9 +96,9 @@ clientApp.service('AuthService', function($http, $q, advancedSettings) {
 			deferred.resolve({authorization: cachedAuthTokens[authEndpoint]});
 		} else {
 			var AUTHENTICATION_REQUEST_CONFIG = { headers: {
-				'ApplicationId': advancedSettings.appId,
-				'x-dnb-user': advancedSettings.userId,
-				'x-dnb-pwd': advancedSettings.password
+				'ApplicationId': advancedSettings.credentials.appId,
+				'x-dnb-user': advancedSettings.credentials.userId,
+				'x-dnb-pwd': advancedSettings.credentials.password
 			}};
 
 			$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
@@ -118,18 +129,18 @@ clientApp.controller('ToggleCtrl', function($scope) {
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG) {
+clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
 	var helper = this;
 
 	/**
 	 * Based on the selected environment and service, determine the correct URL to use.
 	 */
-	helper.configureServiceUrl = function(environmentSelected, serviceSelected, parameter) {
+	helper.configureServiceUrl = function(selectedEnvironment, selectedService, parameter) {
 		var url = "";
 
 		//Determine the endpoint based on selected Environment and Service.
 		for (var endpoint of SERVICES_CONFIG.endpoints) {
-			if (endpoint.service === serviceSelected && (endpoint.env === "" || endpoint.env === environmentSelected)) {
+			if (endpoint.service === selectedService && (endpoint.env === "" || endpoint.env === selectedEnvironment)) {
 				url = endpoint.url;
 				break;
 			}
@@ -157,7 +168,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			//If the user has entered a specific endpoint, just use that.
 			$scope.requestUrl = advancedSettings.requestUrl;
 		} else {
-			$scope.requestUrl = helper.configureServiceUrl($scope.environmentSelected, $scope.serviceSelected, $scope.parameter);
+			$scope.requestUrl = helper.configureServiceUrl($scope.selectedEnvironment, $scope.selectedService, $scope.parameter);
 		}
 
 		//Call the endpoint.
@@ -173,7 +184,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		if (advancedSettings.autoAuthenticate) {
 			requestConfig = { headers: {
 				'Authorization': $scope.authenticationToken,
-				'ApplicationId': advancedSettings.appId
+				'ApplicationId': advancedSettings.credentials.appId
 			}};
 		}
 
@@ -218,21 +229,22 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 
 	/**
 	 * Persist the request/response so we have a history of them.
+	 * NOTE: Currently 2 methods are used to persist the data. At some point, we should standardise on just one.
 	 */
 	helper.storeResponseDetails = function($scope, response, requestMethod) {
 		//Construct the new entry and save it.
 		var entry = {
-			'date': Date(),
-			'request': $scope.requestUrl,
-			'response': response,
-			'method': requestMethod,
-			'timer': $scope.timerEnd - $scope.timerStart
+			date: Date(),
+			request: $scope.requestUrl,
+			response: response,
+			method: requestMethod,
+			timer: $scope.timerEnd - $scope.timerStart
 		};
 		var key = "restclient.history." + Date.now();
 		localStorage[key] = JSON.stringify(entry);
 
-		//Also use Chrome Storage to persist it.
-		if (typeof chrome != 'undefined') {
+		//Also use Chrome Storage to persist it. It allows objects to be persisted.
+		if (typeof chrome !== 'undefined') {
 			var keyValue = {};
 			keyValue[key] = entry;
 			chrome.storage.local.set(keyValue);
@@ -266,10 +278,11 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Delete cookies that can interfere with authentication.
+	 * Delete cookies that can interfere with authentication. 
+	 * NOTE: This will likely mess up any open OAM application sessions.
 	 */
 	helper.deleteCookies = function() {
-		if (typeof chrome != 'undefined') {
+		if (typeof chrome !== 'undefined') {
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "userid"});
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "dnb_loginid"});
 			chrome.cookies.remove({"url": "http://dnb.com", "name": "redirect"});
@@ -278,14 +291,79 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
+	 * Perform some Chrome specific operations that will only work in Chrome.
+	 */
+	helper.performChromeOperations = function($scope) {
+		if (typeof chrome !== 'undefined') {
+			$scope.chromeSupport = true;
+			$scope.version = "v" + chrome.runtime.getManifest()['version'];
+			helper.addUserDefinedServices($scope);
+			helper.retrieveAndSetCredentials($scope.selectedEnvironment);
+		}
+	};
+
+	/**
+	 * Check if the necessary credentials have been provided.
+	 */
+	helper.areCredentialsPresent = function() {
+		return advancedSettings.credentials
+			&& advancedSettings.credentials.appId
+			&& advancedSettings.credentials.userId
+			&& advancedSettings.credentials.password;
+	};
+
+	/**
+	 * Persist the credentials if they've changed.
+	 */
+	helper.persistCredentials = function(env) {
+		//Check if the credentials have changed.
+		var initialCredentials = credentials[env];
+		var currentCredentials = advancedSettings.credentials;
+		if (typeof initialCredentials === 'undefined'
+				|| initialCredentials.appId !== currentCredentials.appId
+				|| initialCredentials.userId !== currentCredentials.userId
+				|| initialCredentials.password !== currentCredentials.password) {
+			//Persist the updated credentials (include some other relevant data).
+			currentCredentials.date = Date();
+			currentCredentials.env = env;
+			var keyValue = {};
+			keyValue["restclient.credentials." + env] = currentCredentials;
+			chrome.storage.sync.set(keyValue);
+			credentials[env] = currentCredentials;
+		}
+	};
+
+	/**
+	 * Retrieve the stored credentials and set them for the current environment.
+	 */
+	helper.retrieveAndSetCredentials = function(selectedEnvironment) {
+		var keys = ["restclient.credentials.qa", "restclient.credentials.stg", "restclient.credentials.prod"];
+		chrome.storage.sync.get(keys, function (environments) {
+			for (var key in environments) {
+				//Use the stored credentials object to set the credentials for each environment.
+				var currentCredentials = environments[key];
+				credentials[currentCredentials.env] = currentCredentials;
+			}
+
+			//Set the initial credential in the UI.
+			//Clone rather than pass by reference so we can determine later if the credentials have been modified.
+			if (credentials[selectedEnvironment]) {
+				advancedSettings.credentials = JSON.parse(JSON.stringify(credentials[selectedEnvironment]));
+			}
+		});
+	};
+
+	/**
 	 * Add custom services that the user has previously saved.
 	 */
 	helper.addUserDefinedServices = function($scope) {
 		chrome.storage.sync.get(null, function (services) {
-			for (key in services) {
+			for (var key in services) {
 				var service = services[key];
-				SERVICES_CONFIG.services.unshift(service.serviceName);
-				SERVICES_CONFIG.endpoints.unshift(service.endpoint);
+				if (service.serviceName && service.endpoint) {
+					SERVICES_CONFIG.services.unshift(service.serviceName);
+					SERVICES_CONFIG.endpoints.unshift(service.endpoint);
+				}
 			}
 			$scope.$apply();
 		});
@@ -305,7 +383,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Return the service object with the specified id from the array. 
+	 * Return the service object with the specified id from the array.
 	 */
 	helper.findServiceById = function(id, services) {
 		var serviceToDelete = {};
@@ -370,7 +448,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 		$scope.customServices = clientAppHelper.getCustomServices();
 		$scope.customServices.unshift({"id" : 0, "label" : "Please select a service..."});
 	}
-	$scope.customServiceSelected = $scope.customServices[0].id;
+	$scope.selectedCustomService = $scope.customServices[0].id;
 
 	//Add the new service to Chrome storage and the application dropdowns.
 	$scope.ok = function () {
@@ -397,15 +475,15 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 	};
 
 	//Delete the specified custom service from Chrome storage and the application dropdowns.
-	$scope.delete = function (customServiceSelected) {
+	$scope.delete = function (selectedCustomService) {
 		//Identify and remove the service from the application dropdowns.
-		var serviceToDelete = clientAppHelper.findServiceById(customServiceSelected, $scope.customServices);
+		var serviceToDelete = clientAppHelper.findServiceById(selectedCustomService, $scope.customServices);
 		$scope.customServices.splice($scope.customServices.indexOf(serviceToDelete), 1);
 		SERVICES_CONFIG.services.splice(SERVICES_CONFIG.services.indexOf(serviceToDelete), 1);
-		$scope.customServiceSelected = $scope.customServices[0].id;
+		$scope.selectedCustomService = $scope.customServices[0].id;
 
 		//Remove it from Chrome storage.
-		var key = "restclient.service." + customServiceSelected;
+		var key = "restclient.service." + selectedCustomService;
 		chrome.storage.sync.remove(key, function() {
 			$scope.alerts = [{type: 'success', msg: "The selected service has been deleted."}];
 			$scope.$apply();
