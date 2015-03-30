@@ -1,8 +1,8 @@
 {
-  "esnext": true,
-  "sub": true,
-  "laxbreak": true,
-  "forin": true,
-  "trailing": true,
-  "predef": [ "chrome", "angular" ]
+  "esnext": true, //Allow ECMAScript 6 specific syntax.
+  "sub": true,  //Suppress warnings about using [] notation instead of dot notation.
+  "laxbreak": true, //Suppress line break warnings.
+  "forin": false, //Suppress warnings about filtering 'for in' loops.
+  "trailing": true, //Prohibit trailing white space.
+  "predef": [ "chrome", "angular" ] //Custom Globals.
 }
