@@ -57,7 +57,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		} else {
 			clientAppHelper.configureAndCallService($scope, "(Automatic Authentication Disabled)", advancedSettings.requestUrl);
 		}
-	}
+	};
 
 	//Copy the request or response to the clipboard.
 	$scope.copy = function(text) {
@@ -102,7 +102,7 @@ clientApp.service('AuthService', function($http, $q, advancedSettings) {
 			}};
 
 			$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
-				success(function(data, status, headers, config) {
+				success(function(data, status, headers) {
 					cachedAuthTokens[authEndpoint] = headers('authorization');
 					deferred.resolve({authorization: headers('authorization')});
 				}).
@@ -122,7 +122,7 @@ clientApp.service('AuthService', function($http, $q, advancedSettings) {
 clientApp.controller('ToggleCtrl', function($scope) {
 	$scope.toggle = function(status) {
 		$scope.status = !status;
-	}
+	};
 });
 
 
@@ -204,6 +204,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 				promise = $http.delete($scope.requestUrl, requestConfig);
 				break;
 			case "get":
+				/* falls through */
 			default:
 				promise = $http.get($scope.requestUrl, requestConfig);
 		}
