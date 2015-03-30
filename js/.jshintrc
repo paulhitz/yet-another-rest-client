@@ -1,0 +1,8 @@
+{
+  "esnext": true,
+  "sub": true,
+  "laxbreak": true,
+  "forin": true,
+  "trailing": true,
+  "predef": [ "chrome", "angular" ]
+}
