@@ -188,7 +188,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			}};
 		}
 
-		//Determine the request method to use (GET/POST/PUT/DELETE).
+		//Determine the request method to use (GET/POST/PUT/DELETE/HEAD).
 		var promise;
 		$scope.timerStart = Date.now();
 		switch (advancedSettings.requestMethod) {
@@ -202,6 +202,9 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 				break;
 			case "delete":
 				promise = $http.delete($scope.requestUrl, requestConfig);
+				break;
+			case "head":
+				promise = $http.head($scope.requestUrl, requestConfig);
 				break;
 			case "get":
 				/* falls through */

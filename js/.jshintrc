@@ -1,8 +1,19 @@
 {
+  //Allow ECMAScript 6 specific syntax.
   "esnext": true,
+
+  //Suppress warnings about using [] notation instead of dot notation.
   "sub": true,
+
+  //Suppress line break warnings.
   "laxbreak": true,
-  "forin": true,
+
+  //Suppress warnings about needing to filter within a 'for in' loop.
+  "forin": false,
+
+  //Prohibit trailing white space.
   "trailing": true,
+
+  //Custom Globals.
   "predef": [ "chrome", "angular" ]
 }
