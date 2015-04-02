@@ -22,7 +22,7 @@
 
 	<header class="navbar navbar-default">
 		<div class="navbar-brand">
-			<img src="img/new_dnb_logo.png" alt="Logo"> D&amp;B Services REST Client <sup>{{version}}</sup>
+			<img src="img/new_dnb_logo.png" alt="Logo"> D&amp;B Services REST Client <sup data-ng-cloak>{{version}}</sup>
 		</div>
 		<div class="collapse navbar-collapse">
 			<p class="navbar-text navbar-right">Developed by the Dublin Onboard Team</p>
@@ -60,7 +60,7 @@
 						<div class="col-md-10">
 							<div class="row">
 								<div class="col-md-11">
-									<input type="text" class="form-control" id="parameter" placeholder="{{placeholder}}" value="" data-ng-model="parameter">
+									<input type="text" class="form-control" id="parameter" placeholder="{{placeholder}}" value="" data-ng-model="parameter" data-ng-cloak>
 								</div>
 								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="An optional parameter to send with the service request. E.g. a DUNS# or a Search Term. {{placeholder}} is used by default."></span>
 							</div>
@@ -163,15 +163,15 @@
 		</form>
 	</article>
 
-	<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse">
+	<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse" data-ng-cloak>
 		<progressbar class="progress-striped active" value="progress.value">{{progress.label}}</progressbar>
 	</div>
 
-	<div class="clearfix">
+	<div class="clearfix" data-ng-cloak>
 		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 	</div>
 
-	<div id="response" class="row clearfix" data-ng-show="displayResponse">
+	<div id="response" class="row clearfix" data-ng-show="displayResponse" data-ng-cloak>
 		<div id="responseBody" class="col-md-12 column">
 			<section class="panel panel-info">
 				<div class="panel-heading">
