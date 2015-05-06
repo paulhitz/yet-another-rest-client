@@ -43,7 +43,7 @@
 					<div class="form-group">
 						<label for="services" class="col-md-2 control-label">Select Service:</label>
 						<div class="col-md-7">
-							<select class="form-control" id="services" data-ng-model="selectedService" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="service.requestUrl"></select>
+							<select class="form-control" id="services" data-ng-model="selectedService" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="settings.requestUrl"></select>
 						</div>
 						<div class="col-md-3" data-ng-controller="AddServiceModalCtrl" data-ng-show="chromeSupport">
 							<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add New Service</button>
