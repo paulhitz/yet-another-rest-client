@@ -216,7 +216,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		promise.then(function(success) {
 			helper.populateView($scope, success);
 			helper.displayView($scope);
-			helper.storeResponseDetails($scope, success.data, advancedSettings.requestMethod);
+			helper.storeResponseDetails($scope, success.data);
 		}, function(error) {
 			helper.populateView($scope, error);
 			helper.displayView($scope);
@@ -235,19 +235,24 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	 * Persist the request/response so we have a history of them.
 	 * NOTE: Currently 2 methods are used to persist the data. At some point, we should standardise on just one.
 	 */
-	helper.storeResponseDetails = function($scope, response, requestMethod) {
-		//Construct the new entry and save it.
+	helper.storeResponseDetails = function($scope, response) {
+		//Construct the new entry.
 		var entry = {
 			date: Date(),
 			request: $scope.requestUrl,
 			response: response,
-			method: requestMethod,
+			method: advancedSettings.requestMethod,
 			timer: $scope.timerEnd - $scope.timerStart
 		};
+		if (advancedSettings.requestMethod === 'post' || advancedSettings.requestMethod === 'put') {
+			entry['payload'] = advancedSettings.payload;
+		}
+
+		//Persist it using LocalStorage.
 		var key = "restclient.history." + Date.now();
 		localStorage[key] = JSON.stringify(entry);
 
-		//Also use Chrome Storage to persist it. It allows objects to be persisted.
+		//Also use Chrome Storage to persist it. Supports objects.
 		if (typeof chrome !== 'undefined') {
 			var keyValue = {};
 			keyValue[key] = entry;
@@ -471,7 +476,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 		//Add the new service to Chrome (Sync) Storage.
 		var key = "restclient.service." + timestamp;
 		var keyValue = {};
-		keyValue[key] = { serviceName : newServiceName, endpoint : newEndpoint };
+		keyValue[key] = {serviceName : newServiceName, endpoint : newEndpoint};
 		chrome.storage.sync.set(keyValue, function() {
 			$scope.alerts = [{type: 'success', msg: "The service (" + newServiceName.label + ") has been added. It will now appear in the Service dropdown."}];
 			$scope.$apply();
