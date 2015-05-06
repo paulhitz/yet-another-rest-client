@@ -91,6 +91,10 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		label : "Change Events (GET)",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
+		id : "gms_alert_report",
+		label : "Alert Report (GET)",
+		group : "GMS Monitoring (Onboard Specific)"
+	}, {
 		id : "investigation",
 		label : "Investigation Service (POST)",
 		group : "Miscellaneous"
@@ -348,6 +352,18 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "prod",
 		service : "gms_events",
 		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/changeevents/{placeholder}?DUNSNumber=200000024&DNBProductID=GSRL7&ApplicationTransactionID=onboard-1&TransactionTimestamp=2001-09-11T09:30:47-05:00&ApplicationID=36&UserID=teamjoly@dnb.com&CustomerID=970151058&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=41"
+	}, {
+		env : "qa",
+		service : "gms_alert_report",
+		url : "http://services-ext-qa.dnb.com/V2.0/gmsmonitoring/alertreport?UserID=teamjoly@dnb.com&CustomerID=965088422&DUNSNumber={placeholder}&CountryISOAlpha2Code=GB&ChangeEventID=355746&ApplicationTransactionID=TRAN-ONBRD-12222&ApplicationID=36&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=39&SeverityText=Down%20Trend&ChangeEventTypeCode=17893"
+	}, {
+		env : "stg",
+		service : "gms_alert_report",
+		url : "http://services-ext-stg.dnb.com/V2.0/gmsmonitoring/alertreport?UserID=teamjoly@dnb.com&CustomerID=970041271&DUNSNumber={placeholder}&CountryISOAlpha2Code=GB&ChangeEventID=355746&ApplicationTransactionID=TRAN-ONBRD-12222&ApplicationID=36&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=39&SeverityText=Down%20Trend&ChangeEventTypeCode=17893"
+	}, {
+		env : "prod",
+		service : "gms_alert_report",
+		url : "https://maxcvservices.dnb.com/V2.0/gmsmonitoring/alertreport?UserID=teamjoly@dnb.com&CustomerID=970151058&DUNSNumber={placeholder}&CountryISOAlpha2Code=GB&ChangeEventID=355746&ApplicationTransactionID=TRAN-ONBRD-12222&ApplicationID=36&UserCountryISOAlpha2Code=GB&LanguagePreferenceCode=39&SeverityText=Down%20Trend&ChangeEventTypeCode=17893"
 	}, {
 		env : "qa",
 		service : "portfolio_assets",
