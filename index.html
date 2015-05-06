@@ -6,20 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="This tool can be used to test various REST Services. A large number of D&amp;B Services are already configured and new ones can be easily added.">
 	<meta name="author" content="Paul Hitz">
-
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/angular-csp.css" rel="stylesheet">
 	<link href="css/highlightjs-default.min.css" rel="stylesheet">
-
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
-
 <body>
 <div class="container" data-ng-controller="ClientAppCtrl">
-
 	<header class="navbar navbar-default">
 		<div class="navbar-brand">
 			<img src="img/new_dnb_logo.png" alt="Logo"> D&amp;B Services REST Client <sup data-ng-cloak>{{version}}</sup>
@@ -49,7 +43,7 @@
 					<div class="form-group">
 						<label for="services" class="col-md-2 control-label">Select Service:</label>
 						<div class="col-md-7">
-							<select class="form-control" id="services" data-ng-model="selectedService" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="service.requestUrl"></select>
+							<select class="form-control" id="services" data-ng-model="selectedService" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="settings.requestUrl"></select>
 						</div>
 						<div class="col-md-3" data-ng-controller="AddServiceModalCtrl" data-ng-show="chromeSupport">
 							<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add New Service</button>
@@ -224,7 +218,7 @@
 	<footer class="row navbar-default container">
 		<p class="text-muted pull-left">Developed by the Dublin <a href="http://onboard.dnb.com/" target="_blank">Onboard</a> Team.</p>
 		<p class="pull-right">
-			<a href="mailto:hitzp@dnb.com">Contact</a> | 
+			<a href="mailto:hitzp@dnb.com">Feedback</a> | 
 			<a href="http://dbdlscmap01.uk.dnb.com:8085/display/GEM/Custom+DnB+REST+Client" target="_blank">Help</a> | 
 			<a data-popover-trigger="mouseenter" data-popover-title="Request History" data-popover="You can view all your previous request/responses by opening the Chrome DevTools (F12) and navigating to Resources / Local Storage.">Request History</a> | 
 			<a href="#top" target="_self">Back To Top</a>
@@ -232,6 +226,8 @@
 	</footer>
 </div>
 
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/angular-resource.min.js"></script>
 <script src="js/highlight.min.js"></script>
