@@ -15,7 +15,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 	$scope.placeholder = SERVICES_CONFIG.placeholder;
 	$scope.alerts = [];
 
-	//Chrome specific operations.
+	//Chrome specific operations. E.g. Chrome Storage related functionality.
 	clientAppHelper.performChromeOperations($scope);
 
 	//Submit the configured Service Request.
@@ -88,12 +88,13 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
  */
 clientApp.service('AuthService', function($http, $q, advancedSettings) {
 	var cachedAuthTokens = [];
+	var VALIDITY_PERIOD = 28800000; //8 hours.
 
 	this.getAuthCookie = function(authEndpoint) {
 		var deferred = $q.defer();
 
-		if (typeof cachedAuthTokens[authEndpoint] !== 'undefined') {
-			deferred.resolve({authorization: cachedAuthTokens[authEndpoint]});
+		if (this.isValidAuthTokenCached(cachedAuthTokens[authEndpoint])) {
+			deferred.resolve({authorization: cachedAuthTokens[authEndpoint]['authToken']});
 		} else {
 			var AUTHENTICATION_REQUEST_CONFIG = { headers: {
 				'ApplicationId': advancedSettings.credentials.appId,
@@ -103,7 +104,12 @@ clientApp.service('AuthService', function($http, $q, advancedSettings) {
 
 			$http.get(authEndpoint, AUTHENTICATION_REQUEST_CONFIG).
 				success(function(data, status, headers) {
-					cachedAuthTokens[authEndpoint] = headers('authorization');
+					//Cache the result.
+					var authenticatedCredentials = AUTHENTICATION_REQUEST_CONFIG.headers;
+					authenticatedCredentials['authToken'] = headers('authorization');
+					authenticatedCredentials['timestamp'] = Date.now();
+					cachedAuthTokens[authEndpoint] = authenticatedCredentials;
+
 					deferred.resolve({authorization: headers('authorization')});
 				}).
 				error(function(msg, code) {
@@ -113,6 +119,29 @@ clientApp.service('AuthService', function($http, $q, advancedSettings) {
 		}
 		return deferred.promise;
 	};
+
+	/**
+	 * Check if we have a previously cached authentication token. 
+	 * This saves time and reduces dependency on the authentication server.
+	 */
+	this.isValidAuthTokenCached = function(authenticatedCredentials) {
+		//Check if we have something cached for this environment
+		if (typeof authenticatedCredentials !== 'undefined') {
+
+			//Confirm it has an authentication token and it was for the same user, password and application.
+			if (typeof authenticatedCredentials['authToken'] !== 'undefined'
+					&& authenticatedCredentials['ApplicationId'] === advancedSettings.credentials.appId
+					&& authenticatedCredentials['x-dnb-user'] === advancedSettings.credentials.userId
+					&& authenticatedCredentials['x-dnb-pwd'] === advancedSettings.credentials.password) {
+
+				//Check that the authentication token hasn't expired.
+				if (authenticatedCredentials['timestamp'] + VALIDITY_PERIOD > Date.now()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 });
 
 
