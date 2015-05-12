@@ -141,7 +141,7 @@ clientApp.service('AuthService', function($http, $q, advancedSettings) {
 			}
 		}
 		return false;
-	}
+	};
 });
 
 
