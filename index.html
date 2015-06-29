@@ -130,6 +130,7 @@
 											<option value="get">GET</option>
 											<option value="post">POST</option>
 											<option value="put">PUT</option>
+											<option value="patch">PATCH</option>
 											<option value="delete">DELETE</option>
 											<option value="head">HEAD</option>
 										</select>
@@ -143,7 +144,7 @@
 							<div class="col-md-10">
 								<div class="row">
 									<div class="col-md-11">
-										<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload" data-ng-disabled="settings.requestMethod !== 'post' && settings.requestMethod !== 'put'"></textarea>
+										<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload" data-ng-disabled="settings.requestMethod !== 'post' && settings.requestMethod !== 'put' && settings.requestMethod !== 'patch'"></textarea>
 									</div>
 									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The payload to use for POST and PUT requests. This is usually in JSON format."></span>
 								</div>

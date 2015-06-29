@@ -61,7 +61,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			}};
 		}
 
-		//Determine the request method to use (GET/POST/PUT/DELETE/HEAD).
+		//Determine the request method to use (GET/POST/PUT/DELETE/HEAD/PATCH).
 		var promise;
 		$scope.timerStart = Date.now();
 		switch (advancedSettings.requestMethod) {
@@ -72,6 +72,10 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			case "put":
 				helper.addPayloadHeaders(requestConfig.headers);
 				promise = $http.put($scope.requestUrl, advancedSettings.payload, requestConfig);
+				break;
+			case "patch":
+				helper.addPayloadHeaders(requestConfig.headers);
+				promise = $http.patch($scope.requestUrl, advancedSettings.payload, requestConfig);
 				break;
 			case "delete":
 				promise = $http.delete($scope.requestUrl, requestConfig);
