@@ -39,10 +39,6 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		label : "SO (Simple Ownership)",
 		group : "Custom Product Service"
 	}, {
-		id : "rdc_search",
-		label : "ComplianceCheck Service / RDC Search (v1.0)",
-		group : "Search"
-	}, {
 		id : "match",
 		label : "Match (REST version)",
 		group : "Search"
@@ -58,6 +54,18 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		id : "list_portfolio",
 		label : "List Portfolio Service (POST)",
 		group : "Portfolio"
+	}, {
+		id : "rdc_search",
+		label : "RDC Search",
+		group : "ComplianceCheck Service (v1.0)"
+	}, {
+		id : "rdc_entity",
+		label : "RDC Entity Information (Silvio Berlusconi)",
+		group : "ComplianceCheck Service (v1.0)"
+	}, {
+		id : "rdc_entity_pdf",
+		label : "RDC Entity Information - PDF (Silvio Berlusconi)",
+		group : "ComplianceCheck Service (v1.0)"
 	}, {
 		id : "gms_reg",
 		label : "Registration (GET/POST/PUT)",
@@ -199,15 +207,39 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "rdc_search",
-		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={placeholder}"
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=dnb_test&SubjectTypeText=P&subjectname={placeholder}"
 	}, {
 		env : "stg",
 		service : "rdc_search",
-		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={placeholder}"
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=dnb_test&SubjectTypeText=P&subjectname={placeholder}"
 	}, {
 		env : "prod",
 		service : "rdc_search",
-		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=teamjoly&SubjectTypeText=P&subjectname={placeholder}"
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/entities/alerts?CandidateDisplayStartSequenceNumber=1&CandidatePerPageMaximumQuantity=100&CustomerBillingEndorsementText=dnb_test&SubjectTypeText=P&subjectname={placeholder}"
+	}, {
+		env : "qa",
+		service : "rdc_entity",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/entities/EntitySystemID-1b59b76f0e75fee15d3f3d53eb346cc4/products/CMP_ENT_DTL?ProductFormatPreferenceCode=7004&httpClient.socketTimeout=30000&httpClient.connectTimeout=30000&CustomerBillingEndorsementText=dnb_test"
+	}, {
+		env : "stg",
+		service : "rdc_entity",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/EntitySystemID-1b59b76f0e75fee15d3f3d53eb346cc4/products/CMP_ENT_DTL?ProductFormatPreferenceCode=7004&httpClient.socketTimeout=30000&httpClient.connectTimeout=30000&CustomerBillingEndorsementText=dnb_test"
+	}, {
+		env : "prod",
+		service : "rdc_entity",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/entities/EntitySystemID-1b59b76f0e75fee15d3f3d53eb346cc4/products/CMP_ENT_DTL?ProductFormatPreferenceCode=7004&httpClient.socketTimeout=30000&httpClient.connectTimeout=30000&CustomerBillingEndorsementText=dnb_test"
+	}, {
+		env : "qa",
+		service : "rdc_entity_pdf",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/entities/EntitySystemID-1b59b76f0e75fee15d3f3d53eb346cc4/products/CMP_ENT_VW?ProductFormatPreferenceCode=13204&httpClient.socketTimeout=30000&httpClient.connectTimeout=30000&CustomerBillingEndorsementText=dnb_test"
+	}, {
+		env : "stg",
+		service : "rdc_entity_pdf",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/entities/EntitySystemID-1b59b76f0e75fee15d3f3d53eb346cc4/products/CMP_ENT_VW?ProductFormatPreferenceCode=13204&httpClient.socketTimeout=30000&httpClient.connectTimeout=30000&CustomerBillingEndorsementText=dnb_test"
+	}, {
+		env : "prod",
+		service : "rdc_entity_pdf",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/entities/EntitySystemID-1b59b76f0e75fee15d3f3d53eb346cc4/products/CMP_ENT_VW?ProductFormatPreferenceCode=13204&httpClient.socketTimeout=30000&httpClient.connectTimeout=30000&CustomerBillingEndorsementText=dnb_test"
 	}, {
 		env : "qa",
 		service : "match",
