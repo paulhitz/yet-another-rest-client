@@ -2,7 +2,8 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
+clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, 
+		ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	/**
@@ -117,7 +118,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 		var entry = {
 			date: Date(),
 			request: $scope.requestUrl,
-			response: response,
+			response: helper.excludeLargeObjects(response),
 			method: advancedSettings.requestMethod,
 			timer: $scope.timerEnd - $scope.timerStart
 		};
@@ -138,15 +139,29 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
+	 * Storing large responses (e.g. base64 encoded PDFs) can lead to performance issues 
+	 * so we explicitly exclude them.
+	 */
+	helper.excludeLargeObjects = function(response) {
+		var responseSize = sizeof(response);
+		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
+			return "The response was too large to store. Only responses less than " 
+				+ GENERAL_CONSTANTS.MAX_OBJECT_SIZE + " bytes in size will be stored. This response was approx " 
+				+ responseSize + " bytes.";
+		}
+		return response;
+	};
+
+	/**
 	 * Update the UI with the data received from the service.
 	 */
 	helper.populateView = function($scope, response) {
 		$scope.timerEnd = Date.now();
 		$scope.progress = ProgressbarService.getProgressState('COMPLETE');
 		response.headers().status = response.status;
-		$scope.responseBody = JSON.stringify(response.data, null, 2);
-		$scope.responseHeaders = JSON.stringify(response.headers(), null, 2);
-		$scope.requestHeaders = JSON.stringify(response.config, null, 2);
+		$scope.responseBody = JSON.stringify(response.data, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
+		$scope.responseHeaders = JSON.stringify(response.headers(), null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
+		$scope.requestHeaders = JSON.stringify(response.config, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
 	};
 
 	/**

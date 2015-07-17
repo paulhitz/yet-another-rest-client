@@ -5,7 +5,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
  * Main application controller. Populates the form and submits the Service Request.
  */
 clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils,
-												ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
+		ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
 	//Populate the form.
 	$scope.settings = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;
