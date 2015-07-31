@@ -11,7 +11,7 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		label : "Staging"
 	}, {
 		id : "prod",
-		label : "Production (Requires Credentials)"
+		label : "Production"
 	} ],
 
 	services : [ {
@@ -107,6 +107,10 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		label : "Investigation Service (POST)",
 		group : "Miscellaneous"
 	}, {
+		id : "pcs_public_docs",
+		label : "Product Catalog Service - Available Image List",
+		group : "Miscellaneous"
+	}, {
 		id : "date_test",
 		label : "JSONTest.com Date/Time",
 		group : "External (No Authentication Required)"
@@ -144,6 +148,18 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "prod",
 		service : "pcs",
 		url : "https://maxcvservices.dnb.com/rest/ProductCatalogService/V2/ListAvailableProduct?DUNSNumber={placeholder}"
+	}, {
+		env : "qa",
+		service : "pcs_public_docs",
+		url : "http://services-ext-qa.dnb.com/rest/ProductCatalogService/V2/ListAvailablePublicDocuments?DUNSNumber={placeholder}"
+	}, {
+		env : "stg",
+		service : "pcs_public_docs",
+		url : "http://services-ext-stg.dnb.com/rest/ProductCatalogService/V2/ListAvailablePublicDocuments?DUNSNumber={placeholder}"
+	}, {
+		env : "prod",
+		service : "pcs_public_docs",
+		url : "https://maxcvservices.dnb.com/rest/ProductCatalogService/V2/ListAvailablePublicDocuments?DUNSNumber={placeholder}"
 	}, {
 		env : "qa",
 		service : "linkage",
@@ -243,15 +259,15 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "match",
-		url : "http://services-ext-qa.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={placeholder}"
+		url : "http://services-ext-qa.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=GB&DUNSNumber={placeholder}"
 	}, {
 		env : "stg",
 		service : "match",
-		url : "http://services-ext-stg.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={placeholder}"
+		url : "http://services-ext-stg.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=GB&DUNSNumber={placeholder}"
 	}, {
 		env : "prod",
 		service : "match",
-		url : "https://maxcvservices.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=BE&DUNSNumber={placeholder}"
+		url : "https://maxcvservices.dnb.com/rest/CompanyService/V2/Match?CountryISOAlpha2Code=GB&DUNSNumber={placeholder}"
 	}, {
 		env : "qa",
 		service : "global",
