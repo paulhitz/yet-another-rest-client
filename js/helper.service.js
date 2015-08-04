@@ -90,14 +90,11 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 				promise = $http.get($scope.requestUrl, requestConfig);
 		}
 
-		//Handle the response.
+		//Handle the service response.
 		promise.then(function(success) {
-			helper.populateView($scope, success);
-			helper.displayView($scope);
-			helper.storeResponseDetails($scope, success.data);
+			helper.handleResponse($scope, success);
 		}, function(error) {
-			helper.populateView($scope, error);
-			helper.displayView($scope);
+			helper.handleResponse($scope, error);
 		});
 	};
 
@@ -107,6 +104,15 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	helper.addPayloadHeaders = function(headers) {
 		headers['Accept'] = "application/json";
 		headers['Content-Type'] = "application/json";
+	};
+
+	/**
+	 * Handle the service response. Update UI, store details etc.
+	 */
+	helper.handleResponse = function($scope, response) {
+		helper.populateView($scope, response);
+		helper.displayView($scope);
+		helper.storeResponseDetails($scope, response.data);
 	};
 
 	/**
