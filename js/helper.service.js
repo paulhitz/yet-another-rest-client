@@ -116,8 +116,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Persist the request/response so we have a history of them.
-	 * NOTE: Currently 2 methods are used to persist the data. At some point, we should standardise on just one.
+	 * Persist the request/response so we have a history of them. Uses Chrome Storage.
 	 */
 	helper.storeResponseDetails = function($scope, response) {
 		//Construct the new entry.
@@ -132,11 +131,8 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			entry['payload'] = advancedSettings.payload;
 		}
 
-		//Persist it using LocalStorage.
+		//Persist it using Chrome Storage. Supports objects.
 		var key = "restclient.history." + Date.now();
-		localStorage[key] = JSON.stringify(entry);
-
-		//Also use Chrome Storage to persist it. Supports objects.
 		if (typeof chrome !== 'undefined') {
 			var keyValue = {};
 			keyValue[key] = entry;
