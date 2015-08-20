@@ -1,4 +1,4 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table']);
 
 
 /**
@@ -81,4 +81,94 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		}
 	};
 });
+
+
+
+/*
+TODO:
+
+-add modal
+-do we use ellipsis for the request url?
+-loading indicator
+-allow delete
+-check that we're using the table correctly
+-sorting
+-Display message if there are no entries
+
+*/
+
+
+
+
+
+
+
+
+clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONSTANTS) {
+
+	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
+
+	//for now limit it to a few entries so it's easier to develop. the final version should use 'null' to get all entries.
+	var keys = ["restclient.history.1430214093668", "restclient.history.1430923645503", "restclient.history.1430923880180"];
+	var values = [];
+
+	//Get the data from chrome storage 
+	chrome.storage.local.get(keys, function (history) {
+
+		for (var key in history) {
+			//console.log("key = " + key);
+			var entry = history[key];
+			//console.log("entry = " + JSON.stringify(entry));
+			
+			if (historyHelper.isHistoryKey(key)) {
+				values.push(entry);
+			}
+		}
+	
+		$scope.rowCollection = values; 	
+		$scope.$apply();
+		
+		//$scope.displayedCollection = [].concat($scope.rowCollection);
+
+	});
+
+
+
+
+//TODO display some kind of loading indicator here?
+
+
+
+$scope.removeItem = function removeItem(row) {
+	var index = $scope.rowCollection.indexOf(row);
+	if (index !== -1) {
+		$scope.rowCollection.splice(index, 1);
+		//TODO now remove it from Chrome Storage. We'll have to include the key somehow?
+	}
+};
+
+  
+});
+
+
+clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
+	var history = this;
+
+	/**
+	 *  TODO check key is in correct format
+	 */
+	history.isHistoryKey = function(key) {
+		//use constants file for "restclient.history"
+		return true;
+	};
+});
+
+
+
+
+
+
+
+
+
 

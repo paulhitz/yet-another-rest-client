@@ -1,7 +1,9 @@
 /**
  * Common utility functions not tied to any particular application.
  */
-angular.module('common', []).service('utils', function() {
+var common = angular.module('common', []);
+
+common.service('utils', function() {
 	var utils = this;
 
 	/**
@@ -22,4 +24,13 @@ angular.module('common', []).service('utils', function() {
 		document.execCommand('copy', true);
 		copyFrom.remove();
 	};
+});
+
+/**
+ * A custom filter to convert a date to a format that Angular recognises.
+ */
+common.filter("asDate", function () {
+    return function (input) {
+        return new Date(input);
+    }
 });
