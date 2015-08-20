@@ -87,13 +87,10 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 /*
 TODO:
 
--sorting bug... it doesn't use the updated array
+
 -add modal
--loading indicator
 -allow delete
--check that we're using the table correctly
--sorting. check we sort the date correctly.
--Display message if there are no entries
+-Fix sorting of the date.
 
 */
 
@@ -103,66 +100,48 @@ TODO:
 
 
 
-
+/**
+ *
+ */
 clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONSTANTS) {
-
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 
 	//for now limit it to a few entries so it's easier to develop. the final version should use 'null' to get all entries.
 	var keys = ["restclient.history.1430214093668", "restclient.history.1430923645503", "restclient.history.1430923880180", "restclient.history.1430925484964"];
-	var values = [];
 
-	//Get the data from chrome storage 
+	//Get the data from chrome storage.
 	chrome.storage.local.get(keys, function (history) {
-
+		//Add each history object to an array.
+		var values = [];
 		for (var key in history) {
-			//console.log("key = " + key);
-			var entry = history[key];
-			//console.log("entry = " + JSON.stringify(entry));
-			
 			if (historyHelper.isHistoryKey(key)) {
-				values.push(entry);
+				values.push(history[key]);
 			}
 		}
-	
-		$scope.rowCollection = values; 	
-		$scope.$apply();
-		
-		//$scope.displayedCollection = [].concat($scope.rowCollection);
 
+		//Update the UI.
+		$scope.rowCollection = values; 	
+		$scope.displayedCollection = [].concat($scope.rowCollection);
+		$scope.$apply();
 	});
 
 
 
+	//
+	$scope.removeItem = function removeItem(row) {
+		var index = $scope.rowCollection.indexOf(row);
+		if (index !== -1) {
+			$scope.rowCollection.splice(index, 1);
+			//TODO now remove it from Chrome Storage. We'll have to include the key somehow?
+		}
+	};
 
-//TODO display some kind of loading indicator here?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$scope.removeItem = function removeItem(row) {
-	var index = $scope.rowCollection.indexOf(row);
-	if (index !== -1) {
-		$scope.rowCollection.splice(index, 1);
-		//TODO now remove it from Chrome Storage. We'll have to include the key somehow?
-	}
-};
-
-$scope.openItem = function removeItem(row) {
-	//console.log("row = " + JSON.stringify(row));
-	//TODO Open a modal dialog with more details.
-	alert(JSON.stringify(row));
-};
+	//
+	$scope.openItem = function removeItem(row) {
+		//console.log("row = " + JSON.stringify(row));
+		//TODO Open a modal dialog with more details.
+		alert(JSON.stringify(row));
+	};
   
 });
 
