@@ -87,12 +87,12 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 /*
 TODO:
 
+-sorting bug... it doesn't use the updated array
 -add modal
--do we use ellipsis for the request url?
 -loading indicator
 -allow delete
 -check that we're using the table correctly
--sorting
+-sorting. check we sort the date correctly.
 -Display message if there are no entries
 
 */
@@ -109,7 +109,7 @@ clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONS
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 
 	//for now limit it to a few entries so it's easier to develop. the final version should use 'null' to get all entries.
-	var keys = ["restclient.history.1430214093668", "restclient.history.1430923645503", "restclient.history.1430923880180"];
+	var keys = ["restclient.history.1430214093668", "restclient.history.1430923645503", "restclient.history.1430923880180", "restclient.history.1430925484964"];
 	var values = [];
 
 	//Get the data from chrome storage 
@@ -139,6 +139,17 @@ clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONS
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 $scope.removeItem = function removeItem(row) {
 	var index = $scope.rowCollection.indexOf(row);
 	if (index !== -1) {
@@ -147,6 +158,11 @@ $scope.removeItem = function removeItem(row) {
 	}
 };
 
+$scope.openItem = function removeItem(row) {
+	//console.log("row = " + JSON.stringify(row));
+	//TODO Open a modal dialog with more details.
+	alert(JSON.stringify(row));
+};
   
 });
 

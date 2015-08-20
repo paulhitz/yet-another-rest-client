@@ -30,7 +30,7 @@ common.service('utils', function() {
  * A custom filter to convert a date to a format that Angular recognises.
  */
 common.filter("asDate", function () {
-    return function (input) {
-        return new Date(input);
-    }
+	return function (input) {
+		return new Date(input);
+	}
 });

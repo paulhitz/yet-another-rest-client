@@ -108,6 +108,20 @@ select#customServices {
   display: inline;
 }
 
+/* Smart-Table Styles */
+.st-sort-ascent:before {
+  content: '\25B2';
+}
+.st-sort-descent:before {
+  content: '\25BC';
+}
+.clickable {
+  cursor: pointer;
+}
+table#history td, table#history th {
+  white-space: nowrap;
+}
+
 
 /*
  * Sticky footer styles
