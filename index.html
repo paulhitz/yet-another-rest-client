@@ -45,7 +45,7 @@
 		<table id="history" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
 			<thead>
 				<tr>
-					<th st-sort="date" st-skip-natural="true" class="clickable">Date</th>
+					<th st-sort="date" st-sort-default="true" st-skip-natural="true" class="clickable">Date</th>
 					<th st-sort="request" st-skip-natural="true" class="clickable">Request URL</th>
 					<th st-sort="method" st-skip-natural="true" class="clickable">Type</th>
 					<th st-sort="timer" st-skip-natural="true" class="clickable">Response Time</th>
@@ -60,7 +60,7 @@
 					<td colspan="5">There are no entries to display.</td>
 				</tr>
 				<tr ng-repeat="row in displayedCollection" class="small">
-					<td>{{row.date | asDate | date:dateFormat}}</td>
+					<td>{{row.date | date:dateFormat}}</td>
 					<td style="word-break: break-all; white-space: normal;">{{row.request}}</td>
 					<td>{{row.method | uppercase}}</td>
 					<td>{{row.timer / 1000}} seconds</td>

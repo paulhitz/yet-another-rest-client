@@ -110,12 +110,18 @@ clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONS
 	var keys = ["restclient.history.1430214093668", "restclient.history.1430923645503", "restclient.history.1430923880180", "restclient.history.1430925484964"];
 
 	//Get the data from chrome storage.
-	chrome.storage.local.get(keys, function (history) {
+	chrome.storage.local.get(null, function (history) {
 		//Add each history object to an array.
 		var values = [];
 		for (var key in history) {
+			var entry = history[key];
 			if (historyHelper.isHistoryKey(key)) {
-				values.push(history[key]);
+				//Add the key to the object so we can identify it later.
+				entry['key'] = key;
+
+				//Fix up the date format to enable simpler sorting and formatting.
+				entry['date'] = new Date(entry['date']);
+				values.push(entry);
 			}
 		}
 
@@ -125,24 +131,26 @@ clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONS
 		$scope.$apply();
 	});
 
-
-
-	//
+	//Delete (permanently) the selected item.
 	$scope.removeItem = function removeItem(row) {
 		var index = $scope.rowCollection.indexOf(row);
 		if (index !== -1) {
 			$scope.rowCollection.splice(index, 1);
-			//TODO now remove it from Chrome Storage. We'll have to include the key somehow?
+
+			//Delete the entry from Chrome Storage.
+			if (typeof chrome !== 'undefined') {
+				//chrome.storage.local.remove(row.key); //TOOD enable this when complete.
+				alert("Deleting key = " + row.key);
+			}
 		}
 	};
 
-	//
+	//View more details about the selected item.
 	$scope.openItem = function removeItem(row) {
 		//console.log("row = " + JSON.stringify(row));
 		//TODO Open a modal dialog with more details.
 		alert(JSON.stringify(row));
 	};
-  
 });
 
 
