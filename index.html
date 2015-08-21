@@ -19,7 +19,33 @@
 			<img src="img/new_dnb_logo.png" alt="Logo"> D&amp;B Services REST Client <sup data-ng-cloak>{{version}}</sup>
 		</div>
 		<div class="collapse navbar-collapse">
-			<p class="navbar-text navbar-right">Developed by the Dublin Onboard Team</p>
+		
+		
+		
+		
+			<div class="">
+
+		
+		
+
+			
+			
+						<ul class="nav navbar-nav navbar-right">
+						
+						 <li class="navbar-text " style="padding-right: 30px;">Developed by the Dublin Onboard Team</li>
+						
+		
+        <li class=" navbar-link-container" style="border-left-width: 2px; border-left-style: outset;" ><a href="#" style="padding-top: 24px;">History</a></li>
+		
+       
+		
+		</ul>
+		
+		
+		</div>
+		
+			
+			
 		</div>
 	</header>
 
@@ -40,12 +66,15 @@
 
 
 
-	<div ng-controller="historyCtrl">
-		<p style="padding: 10px;">A history of your requests is displayed below. Click on a row to display more information, including the service response.</p>
+	<div data-ng-controller="HistoryCtrl">
+		<div id="historyIntroText">
+			<p>A history of your requests is displayed below. You can view more information (including the service responses) by clicking on the 'More Information' icon.</p>
+			<p><strong>Total number of requests: </strong>{{numberOfEntries}}</p>
+		</div>
 		<table id="history" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
 			<thead>
 				<tr>
-					<th st-sort="date" st-sort-default="true" st-skip-natural="true" class="clickable">Date</th>
+					<th st-sort="date" st-skip-natural="true" class="clickable">Date</th>
 					<th st-sort="request" st-skip-natural="true" class="clickable">Request URL</th>
 					<th st-sort="method" st-skip-natural="true" class="clickable">Type</th>
 					<th st-sort="timer" st-skip-natural="true" class="clickable">Response Time</th>
@@ -53,22 +82,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-hide="displayedCollection != null">
-					<td colspan="5" class="text-center"><span class="glyphicon glyphicon-refresh spinning"></span> Loading... </td>
+				<tr data-ng-hide="displayedCollection != null">
+					<td colspan="5" class="text-center"><span class="glyphicon glyphicon-refresh spinning"></span> Loading...</td>
 				</tr>
-				<tr ng-show="displayedCollection.length === 0">
+				<tr data-ng-show="displayedCollection.length === 0">
 					<td colspan="5">There are no entries to display.</td>
 				</tr>
-				<tr ng-repeat="row in displayedCollection" class="small">
+				<tr data-ng-repeat="row in displayedCollection" class="small">
 					<td>{{row.date | date:dateFormat}}</td>
 					<td style="word-break: break-all; white-space: normal;">{{row.request}}</td>
 					<td>{{row.method | uppercase}}</td>
 					<td>{{row.timer / 1000}} seconds</td>
 					<td>
-						<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger" title="Delete this entry.">
+						<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
 							<i class="glyphicon glyphicon-remove"></i>
-						</button>											
-						<button type="button" ng-click="openItem(row)" class="btn btn-sm btn-primary" title="Display more details.">
+						</button>
+						<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details.">
 							<i class="glyphicon glyphicon-info-sign"></i>
 						</button>
 					</td>
@@ -275,9 +304,9 @@
 	<footer class="row navbar-default container">
 		<p class="text-muted pull-left">Developed by the Dublin <a href="http://onboard.dnb.com/" target="_blank">Onboard</a> Team.</p>
 		<p class="pull-right">
-			<a href="mailto:hitzp@dnb.com">Feedback</a> | 
-			<a href="http://dbdlscmap01.uk.dnb.com:8085/display/GEM/Custom+DnB+REST+Client" target="_blank">Help</a> | 
-			<a data-popover-trigger="mouseenter" data-popover-title="Request History" data-popover="You can view all your previous request/responses by opening the Chrome DevTools (F12) and navigating to Resources / Local Storage.">Request History</a> | 
+			<a href="mailto:hitzp@dnb.com">Feedback</a> |
+			<a href="http://dbdlscmap01.uk.dnb.com:8085/display/GEM/Custom+DnB+REST+Client" target="_blank">Help</a> |
+			<a data-popover-trigger="mouseenter" data-popover-title="Request History" data-popover="You can view all your previous request/responses by opening the Chrome DevTools (F12) and navigating to Resources / Local Storage.">Request History</a> |
 			<a href="#top" target="_self">Back To Top</a>
 		</p>
 	</footer>

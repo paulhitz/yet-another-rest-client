@@ -7,7 +7,7 @@ clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
 		var modalInstance = $modal.open({
 			templateUrl: 'partials/customServicesModal.html',
 			controller: 'ModalInstanceCtrl',
-			backdropClass: 'newServiceModal',
+			backdropClass: 'modalBackdrop',
 			backdrop: 'static'
 		});
 	};
@@ -21,7 +21,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 
 	//Enable or disable the Add/Delete buttons.
 	$scope.showAddButton = false;
-	$scope.toggleButtons = function (current) {
+	$scope.toggleButtons = function(current) {
 		$scope.showAddButton = !current;
 	};
 
@@ -33,7 +33,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 	$scope.selectedCustomService = $scope.customServices[0].id;
 
 	//Add the new service to Chrome storage and the application dropdowns.
-	$scope.ok = function () {
+	$scope.ok = function() {
 		//Prepare the data for storage.
 		var timestamp = Date.now();
 		var newServiceName = {id : timestamp, label : $scope.newServiceName, group : "Custom"};
@@ -57,7 +57,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 	};
 
 	//Delete the specified custom service from Chrome storage and the application dropdowns.
-	$scope.delete = function (selectedCustomService) {
+	$scope.delete = function(selectedCustomService) {
 		//Identify and remove the service from the application dropdowns.
 		var serviceToDelete = clientAppHelper.findServiceById(selectedCustomService, $scope.customServices);
 		$scope.customServices.splice($scope.customServices.indexOf(serviceToDelete), 1);
@@ -72,7 +72,7 @@ clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clie
 		});
 	};
 
-	$scope.cancel = function () {
+	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
 });

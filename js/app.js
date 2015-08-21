@@ -86,28 +86,26 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 
 /*
 TODO:
+1) integrate the feature in the tool
+2) tidy up the code
+3) test test test
 
 
--add modal
--allow delete
--Fix sorting of the date.
+
+-tidy header nav
+-open a new page or something similar. best way to do that in angular?
+
+
 
 */
-
-
-
-
-
 
 
 /**
  *
  */
-clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
-
-	//for now limit it to a few entries so it's easier to develop. the final version should use 'null' to get all entries.
-	var keys = ["restclient.history.1430214093668", "restclient.history.1430923645503", "restclient.history.1430923880180", "restclient.history.1430925484964"];
+	$scope.numberOfEntries = 0;
 
 	//Get the data from chrome storage.
 	chrome.storage.local.get(null, function (history) {
@@ -126,30 +124,41 @@ clientApp.controller('historyCtrl', function($scope, historyHelper, GENERAL_CONS
 		}
 
 		//Update the UI.
-		$scope.rowCollection = values; 	
+		$scope.numberOfEntries = values.length;
+		$scope.rowCollection = values;
 		$scope.displayedCollection = [].concat($scope.rowCollection);
 		$scope.$apply();
 	});
 
 	//Delete (permanently) the selected item.
-	$scope.removeItem = function removeItem(row) {
+	$scope.removeItem = function(row) {
 		var index = $scope.rowCollection.indexOf(row);
 		if (index !== -1) {
+			//Remove it from the UI.
 			$scope.rowCollection.splice(index, 1);
+			$scope.numberOfEntries = $scope.rowCollection.length;
 
 			//Delete the entry from Chrome Storage.
 			if (typeof chrome !== 'undefined') {
 				//chrome.storage.local.remove(row.key); //TOOD enable this when complete.
-				alert("Deleting key = " + row.key);
+				//alert("Entry Deleted.");
 			}
 		}
 	};
 
-	//View more details about the selected item.
-	$scope.openItem = function removeItem(row) {
-		//console.log("row = " + JSON.stringify(row));
-		//TODO Open a modal dialog with more details.
-		alert(JSON.stringify(row));
+	//Open a modal dialog to view more details about the selected item.
+	$scope.openRowModal = function(row) {
+		var modalInstance = $modal.open({
+			templateUrl: 'partials/historyModal.html',
+			controller: 'HistoryModalInstanceCtrl',
+			backdropClass: 'modalBackdrop',
+			backdrop: 'static',
+			resolve: {
+				history: function() {
+					return row;
+				}
+			}
+		});
 	};
 });
 
@@ -167,11 +176,17 @@ clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 });
 
 
+/**
+ *
+ */
+clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, GENERAL_CONSTANTS) {
+	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 
+	//Add the history object to the scope so it can be used in the modal.
+	$scope.history = history;
 
-
-
-
-
-
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+});
 
