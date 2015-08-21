@@ -2,8 +2,8 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, 
-		ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials, GENERAL_CONSTANTS) {
+clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, advancedSettings, 
+		SERVICES_CONFIG, credentials, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	/**
@@ -167,17 +167,11 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Show the view and automatically scroll down to it.
+	 * Show the view.
 	 */
 	helper.displayView = function($scope) {
 		$scope.displayResponse = true;
 		$scope.processing = false;
-
-		//Attempt to scroll to the response. This has issues.
-		var old = $location.hash();
-		$location.hash('response');
-		$anchorScroll();
-		$location.hash(old);
 	};
 
 	/**
