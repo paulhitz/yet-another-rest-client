@@ -6,26 +6,34 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 	$scope.numberOfEntries = 0;
 
 	//Get the data from chrome storage.
-	chrome.storage.local.get(null, function (history) {
-		//Add each history object to an array.
-		var values = [];
-		for (var key in history) {
-			var entry = history[key];
-			if (historyHelper.isHistoryKey(key)) {
-				//Add the key to the object so we can identify it later.
-				entry['key'] = key;
+	$scope.loadData = function() {
+		chrome.storage.local.get(null, function (history) {
+			//Add each history object to an array.
+			var values = [];
+			for (var key in history) {
+				var entry = history[key];
+				if (historyHelper.isHistoryKey(key)) {
+					//Add the key to the object so we can identify it later.
+					entry['key'] = key;
 
-				//Fix up the date format to enable simpler sorting and formatting.
-				entry['date'] = new Date(entry['date']);
-				values.push(entry);
+					//Fix up the date format to enable simpler sorting and formatting.
+					entry['date'] = new Date(entry['date']);
+					values.push(entry);
+				}
 			}
-		}
 
-		//Update the UI.
-		$scope.numberOfEntries = values.length;
-		$scope.rowCollection = values;
-		$scope.displayedCollection = [].concat($scope.rowCollection);
-		$scope.$apply();
+			//Update the UI.
+			$scope.numberOfEntries = values.length;
+			$scope.rowCollection = values;
+			$scope.displayedCollection = [].concat($scope.rowCollection);
+			$scope.$apply();
+		});
+	};
+
+	//
+	$scope.$on("loadHistory", function(event, args) {
+		$scope.displayedCollection = null;
+		$scope.loadData();
 	});
 
 	//Delete (permanently) the selected item.
@@ -62,12 +70,12 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 
 
 clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
-	var history = this;
+	var helper = this;
 
 	/**
 	 *  TODO check key is in correct format
 	 */
-	history.isHistoryKey = function(key) {
+	helper.isHistoryKey = function(key) {
 		//use constants file for "restclient.history"
 		return true;
 	};
