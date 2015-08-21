@@ -187,12 +187,4 @@ footer p {
   font-size: smaller;
   margin: 2px;
 }
-.popover {
-  width: 250px;
-  text-align: justify;
-}
-.popover-title {
-  background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
-  color: #fff;
-}
 
