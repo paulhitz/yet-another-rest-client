@@ -19,13 +19,22 @@ header .navbar-brand img {
 
 .navbar-text {
   margin-top: 24px;
-  margin-right: 0;
+  margin-right: 30px;
 }
 
 .navbar-default .navbar-nav .navbar-link-container:hover {
   background-image: linear-gradient(to bottom,#dbdbdb 0,#e2e2e2 100%);
   background-repeat: repeat-x;
   box-shadow: inset 0 3px 9px rgba(0,0,0,.075);
+}
+
+.navbar-default .navbar-nav .navbar-link-container {
+  border-left-width: 2px;
+  border-left-style: outset;
+}
+
+.navbar-default .navbar-nav .navbar-link-container a {
+  padding-top: 24px;
 }
 
 #addServiceButton {

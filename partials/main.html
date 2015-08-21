@@ -1,0 +1,190 @@
+
+<article class="row clearfix">
+	<form class="col-md-12 column">
+		<section class="panel panel-primary">
+			<div class="panel-heading">
+				<h2 class="panel-title">Settings</h2>
+			</div>
+
+			<div class="form-horizontal panel-body" role="form">
+				<div class="form-group">
+					<label for="env" class="col-md-2 control-label">Environment:</label>
+					<div class="col-md-10">
+						<select class="form-control" id="env" data-ng-model="selectedEnvironment" data-ng-options="env.id as env.label for env in environments" data-ng-change="changeEnvironment(selectedEnvironment);"></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="services" class="col-md-2 control-label">Select Service:</label>
+					<div class="col-md-7">
+						<select class="form-control" id="services" data-ng-model="selectedService" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="settings.requestUrl"></select>
+					</div>
+					<div class="col-md-3" data-ng-controller="AddServiceModalCtrl" data-ng-show="chromeSupport">
+						<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add New Service</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="parameter" class="col-md-2 control-label">Parameter (optional):</label>
+					<div class="col-md-10">
+						<div class="row">
+							<div class="col-md-11">
+								<input type="text" class="form-control" id="parameter" placeholder="{{placeholder}}" value="" data-ng-model="parameter" data-ng-cloak>
+							</div>
+							<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="An optional parameter to send with the service request. E.g. a DUNS# or a Search Term. {{placeholder}} is used by default."></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="panel panel-primary">
+			<div class="panel-heading" data-ng-controller="ToggleCtrl">
+				<h2 class="panel-title">
+					<a data-toggle="collapse" href="#advanced" data-ng-click="toggle(status);">
+						Advanced Settings
+						<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': status, 'glyphicon-chevron-right': !status}"></i>
+					</a>
+				</h2>
+			</div>
+
+			<div id="advanced" class="panel-collapse collapse">
+				<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
+					<div class="form-group">
+						<label for="appId" class="col-md-2 control-label">Application ID:</label>
+						<div class="col-md-10">
+							<div class="row">
+								<div class="col-md-4">
+									<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId" data-ng-disabled="!settings.autoAuthenticate" required>
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Application ID is sent with all service requests. Some IDs may not be enabled for all services."></span>
+								<label for="autoAuthenticate" class="col-md-3 control-label alignRight">Auto-Authenticate:</label>
+								<div class="col-md-3">
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-default" data-ng-model="settings.autoAuthenticate" data-btn-radio="true" id="autoAuthenticate">Enabled</button>
+										<button type="button" class="btn btn-default" data-ng-model="settings.autoAuthenticate" data-btn-radio="false">Disabled</button>
+									</div>
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="Automatically authenticate against the selected environment. Authentication is required for all D&amp;B Services."></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="userId" class="col-md-2 control-label">User ID:</label>
+						<div class="col-md-10">
+							<div class="row">
+								<div class="col-md-11">
+									<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="settings.credentials.userId" data-ng-disabled="!settings.autoAuthenticate" required>
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The User ID to use for authenticating."></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="col-md-2 control-label">Password:</label>
+						<div class="col-md-10">
+							<div class="row">
+								<div class="col-md-11">
+									<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="settings.credentials.password" data-ng-disabled="!settings.autoAuthenticate" required>
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The password to use for authenticating."></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="requestUrl" class="col-md-2 control-label">Request URL:</label>
+						<div class="col-md-10">
+							<div class="row">
+								<div class="col-md-7">
+									<input type="url" class="form-control" id="requestUrl" placeholder="Request URL (i.e. http://<configured_endpoint>)" data-ng-model="settings.requestUrl">
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip-html-unsafe="The Request URL allows you to enter your own custom endpoint. <br><br>It will still be authenticated against the selected environment."></span>
+								<label for="requestMethod" class="col-md-1 control-label">Method:</label>
+								<div class="col-md-2">
+									<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
+										<option value="get">GET</option>
+										<option value="post">POST</option>
+										<option value="put">PUT</option>
+										<option value="patch">PATCH</option>
+										<option value="delete">DELETE</option>
+										<option value="head">HEAD</option>
+									</select>
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Request Method to use for calling the service."></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="payload" class="col-md-2 control-label">Payload:</label>
+						<div class="col-md-10">
+							<div class="row">
+								<div class="col-md-11">
+									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload" data-ng-disabled="settings.requestMethod !== 'post' && settings.requestMethod !== 'put' && settings.requestMethod !== 'patch'"></textarea>
+								</div>
+								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The payload to use for POST / PUT / PATCH requests. This is usually in JSON format."></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing">Send Request</button>
+	</form>
+</article>
+
+<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse" data-ng-cloak>
+	<progressbar class="progress-striped active" value="progress.value">{{progress.label}}</progressbar>
+</div>
+
+<div class="clearfix" data-ng-cloak>
+	<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+</div>
+
+<div id="response" class="row clearfix" data-ng-show="displayResponse" data-ng-cloak>
+	<div id="responseBody" class="col-md-12 column">
+		<section class="panel panel-info">
+			<div class="panel-heading">
+				<h2 class="panel-title">Response</h2>
+			</div>
+
+			<div class="panel-body">
+				<div class="well">
+					<strong>Request URL:</strong> <a href="{{requestUrl}}" target="_blank">{{requestUrl}}</a><br>
+					<strong>Authentication Token:</strong> {{authenticationToken}}<br>
+					<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
+				</div>
+
+				<div role="tabpanel">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#json" role="tab" data-toggle="tab">Response Body</a></li>
+						<li role="presentation"><a href="#responseHeaders" role="tab" data-toggle="tab">Response Headers</a></li>
+						<li role="presentation"><a href="#requestHeaders" role="tab" data-toggle="tab">Request Headers</a></li>
+					</ul>
+					<div class="tab-content" id="json-tabs">
+						<div role="tabpanel" class="tab-pane active json-content" id="json">
+							<pre><code data-hljs data-source="responseBody"></code></pre>
+						</div>
+						<div role="tabpanel" class="tab-pane json-content" id="responseHeaders">
+							<pre><code data-hljs data-source="responseHeaders"></code></pre>
+						</div>
+						<div role="tabpanel" class="tab-pane json-content" id="requestHeaders">
+							<pre><code data-hljs data-source="requestHeaders"></code></pre>
+						</div>
+					</div>
+				</div>
+
+				<div id="copy-buttons">
+					<button type="button" class="btn btn-primary" data-ng-click="copy(requestUrl);">
+						<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Request
+					</button>
+					<button type="button" class="btn btn-primary" data-ng-click="copy(responseBody);">
+						<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Response
+					</button>
+					<br>
+					<span class="label label-success" data-ng-show="copyMessage">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{copyMessage}}
+					</span>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>

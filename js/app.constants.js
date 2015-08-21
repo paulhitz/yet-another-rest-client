@@ -1,4 +1,3 @@
-
 /**
  * General constants used within the application.
  */

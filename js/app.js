@@ -1,4 +1,4 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table']);
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'ngRoute']);
 
 
 /**
@@ -86,16 +86,16 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 
 /*
 TODO:
-1) integrate the feature in the tool
-2) tidy up the code
-3) test test test
+-tidy up the code
+-test test test
 
-
-
--tidy header nav
--open a new page or something similar. best way to do that in angular?
-
-
+BUGS
+-the advanced settings panel doesn't work
+-the non angular tabs don't work
+-the main page is doing a full refresh
+-sometimes the custom services are duplicating in the dropdown
+-back to top link doesn't work
+-the version isn't displayed
 
 */
 
