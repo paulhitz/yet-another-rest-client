@@ -3,7 +3,7 @@
  * Various helper functions for the application.
  */
 clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, advancedSettings,
-		SERVICES_CONFIG, credentials, GENERAL_CONSTANTS) {
+		SERVICES_CONFIG, credentials, GENERAL_CONSTANTS, $rootScope) {
 	var helper = this;
 
 	/**
@@ -193,7 +193,7 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	helper.performChromeOperations = function($scope) {
 		if (typeof chrome !== 'undefined') {
 			$scope.chromeSupport = true;
-			$scope.version = "v" + chrome.runtime.getManifest()['version'];
+			$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
 			helper.addUserDefinedServices($scope);
 			helper.retrieveAndSetCredentials($scope.selectedEnvironment);
 		}

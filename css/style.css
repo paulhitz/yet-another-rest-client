@@ -37,6 +37,17 @@ header .navbar-brand img {
   padding-top: 24px;
 }
 
+.square-borders {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#service-description {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  margin-bottom: 0;
+}
+
 #addServiceButton {
   width: 100%;
 }
@@ -84,7 +95,7 @@ div#json-tabs {
   text-align: center;
 }
 
-#advanced div.col-md-11, #advanced div.col-md-7, #advanced div.col-md-2, 
+#advanced div.col-md-11, #advanced div.col-md-7, #advanced div.col-md-2,
 #advanced div.col-md-4, #advanced div.col-md-3, #advanced label.alignRight {
   padding-right: 0;
   text-align: right;

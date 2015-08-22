@@ -17,42 +17,52 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	services : [ {
 		id : "pcs",
 		label : "Product Catalog Service (v2)",
+		description : "",
 		group : "Common"
 	}, {
 		id : "linkage",
 		label : "Linkage Service (v2)",
+		description : "",
 		group : "Common"
 	}, {
 		id : "firm",
 		label : "Firmographics (DCP_PREM_ONBRD)",
+		description : "This service is undocumented.",
 		group : "Custom Product Service"
 	}, {
 		id : "kyc",
 		label : "KYC (Know Your Customer)",
+		description : "",
 		group : "Custom Product Service"
 	}, {
 		id : "gbo",
 		label : "GBO (Global Beneficial Ownership)",
+		description : "",
 		group : "Custom Product Service"
 	}, {
 		id : "so",
 		label : "SO (Simple Ownership)",
+		description : "",
 		group : "Custom Product Service"
 	}, {
 		id : "match",
 		label : "Match (REST version)",
+		description : "",
 		group : "Search"
 	}, {
 		id : "global",
 		label : "Global Name Search / Entity List Service (v4.0)",
+		description : "",
 		group : "Search"
 	}, {
 		id : "portfolio_assets",
 		label : "List Portfolio Asset (GET)",
+		description : "",
 		group : "Portfolio"
 	}, {
 		id : "list_portfolio",
 		label : "List Portfolio Service (POST)",
+		description : "",
 		group : "Portfolio"
 	}, {
 		id : "rdc_search",
@@ -105,22 +115,27 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		id : "investigation",
 		label : "Investigation Service (POST)",
+		description : "",
 		group : "Miscellaneous"
 	}, {
 		id : "pcs_public_docs",
 		label : "Product Catalog Service - Available Image List",
+		description : "",
 		group : "Miscellaneous"
 	}, {
 		id : "date_test",
 		label : "JSONTest.com Date/Time",
+		description : "JSONTest.com is a testing platform for REST services.",
 		group : "External (No Authentication Required)"
 	}, {
 		id : "open_company",
 		label : "OpenCorporates - Companies Search",
+		description : "Search the largest open database of companies in the world.",
 		group : "External (No Authentication Required)"
 	}, {
 		id : "open_officer",
 		label : "OpenCorporates - Officers Search",
+		description : "Directors Search from Open Corporates - The largest open database of companies in the world.",
 		group : "External (No Authentication Required)"
 	} ],
 
