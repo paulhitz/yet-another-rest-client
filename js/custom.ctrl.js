@@ -1,4 +1,3 @@
-
 /**
  * Open an AngularJS-powered custom modal window. Use a partial view and a controller for the modal instance.
  */
@@ -6,7 +5,7 @@ clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
 	$scope.open = function () {
 		var modalInstance = $modal.open({
 			templateUrl: 'partials/customServicesModal.html',
-			controller: 'ModalInstanceCtrl',
+			controller: 'CustomServiceModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
 			backdrop: 'static'
 		});
@@ -16,7 +15,7 @@ clientApp.controller('AddServiceModalCtrl', function($scope, $modal) {
 /**
  * Controller for the Custom Service functionality. Allows a user to add or delete a custom service.
  */
-clientApp.controller('ModalInstanceCtrl', function ($scope, $modalInstance, clientAppHelper, SERVICES_CONFIG) {
+clientApp.controller('CustomServiceModalInstanceCtrl', function ($scope, $modalInstance, clientAppHelper, SERVICES_CONFIG) {
 	$scope.alerts = [];
 
 	//Enable or disable the Add/Delete buttons.

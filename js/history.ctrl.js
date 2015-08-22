@@ -1,9 +1,15 @@
 /**
- *
+ * A controller responsible for handling the Request History.
  */
 clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.numberOfEntries = 0;
+
+	//Listen for an event indicating that the history should be loaded.
+	$scope.$on("loadHistory", function(event, args) {
+		$scope.displayedCollection = null;
+		$scope.loadData();
+	});
 
 	//Get the data from chrome storage.
 	$scope.loadData = function() {
@@ -30,12 +36,6 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 		});
 	};
 
-	//
-	$scope.$on("loadHistory", function(event, args) {
-		$scope.displayedCollection = null;
-		$scope.loadData();
-	});
-
 	//Delete (permanently) the selected item.
 	$scope.removeItem = function(row) {
 		var index = $scope.rowCollection.indexOf(row);
@@ -46,8 +46,7 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 
 			//Delete the entry from Chrome Storage.
 			if (typeof chrome !== 'undefined') {
-				//chrome.storage.local.remove(row.key); //TOOD enable this when complete.
-				//alert("Entry Deleted.");
+				//chrome.storage.local.remove(row.key); //TODO enable this when complete.
 			}
 		}
 	};
@@ -68,22 +67,22 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 	};
 });
 
-
+/**
+ * Various helper functions for the History functionality.
+ */
 clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 	var helper = this;
 
-	/**
-	 *  TODO check key is in correct format
-	 */
+	//Ensure that the specified key is in the correct format for a key used to store history objects.
 	helper.isHistoryKey = function(key) {
-		//use constants file for "restclient.history"
-		return true;
+		if (key.indexOf(GENERAL_CONSTANTS.HISTORY_KEY_FORMAT) > -1) {
+			return true;
+		}
 	};
 });
 
-
 /**
- *
+ * Controller for the displaying more details about a specific history record.
  */
 clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;

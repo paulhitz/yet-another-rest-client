@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, advancedSettings, 
+clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, advancedSettings,
 		SERVICES_CONFIG, credentials, GENERAL_CONSTANTS) {
 	var helper = this;
 
@@ -141,14 +141,14 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * Storing large responses (e.g. base64 encoded PDFs) can lead to performance issues 
+	 * Storing large responses (e.g. base64 encoded PDFs) can lead to performance issues
 	 * so we explicitly exclude them.
 	 */
 	helper.excludeLargeObjects = function(response) {
 		var responseSize = sizeof(response);
 		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
-			return "The response was too large to store. Only responses less than " 
-				+ GENERAL_CONSTANTS.MAX_OBJECT_SIZE + " bytes in size will be stored. This response was approx " 
+			return "The response was too large to store. Only responses less than "
+				+ GENERAL_CONSTANTS.MAX_OBJECT_SIZE + " bytes in size will be stored. This response was approx "
 				+ responseSize + " bytes.";
 		}
 		return response;
@@ -175,7 +175,7 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * Delete cookies that can interfere with authentication. 
+	 * Delete cookies that can interfere with authentication.
 	 * NOTE: This will likely mess up any open OAM application sessions.
 	 */
 	helper.deleteCookies = function() {
