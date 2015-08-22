@@ -39,14 +39,14 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 	//Delete (permanently) the selected item.
 	$scope.removeItem = function(row) {
 		var index = $scope.rowCollection.indexOf(row);
-		if (index !== -1) {
+		if (index > -1) {
 			//Remove it from the UI.
 			$scope.rowCollection.splice(index, 1);
 			$scope.numberOfEntries = $scope.rowCollection.length;
 
 			//Delete the entry from Chrome Storage.
 			if (typeof chrome !== 'undefined') {
-				//chrome.storage.local.remove(row.key); //TODO enable this when complete.
+				chrome.storage.local.remove(row.key);
 			}
 		}
 	};
