@@ -1,5 +1,4 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
-
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table']);
 
 /**
  * Main application controller. Populates the form and submits the Service Request.
@@ -81,4 +80,3 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		}
 	};
 });
-
