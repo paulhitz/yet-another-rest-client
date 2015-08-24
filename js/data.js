@@ -17,110 +17,122 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	services : [ {
 		id : "pcs",
 		label : "Product Catalog Service (v2)",
-		description : "",
+		description : "The Product Catalog Service enables customers to get information on available products for the given DUNS# based on the entitlements of the customer's current contract.",
 		group : "Common"
 	}, {
 		id : "linkage",
 		label : "Linkage Service (v2)",
-		description : "",
+		description : "The Linkage service returns data about a single Global Family Tree (GFT).",
 		group : "Common"
 	}, {
 		id : "firm",
 		label : "Firmographics (DCP_PREM_ONBRD)",
-		description : "This service is undocumented.",
+		description : "Provides basic marketing information such as business name, address, trade style, executive names and titles, financials, number of employees etc.",
 		group : "Custom Product Service"
 	}, {
 		id : "kyc",
 		label : "KYC (Know Your Customer)",
-		description : "",
+		description : "The KYC service provides critical compliance information on businesses and principles in 110 countries to ensure a business is compliant with AML regulations and KYC requirements.",
 		group : "Custom Product Service"
 	}, {
 		id : "gbo",
 		label : "GBO (Global Beneficial Ownership)",
-		description : "",
+		description : "The GBO service combines global corporate linkage and individual share ownership. It enables a customer to establish direct and indirect Ultimate Beneficial Ownership at the level that is required for AML/KYC.",
 		group : "Custom Product Service"
 	}, {
 		id : "so",
 		label : "SO (Simple Ownership)",
-		description : "",
+		description : "Simplified Global Beneficial Ownership. Lacks share ownership for individuals and other details.",
 		group : "Custom Product Service"
 	}, {
 		id : "match",
 		label : "Match (REST version)",
-		description : "",
+		description : "Searches for companies based on DUNS#. The Onboard application does NOT use the REST version of Match. It still uses the SOAP version.",
 		group : "Search"
 	}, {
 		id : "global",
 		label : "Global Name Search / Entity List Service (v4.0)",
-		description : "",
+		description : "Returns a set of companies based on DUNS# or keyword, along with basic identifying data for each company.",
 		group : "Search"
 	}, {
 		id : "portfolio_assets",
 		label : "List Portfolio Asset (GET)",
-		description : "",
+		description : "Retrieve a list of assets stored by the Portfolio Service based on the Application Transaction ID and the Product ID.",
 		group : "Portfolio"
 	}, {
 		id : "list_portfolio",
 		label : "List Portfolio Service (POST)",
-		description : "",
+		description : "This service provides a convenient way to retrieve the list of available assets stored using the Portfolio Service.",
 		group : "Portfolio"
 	}, {
 		id : "rdc_search",
 		label : "RDC Search",
+		description : "This service allows organizations to identify banned or suspect entities (suppliers, partners, customers, etc.) and individuals, strengthen fraud protection, ensure regulatory compliance and manage supply and distribution risk.",
 		group : "ComplianceCheck Service (v1.0)"
 	}, {
 		id : "rdc_entity",
 		label : "RDC Entity Information (Silvio Berlusconi)",
+		description : "Request more information regarding the specified entity. This request is hard-coded with the entity ID of 'Silvio Berlusconi'.",
 		group : "ComplianceCheck Service (v1.0)"
 	}, {
 		id : "rdc_entity_pdf",
 		label : "RDC Entity Information - PDF (Silvio Berlusconi)",
+		description : "Request a PDF with more information regarding the specified entity. This request is hard-coded with the entity ID of 'Silvio Berlusconi'.",
 		group : "ComplianceCheck Service (v1.0)"
 	}, {
 		id : "gms_reg",
 		label : "Registration (GET/POST/PUT)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_profile_create",
 		label : "Profile List/Create (GET/POST)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_profile_param",
 		label : "Profile Get/Update/Delete (GET/PUT/DELETE)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_notice_list",
 		label : "Change Notice List (GET)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_notice_list_count",
 		label : "Change Notice List Count (GET)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_notice_param",
 		label : "Change Notice Update (PUT)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_subject",
 		label : "Subject (GET)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_events",
 		label : "Change Events (GET)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "gms_alert_report",
 		label : "Alert Report (GET)",
+		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
 		group : "GMS Monitoring (Onboard Specific)"
 	}, {
 		id : "investigation",
 		label : "Investigation Service (POST)",
-		description : "",
+		description : "A service for requesting investigations in order to obtain the most recent information on a business. Successful investigations result in the creation or revision of a Business Information Report (BIR).",
 		group : "Miscellaneous"
 	}, {
 		id : "pcs_public_docs",
 		label : "Product Catalog Service - Available Image List",
-		description : "",
+		description : "This service enables the identification of all available company documents that have been filed for a specified UK DUNS#.",
 		group : "Miscellaneous"
 	}, {
 		id : "date_test",
@@ -130,7 +142,7 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		id : "open_company",
 		label : "OpenCorporates - Companies Search",
-		description : "Search the largest open database of companies in the world.",
+		description : "Search the largest open database of companies in the world. Search by company name. E.g. Microsoft",
 		group : "External (No Authentication Required)"
 	}, {
 		id : "open_officer",
