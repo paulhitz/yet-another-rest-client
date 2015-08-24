@@ -1,9 +1,23 @@
-4dbdefe (HEAD, origin/history-ui, history-ui) Fix the History UI sorting by date
+0af3fe7 (HEAD, origin/develop, develop) Version Bump
+905fbe5 Add a brief service description for every service
+09fe0e8 Services can now have descriptions
+ea7c91e Merge pull request #46 from paulhitz/history-ui
+653cac3 (history-ui) Enable deleting of history requests
+2a74ece Tidy up the code for the history feature
+75a2c6e Move content back into index,html (scoping issue)
+14eb707 Broadcast an event to load the History data
+335304c Remove the history popover with info text
+84bf639 Move the History code into cohesive files
+304f57d Revert the RouteProvider implementation
+553b5f0 Add AngularJS Routing to Support the History UI
+94157a8 Generate Changelog
+69cbf1b Add History Modal Dialog with More Info
+4dbdefe Fix the History UI sorting by date
 7af4f5c Improve the History functionality
 4333077 Small clean up of the history UI
 7106cd1 Remove support for LocalStorage
 42a03d7 Initial commit of a History UI
-f34e8d6 (origin/develop, develop) Store error responses, not just successes
+f34e8d6 Store error responses, not just successes
 4e57994 Add new service - Available Image List
 41d7cc4 Restructure the folder structure for 3rd party code
 48e02ef Use constants
