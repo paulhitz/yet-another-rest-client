@@ -2,8 +2,8 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, utils, 
-		ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials, GENERAL_CONSTANTS) {
+clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, advancedSettings,
+		SERVICES_CONFIG, credentials, GENERAL_CONSTANTS, $rootScope) {
 	var helper = this;
 
 	/**
@@ -116,8 +116,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Persist the request/response so we have a history of them.
-	 * NOTE: Currently 2 methods are used to persist the data. At some point, we should standardise on just one.
+	 * Persist the request/response so we have a history of them. Uses Chrome Storage.
 	 */
 	helper.storeResponseDetails = function($scope, response) {
 		//Construct the new entry.
@@ -132,11 +131,8 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 			entry['payload'] = advancedSettings.payload;
 		}
 
-		//Persist it using LocalStorage.
+		//Persist it using Chrome Storage. Supports objects.
 		var key = "restclient.history." + Date.now();
-		localStorage[key] = JSON.stringify(entry);
-
-		//Also use Chrome Storage to persist it. Supports objects.
 		if (typeof chrome !== 'undefined') {
 			var keyValue = {};
 			keyValue[key] = entry;
@@ -145,14 +141,14 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Storing large responses (e.g. base64 encoded PDFs) can lead to performance issues 
+	 * Storing large responses (e.g. base64 encoded PDFs) can lead to performance issues
 	 * so we explicitly exclude them.
 	 */
 	helper.excludeLargeObjects = function(response) {
 		var responseSize = sizeof(response);
 		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
-			return "The response was too large to store. Only responses less than " 
-				+ GENERAL_CONSTANTS.MAX_OBJECT_SIZE + " bytes in size will be stored. This response was approx " 
+			return "The response was too large to store. Only responses less than "
+				+ GENERAL_CONSTANTS.MAX_OBJECT_SIZE + " bytes in size will be stored. This response was approx "
 				+ responseSize + " bytes.";
 		}
 		return response;
@@ -171,21 +167,15 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	};
 
 	/**
-	 * Show the view and automatically scroll down to it.
+	 * Show the view.
 	 */
 	helper.displayView = function($scope) {
 		$scope.displayResponse = true;
 		$scope.processing = false;
-
-		//Attempt to scroll to the response. This has issues.
-		var old = $location.hash();
-		$location.hash('response');
-		$anchorScroll();
-		$location.hash(old);
 	};
 
 	/**
-	 * Delete cookies that can interfere with authentication. 
+	 * Delete cookies that can interfere with authentication.
 	 * NOTE: This will likely mess up any open OAM application sessions.
 	 */
 	helper.deleteCookies = function() {
@@ -203,7 +193,7 @@ clientApp.service('clientAppHelper', function($http, $location, $anchorScroll, u
 	helper.performChromeOperations = function($scope) {
 		if (typeof chrome !== 'undefined') {
 			$scope.chromeSupport = true;
-			$scope.version = "v" + chrome.runtime.getManifest()['version'];
+			$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
 			helper.addUserDefinedServices($scope);
 			helper.retrieveAndSetCredentials($scope.selectedEnvironment);
 		}

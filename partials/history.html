@@ -1,0 +1,43 @@
+
+<section class="panel panel-primary" data-ng-controller="HistoryCtrl">
+	<div class="panel-heading">
+		<h2 class="panel-title">History</h2>
+	</div>
+	<div id="historyIntroText">
+		<p>A history of your requests is displayed below. You can view more information (including the service responses) by clicking on the 'More Information' icon.</p>
+		<p><strong>Total number of requests: </strong>{{numberOfEntries}}</p>
+	</div>
+	<table id="history" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+		<thead>
+			<tr>
+				<th st-sort="date" st-skip-natural="true" class="clickable">Date</th>
+				<th st-sort="request" st-skip-natural="true" class="clickable">Request URL</th>
+				<th st-sort="method" st-skip-natural="true" class="clickable">Type</th>
+				<th st-sort="timer" st-skip-natural="true" class="clickable">Response Time</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-hide="displayedCollection != null">
+				<td colspan="5" class="text-center"><span class="glyphicon glyphicon-refresh spinning"></span> Loading...</td>
+			</tr>
+			<tr data-ng-show="displayedCollection.length === 0">
+				<td colspan="5">There are no entries to display.</td>
+			</tr>
+			<tr data-ng-repeat="row in displayedCollection" class="small">
+				<td>{{row.date | date:dateFormat}}</td>
+				<td style="word-break: break-all; white-space: normal;">{{row.request}}</td>
+				<td>{{row.method | uppercase}}</td>
+				<td>{{row.timer / 1000}} seconds</td>
+				<td>
+					<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+					<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details.">
+						<span class="glyphicon glyphicon-info-sign"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</section>

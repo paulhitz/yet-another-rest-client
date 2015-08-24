@@ -1,5 +1,4 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common']);
-
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table']);
 
 /**
  * Main application controller. Populates the form and submits the Service Request.
@@ -12,6 +11,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 	$scope.selectedEnvironment = SERVICES_CONFIG.environments[1].id;
 	$scope.services = SERVICES_CONFIG.services;
 	$scope.selectedService = SERVICES_CONFIG.services[0].id;
+	$scope.serviceDescription = SERVICES_CONFIG.services[0].description;
 	$scope.placeholder = SERVICES_CONFIG.placeholder;
 	$scope.alerts = [];
 
@@ -80,5 +80,14 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 			$scope.alerts = [];
 		}
 	};
-});
 
+	//Update the service description to match the selected service.
+	$scope.changeService = function(id) {
+		for (var service of SERVICES_CONFIG.services) {
+			if (service.id === id) {
+				$scope.serviceDescription = service.description;
+				break;
+			}
+		}
+	};
+});

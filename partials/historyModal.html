@@ -1,0 +1,35 @@
+
+<form role="form" id="modal-tabs">
+	<div class="modal-header">
+		<button class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<h4 class="modal-title">More Details</h4>
+	</div>
+	<div class="modal-body small">
+		<dl id="history">
+			<dt>Date: </dt>
+			<dd>{{history.date | date:dateFormat}}</dd>
+
+			<dt>Request URL: </dt>
+			<dd style="word-break: break-all;">{{history.request}}</dd>
+
+			<dt>Request Method: </dt>
+			<dd>{{history.method | uppercase}}</dd>
+
+			<dt>Response Time: </dt>
+			<dd>{{history.timer / 1000}} seconds</dd>
+
+			<dt data-ng-show="history.payload">Payload: </dt>
+			<dd data-ng-show="history.payload">
+				<textarea class="form-control" rows="5" disabled>{{history.payload}}</textarea>
+			</dd>
+
+			<dt>Response: </dt>
+			<dd>
+				<textarea class="form-control" rows="10" disabled>{{history.response}}</textarea>
+			</dd>
+		</dl>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" data-ng-click="cancel()">Close</button>
+	</div>
+</form>

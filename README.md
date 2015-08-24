@@ -5,7 +5,9 @@ This tool is useful for testing REST Services. Out of the box, various D&B servi
 
 Both D&B and external services are supported. For D&B services, either the QA, STG or Production environment can be used and automatic authentication will take place.
 
-The response from the service will be displayed along with any headers in the request/response.
+The response from the service will be displayed along with any headers in the request/response. 
+
+Every request and response is saved so they can be viewed again at a later stage.
 
 The complete request URL is provided so it can easily be copied and pasted.
 
@@ -14,7 +16,7 @@ Your credentials are saved against the selected environment.
 
 **Installation**
 
-The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  https://chrome.google.com/webstore/detail/db-services-rest-client/ekgojcdjjjlillgeidgniapfmilgbppm?hl=en&gl=IE
+The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  https://chrome.google.com/webstore/detail/db-services-rest-client/ekgojcdjjjlillgeidgniapfmilgbppm
 
 
 **Request Methods (POST / GET / PUT / DELETE / HEAD / PATCH)**
