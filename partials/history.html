@@ -26,7 +26,7 @@
 			</tr>
 			<tr data-ng-repeat="row in displayedCollection" class="small">
 				<td>{{row.date | date:dateFormat}}</td>
-				<td style="word-break: break-all; white-space: normal;">{{row.request}}</td>
+				<td class="url-row">{{row.request}}</td>
 				<td>{{row.method | uppercase}}</td>
 				<td>{{row.timer / 1000}} seconds</td>
 				<td>
