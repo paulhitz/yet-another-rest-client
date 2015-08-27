@@ -148,6 +148,10 @@ select#customServices {
 table#history td, table#history th {
   white-space: nowrap;
 }
+table#history td.url-row {
+  word-break: break-all;
+  white-space: normal;
+}
 table#history {
   margin-bottom: 2px;
 }
@@ -164,9 +168,9 @@ dl#history dd textarea {
 /* Loading Spinner */
 .spinning {
   -animation: spin .7s infinite linear;
-  -webkit-animation: spin2 .7s infinite linear;
+  -webkit-animation: spin .7s infinite linear;
 }
-@-webkit-keyframes spin2 {
+@-webkit-keyframes spin {
   from { -webkit-transform: rotate(0deg);}
   to { -webkit-transform: rotate(360deg);}
 }

@@ -80,6 +80,26 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		description : "Request a PDF with more information regarding the specified entity. This request is hard-coded with the entity ID of 'Silvio Berlusconi'.",
 		group : "ComplianceCheck Service (v1.0)"
 	}, {
+		id : "rdc_alerts",
+		label : "Monitoring - Alerts",
+		description : "Allows a customer to retrieve a list of recent alerts triggered by active registrations across multiple subjects.",
+		group : "ComplianceCheck Service (v1.0)"
+	}, {
+		id : "rdc_alerts_batch",
+		label : "Monitoring - Alerts by Batch ID",
+		description : "Allows a customer to retrieve a list of recent alerts filtered by Batch ID. This request requires a 'Subject ID'.",
+		group : "ComplianceCheck Service (v1.0)"
+	}, {
+		id : "rdc_subject_alerts",
+		label : "Monitoring - Subject Alerts",
+		description : "Allows a customer to retrieve the results from a successful subject registration. A tracking ID is provided by the 'Register Subject' function that allows for direct access to the results. This ID should be provided as a parameter to this request.",
+		group : "ComplianceCheck Service (v1.0)"
+	}, {
+		id : "rdc_register",
+		label : "Monitoring - Register Entity (POST)",
+		description : "Allows a customer to specify a subject (organizations and/or individuals) to be submitted for compliance screening using the ComplianceCheck service.",
+		group : "ComplianceCheck Service (v1.0)"
+	}, {
 		id : "gms_reg",
 		label : "Registration (GET/POST/PUT)",
 		description : "The GMS service has limited documentation. The GMS endpoints configured in this tool are specific to the Onboard application.",
@@ -283,6 +303,54 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "prod",
 		service : "rdc_entity_pdf",
 		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/entities/EntitySystemID-1b59b76f0e75fee15d3f3d53eb346cc4/products/CMP_ENT_VW?ProductFormatPreferenceCode=13204&httpClient.socketTimeout=30000&httpClient.connectTimeout=30000&CustomerBillingEndorsementText=dnb_test"
+	}, {
+		env : "qa",
+		service : "rdc_alerts",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects/alerts"
+	}, {
+		env : "stg",
+		service : "rdc_alerts",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/alerts"
+	}, {
+		env : "prod",
+		service : "rdc_alerts",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects/alerts"
+	}, {
+		env : "qa",
+		service : "rdc_alerts_batch",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={placeholder}"
+	}, {
+		env : "stg",
+		service : "rdc_alerts_batch",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={placeholder}"
+	}, {
+		env : "prod",
+		service : "rdc_alerts_batch",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects/alerts?SubjectID={placeholder}"
+	}, {
+		env : "qa",
+		service : "rdc_subject_alerts",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects/{placeholder}?ComplianceDataModuleID=ALERTS"
+	}, {
+		env : "stg",
+		service : "rdc_subject_alerts",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects/{placeholder}?ComplianceDataModuleID=ALERTS"
+	}, {
+		env : "prod",
+		service : "rdc_subject_alerts",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects/{placeholder}?ComplianceDataModuleID=ALERTS"
+	}, {
+		env : "qa",
+		service : "rdc_register",
+		url : "http://services-ext-qa.dnb.com/V1.0/compliancecheck/subjects"
+	}, {
+		env : "stg",
+		service : "rdc_register",
+		url : "http://services-ext-stg.dnb.com/V1.0/compliancecheck/subjects"
+	}, {
+		env : "prod",
+		service : "rdc_register",
+		url : "https://maxcvservices.dnb.com/V1.0/compliancecheck/subjects"
 	}, {
 		env : "qa",
 		service : "match",
