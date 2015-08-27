@@ -30,10 +30,10 @@ Some services require a JSON payload. E.g. ListPortfolio
 
 This is a AngularJS application packaged as a Chrome extension to avoid CORS (Cross-Origin Resource Sharing) issues.
 
-[![Code Climate](https://codeclimate.com/github/paulhitz/SimpleRestClient/badges/gpa.svg)](https://codeclimate.com/github/paulhitz/SimpleRestClient)
+[![Code Climate](https://codeclimate.com/github/paulhitz/DnB-REST-Client/badges/gpa.svg)](https://codeclimate.com/github/paulhitz/DnB-REST-Client)
 
 
 **Screenshot**
 
-![Screenshot](https://raw.githubusercontent.com/paulhitz/SimpleRestClient/master/img/screenshots/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/paulhitz/DnB-REST-Client/master/img/screenshots/screenshot.png)
 
