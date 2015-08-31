@@ -65,6 +65,16 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		description : "This service provides a convenient way to retrieve the list of available assets stored using the Portfolio Service.",
 		group : "Portfolio"
 	}, {
+		id : "director_search",
+		label : "Search by Last Name",
+		description : "This service uses Companies House data. This particular operation searches for directors/officers. The last name (e.g. 'Smith') should be provided as a parameter.",
+		group : "Director Search (v1.0)"
+	}, {
+		id : "director_order",
+		label : "Officer Details",
+		description : "This service uses Companies House data. This particular operation provides more details about a specified officer/director. An 'Officer ID' should be passed as a parameter.",
+		group : "Director Search (v1.0)"
+	}, {
 		id : "rdc_search",
 		label : "RDC Search",
 		description : "This service allows organizations to identify banned or suspect entities (suppliers, partners, customers, etc.) and individuals, strengthen fraud protection, ensure regulatory compliance and manage supply and distribution risk.",
@@ -387,6 +397,30 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "prod",
 		service : "list_portfolio",
 		url : "https://maxcvservices.dnb.com/rest/PortfolioService/V2/ListPortfolioAsset"
+	}, {
+		env : "qa",
+		service : "director_search",
+		url : "http://services-ext-qa.dnb.com/v1.0/companyhouse/officers?officerLastName={placeholder}&officerType=CUR"
+	}, {
+		env : "stg",
+		service : "director_search",
+		url : "http://services-ext-stg.dnb.com/v1.0/companyhouse/officers?officerLastName={placeholder}&officerType=CUR"
+	}, {
+		env : "prod",
+		service : "director_search",
+		url : "https://maxcvservices.dnb.com/v1.0/companyhouse/officers?officerLastName={placeholder}&officerType=CUR"
+	}, {
+		env : "qa",
+		service : "director_order",
+		url : "http://services-ext-qa.dnb.com/v1.0/companyhouse/officers/{placeholder}"
+	}, {
+		env : "stg",
+		service : "director_order",
+		url : "http://services-ext-stg.dnb.com/v1.0/companyhouse/officers/{placeholder}"
+	}, {
+		env : "prod",
+		service : "director_order",
+		url : "https://maxcvservices.dnb.com/v1.0/companyhouse/officers/{placeholder}"
 	}, {
 		env : "qa",
 		service : "investigation",
