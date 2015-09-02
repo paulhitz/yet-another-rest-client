@@ -66,13 +66,13 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		group : "Portfolio"
 	}, {
 		id : "director_search",
-		label : "Search by Last Name",
+		label : "Officer Search (by Last Name)",
 		description : "This service uses Companies House data. This particular operation searches for directors/officers. The last name (e.g. 'Smith') should be provided as a parameter.",
 		group : "Director Search (v1.0)"
 	}, {
 		id : "director_order",
 		label : "Officer Details",
-		description : "This service uses Companies House data. This particular operation provides more details about a specified officer/director. An 'Officer ID' should be passed as a parameter.",
+		description : "This service uses Companies House data. This particular operation provides more details about a specified officer/director. An 'Officer ID' should be passed as a parameter. The content of this parameter should be URL-encoded.",
 		group : "Director Search (v1.0)"
 	}, {
 		id : "rdc_search",
@@ -400,15 +400,15 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	}, {
 		env : "qa",
 		service : "director_search",
-		url : "http://services-ext-qa.dnb.com/v1.0/companyhouse/officers?officerLastName={placeholder}&officerType=CUR"
+		url : "http://services-ext-qa.dnb.com/v1.0/companyhouse/officers?officerType=CUR&officerLastName={placeholder}"
 	}, {
 		env : "stg",
 		service : "director_search",
-		url : "http://services-ext-stg.dnb.com/v1.0/companyhouse/officers?officerLastName={placeholder}&officerType=CUR"
+		url : "http://services-ext-stg.dnb.com/v1.0/companyhouse/officers?officerType=CUR&officerLastName={placeholder}"
 	}, {
 		env : "prod",
 		service : "director_search",
-		url : "https://maxcvservices.dnb.com/v1.0/companyhouse/officers?officerLastName={placeholder}&officerType=CUR"
+		url : "https://maxcvservices.dnb.com/v1.0/companyhouse/officers?officerType=CUR&officerLastName={placeholder}"
 	}, {
 		env : "qa",
 		service : "director_order",
