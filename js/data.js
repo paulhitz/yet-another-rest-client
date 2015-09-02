@@ -165,6 +165,11 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		description : "This service enables the identification of all available company documents that have been filed for a specified UK DUNS#.",
 		group : "Miscellaneous"
 	}, {
+		id : "order_company_doc",
+		label : "Report Product Service - Order Company Public Document",
+		description : "This service is used to order BASE64-encoded PDF company documents. It can be used with Available Image List. This particular request is hard-coded to a specific company document.",
+		group : "Miscellaneous"
+	}, {
 		id : "date_test",
 		label : "JSONTest.com Date/Time",
 		description : "JSONTest.com is a testing platform for REST services.",
@@ -217,6 +222,18 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 		env : "prod",
 		service : "pcs_public_docs",
 		url : "https://maxcvservices.dnb.com/rest/ProductCatalogService/V2/ListAvailablePublicDocuments?DUNSNumber={placeholder}"
+	}, {
+		env : "qa",
+		service : "order_company_doc",
+		url : "http://services-ext-qa.dnb.com/rest/ReportProductService/V2/OrderCompanyPublicDocument?DUNSNumber=987027422&FilingDate=2015-05-01&FilingReferenceNumber=184269936&DocumentFormName=B10(R)"
+	}, {
+		env : "stg",
+		service : "order_company_doc",
+		url : "http://services-ext-stg.dnb.com/rest/ReportProductService/V2/OrderCompanyPublicDocument?DUNSNumber=987027422&FilingDate=2015-05-01&FilingReferenceNumber=184269936&DocumentFormName=B10(R)"
+	}, {
+		env : "prod",
+		service : "order_company_doc",
+		url : "https://maxcvservices.dnb.com/rest/ReportProductService/V2/OrderCompanyPublicDocument?DUNSNumber=987027422&FilingDate=2015-05-01&FilingReferenceNumber=184269936&DocumentFormName=B10(R)"
 	}, {
 		env : "qa",
 		service : "linkage",
