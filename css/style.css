@@ -158,6 +158,9 @@ table#history {
 #historyIntroText {
   padding: 10px;
 }
+.pagination a:hover {
+  cursor: pointer;
+}
 dd {
   padding-bottom: 5px;
 }
