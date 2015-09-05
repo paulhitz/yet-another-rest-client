@@ -39,16 +39,16 @@
 			</section>
 
 			<section class="panel panel-primary">
-				<div class="panel-heading" data-ng-controller="ToggleCtrl">
+				<div class="panel-heading" >
 					<h2 class="panel-title">
-						<a data-toggle="collapse" href="#advanced" data-ng-click="toggle(status);">
+						<a data-ng-click="showAdvancedSection = !showAdvancedSection">
 							Advanced Settings
-							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': status, 'glyphicon-chevron-right': !status}"></i>
+							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': showAdvancedSection, 'glyphicon-chevron-right': !showAdvancedSection}"></i>
 						</a>
 					</h2>
 				</div>
 
-				<div id="advanced" class="panel-collapse collapse">
+				<div id="advanced" class="panel-collapse collapse" collapse="!showAdvancedSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
 						<div class="form-group">
 							<label for="appId" class="col-md-2 control-label">Application ID:</label>
