@@ -57,13 +57,21 @@ header .navbar-brand img {
   margin-bottom: 30px;
 }
 
-[ng-click], [data-ng-click], [x-ng-click] {
+[data-ng-click] {
   cursor: pointer;
 }
 
-div#json-tabs {
-  margin-top: 5px;
+div.json-tabs {
   margin-bottom: 10px;
+}
+div.json-content {
+  margin-top: 5px;
+  max-height: 800px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+div.json-content pre {
+  background-color: #f0f0f0;
 }
 
 #modal-tabs .tab-content {
@@ -74,11 +82,16 @@ div#json-tabs {
   padding: 10px;
   padding-bottom: 0;
 }
-
-.json-content {
-  max-height: 800px;
-  overflow: auto;
-  overflow-x: hidden;
+#modal-tabs div.json-content {
+  margin-top: 0px;
+  max-height: 250px;
+}
+#modal-tabs div.json-content-small {
+  max-height: 150px;
+}
+#modal-tabs div.json-content pre {
+  padding: 0;
+  font-size: inherit;
 }
 
 .well {
@@ -165,11 +178,11 @@ table#history {
 .pagination a:hover {
   cursor: pointer;
 }
+#modal-tabs dl {
+  margin-bottom: 10px;
+}
 dd {
   padding-bottom: 5px;
-}
-dl#history dd textarea {
-  font-size: small;
 }
 
 /* Loading Spinner */
