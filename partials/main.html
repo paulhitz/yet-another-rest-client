@@ -98,7 +98,7 @@
 									<div class="col-md-7">
 										<input type="url" class="form-control" id="requestUrl" placeholder="Request URL (i.e. http://<configured_endpoint>)" data-ng-model="settings.requestUrl">
 									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip-html-unsafe="The Request URL allows you to enter your own custom endpoint. <br><br>It will still be authenticated against the selected environment."></span>
+									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Request URL field allows you to enter your own custom endpoint. It will still be authenticated against the selected environment."></span>
 									<label for="requestMethod" class="col-md-1 control-label">Method:</label>
 									<div class="col-md-2">
 										<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
@@ -134,7 +134,7 @@
 	</article>
 
 	<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse" data-ng-cloak>
-		<progressbar class="progress-striped active" value="progress.value">{{progress.label}}</progressbar>
+		<progressbar class="progress-striped active" value="progress.value || 0">{{progress.label}}</progressbar>
 	</div>
 
 	<div class="clearfix" data-ng-cloak>
