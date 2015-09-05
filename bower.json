@@ -20,12 +20,12 @@
   ],
   "dependencies": {
     "angular": "~1.2.8",
-    "angular-bootstrap": "0.12.0",
+    "angular-bootstrap": "~0.12.0",
     "angular-highlightjs": "~0.4.3",
     "angular-resource": "~1.2.8",
     "angular-smart-table": "~2.1.3",
     "bootstrap": "~3.3.5",
     "highlightjs": "~8.7.0",
-    "sizeof": "https://gist.githubusercontent.com/paulhitz/1832969af1c6e821c6d6/raw/24299945fb335d80ae11bbda87c616f9d000d8f5/sizeof.js"
+    "sizeof": "git+https://gist.github.com/paulhitz/1832969af1c6e821c6d6"
   }
 }
