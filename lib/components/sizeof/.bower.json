@@ -1,0 +1,14 @@
+{
+  "name": "sizeof",
+  "_cacheHeaders": {
+    "ETag": "\"2dcd31a13a8a6105d3332d974007d86b5e30e06d\"",
+    "Content-Length": "1814",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:2dcd31a13",
+  "main": "index.js",
+  "_source": "https://gist.githubusercontent.com/paulhitz/1832969af1c6e821c6d6/raw/24299945fb335d80ae11bbda87c616f9d000d8f5/sizeof.js",
+  "_target": "*",
+  "_originalSource": "https://gist.githubusercontent.com/paulhitz/1832969af1c6e821c6d6/raw/24299945fb335d80ae11bbda87c616f9d000d8f5/sizeof.js",
+  "_direct": true
+}
