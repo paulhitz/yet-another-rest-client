@@ -4,6 +4,7 @@
  */
 clientApp.service('ProgressbarService', function() {
 	var PROGRESS_STATES = {
+		NONE: { value: 0, label: '' },
 		START: { value: 10, label: 'Authenticating... ' },
 		IN_PROGRESS: { value: 50, label: 'Making Service Request... ' },
 		COMPLETE: { value: 100, label: 'Response Received' }

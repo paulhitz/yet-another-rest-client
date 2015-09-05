@@ -20,12 +20,12 @@
 
 			<dt data-ng-show="history.payload">Payload: </dt>
 			<dd data-ng-show="history.payload">
-				<textarea class="form-control" rows="5" disabled>{{history.payload}}</textarea>
+				<div data-hljs data-source="history.payload" class="json-content json-content-small"></div>
 			</dd>
 
 			<dt>Response: </dt>
 			<dd>
-				<textarea class="form-control" rows="10" disabled>{{history.response}}</textarea>
+				<div data-hljs data-source="history.response" class="json-content"></div>
 			</dd>
 		</dl>
 	</div>

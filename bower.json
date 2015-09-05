@@ -1,0 +1,31 @@
+{
+  "name": "dnb-rest-client",
+  "homepage": "https://github.com/paulhitz/DnB-REST-Client",
+  "authors": [
+    "Paul Hitz <paulhitz@gmail.com>"
+  ],
+  "description": "Custom REST Client for DnB (Dun and Bradstreet) services.",
+  "keywords": [
+    "rest",
+    "services"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.8",
+    "angular-bootstrap": "~0.12.0",
+    "angular-highlightjs": "~0.4.3",
+    "angular-resource": "~1.2.8",
+    "angular-smart-table": "~2.1.3",
+    "bootstrap": "~3.3.5",
+    "highlightjs": "~8.7.0",
+    "sizeof": "git+https://gist.github.com/paulhitz/1832969af1c6e821c6d6"
+  }
+}
