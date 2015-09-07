@@ -1,3 +1,10 @@
+TODO 
+====
+
+
+
+This is a clone of...
+
 D&B Services REST Client
 ========================
 
@@ -16,7 +23,7 @@ Your credentials are saved against the selected environment.
 
 **Installation**
 
-The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  https://chrome.google.com/webstore/detail/db-services-rest-client/ekgojcdjjjlillgeidgniapfmilgbppm
+The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  TODO
 
 
 **Request Methods (POST / GET / PUT / DELETE / HEAD / PATCH)**
