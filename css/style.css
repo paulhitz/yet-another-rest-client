@@ -8,9 +8,11 @@
   border-top-right-radius: 0;
 }
 
+/*
 .container .navbar-default {
   background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
 }
+*/
 
 header .navbar-brand img {
   margin-right: 5px;
@@ -136,12 +138,12 @@ input.form-control[disabled] {
 .modalBackdrop {
   height: 100%;
 }
-
+/*
 .modal-header {
   background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
   color: #fff;
 }
-
+*/
 .modal-body {
   padding-bottom: 0;
   margin-bottom: -1px;

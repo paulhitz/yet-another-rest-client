@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "D&B Services REST Client",
-  "version": "1.2.2",
+  "name": "YARC!",
+  "version": "0.0.1",
 
-  "description": "This tool can be used to test various REST Services.",
-  "short_name": "D&B Services",
+  "description": "YARC - Yet Another REST Client",
+  "short_name": "YARC!",
   "author": "Paul Hitz",
 
   "icons": { "16": "img/logo_16x16.png",

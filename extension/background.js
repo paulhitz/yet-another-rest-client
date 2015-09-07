@@ -1,6 +1,6 @@
 
 //Add a flag to indicate Dev mode.
-chrome.browserAction.setBadgeText({text: "PRO"});
+chrome.browserAction.setBadgeText({text: "YARC"});
 
 
 //Open the extension in a new tab.

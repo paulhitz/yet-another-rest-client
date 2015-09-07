@@ -595,7 +595,7 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 angular.module('clientApp').value('advancedSettings', {
 	requestUrl : "",
 	requestMethod : "get",
-	autoAuthenticate : true,
+	autoAuthenticate : false,
 	payload : ""
 });
 

@@ -10,8 +10,8 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 	$scope.environments = SERVICES_CONFIG.environments;
 	$scope.selectedEnvironment = SERVICES_CONFIG.environments[1].id;
 	$scope.services = SERVICES_CONFIG.services;
-	$scope.selectedService = SERVICES_CONFIG.services[0].id;
-	$scope.serviceDescription = SERVICES_CONFIG.services[0].description;
+	$scope.selectedService = SERVICES_CONFIG.services[32].id;
+	$scope.serviceDescription = SERVICES_CONFIG.services[32].description;
 	$scope.placeholder = SERVICES_CONFIG.placeholder;
 	$scope.alerts = [];
 
