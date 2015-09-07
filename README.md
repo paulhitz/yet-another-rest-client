@@ -28,7 +28,7 @@ Some services require a JSON payload. E.g. ListPortfolio
 
 **Tech**
 
-This is a AngularJS application packaged as a Chrome extension to avoid CORS (Cross-Origin Resource Sharing) issues.
+This is a AngularJS application packaged as a Chrome extension to avoid CORS (Cross-Origin Resource Sharing) issues. Bower is used to handle dependencies.
 
 [![Code Climate](https://codeclimate.com/github/paulhitz/DnB-REST-Client/badges/gpa.svg)](https://codeclimate.com/github/paulhitz/DnB-REST-Client)
 

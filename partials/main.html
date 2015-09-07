@@ -39,16 +39,16 @@
 			</section>
 
 			<section class="panel panel-primary">
-				<div class="panel-heading" data-ng-controller="ToggleCtrl">
+				<div class="panel-heading" >
 					<h2 class="panel-title">
-						<a data-toggle="collapse" href="#advanced" data-ng-click="toggle(status);">
+						<a data-ng-click="showAdvancedSection = !showAdvancedSection">
 							Advanced Settings
-							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': status, 'glyphicon-chevron-right': !status}"></i>
+							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': showAdvancedSection, 'glyphicon-chevron-right': !showAdvancedSection}"></i>
 						</a>
 					</h2>
 				</div>
 
-				<div id="advanced" class="panel-collapse collapse">
+				<div id="advanced" class="panel-collapse collapse" collapse="!showAdvancedSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
 						<div class="form-group">
 							<label for="appId" class="col-md-2 control-label">Application ID:</label>
@@ -98,7 +98,7 @@
 									<div class="col-md-7">
 										<input type="url" class="form-control" id="requestUrl" placeholder="Request URL (i.e. http://<configured_endpoint>)" data-ng-model="settings.requestUrl">
 									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip-html-unsafe="The Request URL allows you to enter your own custom endpoint. <br><br>It will still be authenticated against the selected environment."></span>
+									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Request URL field allows you to enter your own custom endpoint. It will still be authenticated against the selected environment."></span>
 									<label for="requestMethod" class="col-md-1 control-label">Method:</label>
 									<div class="col-md-2">
 										<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
@@ -134,7 +134,7 @@
 	</article>
 
 	<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse" data-ng-cloak>
-		<progressbar class="progress-striped active" value="progress.value">{{progress.label}}</progressbar>
+		<progressbar class="progress-striped active" value="progress.value || 0">{{progress.label}}</progressbar>
 	</div>
 
 	<div class="clearfix" data-ng-cloak>
@@ -154,25 +154,18 @@
 						<strong>Authentication Token:</strong> {{authenticationToken}}<br>
 						<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
 					</div>
-
-					<div role="tabpanel">
-						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#json" role="tab" data-toggle="tab">Response Body</a></li>
-							<li role="presentation"><a href="#responseHeaders" role="tab" data-toggle="tab">Response Headers</a></li>
-							<li role="presentation"><a href="#requestHeaders" role="tab" data-toggle="tab">Request Headers</a></li>
-						</ul>
-						<div class="tab-content" id="json-tabs">
-							<div role="tabpanel" class="tab-pane active json-content" id="json">
-								<pre><code data-hljs data-source="responseBody"></code></pre>
-							</div>
-							<div role="tabpanel" class="tab-pane json-content" id="responseHeaders">
-								<pre><code data-hljs data-source="responseHeaders"></code></pre>
-							</div>
-							<div role="tabpanel" class="tab-pane json-content" id="requestHeaders">
-								<pre><code data-hljs data-source="requestHeaders"></code></pre>
-							</div>
-						</div>
-					</div>
+					
+					<tabset class="json-tabs">
+						<tab heading="Response Body">
+							<div data-hljs data-source="responseBody" class="json-content"></div>
+						</tab>
+						<tab heading="Response Headers">
+							<div data-hljs data-source="responseHeaders" class="json-content"></div>
+						</tab>
+						<tab heading="Request Headers">
+							<div data-hljs data-source="requestHeaders" class="json-content"></div>
+						</tab>
+					</tabset>
 
 					<div id="copy-buttons">
 						<button type="button" class="btn btn-primary" data-ng-click="copy(requestUrl);">
