@@ -4,39 +4,215 @@
 		<form class="col-md-12 column">
 			<section class="panel panel-primary">
 				<div class="panel-heading">
-					<h2 class="panel-title">Settings</h2>
+					<h2 class="panel-title">Request Settings</h2>
 				</div>
 
 				<div class="form-horizontal panel-body" role="form">
 					<div class="form-group">
-						<label for="env" class="col-md-2 control-label">Environment:</label>
-						<div class="col-md-10">
-							<select class="form-control" id="env" data-ng-model="selectedEnvironment" data-ng-options="env.id as env.label for env in environments" data-ng-change="changeEnvironment(selectedEnvironment);"></select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="services" class="col-md-2 control-label">Select Service:</label>
-						<div class="col-md-7">
+						<label for="services" class="col-md-1 control-label">URL:</label>
+						<div class="col-md-8">
 							<select class="form-control" data-ng-class="{'square-borders': serviceDescription}" id="services" data-ng-model="selectedService" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="settings.requestUrl" data-ng-change="changeService(selectedService);"></select>
-							<div id="service-description" class="well well-sm" data-ng-show="serviceDescription"><small>{{serviceDescription}}</small></div>
 						</div>
-						<div class="col-md-3" data-ng-controller="AddServiceModalCtrl" data-ng-show="chromeSupport">
-							<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add New Service</button>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="parameter" class="col-md-2 control-label">Parameter (optional):</label>
-						<div class="col-md-10">
-							<div class="row">
-								<div class="col-md-11">
-									<input type="text" class="form-control" id="parameter" placeholder="{{placeholder}}" value="" data-ng-model="parameter" data-ng-cloak>
-								</div>
-								<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="An optional parameter to send with the service request. E.g. a DUNS# or a Search Term. {{placeholder}} is used by default."></span>
+						<div class="" data-ng-controller="AddServiceModalCtrl" data-ng-show="chromeSupport">
+							<label for="requestMethod" class="col-md-1 control-label">Method:</label>
+							<div class="col-md-2">
+								<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
+									<option value="get">GET</option>
+									<option value="post">POST</option>
+									<option value="put">PUT</option>
+									<option value="patch">PATCH</option>
+									<option value="delete">DELETE</option>
+									<option value="head">HEAD</option>
+								</select>
 							</div>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="payload" class="col-md-1 control-label">Payload:<br><span data-ng-show="settings.requestMethod !== 'post' && settings.requestMethod !== 'put' && settings.requestMethod !== 'patch'">(Optional)</span></label>
+						<div class="col-md-11">
+							<div class="row">
+								<div class="col-md-12">
+									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="payload" class="col-md-1 control-label">URL:</label>
+						<div class="col-md-11">
+							<div class="row">
+								<div class="col-md-12">
+
+								<div class="input-group">
+								
+								<input type="text" class="form-control" aria-label="...">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="#">GET</a></li>
+          <li><a href="#">POST</a></li>
+          <li><a href="#">PUT</a></li>
+        </ul>
+			</div>					
+							</div>	
+								
+								
+							</div>
+						</div>
+					</div>	
+				</div>
+				
+				
+				
+				
+				
+				
+				
+					<div class="form-group">
+						<label for="payload" class="col-md-1 control-label">URL:</label>
+						<div class="col-md-11">
+							<div class="row">
+								<div class="col-md-12">
+
+								<div class="input-group">
+								
+
+								
+								
+    <ui-select ng-model="address.selected"
+             theme="bootstrap"
+             ng-disabled="disabled"
+             reset-search-input="false">
+    <ui-select-match placeholder="Enter URL...">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="address in addresses track by $index"
+             refresh="refreshAddresses($select.search)"
+             refresh-delay="0">
+      <div ng-bind-html="address.name | highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
+								
+								
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="#">GET</a></li>
+          <li><a href="#">POST</a></li>
+          <li><a href="#">PUT</a></li>
+        </ul>
+			</div>					
+							</div>	
+								
+								
+							</div>
+						</div>
+					</div>	
+				</div>
+				
+				
+				
+			</section>
+
+
+  
+
+
+  
+  
+
+			<section class="panel panel-primary">
+				<div class="panel-heading" >
+					<h2 class="panel-title">
+						<a data-ng-click="showHeaderSection = !showHeaderSection">
+							Custom Headers
+							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': showHeaderSection, 'glyphicon-chevron-right': !showHeaderSection}"></i>
+						</a>
+					</h2>
+				</div>
+
+				<div id="advanced" class="panel-collapse collapse" collapse="!showHeaderSection">
+					<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
+						<div class="form-group">
+							<label for="appId" class="col-md-2 control-label">Name:</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="appId" class="col-md-2 control-label">Name:</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="appId" class="col-md-2 control-label">Name:</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="appId" class="col-md-2 control-label">Name:</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
+									<div class="col-md-4">
+										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="">Add Header</button>
+
+					</div>
 				</div>
 			</section>
+
+
+
+			<section class="panel panel-primary">
+				<div class="panel-heading" >
+					<h2 class="panel-title">
+						<a data-ng-click="showAuthSection = !showAuthSection">
+							Authentication
+							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': showAuthSection, 'glyphicon-chevron-right': !showAuthSection}"></i>
+						</a>
+					</h2>
+				</div>
+
+				<div id="advanced" class="panel-collapse collapse" collapse="!showAuthSection">
+					Auto-generate basic AUTH Headers?
+				</div>
+			</section>
+
+
+
 
 			<section class="panel panel-primary">
 				<div class="panel-heading" >

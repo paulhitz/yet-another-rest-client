@@ -3,8 +3,8 @@
   "name": "YARC!",
   "version": "0.0.1",
 
-  "description": "YARC - Yet Another REST Client",
-  "short_name": "YARC!",
+  "description": "YARC - Yet Another REST Client. A tool for testing REST services.",
+  "short_name": "YARC! Yet Another REST Client",
   "author": "Paul Hitz",
 
   "icons": { "16": "img/logo_16x16.png",

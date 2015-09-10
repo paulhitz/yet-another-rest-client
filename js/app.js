@@ -1,10 +1,50 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table']);
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'ngSanitize', 'ui.select']);
 
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
 clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, clientAppHelper, utils,
 		ProgressbarService, advancedSettings, SERVICES_CONFIG, credentials) {
+		
+		
+		
+		
+  $scope.address = {};
+  $scope.refreshAddresses = function(address) {
+
+      $scope.addresses = [
+    { name: 'Adam2',      email: 'adam@email.com',      age: 10 },
+    { name: 'Amalie2',    email: 'amalie@email.com',    age: 12 },
+    { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+    { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+    { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+    { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+    { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+    { name: 'Adrian2',    email: 'adrian@email.com',    age: 21 }
+  ];
+
+  };
+		
+		
+		
+		  $scope.addresses = [
+    { name: 'Adam',      email: 'adam@email.com',      age: 10 },
+    { name: 'Amalie',    email: 'amalie@email.com',    age: 12 },
+    { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30 },
+    { name: 'Samantha',  email: 'samantha@email.com',  age: 31 },
+    { name: 'Estefanía', email: 'estefanía@email.com', age: 16 },
+    { name: 'Natasha',   email: 'natasha@email.com',   age: 54 },
+    { name: 'Nicole',    email: 'nicole@email.com',    age: 43 },
+    { name: 'Adrian',    email: 'adrian@email.com',    age: 21 }
+  ];
+		
+		
+		
+		
+		
+		
+		
+		
 	//Populate the form.
 	$scope.settings = advancedSettings;
 	$scope.environments = SERVICES_CONFIG.environments;

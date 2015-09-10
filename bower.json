@@ -23,10 +23,12 @@
     "angular-bootstrap": "~0.13.4",
     "angular-highlightjs": "~0.4.3",
     "angular-resource": "~1.4.5",
+    "angular-sanitize": "~1.4.5",
     "angular-smart-table": "~2.1.3",
     "bootstrap": "~3.3.5",
     "bootswatch-dist": "spacelab",
     "highlightjs": "~8.7.0",
-    "sizeof": "git+https://gist.github.com/paulhitz/1832969af1c6e821c6d6"
+    "sizeof": "git+https://gist.github.com/paulhitz/1832969af1c6e821c6d6",
+    "ui-select": "angular-ui-select#~0.12.1"
   }
 }
