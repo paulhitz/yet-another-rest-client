@@ -45,7 +45,7 @@
 
 								<div class="input-group">
 								
-								<input type="text" class="form-control" aria-label="...">
+								<input type="text" ng-model="selected" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com">
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
@@ -79,15 +79,10 @@
 
 								
 								
-    <ui-select ng-model="address.selected"
-             theme="bootstrap"
-             ng-disabled="disabled"
-             reset-search-input="false">
-    <ui-select-match placeholder="Enter URL...">{{$select.selected.name}}</ui-select-match>
-    <ui-select-choices repeat="address in addresses track by $index"
-             refresh="refreshAddresses($select.search)"
-             refresh-delay="0">
-      <div ng-bind-html="address.name | highlight: $select.search"></div>
+    <ui-select ng-model="endpoint.selected" reset-search-input="false">
+    <ui-select-match placeholder="Enter URL...">{{$select.selected.url}}</ui-select-match>
+    <ui-select-choices repeat="endpoint in endpoints | filter: $select.search">
+      <div ng-bind-html="endpoint.url | highlight: $select.search"></div>
     </ui-select-choices>
   </ui-select>
 								
@@ -110,7 +105,67 @@
 				
 				
 				
-			</section>
+
+
+
+
+
+
+
+
+
+					<div class="form-group">
+						<label for="payload" class="col-md-1 control-label">URL:</label>
+						<div class="col-md-11">
+							<div class="row">
+								<div class="col-md-12">
+
+								<div class="input-group">
+								
+
+
+<div class="input-group">
+
+<input type="text" ng-model="selected" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="Enter URL...">
+	  
+	        <span class="input-group-addon">
+        <select  name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
+									<option value="get">GET</option>
+									<option value="post">POST</option>
+									<option value="put">PUT</option>
+									<option value="patch">PATCH</option>
+									<option value="delete">DELETE</option>
+									<option value="head">HEAD</option>
+								</select>
+      </span>
+	  
+    </div>
+
+
+								
+							</div>	
+								
+								
+							</div>
+						</div>
+					</div>	
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</section>
 
 
   
@@ -129,67 +184,30 @@
 					</h2>
 				</div>
 
-				<div id="advanced" class="panel-collapse collapse" collapse="!showHeaderSection">
+				<div id="headers" class="panel-collapse collapse" collapse="!showHeaderSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
 						<div class="form-group">
-							<label for="appId" class="col-md-2 control-label">Name:</label>
-							<div class="col-md-10">
+							<label for="appId" class="col-md-1 control-label">Name:</label>
+							<div class="col-md-11">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+										<input type="text" class="form-control" id="appId" placeholder="Enter the header name..." data-ng-model="settings.credentials.appId">
 									</div>
-									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
+									<label for="autoAuthenticate" class="col-md-1 control-label">Value:</label>
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
+										<input type="text" class="form-control" id="appId" placeholder="Enter the header value..." data-ng-model="settings.credentials.appId">
+									</div>
+									<div class="col-md-2">
+										<button type="button" data-ng-click="removeItem(row)" class="btn btn-sm btn-danger" title="Delete this entry.">
+											<span class="glyphicon glyphicon-minus"></span>
+										</button>
+										<button type="button" data-ng-click="removeItem(row)" class="btn btn-sm btn-success" title="Delete this entry.">
+											<span class="glyphicon glyphicon-plus"></span>
+										</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="appId" class="col-md-2 control-label">Name:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
-									</div>
-									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="appId" class="col-md-2 control-label">Name:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
-									</div>
-									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="appId" class="col-md-2 control-label">Name:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
-									</div>
-									<label for="autoAuthenticate" class="col-md-2 control-label">Value:</label>
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId">
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="">Add Header</button>
-
 					</div>
 				</div>
 			</section>
@@ -206,8 +224,20 @@
 					</h2>
 				</div>
 
-				<div id="advanced" class="panel-collapse collapse" collapse="!showAuthSection">
-					Auto-generate basic AUTH Headers?
+				<div id="authentication" class="panel-collapse collapse" collapse="!showAuthSection">
+					<p>Basic Authentication is supported. Enter a username and password and the Auth Header will be generated and sent with the request.</p>
+
+					<div class="form-horizontal panel-body" role="form">
+						<div class="form-group">
+							<label for="auth" class="col-md-2 control-label">Auth Header:</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="auth" placeholder="Basic QWEFfsdfsdfSDFsdfFSDF==" value="" data-ng-model="parameter">
+							</div>
+							<div class="col-md-3" data-ng-controller="AddServiceModalCtrl">
+								<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add Credentials</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
 
