@@ -10,8 +10,11 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 		
 	$scope.endpoint = {};
 	$scope.endpoints = SERVICES_CONFIG.endpoints;
-		
-		
+	
+	$scope.requestMethod = "GET";
+	$scope.changeRequestMethod = function(method) {
+		$scope.requestMethod = method;
+	};
 		
 		
 		

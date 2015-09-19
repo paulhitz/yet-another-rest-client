@@ -38,28 +38,30 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="payload" class="col-md-1 control-label">URL:</label>
+						<label for="url" class="col-md-1 control-label">URL:</label>
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
-
-								<div class="input-group">
-								
-								<input type="text" ng-model="selected" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#">GET</a></li>
-          <li><a href="#">POST</a></li>
-          <li><a href="#">PUT</a></li>
-        </ul>
-			</div>					
-							</div>	
-								
-								
+									<div class="input-group">
+										<span class="input-group-addon" title="Add to favourites.">
+											<input type="checkbox" class="glyphicon glyphicon-star-empty">
+										</span>
+										<input id="url" type="text" ng-model="selected" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com">
+										<div class="input-group-btn" title="Select the request method to use.">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
+											<ul class="dropdown-menu dropdown-menu-right">
+												<li><a href="#" ng-click="changeRequestMethod('GET')">GET</a></li>
+												<li><a href="#" ng-click="changeRequestMethod('POST')">POST</a></li>
+												<li><a href="#" ng-click="changeRequestMethod('PUT')">PUT</a></li>
+												<li><a href="#" ng-click="changeRequestMethod('PATCH')">PATCH</a></li>
+												<li><a href="#" ng-click="changeRequestMethod('DELETE')">DELETE</a></li>
+												<li><a href="#" ng-click="changeRequestMethod('HEAD')">HEAD</a></li>
+											</ul>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</div>
 				
 				
@@ -105,64 +107,6 @@
 				
 				
 				
-
-
-
-
-
-
-
-
-
-					<div class="form-group">
-						<label for="payload" class="col-md-1 control-label">URL:</label>
-						<div class="col-md-11">
-							<div class="row">
-								<div class="col-md-12">
-
-								<div class="input-group">
-								
-
-
-<div class="input-group">
-
-<input type="text" ng-model="selected" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="Enter URL...">
-	  
-	        <span class="input-group-addon">
-        <select  name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
-									<option value="get">GET</option>
-									<option value="post">POST</option>
-									<option value="put">PUT</option>
-									<option value="patch">PATCH</option>
-									<option value="delete">DELETE</option>
-									<option value="head">HEAD</option>
-								</select>
-      </span>
-	  
-    </div>
-
-
-								
-							</div>	
-								
-								
-							</div>
-						</div>
-					</div>	
-				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 				</section>

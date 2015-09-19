@@ -2,6 +2,38 @@
  * Various custom styles for the REST Client. Bootstrap provides the bulk of the Look and Feel.
  */
 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ .input-group-addon input.glyphicon:before {
+ visibility: visible;
+}
+ .input-group-addon input.glyphicon.glyphicon-star-empty:checked:before {
+   content: "\e006";
+}
+ .input-group-addon input[type=checkbox].glyphicon{
+    visibility: hidden;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 .navbar {
   border-top-width: 0;
   border-top-left-radius: 0;

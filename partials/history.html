@@ -10,11 +10,14 @@
 	<table id="history" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
 		<thead>
 			<tr>
-				<th st-sort="date" st-skip-natural="true" class="clickable">Date</th>
+				<th st-sort="date" st-skip-natural="true" st-sort-default="reverse" class="clickable">Date</th>
 				<th st-sort="request" st-skip-natural="true" class="clickable">Request URL</th>
 				<th st-sort="method" st-skip-natural="true" class="clickable">Type</th>
 				<th st-sort="timer" st-skip-natural="true" class="clickable">Response Time</th>
 				<th>Actions</th>
+			</tr>
+			<tr data-ng-show="numberOfEntries > 10">
+				<th colspan="5"><input st-search="request" class="form-control" placeholder="Filter by Request URL..." type="text"/></th>
 			</tr>
 		</thead>
 		<tbody>
