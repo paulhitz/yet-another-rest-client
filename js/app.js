@@ -58,7 +58,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 			var authEndpoint = clientAppHelper.configureServiceUrl($scope.selectedEnvironment, "auth");
 			AuthService.getAuthCookie(authEndpoint).then(
 				function(success) {
-					clientAppHelper.configureAndCallService($scope, success.authorization, advancedSettings.requestUrl);
+					clientAppHelper.configureAndCallService($scope, success.authorization, $scope.requestUrl);
 				},
 				function(error) {
 					$log.error(error);
@@ -68,7 +68,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, AuthService, client
 				}
 			);
 		} else {
-			clientAppHelper.configureAndCallService($scope, "(Automatic Authentication Disabled)", advancedSettings.requestUrl);
+			clientAppHelper.configureAndCallService($scope, "(Automatic Authentication Disabled)", $scope.requestUrl);
 		}
 	};
 

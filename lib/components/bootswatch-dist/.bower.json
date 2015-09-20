@@ -57,6 +57,5 @@
   },
   "_source": "git://github.com/dbtek/bootswatch-dist.git",
   "_target": "spacelab",
-  "_originalSource": "bootswatch-dist",
-  "_direct": true
+  "_originalSource": "bootswatch-dist"
 }

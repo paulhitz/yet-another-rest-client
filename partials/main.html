@@ -9,36 +9,7 @@
 
 				<div class="form-horizontal panel-body" role="form">
 					<div class="form-group">
-						<label for="services" class="col-md-1 control-label">URL:</label>
-						<div class="col-md-8">
-							<select class="form-control" data-ng-class="{'square-borders': serviceDescription}" id="services" data-ng-model="selectedService" data-ng-options="service.id as service.label group by service.group for service in services" data-ng-disabled="settings.requestUrl" data-ng-change="changeService(selectedService);"></select>
-						</div>
-						<div class="" data-ng-controller="AddServiceModalCtrl" data-ng-show="chromeSupport">
-							<label for="requestMethod" class="col-md-1 control-label">Method:</label>
-							<div class="col-md-2">
-								<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
-									<option value="get">GET</option>
-									<option value="post">POST</option>
-									<option value="put">PUT</option>
-									<option value="patch">PATCH</option>
-									<option value="delete">DELETE</option>
-									<option value="head">HEAD</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="payload" class="col-md-1 control-label">Payload:<br><span data-ng-show="settings.requestMethod !== 'post' && settings.requestMethod !== 'put' && settings.requestMethod !== 'patch'">(Optional)</span></label>
-						<div class="col-md-11">
-							<div class="row">
-								<div class="col-md-12">
-									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload"></textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="url" class="col-md-1 control-label">URL:</label>
+						<label for="requestUrl" class="col-md-1 control-label">URL:</label>
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
@@ -46,7 +17,7 @@
 										<span class="input-group-addon" title="Add to favourites.">
 											<input type="checkbox" class="glyphicon glyphicon-star-empty">
 										</span>
-										<input id="url" type="text" ng-model="selected" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com">
+										<input id="requestUrl" type="text" ng-model="requestUrl" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com">
 										<div class="input-group-btn" title="Select the request method to use.">
 											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
@@ -57,37 +28,43 @@
 												<li><a href="#" ng-click="changeRequestMethod('DELETE')">DELETE</a></li>
 												<li><a href="#" ng-click="changeRequestMethod('HEAD')">HEAD</a></li>
 											</ul>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+					<div class="form-group">
+						<label for="payload" class="col-md-1 control-label">Payload:<br><span data-ng-show="requestMethod !== 'POST' && requestMethod !== 'PUT' && requestMethod !== 'PATCH'">(Optional)</span></label>
+						<div class="col-md-11">
+							<div class="row">
+								<div class="col-md-12">
+									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				
 				
 				
 				
 				
 				
-				
+				<!--
 					<div class="form-group">
 						<label for="payload" class="col-md-1 control-label">URL:</label>
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
-
 								<div class="input-group">
-								
-
-								
 								
     <ui-select ng-model="endpoint.selected" reset-search-input="false">
     <ui-select-match placeholder="Enter URL...">{{$select.selected.url}}</ui-select-match>
     <ui-select-choices repeat="endpoint in endpoints | filter: $select.search">
       <div ng-bind-html="endpoint.url | highlight: $select.search"></div>
     </ui-select-choices>
-  </ui-select>
-								
+  </ui-select>							
 								
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
@@ -98,13 +75,11 @@
         </ul>
 			</div>					
 							</div>	
-								
-								
 							</div>
 						</div>
 					</div>	
 				</div>
-				
+				-->
 				
 				
 
@@ -185,100 +160,6 @@
 				</div>
 			</section>
 
-
-
-
-			<section class="panel panel-primary">
-				<div class="panel-heading" >
-					<h2 class="panel-title">
-						<a data-ng-click="showAdvancedSection = !showAdvancedSection">
-							Advanced Settings
-							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': showAdvancedSection, 'glyphicon-chevron-right': !showAdvancedSection}"></i>
-						</a>
-					</h2>
-				</div>
-
-				<div id="advanced" class="panel-collapse collapse" collapse="!showAdvancedSection">
-					<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
-						<div class="form-group">
-							<label for="appId" class="col-md-2 control-label">Application ID:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="E.g. 36" data-ng-model="settings.credentials.appId" data-ng-disabled="!settings.autoAuthenticate" required>
-									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Application ID is sent with all service requests. Some IDs may not be enabled for all services."></span>
-									<label for="autoAuthenticate" class="col-md-3 control-label alignRight">Auto-Authenticate:</label>
-									<div class="col-md-3">
-										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-default" data-ng-model="settings.autoAuthenticate" data-btn-radio="true" id="autoAuthenticate">Enabled</button>
-											<button type="button" class="btn btn-default" data-ng-model="settings.autoAuthenticate" data-btn-radio="false">Disabled</button>
-										</div>
-									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="Automatically authenticate against the selected environment. Authentication is required for all D&amp;B Services."></span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="userId" class="col-md-2 control-label">User ID:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-11">
-										<input type="text" class="form-control" id="userId" placeholder="User ID" data-ng-model="settings.credentials.userId" data-ng-disabled="!settings.autoAuthenticate" required>
-									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The User ID to use for authenticating."></span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="password" class="col-md-2 control-label">Password:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-11">
-										<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="settings.credentials.password" data-ng-disabled="!settings.autoAuthenticate" required>
-									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The password to use for authenticating."></span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="requestUrl" class="col-md-2 control-label">Request URL:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-7">
-										<input type="url" class="form-control" id="requestUrl" placeholder="Request URL (i.e. http://<configured_endpoint>)" data-ng-model="settings.requestUrl">
-									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Request URL field allows you to enter your own custom endpoint. It will still be authenticated against the selected environment."></span>
-									<label for="requestMethod" class="col-md-1 control-label">Method:</label>
-									<div class="col-md-2">
-										<select class="form-control" name="requestMethod" id="requestMethod" data-ng-model="settings.requestMethod">
-											<option value="get">GET</option>
-											<option value="post">POST</option>
-											<option value="put">PUT</option>
-											<option value="patch">PATCH</option>
-											<option value="delete">DELETE</option>
-											<option value="head">HEAD</option>
-										</select>
-									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The Request Method to use for calling the service."></span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="payload" class="col-md-2 control-label">Payload:</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-11">
-										<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload" data-ng-disabled="settings.requestMethod !== 'post' && settings.requestMethod !== 'put' && settings.requestMethod !== 'patch'"></textarea>
-									</div>
-									<span class="glyphicon glyphicon-question-sign help col-md-1" aria-hidden="true" data-tooltip="The payload to use for POST / PUT / PATCH requests. This is usually in JSON format."></span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
 			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing">Send Request</button>
 		</form>
 	</article>
@@ -301,7 +182,6 @@
 				<div class="panel-body">
 					<div class="well">
 						<strong>Request URL:</strong> <a href="{{requestUrl}}" target="_blank">{{requestUrl}}</a><br>
-						<strong>Authentication Token:</strong> {{authenticationToken}}<br>
 						<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
 					</div>
 					

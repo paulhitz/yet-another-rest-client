@@ -34,13 +34,13 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	/**
 	 * Determine the service endpoint to use and call the service.
 	 */
-	helper.configureAndCallService = function($scope, token) {
+	helper.configureAndCallService = function($scope, token, requestUrl) {
 		$scope.authenticationToken = token;
 
 		//Determine the configured service endpoint.
-		if (advancedSettings.requestUrl) {
+		if (requestUrl) {
 			//If the user has entered a specific endpoint, just use that.
-			$scope.requestUrl = advancedSettings.requestUrl;
+			$scope.requestUrl = requestUrl;
 		} else {
 			$scope.requestUrl = helper.configureServiceUrl($scope.selectedEnvironment, $scope.selectedService, $scope.parameter);
 		}
