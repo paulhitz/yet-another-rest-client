@@ -34,16 +34,10 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	/**
 	 * Determine the service endpoint to use and call the service.
 	 */
-	helper.configureAndCallService = function($scope, token, requestUrl) {
-		$scope.authenticationToken = token;
+	helper.configureAndCallService = function($scope, requestUrl) {
 
-		//Determine the configured service endpoint.
-		if (requestUrl) {
-			//If the user has entered a specific endpoint, just use that.
-			$scope.requestUrl = requestUrl;
-		} else {
-			$scope.requestUrl = helper.configureServiceUrl($scope.selectedEnvironment, $scope.selectedService, $scope.parameter);
-		}
+		//
+		$scope.requestUrl = requestUrl;
 
 		//Call the endpoint.
 		$scope.progress = ProgressbarService.getProgressState('IN_PROGRESS');
@@ -65,26 +59,26 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 		//Determine the request method to use (GET/POST/PUT/DELETE/HEAD/PATCH).
 		var promise;
 		$scope.timerStart = Date.now();
-		switch (advancedSettings.requestMethod) {
-			case "post":
+		switch ($scope.requestMethod) {
+			case "POST":
 				helper.addPayloadHeaders(requestConfig.headers);
-				promise = $http.post($scope.requestUrl, advancedSettings.payload, requestConfig);
+				promise = $http.post($scope.requestUrl, $scope.payload, requestConfig);
 				break;
-			case "put":
+			case "PUT":
 				helper.addPayloadHeaders(requestConfig.headers);
-				promise = $http.put($scope.requestUrl, advancedSettings.payload, requestConfig);
+				promise = $http.put($scope.requestUrl, $scope.payload, requestConfig);
 				break;
-			case "patch":
+			case "PATCH":
 				helper.addPayloadHeaders(requestConfig.headers);
-				promise = $http.patch($scope.requestUrl, advancedSettings.payload, requestConfig);
+				promise = $http.patch($scope.requestUrl, $scope.payload, requestConfig);
 				break;
-			case "delete":
+			case "DELETE":
 				promise = $http.delete($scope.requestUrl, requestConfig);
 				break;
-			case "head":
+			case "HEAD":
 				promise = $http.head($scope.requestUrl, requestConfig);
 				break;
-			case "get":
+			case "GET":
 				/* falls through */
 			default:
 				promise = $http.get($scope.requestUrl, requestConfig);
@@ -124,12 +118,10 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			date: Date(),
 			request: $scope.requestUrl,
 			response: helper.excludeLargeObjects(response),
-			method: advancedSettings.requestMethod,
+			method: $scope.requestMethod,
+			payload: $scope.payload,
 			timer: $scope.timerEnd - $scope.timerStart
 		};
-		if (advancedSettings.requestMethod === 'post' || advancedSettings.requestMethod === 'put') {
-			entry['payload'] = advancedSettings.payload;
-		}
 
 		//Persist it using Chrome Storage. Supports objects.
 		var key = "restclient.history." + Date.now();

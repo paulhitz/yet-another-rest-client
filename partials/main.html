@@ -14,7 +14,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="input-group">
-										<span class="input-group-addon" title="Add to favourites.">
+										<span class="input-group-addon" title="Add to favorites.">
 											<input type="checkbox" class="glyphicon glyphicon-star-empty">
 										</span>
 										<input id="requestUrl" type="text" ng-model="requestUrl" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com">
@@ -39,7 +39,7 @@
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
-									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="settings.payload"></textarea>
+									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="payload"></textarea>
 								</div>
 							</div>
 						</div>
@@ -104,17 +104,17 @@
 				</div>
 
 				<div id="headers" class="panel-collapse collapse" collapse="!showHeaderSection">
-					<div class="form-horizontal panel-body" role="form" data-ng-model="settings">
+					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
 						<div class="form-group">
 							<label for="appId" class="col-md-1 control-label">Name:</label>
 							<div class="col-md-11">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="Enter the header name..." data-ng-model="settings.credentials.appId">
+										<input type="text" class="form-control" id="appId" placeholder="Enter the header name..." data-ng-model="headers.name">
 									</div>
 									<label for="autoAuthenticate" class="col-md-1 control-label">Value:</label>
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="Enter the header value..." data-ng-model="settings.credentials.appId">
+										<input type="text" class="form-control" id="appId" placeholder="Enter the header value..." data-ng-model="headers.value">
 									</div>
 									<div class="col-md-2">
 										<button type="button" data-ng-click="removeItem(row)" class="btn btn-sm btn-danger" title="Delete this entry.">
@@ -182,6 +182,7 @@
 				<div class="panel-body">
 					<div class="well">
 						<strong>Request URL:</strong> <a href="{{requestUrl}}" target="_blank">{{requestUrl}}</a><br>
+						<strong>Request Method:</strong> {{requestMethod}}<br>
 						<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
 					</div>
 					
