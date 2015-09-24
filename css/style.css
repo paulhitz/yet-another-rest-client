@@ -46,10 +46,10 @@
 }
 */
 
+/* TODO tidy this up. */
 sup {
     top: -1.5em;
 }
-
 header .navbar-brand {
   padding-top: 20px;
 }
@@ -71,11 +71,8 @@ header .navbar-brand span {
   border-left-width: 2px;
   border-left-style: outset;
 }
-.navbar-default .navbar-nav .navbar-link-container a {
+.navbar-default .navbar-nav .navbar-link-container > a {
   padding-top: 24px;
-}
-.navbar-default .navbar-nav .navbar-link-container ul.dropdown-menu a {
-  padding-top: 0;
 }
 
 .square-borders {

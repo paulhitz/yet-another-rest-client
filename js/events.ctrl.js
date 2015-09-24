@@ -1,13 +1,14 @@
 /**
- * A controller responsible for broadcasting events.
+ * A controller responsible for broadcasting events and setting the current tab.
  */
 clientApp.controller('EventsCtrl', function($scope, $rootScope) {
 
-	//Broadcast an event to indicate that the request history should be loaded.
-	$scope.loadHistory = function(value) {
-		$rootScope.displayHistory = value;
-		if (value) {
-			$rootScope.$broadcast('loadHistory');
+	$scope.loadTab = function(tab) {
+		$rootScope.currentTab = tab;
+
+		if (tab === "history") {
+			//Broadcast an event to indicate that the request history should be loaded.
+			$rootScope.$broadcast("loadHistory");
 		}
 	};
 });
