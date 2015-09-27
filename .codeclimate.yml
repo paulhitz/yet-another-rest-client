@@ -1,18 +1,13 @@
-
 engines:
   eslint:
     enabled: true
   csslint:
     enabled: true
-
-
- ratings:
+ratings:
    paths:
    - js/**
    - css/**
    - partials/**
-
-
 exclude_paths:
 - "lib/*"
 - "extension/*"
