@@ -210,9 +210,6 @@ table#history td.url-row {
 table#history {
   margin-bottom: 2px;
 }
-#historyIntroText {
-  padding: 10px;
-}
 .pagination a:hover {
   cursor: pointer;
 }

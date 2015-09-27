@@ -17,9 +17,9 @@
 <div class="container">
 	<data-ng-include src="'partials/header.html'"></data-ng-include>
 
-	<data-ng-include src="'partials/main.html'" data-ng-hide="currentTab && currentTab != 'main'"></data-ng-include>
-	<data-ng-include src="'partials/history.html'" data-ng-show="currentTab == 'history'"></data-ng-include>
-	<data-ng-include src="'partials/help.html'" data-ng-show="currentTab == 'help'"></data-ng-include>
+	<data-ng-include src="'partials/main.html'" data-ng-hide="currentTab && currentTab !== 'main'"></data-ng-include>
+	<data-ng-include src="'partials/history.html'" data-ng-show="currentTab === 'history'"></data-ng-include>
+	<data-ng-include src="'partials/help.html'" data-ng-show="currentTab === 'help'"></data-ng-include>
 
 	<data-ng-include src="'partials/footer.html'"></data-ng-include>
 </div>
