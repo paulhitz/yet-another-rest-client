@@ -14,7 +14,9 @@ Every request and response is saved so they can be viewed again at a later stage
 The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  TODO
 
 
-**Request Methods (POST / GET / PUT / DELETE / HEAD / PATCH)**
+**Request Methods**
+
+Supported: GET / POST / PUT / DELETE / HEAD / PATCH
 
 Requests use GET by default. POST/PUT/PATCH requests should specify a payload.
 
