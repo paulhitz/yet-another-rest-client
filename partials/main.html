@@ -144,13 +144,13 @@
 				</div>
 
 				<div id="authentication" class="panel-collapse collapse panel-body" collapse="!showAuthSection">
-					<p>Basic Authentication is supported. Enter a username and password and the Auth Header will be generated and sent with the request.</p>
+					<p>Basic Authentication is supported. Enter a username and password and the Authorization Header will be generated and sent with the request.</p>
 
 					<div class="form-horizontal" role="form">
 						<div class="form-group">
-							<label for="auth" class="col-md-2 control-label">Auth Header:</label>
+							<label for="auth" class="col-md-2 control-label">Authorization:</label>
 							<div class="col-md-7">
-								<input type="text" class="form-control" id="auth" placeholder="Basic QWEFfsdfsdfSDFsdfFSDF==" value="" data-ng-model="parameter">
+								<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" value="" data-ng-model="parameter">
 							</div>
 							<div class="col-md-3" data-ng-controller="AddServiceModalCtrl">
 								<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add Credentials</button>
