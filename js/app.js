@@ -3,7 +3,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, utils, ProgressbarService, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, utils, ProgressbarService, SERVICES_CONFIG, EXAMPLE_HEADERS) {
 
 
 	$scope.endpoint = {};
@@ -13,6 +13,28 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, ut
 	$scope.changeRequestMethod = function(method) {
 		$scope.requestMethod = method;
 	};
+
+
+
+
+var savedHeaders = clientAppHelper.retrieveSavedHeaders();
+if (savedHeaders.length > 0) {
+	savedHeaders = clientAppHelper.prepareHeadersForDisplay(savedHeaders, "Custom");
+} else {
+	//if there are no saved headers, add a placeholder called 'none'.
+	savedHeaders = [ { group: 'Custom', label: 'None'} ];
+}
+
+
+//Add the dropdown category and generate the label to display.
+var exampleHeaders = clientAppHelper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples");
+
+//Merge the different types of headers to display
+$scope.headers = savedHeaders.concat(exampleHeaders);
+
+
+
+
 
 
 	//Populate the form.

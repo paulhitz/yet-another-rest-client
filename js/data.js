@@ -605,3 +605,34 @@ angular.module('clientApp').value('advancedSettings', {
  * If necessary, there is also an option to hard-code them here.
  */
 angular.module('clientApp').value('credentials', {});
+
+/**
+ *
+ */
+angular.module('clientApp').constant('EXAMPLE_HEADERS', [ 
+	{
+		id : "qa",
+		name : "Authorization",
+		value : ""
+	}, {
+		id : "qa",
+		name : "ApplicationId",
+		value : "36"
+	}, {
+		id : "qa",
+		name : "Content-Type",
+		value : "application/json"
+	}, {
+		id : "qa",
+		name : "Accept",
+		value : "application/json"
+	} ]
+);
+
+
+
+
+
+
+
+

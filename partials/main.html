@@ -103,30 +103,56 @@
 					</h2>
 				</div>
 
-				<div id="headers" class="panel-collapse collapse" collapse="!showHeaderSection">
+				<div id="headers" class="panel-collapse collapse" collapse="showHeaderSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
+					
+					
+					
+					
+
+						
 						<div class="form-group">
-							<label for="appId" class="col-md-1 control-label">Name:</label>
-							<div class="col-md-11">
-								<div class="row">
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="Enter the header name..." data-ng-model="headers.name">
-									</div>
-									<label for="autoAuthenticate" class="col-md-1 control-label">Value:</label>
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="appId" placeholder="Enter the header value..." data-ng-model="headers.value">
-									</div>
-									<div class="col-md-2">
-										<button type="button" data-ng-click="removeItem(row)" class="btn btn-sm btn-danger" title="Delete this entry.">
-											<span class="glyphicon glyphicon-minus"></span>
-										</button>
-										<button type="button" data-ng-click="removeItem(row)" class="btn btn-sm btn-success" title="Delete this entry.">
-											<span class="glyphicon glyphicon-plus"></span>
-										</button>
-									</div>
+							<label for="headers" class="col-md-1 control-label">Favorites:</label>
+							<div class="col-md-7">
+								<div class="input-group">
+									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-init="selectedHeader = selectedHeader || headers[0]" data-ng-options="header as header.label group by header.group for header in headers"></select>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'">Use Favorite</button>
+									</span>
 								</div>
 							</div>
+							<div class="col-md-2" data-ng-controller="AddServiceModalCtrl">
+								<button type="button" class="btn btn-primary" id="addServiceButton" data-ng-click="open();">Add New Header</button>
+							</div>
 						</div>
+						
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Header Name</th>
+									<th>Header Value</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-show="true">
+									<td colspan="3">There are no headers to display.</td>
+								</tr>
+								<tr data-ng-repeat="row in displayedCollection" class="small">
+									<td>{{row.name}}</td>
+									<td class="url-row">{{row.value}}</td>
+									<td>
+										<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
+											<span class="glyphicon glyphicon-remove"></span>
+										</button>
+										<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details.">
+											<span class="glyphicon glyphicon-info-sign"></span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
 					</div>
 				</div>
 			</section>
