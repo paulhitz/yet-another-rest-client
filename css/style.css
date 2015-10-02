@@ -203,7 +203,7 @@ select#customServices {
 table#history td, table#history th {
   white-space: nowrap;
 }
-table#history td.url-row {
+td.break-row {
   word-break: break-all;
   white-space: normal;
 }

@@ -115,9 +115,9 @@
 							<label for="headers" class="col-md-1 control-label">Favorites:</label>
 							<div class="col-md-7">
 								<div class="input-group">
-									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-init="selectedHeader = selectedHeader || headers[0]" data-ng-options="header as header.label group by header.group for header in headers"></select>
+									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-init="selectedHeader = selectedHeader || favHeaders[0]" data-ng-options="header as header.label group by header.group for header in favHeaders"></select>
 									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'">Use Favorite</button>
+										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'" data-ng-click="addCustomHeader(selectedHeader);">Use Favorite</button>
 									</span>
 								</div>
 							</div>
@@ -135,18 +135,18 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr data-ng-show="true">
+								<tr data-ng-show="isEmptyObject(headers)">
 									<td colspan="3">There are no headers to display.</td>
 								</tr>
-								<tr data-ng-repeat="row in displayedCollection" class="small">
+								<tr data-ng-repeat="row in headers">
 									<td>{{row.name}}</td>
-									<td class="url-row">{{row.value}}</td>
+									<td class="break-row">{{row.value}}</td>
 									<td>
-										<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
+										<button type="button" data-ng-click="removeHeader(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
 											<span class="glyphicon glyphicon-remove"></span>
 										</button>
-										<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details.">
-											<span class="glyphicon glyphicon-info-sign"></span>
+										<button type="button" data-ng-click="openHeaderModal(row);" class="btn btn-xs btn-primary" title="Edit this entry.">
+											<span class="glyphicon glyphicon-edit"></span>
 										</button>
 									</td>
 								</tr>

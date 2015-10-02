@@ -16,23 +16,37 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, ut
 
 
 
+	//TODO Consider new controller solely for header functionality.
 
-var savedHeaders = clientAppHelper.retrieveSavedHeaders();
-if (savedHeaders.length > 0) {
-	savedHeaders = clientAppHelper.prepareHeadersForDisplay(savedHeaders, "Custom");
-} else {
-	//if there are no saved headers, add a placeholder called 'none'.
-	savedHeaders = [ { group: 'Custom', label: 'None'} ];
-}
+	var savedHeaders = clientAppHelper.retrieveSavedHeaders();
+	if (savedHeaders.length > 0) {
+		savedHeaders = clientAppHelper.prepareHeadersForDisplay(savedHeaders, "Custom");
+	} else {
+		//if there are no saved headers, add a placeholder called 'none'.
+		savedHeaders = [ { group: 'Custom', label: 'None'} ];
+	}
 
+	//Add the dropdown category and generate the label to display.
+	var exampleHeaders = clientAppHelper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples");
 
-//Add the dropdown category and generate the label to display.
-var exampleHeaders = clientAppHelper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples");
+	//Merge the different types of headers to display
+	$scope.favHeaders = savedHeaders.concat(exampleHeaders);
 
-//Merge the different types of headers to display
-$scope.headers = savedHeaders.concat(exampleHeaders);
-
-
+	$scope.headers = {};
+	$scope.addCustomHeader = function(selectedHeader) {
+		console.log("added header = " + JSON.stringify(selectedHeader));
+		$scope.headers[selectedHeader.id] = (selectedHeader);
+	};
+	
+	$scope.removeHeader = function(header) {
+		console.log("removing header = " + JSON.stringify(header));
+		delete $scope.headers[header.id]
+	};
+	
+	//TODO move to utility class? Add to rootscope?
+	$scope.isEmptyObject = function(object){
+		return angular.equals({}, object);
+	}
 
 
 
