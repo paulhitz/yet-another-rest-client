@@ -7,44 +7,6 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	var helper = this;
 
 	/**
-	 * 
-	 */
-	helper.prepareHeadersForDisplay = function(headers, group) {
-		for (var header of headers) {
-			header['group'] = group;
-			header['label'] = header.name + ": " + header.value;
-		}		
-		return headers;
-	};
-
-	/**
-	 * 
-	 */
-	helper.retrieveSavedHeaders = function() {
-		//TODO get the custom headers from chrome storage.
-		
-		var headers = [];
-		
-		//hard-coded for now...
-		headers = [
-		  { name: 'Authorization', value: 'some token', id: '100' }, 
-		  { name: 'Accept', value: 'something', id: '101' }, 
-		  { name: 'Auth', value: '', id: '102' }
-		];
-
-		return headers;
-	};
-
-
-
-
-
-
-
-
-
-
-	/**
 	 * Based on the selected environment and service, determine the correct URL to use.
 	 */
 	helper.configureServiceUrl = function(selectedEnvironment, selectedService, parameter) {
