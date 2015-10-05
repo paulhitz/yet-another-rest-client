@@ -120,14 +120,14 @@ div.json-content pre {
   padding: 10px;
   padding-bottom: 0;
 }
-#modal-tabs div.json-content {
+#history-modal div.json-content {
   margin-top: 0px;
   max-height: 250px;
 }
-#modal-tabs div.json-content-small {
+#history-modal div.json-content-small {
   max-height: 150px;
 }
-#modal-tabs div.json-content pre {
+#history-modal div.json-content pre {
   padding: 0;
   font-size: inherit;
 }
@@ -205,7 +205,7 @@ table#history td, table#history th {
 }
 td.break-row {
   word-break: break-all;
-  white-space: normal;
+  white-space: normal !important;
 }
 table#history {
   margin-bottom: 2px;
@@ -213,7 +213,7 @@ table#history {
 .pagination a:hover {
   cursor: pointer;
 }
-#modal-tabs dl {
+#history-modal dl {
   margin-bottom: 10px;
 }
 dd {

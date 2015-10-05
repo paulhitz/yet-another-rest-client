@@ -31,21 +31,81 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, EXAM
 		return angular.equals({}, object);
 	}
 
-	//Open a modal dialog to...
+	//Open a modal dialog to allow a new header to be entered or an existing header to be edited.
 	$scope.openHeaderModal = function(row) {
 		var modalInstance = $modal.open({
-			templateUrl: 'partials/historyModal.html',
+			templateUrl: 'partials/headersModal.html',
 			controller: 'HeaderModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
 			backdrop: 'static',
 			resolve: {
-				header: function() {
+				selectedHeader: function() {
+					//This is used for editing an existing header.
 					return row;
+				},
+				headers: function() {
+					return $scope.headers;
 				}
 			}
 		});
 	};
 });
+
+
+/**
+ * Controller for ...
+ */
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, selectedHeader, headers) {
+
+
+/*
+TODO
+-shouldn't modify selectedHeader directly. copy it.
+-how should we handle edit operations?
+-what if they edit an example? it should be allowed but only update the table, not the dropdown. 
+	-what happens to the ID? New one? Do we even need IDs?
+*/
+
+
+	console.log("current = " + JSON.stringify(selectedHeader));
+	//console.log("headers = " + JSON.stringify(headers));
+
+
+
+
+
+	//Default to not adding to favorites.
+	$scope.favorite = false;
+
+	//Check if this is an edit operation.
+	if (selectedHeader) {
+		//Add the existing header object to the scope so it can be used in the modal.
+		$scope.header = selectedHeader;
+	}
+
+	//Add the header to the main UI and, if required, persist it.
+	$scope.ok = function() {
+		//Add to the main UI.
+		var id = Date.now();
+		headers[id] = {
+			id: id, //TODO is this really needed?
+			name: $scope.header.name,
+			value: $scope.header.value
+		};
+		
+		//Persist it if required.
+		if ($scope.favorite) {
+			console.log("need to persist this header");
+			//TODO add to Chrome storage AND to the dropdown list. (need to pass that in?)
+		}
+		$modalInstance.dismiss('cancel');
+	};
+
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+});
+
 
 /**
  * Various helper functions for the Headers functionality.
@@ -90,19 +150,5 @@ clientApp.service('headersHelper', function(GENERAL_CONSTANTS) {
 		if (key.indexOf(GENERAL_CONSTANTS.HEADER_KEY_FORMAT) > -1) {
 			return true;
 		}
-	};
-});
-
-/**
- * Controller for ...
- */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, header) {
-	//history.response = JSON.stringify(history.response, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
-
-	//Add the history object to the scope so it can be used in the modal.
-	$scope.history = header;
-
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
 	};
 });

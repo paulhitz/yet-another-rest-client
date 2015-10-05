@@ -615,7 +615,7 @@ angular.module('clientApp').constant('EXAMPLE_HEADERS', [
 		name : "Authorization",
 		value : ""
 	}, {
-		id : "id",
+		id : "appId",
 		name : "ApplicationId",
 		value : "36"
 	}, {
