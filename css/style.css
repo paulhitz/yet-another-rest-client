@@ -18,8 +18,11 @@
  .input-group-addon input[type=checkbox].glyphicon{
     visibility: hidden;
 }
- 
- 
+
+.positive-message {
+  color: #3c763d;
+  margin-left: 10px;
+} 
  
  
  

@@ -19,6 +19,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, EXAM
 	$scope.headers = {};
 	$scope.addCustomHeader = function(selectedHeader) {
 		$scope.headers[selectedHeader.id] = (selectedHeader);
+		//$scope.headers[Date.now()] = (selectedHeader);
 	};
 
 	//Remove the selected from the list of headers.
@@ -41,7 +42,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, EXAM
 			resolve: {
 				selectedHeader: function() {
 					//This is used for editing an existing header.
-					return row;
+					return angular.copy(row);
 				},
 				headers: function() {
 					return $scope.headers;
@@ -60,15 +61,15 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 
 /*
 TODO
--shouldn't modify selectedHeader directly. copy it.
--how should we handle edit operations?
--what if they edit an example? it should be allowed but only update the table, not the dropdown. 
-	-what happens to the ID? New one? Do we even need IDs?
+-handle persisting.
+	-will we need some logic to check if the exact same entry has already been saved?
+
+
 */
 
 
 	console.log("current = " + JSON.stringify(selectedHeader));
-	//console.log("headers = " + JSON.stringify(headers));
+	console.log("headers = " + JSON.stringify(headers));
 
 
 
@@ -85,10 +86,13 @@ TODO
 
 	//Add the header to the main UI and, if required, persist it.
 	$scope.ok = function() {
-		//Add to the main UI.
 		var id = Date.now();
+		if (selectedHeader && selectedHeader.id) {
+			id = selectedHeader.id;
+		}
+		//Add to the main UI.
 		headers[id] = {
-			id: id, //TODO is this really needed?
+			id: id,
 			name: $scope.header.name,
 			value: $scope.header.value
 		};
