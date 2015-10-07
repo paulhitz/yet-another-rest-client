@@ -1,25 +1,20 @@
 /**
  * A controller responsible for handling the Request Headers.
  */
-clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, EXAMPLE_HEADERS) {
+clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper) {
 
-	//Load the saved custom headers and generate a label to display them with.
-	var savedHeaders = headersHelper.retrieveSavedHeaders();
-	if (savedHeaders.length > 0) {
-		savedHeaders = headersHelper.prepareHeadersForDisplay(savedHeaders, "Custom");
-	} else {
-		savedHeaders = [ { group: 'Custom', label: 'None'} ];
-	}
-
-	//Prepare the example headers for display and merge them with the custom headers.
-	var exampleHeaders = headersHelper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples");
-	$scope.favHeaders = savedHeaders.concat(exampleHeaders);
-
-	//Add the selected header to the list of headers for the next request.
+	//The headers that should be added to subsequent requests.
 	$scope.headers = {};
-	$scope.addCustomHeader = function(selectedHeader) {
-		$scope.headers[selectedHeader.id] = (selectedHeader);
-		//$scope.headers[Date.now()] = (selectedHeader);
+
+	//Display example headers and any saved custom headers.
+	headersHelper.displayFavoriteAndExampleHeaders($scope);
+
+	//Add the selected header to the headers for the next request.
+	$scope.addCustomHeader = function(header) {
+		var headerCopy = angular.copy(header);
+		var id = Date.now();
+		headerCopy.id = id;
+		$scope.headers[headerCopy.id] = headerCopy;
 	};
 
 	//Remove the selected from the list of headers.
@@ -46,6 +41,9 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, EXAM
 				},
 				headers: function() {
 					return $scope.headers;
+				},
+				favHeaders: function() {
+					return $scope.favHeaders;
 				}
 			}
 		});
@@ -56,7 +54,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, EXAM
 /**
  * Controller for ...
  */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, selectedHeader, headers) {
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, selectedHeader, headers, favHeaders, GENERAL_CONSTANTS) {
 
 
 /*
@@ -70,6 +68,7 @@ TODO
 
 	console.log("current = " + JSON.stringify(selectedHeader));
 	console.log("headers = " + JSON.stringify(headers));
+	//console.log("fav headers = " + JSON.stringify(favHeaders));
 
 
 
@@ -88,19 +87,31 @@ TODO
 	$scope.ok = function() {
 		var id = Date.now();
 		if (selectedHeader && selectedHeader.id) {
+			//This must be an edit operation.
 			id = selectedHeader.id;
 		}
-		//Add to the main UI.
-		headers[id] = {
+		var newHeader = {
 			id: id,
 			name: $scope.header.name,
 			value: $scope.header.value
 		};
 		
-		//Persist it if required.
+		//Add to the main UI.
+		headers[id] = newHeader;
+		
 		if ($scope.favorite) {
-			console.log("need to persist this header");
-			//TODO add to Chrome storage AND to the dropdown list. (need to pass that in?)
+			//TODO also add to the dropdown list. (need to pass that in?).
+			//TODO Should we check if they've changed?
+		
+			//Persist the custom header.
+			var keyValue = {};
+			keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + id] = newHeader;
+			chrome.storage.sync.set(keyValue);
+
+			//Update the dropdown.
+			newHeader['group'] = "Custom";
+			newHeader['label'] = newHeader.name + ": " + newHeader.value;
+			favHeaders.unshift(newHeader);
 		}
 		$modalInstance.dismiss('cancel');
 	};
@@ -114,7 +125,7 @@ TODO
 /**
  * Various helper functions for the Headers functionality.
  */
-clientApp.service('headersHelper', function(GENERAL_CONSTANTS) {
+clientApp.service('headersHelper', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS) {
 	var helper = this;
 
 	/**
@@ -129,22 +140,32 @@ clientApp.service('headersHelper', function(GENERAL_CONSTANTS) {
 	};
 
 	/**
-	 * Load the saved custom request headers from Chrome Storage.
+	 * Display a combined list of example headers and any saved custom headers.
 	 */
-	helper.retrieveSavedHeaders = function() {
-		var headers = [];
-		chrome.storage.sync.get(null, function (headers) {
-			//Add each header object to an array.
-			for (var key in headers) {
-				var entry = headers[key];
+	helper.displayFavoriteAndExampleHeaders = function($scope) {
+
+		//Load the saved custom request headers from Chrome Storage.
+		chrome.storage.sync.get(null, function (objects) {
+			//Add each valid custom header object to the array.
+			var savedHeaders = [];
+			for (var key in objects) {
 				if (helper.isHeaderKey(key)) {
-					//Add the key to the object so we can identify it later.
-					//entry['key'] = key;
-					headers.push(entry);
+					savedHeaders.push(objects[key]);
 				}
 			}
+
+			//Prepare the headers for display.
+			if (savedHeaders.length > 0) {
+				savedHeaders = helper.prepareHeadersForDisplay(savedHeaders, "Custom");
+			} else {
+				savedHeaders = [ { group: 'Custom', label: 'None'} ];
+			}
+			var exampleHeaders = helper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples")
+
+			//Merge the custom headers and example headers.
+			$scope.favHeaders = savedHeaders.concat(exampleHeaders);
+			$scope.selectedHeader = $scope.favHeaders[0];
 		});
-		return headers;
 	};
 
 	/**

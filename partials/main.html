@@ -106,16 +106,11 @@
 				<div id="headers" class="panel-collapse collapse" collapse="showHeaderSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
 					
-					
-					
-					
-
-						
 						<div class="form-group">
 							<label for="headers" class="col-md-1 control-label">Headers:</label>
 							<div class="col-md-7">
 								<div class="input-group">
-									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-init="selectedHeader = selectedHeader || favHeaders[0]" data-ng-options="header as header.label group by header.group for header in favHeaders"></select>
+									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in favHeaders"></select>
 									<span class="input-group-btn">
 										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'" data-ng-click="addCustomHeader(selectedHeader);">Use Favorite</button>
 									</span>

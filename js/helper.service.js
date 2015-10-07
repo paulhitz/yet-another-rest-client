@@ -124,7 +124,7 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 		};
 
 		//Persist it using Chrome Storage. Supports objects.
-		var key = "restclient.history." + Date.now();
+		var key = GENERAL_CONSTANTS.HISTORY_KEY_FORMAT + Date.now();
 		if (typeof chrome !== 'undefined') {
 			var keyValue = {};
 			keyValue[key] = entry;
