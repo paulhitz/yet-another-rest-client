@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the Request Headers.
  */
-clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper) {
+clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENERAL_CONSTANTS) {
 
 	//The headers that should be added to subsequent requests.
 	$scope.headers = {};
@@ -17,13 +17,27 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper) {
 		$scope.headers[headerCopy.id] = headerCopy;
 	};
 
+	//Delete the selected custom header.
+	$scope.deleteCustomHeader = function(header) {
+		var index = $scope.favHeaders.indexOf(header);
+		if (index > -1) {
+			//Remove it from the UI.
+			$scope.favHeaders.splice(index, 1);
+			$scope.selectedHeader = $scope.favHeaders[0];
+
+			//Delete the entry from Chrome Storage.
+			var key = GENERAL_CONSTANTS.HEADER_KEY_FORMAT + header.id;
+			chrome.storage.sync.remove(key);
+		}	
+	};
+
 	//Remove the selected from the list of headers.
 	$scope.removeHeader = function(header) {
 		delete $scope.headers[header.id]
 	};
 
 	//Identifies if the supplied object is empty.
-	$scope.isEmptyObject = function(object){
+	$scope.isEmptyObject = function(object) {
 		return angular.equals({}, object);
 	}
 
@@ -48,27 +62,32 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper) {
 			}
 		});
 	};
+	$scope.openCustomHeaderModal = function(row) {
+		console.log("opening custom header modal");
+		row['custom'] = true; //TODO This updates the original object. Do we want to do this?
+		$scope.openHeaderModal(row);
+	}
 });
 
 
 /**
- * Controller for ...
+ * Controller for Adding or Editing a Request Header.
  */
 clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, selectedHeader, headers, favHeaders, GENERAL_CONSTANTS) {
 
-
 /*
-TODO
--handle persisting.
-	-will we need some logic to check if the exact same entry has already been saved?
+ * TODO...
+ * -handle editing of favorites. shouldn't add them to the table. Shouldn't display 'favorites' option.
+ * -Should we check if the header has changed?
+ * -Should we have a 'add to' option?
+ * -Tidy all of this.
+ */
 
-
-*/
 
 
 	console.log("current = " + JSON.stringify(selectedHeader));
 	console.log("headers = " + JSON.stringify(headers));
-	//console.log("fav headers = " + JSON.stringify(favHeaders));
+	console.log("fav headers = " + JSON.stringify(favHeaders));
 
 
 
@@ -100,9 +119,6 @@ TODO
 		headers[id] = newHeader;
 		
 		if ($scope.favorite) {
-			//TODO also add to the dropdown list. (need to pass that in?).
-			//TODO Should we check if they've changed?
-		
 			//Persist the custom header.
 			var keyValue = {};
 			keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + id] = newHeader;

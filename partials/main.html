@@ -111,9 +111,16 @@
 							<div class="col-md-7">
 								<div class="input-group">
 									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in favHeaders"></select>
-									<span class="input-group-btn">
+									<div class="input-group-btn">
 										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'" data-ng-click="addCustomHeader(selectedHeader);">Use Favorite</button>
-									</span>
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="selectedHeader.label === 'None'">
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a data-ng-click="openCustomHeaderModal(selectedHeader);">Edit Favorite</a></li>
+											<li><a data-ng-click="deleteCustomHeader(selectedHeader);">Delete Favorite</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-2" data-ng-controller="AddServiceModalCtrl">
