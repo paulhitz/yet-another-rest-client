@@ -110,14 +110,14 @@
 							<label for="headers" class="col-md-1 control-label">Headers:</label>
 							<div class="col-md-7">
 								<div class="input-group">
-									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in favHeaders"></select>
+									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in customHeaders"></select>
 									<div class="input-group-btn">
-										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'" data-ng-click="addCustomHeader(selectedHeader);">Use Favorite</button>
-										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="selectedHeader.label === 'None'">
+										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'" data-ng-click="useCustomHeader(selectedHeader);">Use Favorite</button>
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="selectedHeader.label === 'None' || selectedHeader.group === 'Examples'">
 											<span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li><a data-ng-click="openCustomHeaderModal(selectedHeader);">Edit Favorite</a></li>
+											<li><a data-ng-click="openHeaderModal(selectedHeader);">Edit Favorite</a></li>
 											<li><a data-ng-click="deleteCustomHeader(selectedHeader);">Delete Favorite</a></li>
 										</ul>
 									</div>
