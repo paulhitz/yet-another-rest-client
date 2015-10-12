@@ -24,7 +24,9 @@
   margin-left: 10px;
 } 
  
- 
+.full-width {
+  width: 100%;
+}
  
  
  
@@ -90,9 +92,7 @@ header .navbar-brand span {
   word-break: break-word;
 }
 
-#addServiceButton {
-  width: 100%;
-}
+
 
 #submitFormButton {
   margin-bottom: 30px;

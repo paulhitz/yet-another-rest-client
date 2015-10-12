@@ -11,6 +11,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 
 	//Add the selected custom header to the headers for the next request.
 	$scope.useCustomHeader = function(header) {
+		//TODO possible issue with header value being the wrong selection.
 		//Copy the header and change the ID so it can be manipulated independently.
 		var headerCopy = angular.copy(header);
 		var id = Date.now();
@@ -35,7 +36,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 			//Delete the entry from Chrome Storage.
 			var key = GENERAL_CONSTANTS.HEADER_KEY_FORMAT + header.id;
 			chrome.storage.sync.remove(key);
-		}	
+		}
 	};
 
 	//Identifies if the supplied object is empty.
@@ -64,6 +65,9 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 				},
 				customHeaders: function() {
 					return $scope.customHeaders;
+				},
+				selectedHeader: function() {
+					return $scope.selectedHeader;
 				}
 			}
 		});
@@ -74,7 +78,8 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 /**
  * Controller for Adding or Editing a Request Header.
  */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, headers, customHeaders, headersHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, headers, 
+		customHeaders, selectedHeader, headersHelper, GENERAL_CONSTANTS) {
 
 	//Default to not adding to favorites.
 	$scope.favorite = false;
@@ -111,20 +116,25 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 				name: $scope.header.name,
 				value: $scope.header.value
 			};
-			
+
 			//Add to the main UI.
 			headers[id] = newHeader;
 		}
 
 		if ($scope.favorite) {
+			var saveCopy = angular.copy(newHeader);
+			saveCopy.id = Date.now();
+
 			//Persist the custom header.
-			newHeader = headersHelper.prepareHeaderForDisplay(newHeader, "Custom");
+			saveCopy = headersHelper.prepareHeaderForDisplay(saveCopy, "Custom");
 			var keyValue = {};
-			keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + newHeader.id] = newHeader;
+			keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + saveCopy.id] = saveCopy;
 			chrome.storage.sync.set(keyValue);
 
-			//Update the dropdown. TODO it should use an different ID.
-			customHeaders.unshift(newHeader);
+			//Update the dropdown.
+			//TODO Some issues here. E.g. When editing a custom header, we'll get an empty selection in the dropdown.
+			customHeaders.unshift(saveCopy);
+			selectedHeader = customHeaders[0];
 		}
 		$modalInstance.dismiss('cancel');
 	};
@@ -150,7 +160,7 @@ clientApp.service('headersHelper', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS) 
 		}
 		return headers;
 	};
-	
+
 	/**
 	 * Add the specified group name to the specified header object and generate a label used to display them.
 	 */
@@ -176,11 +186,7 @@ clientApp.service('headersHelper', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS) 
 			}
 
 			//Prepare the headers for display.
-			if (savedHeaders.length > 0) {
-				savedHeaders = helper.prepareHeadersForDisplay(savedHeaders, "Custom");
-			} else {
-				savedHeaders = [ { group: 'Custom', label: 'None'} ];
-			}
+			savedHeaders = helper.prepareHeadersForDisplay(savedHeaders, "Custom");
 			var exampleHeaders = helper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples")
 
 			//Merge the custom headers and example headers.

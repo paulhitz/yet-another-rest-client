@@ -103,17 +103,17 @@
 					</h2>
 				</div>
 
-				<div id="headers" class="panel-collapse collapse" collapse="showHeaderSection">
+				<div id="headers" class="panel-collapse collapse" collapse="!showHeaderSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
 					
 						<div class="form-group">
 							<label for="headers" class="col-md-1 control-label">Headers:</label>
-							<div class="col-md-7">
+							<div class="col-md-9">
 								<div class="input-group">
 									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in customHeaders"></select>
 									<div class="input-group-btn">
-										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'" data-ng-click="useCustomHeader(selectedHeader);">Use Favorite</button>
-										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-disabled="selectedHeader.label === 'None' || selectedHeader.group === 'Examples'">
+										<button class="btn btn-default" type="button" data-ng-click="useCustomHeader(selectedHeader);">Add Selected Header</button>
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Edit/Delete Custom Headers." data-ng-disabled="selectedHeader.group === 'Examples'">
 											<span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
@@ -124,7 +124,7 @@
 								</div>
 							</div>
 							<div class="col-md-2" data-ng-controller="AddServiceModalCtrl">
-								<button type="button" class="btn btn-primary" id="addServiceButton" data-ng-click="openHeaderModal();">Add New Header</button>
+								<button type="button" class="btn btn-primary full-width" data-ng-click="openHeaderModal();">Add New Header</button>
 							</div>
 						</div>
 						
@@ -163,7 +163,7 @@
 
 
 
-			<section class="panel panel-primary">
+			<section class="panel panel-primary" data-ng-controller="AuthCtrl">
 				<div class="panel-heading" >
 					<h2 class="panel-title">
 						<a data-ng-click="showAuthSection = !showAuthSection">
@@ -174,16 +174,16 @@
 				</div>
 
 				<div id="authentication" class="panel-collapse collapse panel-body" collapse="!showAuthSection">
-					<p>Basic Authentication is supported. Enter a username and password and the Authorization Header will be generated and sent with the request.</p>
+					<p>Basic Authentication is supported. Enter a username and password and the Authorization Header will be generated and sent with the request.<br><br><h1>{{authValue}}</h1><h1>{{test}}</h1></p>
 
 					<div class="form-horizontal" role="form">
 						<div class="form-group">
 							<label for="auth" class="col-md-2 control-label">Authorization:</label>
 							<div class="col-md-7">
-								<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" value="" data-ng-model="parameter">
+								<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" data-ng-model="authValue">
 							</div>
-							<div class="col-md-3" data-ng-controller="AddServiceModalCtrl">
-								<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add Credentials</button>
+							<div class="col-md-3"">
+								<button type="button" class="btn btn-default full-width" data-ng-click="openAuthModal();">Add Credentials</button>
 							</div>
 						</div>
 					</div>
