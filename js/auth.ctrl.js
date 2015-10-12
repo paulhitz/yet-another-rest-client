@@ -3,25 +3,21 @@
  */
 clientApp.controller('AuthCtrl', function($scope, $modal) {
 
-	//
-	$scope.authValue = "foo";
-	$scope.test = "bar";
+	//The Basic Authorization value to use in requests.
+	$scope.authValue = "";
 
-	//Open a modal dialog to allow 
+	//Open a modal dialog to allow the user to enter credentials.
 	$scope.openAuthModal = function() {
 		var modalInstance = $modal.open({
 			templateUrl: 'partials/authModal.html',
 			controller: 'AuthModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
-			backdrop: 'static',
-			resolve: {
-				authValue: function() {
-					return $scope.authValue;
-				},
-				test: function() {
-					return $scope.test;
-				}
-			}
+			backdrop: 'static'
+		});
+
+		//Update the authorization value.
+		modalInstance.result.then(function (value) {
+			$scope.authValue = value;
 		});
 	};
 });
@@ -30,12 +26,11 @@ clientApp.controller('AuthCtrl', function($scope, $modal) {
 /**
  * Controller for handling the username and password used for Basic Authorization.
  */
-clientApp.controller('AuthModalInstanceCtrl', function ($scope, $modalInstance, authValue, authHelper, test) {
-test = "sdfsdfsdafasdf*******************************************";
-	//Update the UI with the generated Authorization Value.
+clientApp.controller('AuthModalInstanceCtrl', function ($scope, $modalInstance, authHelper) {
+
 	$scope.ok = function() {
-		authValue = authHelper.generateBasicAuthHeader($scope.auth.name, $scope.auth.password);
-		$modalInstance.dismiss('cancel');
+		var authValue = authHelper.generateBasicAuthHeader($scope.auth.name, $scope.auth.password);
+		$modalInstance.close(authValue);
 	};
 
 	$scope.cancel = function() {
@@ -56,7 +51,6 @@ clientApp.service('authHelper', function() {
 	helper.generateBasicAuthHeader = function(name, password) {
 		var unencoded = name + ":" + password;
 		var encoded = btoa(unencoded);
-		console.log("encoded = " + encoded);
 		return "Basic " + encoded;
 	};
 });

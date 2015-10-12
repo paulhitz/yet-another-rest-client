@@ -136,7 +136,7 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 			customHeaders.unshift(saveCopy);
 			selectedHeader = customHeaders[0];
 		}
-		$modalInstance.dismiss('cancel');
+		$modalInstance.close();
 	};
 
 	$scope.cancel = function() {
