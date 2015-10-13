@@ -1,0 +1,37 @@
+
+<form class="form-horizontal">
+	<div class="modal-header">
+		<button type="button" class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<h4 class="modal-title">Header</h4>
+	</div>
+	<div class="modal-body">
+		<div class="panel-body">
+			<div class="form-group">
+				<label for="headerName" class="col-sm-2 control-label">Name:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="headerName" placeholder="Example: Accept" data-ng-model="header.name" autofocus>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="headerValue" class="col-sm-2 control-label">Value:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="headerValue" placeholder="Example: text/plain" data-ng-model="header.value">
+				</div>
+			</div>
+			<div class="form-group" data-ng-hide="header.group">
+				<label for="favorite" class="col-sm-2 control-label">Favorite?</label>
+				<div class="col-sm-10">
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default" data-ng-model="favorite" data-btn-radio="true">Yes</button>
+						<button type="button" class="btn btn-default" data-ng-model="favorite" data-btn-radio="false" id="favorite">No</button>
+					</div>
+					<span class="positive-message" data-ng-show="favorite == true">This header will be added to your favorites.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!header.name || !header.value">Save</button>
+		<button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>
+	</div>
+</form>

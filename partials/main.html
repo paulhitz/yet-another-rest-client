@@ -17,7 +17,7 @@
 										<span class="input-group-addon" title="Add to favorites.">
 											<input type="checkbox" class="glyphicon glyphicon-star-empty">
 										</span>
-										<input id="requestUrl" type="text" ng-model="requestUrl" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com">
+										<input id="requestUrl" type="text" ng-model="requestUrl" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com" autofocus>
 										<div class="input-group-btn" title="Select the request method to use.">
 											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
@@ -93,7 +93,7 @@
   
   
 
-			<section class="panel panel-primary">
+			<section class="panel panel-primary" data-ng-controller="HeadersCtrl">
 				<div class="panel-heading" >
 					<h2 class="panel-title">
 						<a data-ng-click="showHeaderSection = !showHeaderSection">
@@ -103,26 +103,28 @@
 					</h2>
 				</div>
 
-				<div id="headers" class="panel-collapse collapse" collapse="showHeaderSection">
+				<div id="headers" class="panel-collapse collapse" collapse="!showHeaderSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
 					
-					
-					
-					
-
-						
 						<div class="form-group">
-							<label for="headers" class="col-md-1 control-label">Favorites:</label>
-							<div class="col-md-7">
+							<label for="headers" class="col-md-1 control-label">Headers:</label>
+							<div class="col-md-9">
 								<div class="input-group">
-									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-init="selectedHeader = selectedHeader || headers[0]" data-ng-options="header as header.label group by header.group for header in headers"></select>
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button" data-ng-disabled="selectedHeader.label === 'None'">Use Favorite</button>
-									</span>
+									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in customHeaders"></select>
+									<div class="input-group-btn">
+										<button class="btn btn-default" type="button" data-ng-click="useCustomHeader(selectedHeader);">Add Selected Header</button>
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Edit/Delete Custom Headers." data-ng-disabled="selectedHeader.group === 'Examples'">
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a data-ng-click="openHeaderModal(selectedHeader);">Edit Favorite</a></li>
+											<li><a data-ng-click="deleteCustomHeader(selectedHeader);">Delete Favorite</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 							<div class="col-md-2" data-ng-controller="AddServiceModalCtrl">
-								<button type="button" class="btn btn-primary" id="addServiceButton" data-ng-click="open();">Add New Header</button>
+								<button type="button" class="btn btn-primary full-width" data-ng-click="openHeaderModal();">Add New Header</button>
 							</div>
 						</div>
 						
@@ -131,27 +133,29 @@
 								<tr>
 									<th>Header Name</th>
 									<th>Header Value</th>
-									<th>Actions</th>
+									<th width="100" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr data-ng-show="true">
+								<tr data-ng-show="isEmptyObject(headers)">
 									<td colspan="3">There are no headers to display.</td>
 								</tr>
-								<tr data-ng-repeat="row in displayedCollection" class="small">
+								<tr data-ng-repeat="row in headers">
 									<td>{{row.name}}</td>
-									<td class="url-row">{{row.value}}</td>
-									<td>
-										<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
+									<td class="break-row">{{row.value}}</td>
+									<td class="text-center">
+										<button type="button" data-ng-click="removeHeader(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
 											<span class="glyphicon glyphicon-remove"></span>
 										</button>
-										<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details.">
-											<span class="glyphicon glyphicon-info-sign"></span>
+										<button type="button" data-ng-click="openHeaderModal(row);" class="btn btn-xs btn-primary" title="Edit this entry.">
+											<span class="glyphicon glyphicon-edit"></span>
 										</button>
 									</td>
 								</tr>
 							</tbody>
 						</table>
+						
+						<p data-ng-hide="isEmptyObject(headers)">The above header(s) will be added to the next request.</p>
 						
 					</div>
 				</div>
@@ -159,7 +163,7 @@
 
 
 
-			<section class="panel panel-primary">
+			<section class="panel panel-primary" data-ng-controller="AuthCtrl">
 				<div class="panel-heading" >
 					<h2 class="panel-title">
 						<a data-ng-click="showAuthSection = !showAuthSection">
@@ -176,10 +180,10 @@
 						<div class="form-group">
 							<label for="auth" class="col-md-2 control-label">Authorization:</label>
 							<div class="col-md-7">
-								<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" value="" data-ng-model="parameter">
+								<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" data-ng-model="authValue">
 							</div>
-							<div class="col-md-3" data-ng-controller="AddServiceModalCtrl">
-								<button type="button" class="btn btn-default" id="addServiceButton" data-ng-click="open();">Add Credentials</button>
+							<div class="col-md-3"">
+								<button type="button" class="btn btn-default full-width" data-ng-click="openAuthModal();">Add Credentials</button>
 							</div>
 						</div>
 					</div>

@@ -82,7 +82,7 @@ clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 });
 
 /**
- * Controller for the displaying more details about a specific history record.
+ * Controller for displaying more details about a specific history record.
  */
 clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;

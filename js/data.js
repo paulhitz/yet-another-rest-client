@@ -607,23 +607,23 @@ angular.module('clientApp').value('advancedSettings', {
 angular.module('clientApp').value('credentials', {});
 
 /**
- *
+ * TODO need to add a lot more example headers here.
  */
 angular.module('clientApp').constant('EXAMPLE_HEADERS', [ 
 	{
-		id : "qa",
+		id : "auth",
 		name : "Authorization",
 		value : ""
 	}, {
-		id : "qa",
+		id : "appId",
 		name : "ApplicationId",
 		value : "36"
 	}, {
-		id : "qa",
+		id : "content",
 		name : "Content-Type",
 		value : "application/json"
 	}, {
-		id : "qa",
+		id : "accept",
 		name : "Accept",
 		value : "application/json"
 	} ]

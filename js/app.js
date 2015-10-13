@@ -3,7 +3,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, utils, ProgressbarService, SERVICES_CONFIG, EXAMPLE_HEADERS) {
+clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, utils, ProgressbarService, SERVICES_CONFIG) {
 
 
 	$scope.endpoint = {};
@@ -14,29 +14,20 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, ut
 		$scope.requestMethod = method;
 	};
 
+	//Identifies if the supplied object is empty. TODO best place for this?
+	$scope.isEmptyObject = function(object){
+		return angular.equals({}, object);
+	}
 
-
-
-var savedHeaders = clientAppHelper.retrieveSavedHeaders();
-if (savedHeaders.length > 0) {
-	savedHeaders = clientAppHelper.prepareHeadersForDisplay(savedHeaders, "Custom");
-} else {
-	//if there are no saved headers, add a placeholder called 'none'.
-	savedHeaders = [ { group: 'Custom', label: 'None'} ];
-}
-
-
-//Add the dropdown category and generate the label to display.
-var exampleHeaders = clientAppHelper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples");
-
-//Merge the different types of headers to display
-$scope.headers = savedHeaders.concat(exampleHeaders);
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//Populate the form.
 	$scope.alerts = [];
 

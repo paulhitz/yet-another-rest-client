@@ -18,10 +18,15 @@
  .input-group-addon input[type=checkbox].glyphicon{
     visibility: hidden;
 }
+
+.positive-message {
+  color: #3c763d;
+  margin-left: 10px;
+} 
  
- 
- 
- 
+.full-width {
+  width: 100%;
+}
  
  
  
@@ -87,9 +92,7 @@ header .navbar-brand span {
   word-break: break-word;
 }
 
-#addServiceButton {
-  width: 100%;
-}
+
 
 #submitFormButton {
   margin-bottom: 30px;
@@ -120,14 +123,14 @@ div.json-content pre {
   padding: 10px;
   padding-bottom: 0;
 }
-#modal-tabs div.json-content {
+#history-modal div.json-content {
   margin-top: 0px;
   max-height: 250px;
 }
-#modal-tabs div.json-content-small {
+#history-modal div.json-content-small {
   max-height: 150px;
 }
-#modal-tabs div.json-content pre {
+#history-modal div.json-content pre {
   padding: 0;
   font-size: inherit;
 }
@@ -203,9 +206,9 @@ select#customServices {
 table#history td, table#history th {
   white-space: nowrap;
 }
-table#history td.url-row {
+td.break-row {
   word-break: break-all;
-  white-space: normal;
+  white-space: normal !important;
 }
 table#history {
   margin-bottom: 2px;
@@ -213,8 +216,8 @@ table#history {
 .pagination a:hover {
   cursor: pointer;
 }
-#modal-tabs dl {
-  margin-bottom: 10px;
+#history-modal dl {
+  margin-bottom: 0;
 }
 dd {
   padding-bottom: 5px;
