@@ -24,11 +24,8 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 		$scope.displayResponse = false;
 		$scope.processing = true;
 
-		//Update Progress Bar.
-		$scope.progress = ProgressbarService.getProgressState('START');
-
-		//Call the service.
-		$scope.requestUrl = requestUrl;
+		//Call the Service.
+		$scope.progress = ProgressbarService.PROGRESS_STATES.START;
 		clientAppHelper.callService($scope)
 	};
 

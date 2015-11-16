@@ -2,38 +2,28 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, advancedSettings,
-		SERVICES_CONFIG, credentials, GENERAL_CONSTANTS, $rootScope) {
+clientApp.service('clientAppHelper', function($http, ProgressbarService, SERVICES_CONFIG, GENERAL_CONSTANTS, $rootScope) {
 	var helper = this;
 
 	/**
 	 * Call the specified endpoint and update the UI.
 	 */
 	helper.callService = function($scope) {
-		$scope.progress = ProgressbarService.getProgressState('IN_PROGRESS');
+		$scope.progress = ProgressbarService.PROGRESS_STATES.IN_PROGRESS;
 
-		var requestConfig = { headers: {} };
-		if (advancedSettings.autoAuthenticate) {
-			requestConfig = { headers: {
-				'Authorization': $scope.authenticationToken,
-				'ApplicationId': advancedSettings.credentials.appId
-			}};
-		}
+		var requestConfig = helper.addHeaders($scope.payload);
 
 		//Determine the request method to use (GET/POST/PUT/DELETE/HEAD/PATCH).
 		var promise;
 		$scope.timerStart = Date.now();
 		switch ($scope.requestMethod) {
 			case "POST":
-				helper.addPayloadHeaders(requestConfig.headers);
 				promise = $http.post($scope.requestUrl, $scope.payload, requestConfig);
 				break;
 			case "PUT":
-				helper.addPayloadHeaders(requestConfig.headers);
 				promise = $http.put($scope.requestUrl, $scope.payload, requestConfig);
 				break;
 			case "PATCH":
-				helper.addPayloadHeaders(requestConfig.headers);
 				promise = $http.patch($scope.requestUrl, $scope.payload, requestConfig);
 				break;
 			case "DELETE":
@@ -57,9 +47,25 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * Add request headers indicating the type of payload. Used by POST/PUT operations.
+	 * TODO Add the custom user defined headers.
+	 */
+	helper.addHeaders = function(payload) {
+
+		//Add custom headers. TODO use a service to get them from HeadersCtrl.
+		var header = { headers: {} }
+
+		//Add specific payload headers if a payload exists.
+		if (payload) {
+			helper.addPayloadHeaders(headers)
+		}
+		return headers;
+	};
+
+	/**
+	 * Add request headers indicating the type of payload. Used by POST/PUT/PATCH operations.
 	 */
 	helper.addPayloadHeaders = function(headers) {
+		//TODO only add them if not already present. I.e. any user defined ones take precedence.
 		headers['Accept'] = "application/json";
 		headers['Content-Type'] = "application/json";
 	};
@@ -71,6 +77,26 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 		helper.populateView($scope, response);
 		helper.displayView($scope);
 		helper.storeResponseDetails($scope, response.data);
+	};
+
+	/**
+	 * Update the UI with the data received from the service.
+	 */
+	helper.populateView = function($scope, response) {
+		$scope.timerEnd = Date.now();
+		$scope.progress = ProgressbarService.PROGRESS_STATES.COMPLETE;
+		response.headers().status = response.status;
+		$scope.responseBody = JSON.stringify(response.data, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
+		$scope.responseHeaders = JSON.stringify(response.headers(), null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
+		$scope.requestHeaders = JSON.stringify(response.config, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
+	};
+
+	/**
+	 * Show the view.
+	 */
+	helper.displayView = function($scope) {
+		$scope.displayResponse = true;
+		$scope.processing = false;
 	};
 
 	/**
@@ -111,39 +137,6 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * Update the UI with the data received from the service.
-	 */
-	helper.populateView = function($scope, response) {
-		$scope.timerEnd = Date.now();
-		$scope.progress = ProgressbarService.getProgressState('COMPLETE');
-		response.headers().status = response.status;
-		$scope.responseBody = JSON.stringify(response.data, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
-		$scope.responseHeaders = JSON.stringify(response.headers(), null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
-		$scope.requestHeaders = JSON.stringify(response.config, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
-	};
-
-	/**
-	 * Show the view.
-	 */
-	helper.displayView = function($scope) {
-		$scope.displayResponse = true;
-		$scope.processing = false;
-	};
-
-	/**
-	 * Delete cookies that can interfere with authentication.
-	 * NOTE: This will likely mess up any open OAM application sessions.
-	 */
-	helper.deleteCookies = function() {
-		if (typeof chrome !== 'undefined') {
-			chrome.cookies.remove({"url": "http://dnb.com", "name": "userid"});
-			chrome.cookies.remove({"url": "http://dnb.com", "name": "dnb_loginid"});
-			chrome.cookies.remove({"url": "http://dnb.com", "name": "redirect"});
-			chrome.cookies.remove({"url": "http://dnb.com", "name": "ObSSOCookie"});
-		}
-	};
-
-	/**
 	 * Perform some Chrome specific operations that will only work in Chrome.
 	 */
 	helper.performChromeOperations = function($scope) {
@@ -152,16 +145,6 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
 			helper.addUserDefinedServices($scope);
 		}
-	};
-
-	/**
-	 * Check if the necessary credentials have been provided.
-	 */
-	helper.areCredentialsPresent = function() {
-		return advancedSettings.credentials
-			&& advancedSettings.credentials.appId
-			&& advancedSettings.credentials.userId
-			&& advancedSettings.credentials.password;
 	};
 
 	/**
@@ -177,19 +160,5 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			}
 			$scope.$apply();
 		});
-	};
-
-	/**
-	 * Return the service object with the specified id from the array.
-	 */
-	helper.findServiceById = function(id, services) {
-		var serviceToDelete = {};
-		for (var service of services) {
-			if (service.id === id) {
-				serviceToDelete = service;
-				break;
-			}
-		}
-		return serviceToDelete;
 	};
 });

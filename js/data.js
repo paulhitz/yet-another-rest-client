@@ -1,6 +1,6 @@
 
 /**
- * .
+ * 
  */
 angular.module('clientApp').constant('SERVICES_CONFIG', {
 
@@ -41,24 +41,6 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	} ]
 });
 
-
-/**
- * The default advanced settings to use.
- */
-angular.module('clientApp').value('advancedSettings', {
-	requestUrl : "",
-	requestMethod : "get",
-	autoAuthenticate : false,
-	payload : ""
-});
-
-
-/**
- * The credentials used for authentication. If available, these are populated from Chrome Storage.
- * If necessary, there is also an option to hard-code them here.
- */
-angular.module('clientApp').value('credentials', {});
-
 /**
  * 
  */
@@ -93,11 +75,3 @@ angular.module('clientApp').constant('EXAMPLE_HEADERS', [
 		value : "Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/21.0"
 	} ]
 );
-
-
-
-
-
-
-
-
