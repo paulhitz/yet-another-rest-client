@@ -24,6 +24,13 @@ common.service('utils', function() {
 		document.execCommand('copy', true);
 		copyFrom.remove();
 	};
+
+	/**
+	 * Identifies if the supplied object is empty.
+	 */
+	utils.isEmptyObject = function(object) {
+		return angular.equals({}, object);
+	};
 });
 
 /**

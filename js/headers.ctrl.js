@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the Request Headers.
  */
-clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, utils, GENERAL_CONSTANTS) {
 
 	//The headers that should be added to subsequent requests.
 	$scope.headers = {};
@@ -41,8 +41,8 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 
 	//Identifies if the supplied object is empty.
 	$scope.isEmptyObject = function(object) {
-		return angular.equals({}, object);
-	}
+		return utils.isEmptyObject(object);
+	};
 
 	//Open a modal dialog to allow a new header to be entered or an existing header to be edited.
 	$scope.openHeaderModal = function(row) {

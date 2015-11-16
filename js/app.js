@@ -3,38 +3,20 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, utils, ProgressbarService, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, SERVICES_CONFIG) {
 
-
-	$scope.endpoint = {};
-	$scope.endpoints = SERVICES_CONFIG.endpoints;
-	
+	//Populate the form.
+	$scope.endpoints = SERVICES_CONFIG.typeahead;
+	$scope.alerts = [];
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
 		$scope.requestMethod = method;
 	};
 
-	//Identifies if the supplied object is empty. TODO best place for this?
-	$scope.isEmptyObject = function(object){
-		return angular.equals({}, object);
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//Populate the form.
-	$scope.alerts = [];
-
 	//Chrome specific operations. E.g. Chrome Storage related functionality.
 	clientAppHelper.performChromeOperations($scope);
 
-	//Submit the configured Service Request.
+	//Submit the Service Request.
 	$scope.submit = function() {
 		//Remove any previous errors/alerts and hide the previous response.
 		$scope.alerts = [];
@@ -45,8 +27,9 @@ clientApp.controller('ClientAppCtrl', function($scope, $log, clientAppHelper, ut
 		//Update Progress Bar.
 		$scope.progress = ProgressbarService.getProgressState('START');
 
-		//
-		clientAppHelper.configureAndCallService($scope, $scope.requestUrl);
+		//Call the service.
+		$scope.requestUrl = requestUrl;
+		clientAppHelper.callService($scope)
 	};
 
 	//Copy the request or response to the clipboard.

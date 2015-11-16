@@ -7,47 +7,11 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	var helper = this;
 
 	/**
-	 * Based on the selected environment and service, determine the correct URL to use.
-	 */
-	helper.configureServiceUrl = function(selectedEnvironment, selectedService, parameter) {
-		var url = "";
-
-		//Determine the endpoint based on selected Environment and Service.
-		for (var endpoint of SERVICES_CONFIG.endpoints) {
-			if (endpoint.service === selectedService && (endpoint.env === "" || endpoint.env === selectedEnvironment)) {
-				url = endpoint.url;
-				break;
-			}
-		}
-
-		//Remove dashes from the optional parameter and add it to the URL.
-		var placeholder = SERVICES_CONFIG.placeholder;
-		if (parameter) {
-			placeholder = utils.replaceAll(parameter, "-", "");
-		}
-		if (url) {
-			url = url.replace("{placeholder}", placeholder);
-		}
-		return url;
-	};
-
-	/**
-	 * Determine the service endpoint to use and call the service.
-	 */
-	helper.configureAndCallService = function($scope, requestUrl) {
-
-		//
-		$scope.requestUrl = requestUrl;
-
-		//Call the endpoint.
-		$scope.progress = ProgressbarService.getProgressState('IN_PROGRESS');
-		helper.callService($scope);
-	};
-
-	/**
 	 * Call the specified endpoint and update the UI.
 	 */
 	helper.callService = function($scope) {
+		$scope.progress = ProgressbarService.getProgressState('IN_PROGRESS');
+
 		var requestConfig = { headers: {} };
 		if (advancedSettings.autoAuthenticate) {
 			requestConfig = { headers: {
@@ -187,7 +151,6 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			$scope.chromeSupport = true;
 			$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
 			helper.addUserDefinedServices($scope);
-			helper.retrieveAndSetCredentials($scope.selectedEnvironment);
 		}
 	};
 
@@ -202,47 +165,6 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * Persist the credentials if they've changed.
-	 */
-	helper.persistCredentials = function(env) {
-		//Check if the credentials have changed.
-		var initialCredentials = credentials[env];
-		var currentCredentials = advancedSettings.credentials;
-		if (typeof initialCredentials === 'undefined'
-				|| initialCredentials.appId !== currentCredentials.appId
-				|| initialCredentials.userId !== currentCredentials.userId
-				|| initialCredentials.password !== currentCredentials.password) {
-			//Persist the updated credentials (include some other relevant data).
-			currentCredentials.date = Date();
-			currentCredentials.env = env;
-			var keyValue = {};
-			keyValue["restclient.credentials." + env] = currentCredentials;
-			chrome.storage.sync.set(keyValue);
-			credentials[env] = currentCredentials;
-		}
-	};
-
-	/**
-	 * Retrieve the stored credentials and set them for the current environment.
-	 */
-	helper.retrieveAndSetCredentials = function(selectedEnvironment) {
-		var keys = ["restclient.credentials.qa", "restclient.credentials.stg", "restclient.credentials.prod"];
-		chrome.storage.sync.get(keys, function (environments) {
-			for (var key in environments) {
-				//Use the stored credentials object to set the credentials for each environment.
-				var currentCredentials = environments[key];
-				credentials[currentCredentials.env] = currentCredentials;
-			}
-
-			//Set the initial credential in the UI.
-			//Clone rather than pass by reference so we can determine later if the credentials have been modified.
-			if (credentials[selectedEnvironment]) {
-				advancedSettings.credentials = JSON.parse(JSON.stringify(credentials[selectedEnvironment]));
-			}
-		});
-	};
-
-	/**
 	 * Add custom services that the user has previously saved.
 	 */
 	helper.addUserDefinedServices = function($scope) {
@@ -250,25 +172,11 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			for (var key in services) {
 				var service = services[key];
 				if (service.serviceName && service.endpoint) {
-					SERVICES_CONFIG.services.unshift(service.serviceName);
-					SERVICES_CONFIG.endpoints.unshift(service.endpoint);
+					SERVICES_CONFIG.typeahead.unshift(service.endpoint);
 				}
 			}
 			$scope.$apply();
 		});
-	};
-
-	/**
-	 * Retrieve the Custom Services. Avoids going to Chrome Storage again.
-	 */
-	helper.getCustomServices = function() {
-		var customServices = [];
-		for (var service of SERVICES_CONFIG.services) {
-			if (service.group === "Custom") {
-				customServices.push(service);
-			}
-		}
-		return customServices;
 	};
 
 	/**
