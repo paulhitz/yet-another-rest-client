@@ -84,12 +84,12 @@ clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 /**
  * Controller for displaying more details about a specific history record.
  */
-clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, utils, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 
 	//Add the history object to the scope so it can be used in the modal.
 	$scope.history = angular.copy(history);
-	$scope.history.response = JSON.stringify($scope.history.response, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
+	$scope.history.response = utils.stringify($scope.history.response);
 
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
