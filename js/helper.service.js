@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, TYPEAHEAD, GENERAL_CONSTANTS, $rootScope) {
+clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, favorites, GENERAL_CONSTANTS, $rootScope) {
 	var helper = this;
 
 	/**
@@ -147,24 +147,8 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 		if (typeof chrome !== 'undefined') {
 			$scope.chromeSupport = true;
 			$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
-			helper.addUserDefinedServices($scope);
+			favorites.retrieveFavorites();
 		}
 	};
 
-	/**
-	 * Add custom services that the user has previously saved. 
-	 *
-	 * TODO is this obsolete? Or will it tie in with the import/export functionality?  
-	 */
-	helper.addUserDefinedServices = function($scope) {
-		chrome.storage.sync.get(null, function (services) {
-			for (var key in services) {
-				var service = services[key];
-				if (service.serviceName && service.endpoint) {
-					TYPEAHEAD.endpoints.unshift(service.endpoint);
-				}
-			}
-			$scope.$apply();
-		});
-	};
 });

@@ -6,7 +6,8 @@ clientApp.constant('GENERAL_CONSTANTS', {
 	INDENTATION_LEVEL: 2,
 	DATE_FORMAT: 'MMM dd, yyyy HH:mm',
 	HISTORY_KEY_FORMAT: 'yarc.history.',
-	HEADER_KEY_FORMAT: 'yarc.header.'
+	HEADER_KEY_FORMAT: 'yarc.header.',
+	FAVORITE_KEY_FORMAT: 'yarc.favorite.'
 });
 
 

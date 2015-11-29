@@ -28,7 +28,9 @@
   width: 100%;
 }
  
- 
+.badge {
+  background-color: #777;
+}
  
  
  

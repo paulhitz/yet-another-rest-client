@@ -3,10 +3,10 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, TYPEAHEAD) {
+clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites) {
 
 	//Populate the form.
-	$scope.endpoints = TYPEAHEAD.endpoints;
+	$scope.favorites = favorites.get();
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
@@ -33,5 +33,11 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 	$scope.copy = function(text) {
 		$scope.copyMessage = "Successfully copied to the Clipboard.";
 		utils.copyToClipboard(text);
+	};
+
+	//Add the current URL to favorites.
+	$scope.addFavorite = function(url) {
+		console.log("adding to favorites = " + url); //TODO add some kind of indication to the screen.
+		favorites.saveFavorite($scope);
 	};
 });

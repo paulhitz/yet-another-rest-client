@@ -15,9 +15,9 @@
 								<div class="col-md-12">
 									<div class="input-group">
 										<span class="input-group-addon" title="Add to favorites.">
-											<input type="checkbox" class="glyphicon glyphicon-star-empty">
+											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-click="addFavorite(requestUrl)">
 										</span>
-										<input id="requestUrl" type="text" ng-model="requestUrl" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com" autofocus>
+										<input id="requestUrl" type="text" ng-model="requestUrl" typeahead="favorite.url for favorite in favorites | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
 										<div class="input-group-btn" title="Select the request method to use.">
 											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">

@@ -8,7 +8,7 @@
 			<li class="navbar-text"><strong>Y</strong>et <strong>A</strong>nother <strong>R</strong>EST <strong>C</strong>lient</li>
 			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('main');">Main</a></li>
 			<li class="dropdown navbar-link-container">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Favorites <span class="caret"></span></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Favorites <span class="badge">{{numFavorites || 0}}</span><span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a href="#">Manage Favorites</a></li>
 					<li role="separator" class="divider"></li>
