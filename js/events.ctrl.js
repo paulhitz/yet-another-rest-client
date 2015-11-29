@@ -4,6 +4,7 @@
 clientApp.controller('EventsCtrl', function($scope, $rootScope) {
 
 	$scope.loadTab = function(tab) {
+		//Load the content for the specified tab.
 		$rootScope.currentTab = tab;
 
 		if (tab === "history") {

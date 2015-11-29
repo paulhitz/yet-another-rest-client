@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, SERVICES_CONFIG, GENERAL_CONSTANTS, $rootScope) {
+clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, TYPEAHEAD, GENERAL_CONSTANTS, $rootScope) {
 	var helper = this;
 
 	/**
@@ -113,6 +113,8 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			timer: $scope.timerEnd - $scope.timerStart
 		};
 
+//TODO if (tooLarge) save flag; else save response.
+
 		//Persist it using Chrome Storage. Supports objects.
 		var key = GENERAL_CONSTANTS.HISTORY_KEY_FORMAT + Date.now();
 		if (typeof chrome !== 'undefined') {
@@ -125,6 +127,8 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	/**
 	 * Storing large responses (e.g. base64 encoded PDFs) can lead to performance issues
 	 * so we explicitly exclude them.
+	 *
+	 * TODO just persist a flag rather than the text. The client can determine the text to display.
 	 */
 	helper.excludeLargeObjects = function(response) {
 		var responseSize = sizeof(response);
@@ -148,14 +152,16 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * Add custom services that the user has previously saved.
+	 * Add custom services that the user has previously saved. 
+	 *
+	 * TODO is this obsolete? Or will it tie in with the import/export functionality?  
 	 */
 	helper.addUserDefinedServices = function($scope) {
 		chrome.storage.sync.get(null, function (services) {
 			for (var key in services) {
 				var service = services[key];
 				if (service.serviceName && service.endpoint) {
-					SERVICES_CONFIG.typeahead.unshift(service.endpoint);
+					TYPEAHEAD.endpoints.unshift(service.endpoint);
 				}
 			}
 			$scope.$apply();

@@ -1,11 +1,11 @@
 
 /**
- * 
+ * TODO rename this (the constant and the file). Or remove it completely.
  */
-angular.module('clientApp').constant('SERVICES_CONFIG', {
+angular.module('clientApp').constant('TYPEAHEAD', {
 
 	//Some default entries for the URL typeahead. TODO Should these form part of a custom DnB 'import' package?
-	typeahead : [ {
+	endpoints : [ {
 		service : "auth",
 		url : "http://services-ext-qa.dnb.com/rest/Authentication"
 	}, {
@@ -41,37 +41,3 @@ angular.module('clientApp').constant('SERVICES_CONFIG', {
 	} ]
 });
 
-/**
- * 
- */
-angular.module('clientApp').constant('EXAMPLE_HEADERS', [ 
-	{
-		id : "accept",
-		name : "Accept",
-		value : "application/json"
-	}, {
-		id : "accept_charset",
-		name : "Accept-Charset",
-		value : "utf-8"
-	}, {
-		id : "app_id",
-		name : "ApplicationId",
-		value : "36"
-	}, {
-		id : "auth",
-		name : "Authorization",
-		value : "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=="
-	}, {
-		id : "cache",
-		name : "Cache-Control",
-		value : "no-cache"
-	}, {
-		id : "content",
-		name : "Content-Type",
-		value : "application/json"
-	}, {
-		id : "user_agent",
-		name : "User-Agent",
-		value : "Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/21.0"
-	} ]
-);

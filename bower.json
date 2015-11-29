@@ -1,10 +1,10 @@
 {
-  "name": "dnb-rest-client",
-  "homepage": "https://github.com/paulhitz/DnB-REST-Client",
+  "name": "yet-another-rest-client",
+  "homepage": "https://github.com/paulhitz/yet-another-rest-client",
   "authors": [
     "Paul Hitz <paulhitz@gmail.com>"
   ],
-  "description": "Custom REST Client for DnB (Dun and Bradstreet) services.",
+  "description": "YARC - Yet Another REST Client. A simple REST client for Chrome.",
   "keywords": [
     "rest",
     "services"

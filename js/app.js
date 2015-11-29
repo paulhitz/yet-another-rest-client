@@ -3,10 +3,10 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Populates the form and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, SERVICES_CONFIG) {
+clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, TYPEAHEAD) {
 
 	//Populate the form.
-	$scope.endpoints = SERVICES_CONFIG.typeahead;
+	$scope.endpoints = TYPEAHEAD.endpoints;
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
