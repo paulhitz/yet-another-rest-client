@@ -1,12 +1,13 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'ngSanitize', 'ui.select']);
 
 /**
- * Main application controller. Populates the form and submits the Service Request.
+ * Main application controller. Prepares the page and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites) {
+clientApp.controller('ClientAppCtrl', function($scope, $rootScope, clientAppHelper, utils, ProgressbarService, favorites) {
 
-	//Populate the form.
+	//Set up the page.
 	$scope.favorites = favorites.get();
+	$rootScope.numFavorites = favorites.get().length;
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
@@ -37,7 +38,12 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 
 	//Add the current URL to favorites.
 	$scope.addFavorite = function(url) {
-		console.log("adding to favorites = " + url); //TODO add some kind of indication to the screen.
-		favorites.saveFavorite($scope);
+		console.log("adding to favorites = " + url);
+		favorites.saveFavorite($scope, function(count){
+			//Update the number of favorites count in the UI.
+			$rootScope.numFavorites = count;
+			$scope.alerts = [{type: 'success', msg: "Successfully added to Favorites"}];
+			$scope.$apply();  //TODO need a new notification area?
+		});
 	};
 });

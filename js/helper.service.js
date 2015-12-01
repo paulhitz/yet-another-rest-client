@@ -147,7 +147,9 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 		if (typeof chrome !== 'undefined') {
 			$scope.chromeSupport = true;
 			$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
-			favorites.retrieveFavorites();
+			favorites.retrieveFavorites(function(count){
+				$rootScope.numFavorites = count;
+			});
 		}
 	};
 

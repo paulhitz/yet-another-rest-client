@@ -20,13 +20,16 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	/**
 	 * Retrieve the saved list of favorites.
 	 */
-	helper.retrieveFavorites = function() {
+	helper.retrieveFavorites = function(callback) {
 		chrome.storage.sync.get(null, function (savedFavorites) {
 			for (var key in savedFavorites) {
 				var favorite = savedFavorites[key];
 				if (helper.isValidKey(key)) {
 					favorites.push(favorite);
 				}
+			}
+			if (typeof(callback) === "function") {
+				callback(favorites.length);
 			}
 		});
 	};
@@ -36,7 +39,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	 *
 	 * TODO don't allow duplicates to be saved.
 	 */
-	helper.saveFavorite = function($scope) {
+	helper.saveFavorite = function($scope, callback) {
 		//Prepare the data for storage.
 		var timestamp = Date.now();
 		var entry = {
@@ -53,9 +56,10 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		var keyValue = {};
 		keyValue[key] = entry;
 		chrome.storage.sync.set(keyValue, function() {
-			//$scope.alerts = [{type: 'success', msg: "Added to Favorites"}];
 			favorites.push(entry);
-			//TODO update count in the UI?
+			if (typeof(callback) === "function") {
+				callback(favorites.length);
+			}
 		});
 	};
 
