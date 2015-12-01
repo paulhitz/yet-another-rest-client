@@ -229,6 +229,9 @@ table#history {
 dd {
   padding-bottom: 5px;
 }
+.alert {
+  margin-bottom: 10px;
+}
 
 /* Loading Spinner */
 .spinning {

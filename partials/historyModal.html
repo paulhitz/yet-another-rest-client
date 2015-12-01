@@ -5,6 +5,7 @@
 		<h4 class="modal-title">More Details</h4>
 	</div>
 	<div class="modal-body small">
+		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<dl id="history">
 			<dt>Date: </dt>
 			<dd>{{history.date | date:dateFormat}}</dd>
@@ -30,6 +31,12 @@
 		</dl>
 	</div>
 	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-ng-click="copy(history.request)">
+			<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Request
+		</button>
+		<button type="button" class="btn btn-default" data-ng-click="copy(history.response)">
+			<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Response
+		</button>
 		<button class="btn btn-default" data-ng-click="cancel()">Close</button>
 	</div>
 </form>

@@ -91,6 +91,12 @@ clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstanc
 	$scope.history = angular.copy(history);
 	$scope.history.response = utils.stringify($scope.history.response);
 
+	//Copy the request or response to the clipboard.
+	$scope.copy = function(text) {
+		$scope.alerts = [{type: 'success', msg: "Successfully copied to the Clipboard."}];
+		utils.copyToClipboard(text);
+	};
+
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
