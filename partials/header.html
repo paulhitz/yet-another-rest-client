@@ -6,9 +6,9 @@
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav navbar-right" data-ng-controller="EventsCtrl">
 			<li class="navbar-text"><strong>Y</strong>et <strong>A</strong>nother <strong>R</strong>EST <strong>C</strong>lient</li>
-			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('main');">Main</a></li>
+			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('main');" accesskey="m">Main</a></li>
 			<li class="dropdown navbar-link-container">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Favorites <span class="badge">{{numFavorites || 0}}</span><span class="caret"></span></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" accesskey="f">Favorites <span class="badge">{{numFavorites || 0}}</span><span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a href="#">Manage Favorites</a></li>
 					<li role="separator" class="divider"></li>
@@ -19,8 +19,8 @@
 					<li><a href="#">Import</a></li>
 				</ul>
 			</li>
-			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('history');">History</a></li>
-			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('help');">Help</a></li>
+			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('history');" accesskey="h">History</a></li>
+			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('help');" accesskey="?">Help</a></li>
 		</ul>
 	</div>
 </header>
