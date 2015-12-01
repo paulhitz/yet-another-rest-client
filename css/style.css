@@ -32,15 +32,16 @@
   background-color: #777;
 }
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+  color: #777 !important;
+  background-color: transparent;
+}
+
+
+
+
+
 .navbar {
   border-top-width: 0;
   border-top-left-radius: 0;
@@ -54,14 +55,18 @@
 */
 
 /* TODO tidy this up. */
+
+h1 {
+  display: inline;
+  font-size: 30px;
+  color: #777;
+}
+header .navbar-brand img {
+  margin-right: 5px;
+  -webkit-filter: grayscale(100%);
+}
 sup {
     top: -1.5em;
-}
-header .navbar-brand {
-  padding-top: 20px;
-}
-header .navbar-brand span {
-  font-size: 30px;
 }
 
 .navbar-text {
