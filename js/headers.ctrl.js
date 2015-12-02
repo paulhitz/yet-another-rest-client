@@ -22,7 +22,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, util
 
 	//Remove the selected header from the list of headers.
 	$scope.removeHeader = function(header) {
-		delete $scope.headers[header.id]
+		delete $scope.headers[header.id];
 	};
 
 	//Delete the selected custom header.

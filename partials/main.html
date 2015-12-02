@@ -39,7 +39,7 @@
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
-									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="payload"></textarea>
+									<textarea class="form-control" rows="{{payloadHeight || 5}}" id="payload" placeholder="application/json" data-ng-model="payload" ng-focus="payloadHeight = 10" ng-blur="payloadHeight = 5"></textarea>
 								</div>
 							</div>
 						</div>
@@ -190,7 +190,7 @@
 				</div>
 			</section>
 
-			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing">Send Request</button>
+			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing || !requestUrl">Send Request</button>
 		</form>
 	</article>
 
