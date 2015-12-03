@@ -41,18 +41,17 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	 */
 	helper.saveFavorite = function($scope, callback) {
 		//Prepare the data for storage.
-		var timestamp = Date.now();
 		var entry = {
-			date: timestamp,
+			date: Date(),
 			name: "",
 			url: $scope.requestUrl,
 			method: $scope.requestMethod,
 			payload: $scope.payload,
-			headers: {}
+			headers: []
 		};
 
 		//Add to Chrome (Sync) Storage.
-		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + timestamp;
+		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + Date.now();
 		var keyValue = {};
 		keyValue[key] = entry;
 		chrome.storage.sync.set(keyValue, function() {

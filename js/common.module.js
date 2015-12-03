@@ -43,6 +43,16 @@ common.service('utils', function() {
 		}
 		return returnValue;
 	};
+
+	/**
+	 * Trigger a download of the specifed data.
+	 */
+	utils.download = function (blob, fileName) {
+		var downloadLink = angular.element('<a></a>');
+		downloadLink.attr('href', window.URL.createObjectURL(blob));
+		downloadLink.attr('download', fileName);
+		downloadLink[0].click();
+	};
 });
 
 /**

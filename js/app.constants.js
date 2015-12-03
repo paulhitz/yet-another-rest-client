@@ -7,7 +7,8 @@ clientApp.constant('GENERAL_CONSTANTS', {
 	DATE_FORMAT: 'MMM dd, yyyy HH:mm',
 	HISTORY_KEY_FORMAT: 'yarc.history.',
 	HEADER_KEY_FORMAT: 'yarc.header.',
-	FAVORITE_KEY_FORMAT: 'yarc.favorite.'
+	FAVORITE_KEY_FORMAT: 'yarc.favorite.',
+	EXPORT_FILE_NAME: 'yarc_favorites.json'
 });
 
 
