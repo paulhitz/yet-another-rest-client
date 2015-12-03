@@ -36,7 +36,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 /**
  * Controller for managing favorites.
  */
-clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favoritesHelper) {
+clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $modalInstance) {
 
 	$scope.alerts = [{type: 'danger', msg: "Not yet implemented."}];
 
@@ -53,13 +53,53 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $moda
 
 /**
  * Controller for importing favorites.
+ *
+ * TODO this isn't the best place for all this logic. Need to be refactored.
  */
-clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favoritesHelper) {
+clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorites, $rootScope) {
 
 	$scope.ok = function() {
 		$scope.alerts = [{type: 'danger', msg: "Not yet implemented."}];
-		console.log("import file = " + $scope.importFile);
-		//$modalInstance.close(authValue);
+		console.log("import file = ", $scope.uploadFile);
+
+		//TODO
+		//Read the file and transform it into a JSON object
+		//iterate through each array element and add to favs. or just add the enrite array to favs.
+		//should prob perform some validation on the inputted array
+
+		//Read the file
+		//var test = angular.toJson($scope.uploadFile);
+
+
+		var reader = new FileReader();
+		reader.onload = function (evt) { 
+			//Convert the file to a JSON object. TODO Need to handle errors. Invalid files etc. ****IMPORTANT****
+			var content = angular.fromJson(evt.target.result);
+			//var fav = favorites.get();
+
+			//iterate over each array element. confirm it;s valid. confirm it's not a dup. add to chrome storage (which adds to favs).
+			for (var fav of content) {
+				console.log("fav", fav);
+				if (favorites.isValidFavorite(fav)) {
+					console.log("valid fav!");
+					//TODO do we care about duplicates? And what is a duplicate?
+					//favorites.saveFavorite(fav);
+
+					//TODO this is all temp code. We need a cleaner solution.
+					favorites.saveFavorite(fav, function(count){
+						//Update the number of favorites count in the UI.
+						//$rootScope.numFavorites = count;
+						//$scope.alerts = [{type: 'success', msg: "Successfully added to Favorites"}];
+						//$scope.$apply();
+					});
+				}
+			}
+
+
+
+		};
+		reader.readAsText($scope.uploadFile);
+
 	};
 
 	$scope.cancel = function() {

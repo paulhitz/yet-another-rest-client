@@ -1,4 +1,4 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'ngSanitize', 'ui.select']);
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'ngSanitize', 'ui.select', 'bootstrap.fileField']);
 
 /**
  * Main application controller. Prepares the page and submits the Service Request.
@@ -6,7 +6,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 clientApp.controller('ClientAppCtrl', function($scope, $rootScope, clientAppHelper, utils, ProgressbarService, favorites) {
 
 	//Set up the page.
-	$scope.favorites = favorites.get();
+	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs.
 	$rootScope.numFavorites = favorites.get().length;
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";

@@ -17,6 +17,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		return favorites;
 	};
 
+
 	/**
 	 * Retrieve the saved list of favorites.
 	 */
@@ -34,16 +35,18 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		});
 	};
 
+
 	/**
 	 * Save the selected request details. It will now appear in favorites.
 	 *
 	 * TODO don't allow duplicates to be saved.
+	 * TODO split this into 2 functions (create object, save) so the import can re-use the code. 
 	 */
 	helper.saveFavorite = function($scope, callback) {
 		//Prepare the data for storage.
 		var entry = {
 			date: Date(),
-			name: "",
+			name: $scope.name,
 			url: $scope.requestUrl,
 			method: $scope.requestMethod,
 			payload: $scope.payload,
@@ -62,6 +65,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		});
 	};
 
+
 	/**
 	 * 
 	 */
@@ -73,6 +77,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		chrome.storage.sync.remove(key);
 	}
 
+
 	/**
 	 * Ensure that the specified key is in the correct format.
 	 */
@@ -81,4 +86,50 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 			return true;
 		}
 	};
+
+
+	/**
+	 * Ensure that the specified favorite contains all the required fields.
+	 */
+	helper.isValidFavorite = function(fav) {
+		var valid = true;
+
+		//If it's an object
+
+
+		//The object contains an id element?
+
+
+		//The object contains a date element?
+
+
+		//The object contains a name element
+
+
+		//The object contains a URL element
+
+
+		//The object contains a METHOD element
+
+
+		//If it contains a HEADERS element, then those are valid.
+
+
+		//Do we need to check for a valid payload element?
+
+
+		return valid;
+	};
 });
+
+
+/*
+  {
+    "date": "Thu Dec 03 2015 12:22:02 GMT+0000 (GMT Standard Time)",
+    "headers": {},
+    "method": "GET",
+    "name": "",
+    "url": "http://www.paulhitz.com"
+  }
+
+*/

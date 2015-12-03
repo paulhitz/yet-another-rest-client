@@ -8,14 +8,19 @@
 		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<div class="panel-body">
 			<div class="form-group">
-				<label for="exampleInputFile">Select Import File</label>
-				<input type="file" id="favoritesInputFile">
+				<label for="exampleInputFile">Select Import File:</label>
+				<div class="input-group">
+	                <span class="input-group-btn">
+                        <file-field ng-model="uploadFile" class="btn btn-primary" id="exampleInputFile">Browse… </file-field>
+	                </span>
+	                <input type="text" class="form-control" readonly="" value="{{uploadFile.name}}">
+	            </div>
 				<p class="help-block">Select a JSON file to import the contents into your favorites.</p>
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" data-ng-click="ok()" data-ng-enabled="">Import</button>
+		<button type="submit" class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!uploadFile.name">Import</button>
 		<button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>
 	</div>
 </form>

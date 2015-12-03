@@ -29,6 +29,7 @@
     "bootswatch-dist": "spacelab",
     "highlightjs": "~8.7.0",
     "sizeof": "git+https://gist.github.com/paulhitz/1832969af1c6e821c6d6",
-    "ui-select": "angular-ui-select#~0.12.1"
+    "ui-select": "angular-ui-select#~0.12.1",
+    "angular-bootstrap-file-field": "~0.1.3"
   }
 }

@@ -1,0 +1,34 @@
+{
+  "name": "angular-bootstrap-file-field",
+  "main": [
+    "dist/angular-bootstrap-file-field.min.js",
+    "dist/angular-bootstrap-file-field.min.js.map"
+  ],
+  "ignore": [
+    "source",
+    "spec",
+    ".bowerrc",
+    ".gitignore",
+    ".jshintignore",
+    ".jshintrc",
+    "bower.json",
+    "gruntfile.js",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "angular": "~1.3.0"
+  },
+  "homepage": "https://github.com/itslenny/angular-bootstrap-file-field",
+  "version": "0.1.3",
+  "_release": "0.1.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.3",
+    "commit": "88ab52097d5f8ced6881e24e85ffd84274bbf694"
+  },
+  "_source": "git://github.com/itslenny/angular-bootstrap-file-field.git",
+  "_target": "~0.1.3",
+  "_originalSource": "angular-bootstrap-file-field",
+  "_direct": true
+}
