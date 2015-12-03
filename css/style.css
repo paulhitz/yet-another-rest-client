@@ -6,6 +6,12 @@
  
  
  
+.dropdown-menu .favorite-list {
+  padding: 1px 20px;
+  font-size: small;
+}
+
+
  
  
  
@@ -63,6 +69,7 @@ h1 {
 }
 header .navbar-brand img {
   margin-right: 5px;
+  margin-bottom: 1px;
   -webkit-filter: grayscale(100%);
 }
 sup {

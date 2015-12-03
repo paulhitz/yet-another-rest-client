@@ -1,8 +1,6 @@
 
 /**
  * Handles CRUD operations for Favorites.
- *
- * TODO handle import/export
  */
 clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	var helper = this;

@@ -1,7 +1,7 @@
 
 <header class="navbar navbar-default">
 	<div class="navbar-brand">
-		<h1><img src="img/logo_38x38.png" alt="Logo">YARC!</h1> <sup data-ng-cloak>{{version}}</sup>
+		<h1 title="Yet Another REST Client!"><img src="img/logo_38x38.png" alt="Logo">YARC!</h1> <sup data-ng-cloak>{{version}}</sup>
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav navbar-right" data-ng-controller="EventsCtrl">
@@ -12,11 +12,13 @@
 				<ul class="dropdown-menu">
 					<li><a href="#" data-ng-click="openManageFavoritesModal();">Manage Favorites</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="#">GBO (STG)</a></li>
-					<li><a href="#">GBO (QA)</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#" data-ng-click="exportFavorites();">Export</a></li>
 					<li><a href="#" data-ng-click="openImportFavoritesModal();">Import</a></li>
+					<li><a href="#" data-ng-click="exportFavorites();">Export</a></li>
+					<li role="separator" class="divider"></li>
+					<li class="dropdown-header">Apply Favorite...</li>
+					<li class="animate-repeat" ng-repeat="favorite in favorites">
+						<a href="#" data-ng-click="applyFavorite($index);" class="favorite-list">{{favorite.name}}</a>
+					</li>
 				</ul>
 			</li>
 			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('history');" accesskey="h">History</a></li>

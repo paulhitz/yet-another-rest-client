@@ -3,6 +3,8 @@
  */
 clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils, GENERAL_CONSTANTS) {
 
+	$scope.favorites = favorites.get()
+
 	//Open a modal dialog to allow the user to mange their favorites.
 	$scope.openManageFavoritesModal = function() {
 		var modalInstance = $modal.open({
@@ -29,6 +31,11 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 		var json = utils.stringify(favorites.get());
 		var blob = new Blob([json], {type: 'application/json'});
 		utils.download(blob, GENERAL_CONSTANTS.EXPORT_FILE_NAME);
+	};
+
+	//Use the specified favorite to configure the tool.
+	$scope.applyFavorite = function(index) {
+		console.log("apply fav...", $scope.favorites[index]);
 	};
 });
 
@@ -90,6 +97,7 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 						//Update the number of favorites count in the UI.
 						//$rootScope.numFavorites = count;
 						//$scope.alerts = [{type: 'success', msg: "Successfully added to Favorites"}];
+						$scope.alerts = [{type: 'success', msg: "x favorites successfully imported."}];
 						//$scope.$apply();
 					});
 				}
