@@ -16,7 +16,7 @@ clientApp.controller('AuthCtrl', function($scope, $modal) {
 		});
 
 		//Update the authorization value.
-		modalInstance.result.then(function (value) {
+		modalInstance.result.then(function(value) {
 			$scope.authValue = value;
 		});
 	};

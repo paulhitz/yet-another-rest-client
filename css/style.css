@@ -72,6 +72,11 @@ header .navbar-brand img {
   margin-bottom: 1px;
   -webkit-filter: grayscale(100%);
 }
+header .navbar-brand img:hover {
+  -webkit-filter: initial;
+  transition: all 1s;
+  transform: rotate(360deg);
+}
 sup {
     top: -1.5em;
 }

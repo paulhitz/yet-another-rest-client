@@ -51,8 +51,15 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	 */
 	helper.addHeaders = function(payload) {
 
+		//testing...
+		console.log("test");
+		console.log(utils.stringify(headers));
+		console.log(headers);
+
+
 		//Add custom headers. TODO use a service to get them from HeadersCtrl.
-		var header = { headers: {} }
+		var headers = { headers: {} }
+
 
 		//Add specific payload headers if a payload exists.
 		if (payload) {
@@ -66,6 +73,7 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	 */
 	helper.addPayloadHeaders = function(headers) {
 		//TODO only add them if not already present. I.e. any user defined ones take precedence.
+		//TODO Confirm if they're really needed. Are they added automatically?
 		headers['Accept'] = "application/json";
 		headers['Content-Type'] = "application/json";
 	};
@@ -142,14 +150,14 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 
 	/**
 	 * Perform some Chrome specific operations that will only work in Chrome.
+	 *
+	 * TODO Does this make sense? It's a Chrome extension. Do we need to call out Chrome operations?
 	 */
 	helper.performChromeOperations = function($scope) {
 		if (typeof chrome !== 'undefined') {
 			$scope.chromeSupport = true;
 			$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
-			favorites.retrieveFavorites(function(count){
-				$rootScope.numFavorites = count;
-			});
+			favorites.retrieveFavorites();
 		}
 	};
 

@@ -1,9 +1,9 @@
 /**
  * A controller responsible for variious actions related to Favorites. E.g. Import, export etc.
  */
-clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils, GENERAL_CONSTANTS) {
+clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils, GENERAL_CONSTANTS, $rootScope) {
 
-	$scope.favorites = favorites.get()
+	$scope.favorites = favorites.get();
 
 	//Open a modal dialog to allow the user to mange their favorites.
 	$scope.openManageFavoritesModal = function() {
@@ -41,7 +41,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 
 
 /**
- * Controller for managing favorites.
+ * Simple modal controller for managing favorites.
  */
 clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $modalInstance) {
 
@@ -59,55 +59,34 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $moda
 
 
 /**
- * Controller for importing favorites.
+ * Simple modal controller for importing favorites.
  *
- * TODO this isn't the best place for all this logic. Need to be refactored.
+ * TODO this isn't the best place for all this logic. Needs to be refactored.
  */
 clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorites, $rootScope) {
 
 	$scope.ok = function() {
-		$scope.alerts = [{type: 'danger', msg: "Not yet implemented."}];
-		console.log("import file = ", $scope.uploadFile);
+		//TODO perform some validation on the input.
 
-		//TODO
-		//Read the file and transform it into a JSON object
-		//iterate through each array element and add to favs. or just add the enrite array to favs.
-		//should prob perform some validation on the inputted array
-
-		//Read the file
-		//var test = angular.toJson($scope.uploadFile);
-
-
+		//Load the file.
 		var reader = new FileReader();
-		reader.onload = function (evt) { 
+		reader.onload = function(evt) { 
 			//Convert the file to a JSON object. TODO Need to handle errors. Invalid files etc. ****IMPORTANT****
 			var content = angular.fromJson(evt.target.result);
-			//var fav = favorites.get();
 
-			//iterate over each array element. confirm it;s valid. confirm it's not a dup. add to chrome storage (which adds to favs).
+			//Add each valid entry from the import file to the favorites.
 			for (var fav of content) {
-				console.log("fav", fav);
 				if (favorites.isValidFavorite(fav)) {
 					console.log("valid fav!");
-					//TODO do we care about duplicates? And what is a duplicate?
-					//favorites.saveFavorite(fav);
 
-					//TODO this is all temp code. We need a cleaner solution.
+					//TODO can chrome storage take a list of objects? So we don't do it individually?
 					favorites.saveFavorite(fav, function(count){
-						//Update the number of favorites count in the UI.
-						//$rootScope.numFavorites = count;
-						//$scope.alerts = [{type: 'success', msg: "Successfully added to Favorites"}];
 						$scope.alerts = [{type: 'success', msg: "x favorites successfully imported."}];
-						//$scope.$apply();
 					});
 				}
 			}
-
-
-
 		};
 		reader.readAsText($scope.uploadFile);
-
 	};
 
 	$scope.cancel = function() {

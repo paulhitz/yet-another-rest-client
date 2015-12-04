@@ -8,10 +8,10 @@
 		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<div class="panel-body">
 			<div class="form-group">
-				<label for="exampleInputFile">Select Import File:</label>
+				<label for="inputFile">Select Import File:</label>
 				<div class="input-group">
 	                <span class="input-group-btn">
-                        <file-field ng-model="uploadFile" class="btn btn-primary" id="exampleInputFile">Browse… </file-field>
+                        <file-field ng-model="uploadFile" class="btn btn-primary" id="inputFile">Browse…</file-field>
 	                </span>
 	                <input type="text" class="form-control" value="{{uploadFile.name}}" placeholder="Example: favorites.json" readonly>
 	            </div>

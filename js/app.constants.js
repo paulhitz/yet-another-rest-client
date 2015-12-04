@@ -15,8 +15,7 @@ clientApp.constant('GENERAL_CONSTANTS', {
 /**
  * Common request headers. 
  */
-clientApp.constant('EXAMPLE_HEADERS', [ 
-	{
+clientApp.constant('EXAMPLE_HEADERS', [ {
 		id : "accept",
 		name : "Accept",
 		value : "application/json"

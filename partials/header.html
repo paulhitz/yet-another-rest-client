@@ -8,16 +8,16 @@
 			<li class="navbar-text"><strong>Y</strong>et <strong>A</strong>nother <strong>R</strong>EST <strong>C</strong>lient</li>
 			<li class="navbar-link-container"><a href="" data-ng-click="loadTab('main');" accesskey="m">Main</a></li>
 			<li class="dropdown navbar-link-container" data-ng-controller="FavoritesCtrl">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" accesskey="f">Favorites <span class="badge">{{numFavorites || 0}}</span><span class="caret"></span></a>
+				<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" accesskey="f">Favorites <span class="badge">{{favorites.length}}</span><span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#" data-ng-click="openManageFavoritesModal();">Manage Favorites</a></li>
+					<li><a href="" data-ng-click="openManageFavoritesModal();">Manage Favorites</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="#" data-ng-click="openImportFavoritesModal();">Import</a></li>
-					<li><a href="#" data-ng-click="exportFavorites();">Export</a></li>
-					<li role="separator" class="divider"></li>
-					<li class="dropdown-header">Apply Favorite...</li>
+					<li><a href="" data-ng-click="openImportFavoritesModal();">Import</a></li>
+					<li><a href="" data-ng-click="exportFavorites();" ng-hide="favorites.length == 0">Export</a></li>
+					<li role="separator" class="divider" ng-hide="favorites.length == 0"></li>
+					<li class="dropdown-header" ng-hide="favorites.length == 0">Apply Favorite...</li>
 					<li class="animate-repeat" ng-repeat="favorite in favorites">
-						<a href="#" data-ng-click="applyFavorite($index);" class="favorite-list">{{favorite.name}}</a>
+						<a href="" data-ng-click="applyFavorite($index);" class="favorite-list">{{favorite.name}}</a>
 					</li>
 				</ul>
 			</li>

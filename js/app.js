@@ -3,11 +3,10 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Prepares the page and submits the Service Request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, $rootScope, clientAppHelper, utils, ProgressbarService, favorites) {
+clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites, $modal) {
 
 	//Set up the page.
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs.
-	$rootScope.numFavorites = favorites.get().length;
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
@@ -36,14 +35,40 @@ clientApp.controller('ClientAppCtrl', function($scope, $rootScope, clientAppHelp
 		utils.copyToClipboard(text);
 	};
 
-	//Add the current URL to favorites.
-	$scope.addFavorite = function(url) {
-		console.log("adding to favorites = " + url);
-		favorites.saveFavorite($scope, function(count){
-			//Update the number of favorites count in the UI.
-			$rootScope.numFavorites = count;
-			$scope.alerts = [{type: 'success', msg: "Successfully added to Favorites"}];
-			$scope.$apply();  //TODO need a new notification area?
+	//Add the current URL to favorites. TODO should this be in the favorite controller?
+	$scope.openAddFavoriteModal = function(url) {
+		var modalInstance = $modal.open({
+			templateUrl: 'partials/addFavoriteModal.html',
+			controller: 'AddFavoriteModalInstanceCtrl',
+			backdropClass: 'modalBackdrop',
+			backdrop: 'static'
 		});
+
+		//Add the details to user favorites using the specified name.
+		modalInstance.result.then(function(name) {
+			var data = {
+				'id': Date.now(), 'name': name, 'url': $scope.requestUrl, 
+				'method': $scope.requestMethod, 'payload': $scope.payload, 'headers': []
+			};
+			favorites.saveFavorite(data, function(count){
+				//TODO Display success/fail message. Where? need a new notification area?
+				//$rootScope.notification = [{type: 'success', msg: "Successfully added to Favorites"}];
+			});
+		});
+	};
+});
+
+
+/**
+ * Simple modal controller for adding a favorite.
+ */
+clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $modalInstance) {
+
+	$scope.ok = function(name) {
+		$modalInstance.close(name);
+	};
+
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
 	};
 });

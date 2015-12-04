@@ -1,10 +1,10 @@
 
-<form role="form" id="history-modal">
+<form role="form">
 	<div class="modal-header">
 		<button class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
 		<h4 class="modal-title">Manage Favorites</h4>
 	</div>
-	<div class="modal-body small">
+	<div class="modal-body">
 		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<p>TODO list all favorites (similar to history UI). Allow deletion, editing, viewing and selecting. Includes URL, payload, headers, date.</p>
 		<p>Should it be a modal or a new page?</p>

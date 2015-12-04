@@ -5,7 +5,7 @@
 clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	var helper = this;
 
-	//
+	//The list of user favorites.
 	var favorites = [];
 
 	/**
@@ -17,9 +17,9 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 
 
 	/**
-	 * Retrieve the saved list of favorites.
+	 * Retrieve the saved list of favorites from Chrome Storage.
 	 */
-	helper.retrieveFavorites = function(callback) {
+	helper.retrieveFavorites = function() {
 		chrome.storage.sync.get(null, function (savedFavorites) {
 			for (var key in savedFavorites) {
 				var favorite = savedFavorites[key];
@@ -27,37 +27,35 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 					favorites.push(favorite);
 				}
 			}
-			if (typeof(callback) === "function") {
-				callback(favorites.length);
-			}
 		});
 	};
 
 
 	/**
-	 * Save the selected request details. It will now appear in favorites.
+	 * Save the provided data as a favorite. It will now appear in the favorites section.
 	 *
-	 * TODO don't allow duplicates to be saved.
-	 * TODO split this into 2 functions (create object, save) so the import can re-use the code. 
+	 * Note: Imported favorites will replace existing favorites with the same ID.
 	 */
-	helper.saveFavorite = function($scope, callback) {
+	helper.saveFavorite = function(data, callback) {
 		//Prepare the data for storage.
 		var entry = {
+			id: data.id,
 			date: Date(),
-			name: $scope.name,
-			url: $scope.requestUrl,
-			method: $scope.requestMethod,
-			payload: $scope.payload,
-			headers: []
+			name: data.name,
+			url: data.url,
+			method: data.method,
+			payload: data.payload,
+			headers: data.headers
 		};
 
 		//Add to Chrome (Sync) Storage.
-		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + Date.now();
+		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + data.id;
 		var keyValue = {};
 		keyValue[key] = entry;
 		chrome.storage.sync.set(keyValue, function() {
+			console.log("Test Chrome Storage error: ", chrome.runtime.lastError);
 			favorites.push(entry);
-			if (typeof(callback) === "function") {
+			if (typeof(callback) === "function") { //TODO is the callback still needed?
 				callback(favorites.length);
 			}
 		});
@@ -65,14 +63,22 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 
 
 	/**
-	 * 
+	 * Delete a favorite based on ID.
 	 */
 	helper.deleteFavorite = function(id) {
-		console.log("Deleting");
 
 		//Delete the entry from Chrome Storage.
-		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + header.id;
-		chrome.storage.sync.remove(key);
+		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + id;
+		chrome.storage.sync.remove(key, function() {
+			console.log("Test Chrome Storage error: ", chrome.runtime.lastError);
+			//Remove it from the local array which updates the UI. TODO confirm this works correctly.
+			for (var i = favorites.length - 1; i >= 0; i--) {
+				if (favorites[i].id === id) {
+					favorites.splice(i, 1);
+					break;
+				}
+			}
+		});
 	}
 
 
@@ -88,6 +94,9 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 
 	/**
 	 * Ensure that the specified favorite contains all the required fields.
+	 *
+	 * Mandatory: id, name, url, request method.
+	 * Optional: payload, headers.
 	 */
 	helper.isValidFavorite = function(fav) {
 		var valid = true;
@@ -95,10 +104,10 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		//If it's an object
 
 
-		//The object contains an id element?
+		//The object contains an id element? yes
 
 
-		//The object contains a date element?
+		//The object contains a date element? no
 
 
 		//The object contains a name element
@@ -119,15 +128,3 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		return valid;
 	};
 });
-
-
-/*
-  {
-    "date": "Thu Dec 03 2015 12:22:02 GMT+0000 (GMT Standard Time)",
-    "headers": {},
-    "method": "GET",
-    "name": "",
-    "url": "http://www.paulhitz.com"
-  }
-
-*/
