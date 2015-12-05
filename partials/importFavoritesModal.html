@@ -10,11 +10,11 @@
 			<div class="form-group">
 				<label for="inputFile">Select Import File:</label>
 				<div class="input-group">
-	                <span class="input-group-btn">
-                        <file-field ng-model="uploadFile" class="btn btn-primary" id="inputFile">Browse…</file-field>
-	                </span>
-	                <input type="text" class="form-control" value="{{uploadFile.name}}" placeholder="Example: favorites.json" readonly>
-	            </div>
+					<span class="input-group-btn">
+						<file-field ng-model="uploadFile" class="btn btn-primary" id="inputFile" accept=".json">Browse…</file-field>
+					</span>
+					<input type="text" class="form-control" value="{{uploadFile.name}}" placeholder="Example: favorites.json" readonly>
+				</div>
 				<p class="help-block">Select a JSON file to import the contents into your favorites.</p>
 			</div>
 		</div>
