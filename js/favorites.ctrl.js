@@ -71,19 +71,24 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 		//Load the file.
 		var reader = new FileReader();
 		reader.onload = function(evt) {
-			//Convert the file to a JSON object. TODO Need to handle errors. Invalid files etc. ****IMPORTANT****
+			//Convert the file to a JSON object.
+			//TODO Need to handle errors. Invalid files etc. ****IMPORTANT****
+			//TODO + check it's an array
 			var content = angular.fromJson(evt.target.result);
 
 			//Add each valid entry from the import file to the favorites.
+			var numValidFavorites = 0;
 			for (var fav of content) {
 				if (favorites.isValidFavorite(fav)) {
+					numValidFavorites++;
 					console.log("valid fav!");
 
-					//TODO can chrome storage take a list of objects? So we don't do it individually?
+					//TODO can chrome storage take a list of objects? So we don't have to import favorites individually?
 					favorites.saveFavorite(fav);
 				}
 			}
-			$scope.alerts = [{type: 'success', msg: "x favorites successfully imported."}];
+			$scope.alerts = [{type: 'success', msg: numValidFavorites + " favorites successfully imported."}];
+			$scope.$apply();
 		};
 		reader.readAsText($scope.uploadFile);
 	};

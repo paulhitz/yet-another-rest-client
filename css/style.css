@@ -2,19 +2,19 @@
  * Various custom styles for the REST Client. Bootstrap provides the bulk of the Look and Feel.
  */
 
- 
- 
- 
- 
+
+
+
+
 .dropdown-menu .favorite-list {
   padding: 1px 20px;
   font-size: small;
 }
 
 
- 
- 
- 
+
+
+
  .input-group-addon input.glyphicon:before {
  visibility: visible;
 }
@@ -28,16 +28,16 @@
 .positive-message {
   color: #3c763d;
   margin-left: 10px;
-} 
- 
+}
+
 .full-width {
   width: 100%;
 }
- 
+
 .badge {
   background-color: #777;
 }
- 
+
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
   color: #777 !important;
@@ -73,7 +73,7 @@ header .navbar-brand img {
   -webkit-filter: grayscale(100%);
 }
 header .navbar-brand img:hover {
-  -webkit-filter: initial;
+  /*-webkit-filter: initial;*/
   transition: all 1s;
   transform: rotate(360deg);
 }
@@ -283,4 +283,3 @@ footer p {
   font-size: smaller;
   margin: 2px;
 }
-

@@ -13,7 +13,7 @@ clientApp.constant('GENERAL_CONSTANTS', {
 
 
 /**
- * Common request headers. 
+ * Common request headers.
  */
 clientApp.constant('EXAMPLE_HEADERS', [ {
 		id : "accept",
@@ -42,6 +42,6 @@ clientApp.constant('EXAMPLE_HEADERS', [ {
 	}, {
 		id : "user_agent",
 		name : "User-Agent",
-		value : "Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/21.0"
+		value : "yarc-rest-client"
 	} ]
 );

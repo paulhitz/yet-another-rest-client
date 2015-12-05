@@ -90,32 +90,27 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	 * Optional: payload, headers.
 	 */
 	helper.isValidFavorite = function(fav) {
-		var valid = true;
 
-		//If it's an object
+		//Check it's an object.
+		if (angular.isUndefined(fav) || !angular.isObject(fav)) {
+			return false;
+		}
 
+		//Check it contains all manadatory fields.
+		if (angular.isUndefined(fav.id)
+				|| angular.isUndefined(fav.name)
+				|| angular.isUndefined(fav.url)
+				|| angular.isUndefined(fav.method)) {
+			return false;
+		}
 
-		//The object contains an id element? yes
+		//If it contains a HEADERS field, then check those are valid.
+		if (angular.isDefined(fav.headers)) {
+			//TODO check the headers are in the correct format. An array?
+		}
 
+		//TODO Do we need to check for a valid payload field?
 
-		//The object contains a date element? no
-
-
-		//The object contains a name element
-
-
-		//The object contains a URL element
-
-
-		//The object contains a METHOD element
-
-
-		//If it contains a HEADERS element, then those are valid.
-
-
-		//Do we need to check for a valid payload element?
-
-
-		return valid;
+		return true;
 	};
 });
