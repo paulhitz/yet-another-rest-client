@@ -45,12 +45,12 @@
 						</div>
 					</div>
 
-				
-				
-				
-				
-				
-				
+
+
+
+
+
+
 				<!--
 					<div class="form-group">
 						<label for="payload" class="col-md-1 control-label">URL:</label>
@@ -58,14 +58,14 @@
 							<div class="row">
 								<div class="col-md-12">
 								<div class="input-group">
-								
+
     <ui-select ng-model="endpoint.selected" reset-search-input="false">
     <ui-select-match placeholder="Enter URL...">{{$select.selected.url}}</ui-select-match>
     <ui-select-choices repeat="endpoint in endpoints | filter: $select.search">
       <div ng-bind-html="endpoint.url | highlight: $select.search"></div>
     </ui-select-choices>
-  </ui-select>							
-								
+  </ui-select>
+
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
@@ -73,25 +73,25 @@
           <li><a href="#">POST</a></li>
           <li><a href="#">PUT</a></li>
         </ul>
-			</div>					
-							</div>	
+			</div>
+							</div>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</div>
 				-->
-				
-				
+
+
 
 
 				</section>
 
 
-  
 
 
-  
-  
+
+
+
 
 			<section class="panel panel-primary" data-ng-controller="HeadersCtrl">
 				<div class="panel-heading" >
@@ -105,7 +105,7 @@
 
 				<div id="headers" class="panel-collapse collapse" collapse="!showHeaderSection">
 					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
-					
+
 						<div class="form-group">
 							<label for="headers" class="col-md-1 control-label">Headers:</label>
 							<div class="col-md-9">
@@ -127,7 +127,7 @@
 								<button type="button" class="btn btn-primary full-width" data-ng-click="openHeaderModal();">Add New Header</button>
 							</div>
 						</div>
-						
+
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -154,9 +154,9 @@
 								</tr>
 							</tbody>
 						</table>
-						
+
 						<p data-ng-hide="isEmptyObject(headers)">The above header(s) will be added to the next request.</p>
-						
+
 					</div>
 				</div>
 			</section>
@@ -215,10 +215,13 @@
 						<strong>Request Method:</strong> {{requestMethod}}<br>
 						<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
 					</div>
-					
+
 					<tabset class="json-tabs">
 						<tab heading="Response Body">
 							<div data-hljs data-source="responseBody" class="json-content"></div>
+						</tab>
+						<tab heading="Response Body (RAW)">
+							<div class="json-content"><pre>{{responseBody}}</pre></div>
 						</tab>
 						<tab heading="Response Headers">
 							<div data-hljs data-source="responseHeaders" class="json-content"></div>
