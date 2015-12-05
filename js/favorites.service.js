@@ -15,6 +15,19 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		return favorites;
 	};
 
+	/**
+	 * Add the specified favorite. If it's a duplicate, it should replace the existing entry.
+	 */
+	helper.add = function(input) {
+		for (var i = 0; i < favorites.length; i++) {
+			if (favorites[i].id == input.id) {
+				favorites[i] = input;
+				return;
+			}
+		}
+		favorites.push(input);
+	};
+
 
 	/**
 	 * Retrieve the saved list of favorites from Chrome Storage.
@@ -44,12 +57,25 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		var keyValue = {};
 		keyValue[key] = favorite;
 		chrome.storage.sync.set(keyValue, function() {
-			console.log("Test Chrome Storage error: ", chrome.runtime.lastError);
-			favorites.push(favorite);
-			if (typeof(callback) === "function") { //TODO is the callback still needed?
-				callback(favorites.length);
-			}
+			helper.add(favorite);
 		});
+	};
+
+
+	/**
+	 * Save multiple favorites. This is used for imports.
+	 *
+	 * TODO can chrome storage take a list of objects? So we don't have to import favorites individually?
+	 */
+	helper.saveMultipleFavorites = function(content) {
+		var numValidFavorites = 0;
+		for (var fav of content) {
+			if (helper.isValidFavorite(fav)) {
+				numValidFavorites++;
+				helper.saveFavorite(fav);
+			}
+		}
+		return numValidFavorites;
 	};
 
 

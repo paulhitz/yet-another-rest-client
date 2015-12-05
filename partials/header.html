@@ -16,7 +16,7 @@
 					<li><a href="" data-ng-click="exportFavorites();" ng-hide="favorites.length == 0">Export</a></li>
 					<li role="separator" class="divider" ng-hide="favorites.length == 0"></li>
 					<li class="dropdown-header" ng-hide="favorites.length == 0">Apply Favorite...</li>
-					<li class="animate-repeat" ng-repeat="favorite in favorites">
+					<li ng-repeat="favorite in favorites">
 						<a href="" data-ng-click="applyFavorite($index);" class="favorite-list">{{favorite.name}}</a>
 					</li>
 				</ul>

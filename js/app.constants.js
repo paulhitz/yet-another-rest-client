@@ -8,7 +8,8 @@ clientApp.constant('GENERAL_CONSTANTS', {
 	HISTORY_KEY_FORMAT: 'yarc.history.',
 	HEADER_KEY_FORMAT: 'yarc.header.',
 	FAVORITE_KEY_FORMAT: 'yarc.favorite.',
-	EXPORT_FILE_NAME: 'yarc_favorites.json'
+	EXPORT_FILE_NAME: 'yarc_favorites.json',
+	MAX_IMPORT_FILE_SIZE: 50000
 });
 
 

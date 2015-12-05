@@ -48,8 +48,7 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $moda
 	$scope.alerts = [{type: 'danger', msg: "Not yet implemented."}];
 
 	$scope.ok = function() {
-		$scope.alerts = [{type: 'danger', msg: "Not yet implemented."}];
-		//$modalInstance.close(authValue);
+
 	};
 
 	$scope.cancel = function() {
@@ -60,37 +59,22 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $moda
 
 /**
  * Simple modal controller for importing favorites.
- *
- * TODO this isn't the best place for all this logic. Needs to be refactored.
  */
-clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorites, $rootScope) {
+clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorites, fileImportHelper) {
 
 	$scope.ok = function() {
-		//TODO perform some validation on the input.
+		//Validate the File.
+		if (!fileImportHelper.isValidFile($scope.uploadFile)) {
+			$scope.alerts = [{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}];
+			return;
+		}
 
-		//Load the file.
-		var reader = new FileReader();
-		reader.onload = function(evt) {
-			//Convert the file to a JSON object.
-			//TODO Need to handle errors. Invalid files etc. ****IMPORTANT****
-			//TODO + check it's an array
-			var content = angular.fromJson(evt.target.result);
-
-			//Add each valid entry from the import file to the favorites.
-			var numValidFavorites = 0;
-			for (var fav of content) {
-				if (favorites.isValidFavorite(fav)) {
-					numValidFavorites++;
-					console.log("valid fav!");
-
-					//TODO can chrome storage take a list of objects? So we don't have to import favorites individually?
-					favorites.saveFavorite(fav);
-				}
-			}
-			$scope.alerts = [{type: 'success', msg: numValidFavorites + " favorites successfully imported."}];
+		//Import the contents of the file.
+		fileImportHelper.importFile($scope.uploadFile, function(message) {
+			//TODO if it's a success, then close the modal and display global success message. Otherwise display error in modal.
+			$scope.alerts = message;
 			$scope.$apply();
-		};
-		reader.readAsText($scope.uploadFile);
+		});
 	};
 
 	$scope.cancel = function() {
@@ -100,9 +84,72 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 
 
 /**
- * Various helper functions for the Favorites functionality.
+ * Various helper functions for the file import functionality.
  */
-clientApp.service('favoritesHelper', function() {
+clientApp.service('fileImportHelper', function(favorites, GENERAL_CONSTANTS) {
 	var helper = this;
 
+	/**
+	 * Check that the specified File is valid.
+	 */
+	helper.isValidFile = function(file) {
+		//Check file object.
+		if (angular.isUndefined(file) || !angular.isObject(file)) {
+			return false;
+		}
+
+		//Check file size.
+		if (angular.isUndefined(file.size) || file.size > GENERAL_CONSTANTS.MAX_IMPORT_FILE_SIZE) {
+			return false;
+		}
+
+		//check file extension.
+		if (angular.isUndefined(file.name) || file.name.indexOf('.json') == -1) {
+			return false;
+		}
+		return true;
+	};
+
+	/**
+	 * Check that the specified content matches is in the expected format.
+	 */
+	helper.hasValidContent = function(content) {
+		var valid = true;
+		if (!angular.isObject(content) || !angular.isArray(content)) {
+			valid = false;
+		}
+		return valid;
+	};
+
+	/**
+	 * Import the contents of the file. The contents will be loaded and any valid favorites will be saved.
+	 */
+	helper.importFile = function(file, callback) {
+
+		var reader = new FileReader();
+		reader.onload = function(evt) {
+			var content;
+			try {
+				//Convert the file contents to a JSON object.
+			  content = angular.fromJson(evt.target.result);
+			} catch (e) {
+				//Do nothing. The next check will find any issues with the conversion.
+			}
+
+			var message;
+			if (!helper.hasValidContent(content)) {
+				message = [{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}];
+			} else {
+				//Add each valid entry from the import file to the list of favorites.
+				var numValidFavorites = favorites.saveMultipleFavorites(content);
+				message = [{type: 'success', msg: numValidFavorites + " favorites successfully imported from " + file.name}];
+			}
+
+			//Return a status message.
+			if (typeof(callback) === "function") {
+				callback(message);
+			}
+		};
+		reader.readAsText(file);
+	};
 });
