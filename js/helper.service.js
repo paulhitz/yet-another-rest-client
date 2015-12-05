@@ -58,12 +58,12 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 
 
 		//Add custom headers. TODO use a service to get them from HeadersCtrl.
-		var headers = { headers: {} }
+		var headers = { headers: {} };
 
 
 		//Add specific payload headers if a payload exists.
 		if (payload) {
-			helper.addPayloadHeaders(headers)
+			helper.addPayloadHeaders(headers);
 		}
 		return headers;
 	};
@@ -160,5 +160,4 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			favorites.retrieveFavorites();
 		}
 	};
-
 });

@@ -78,7 +78,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, util
 /**
  * Controller for Adding or Editing a Request Header.
  */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, headers, 
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, headers,
 		customHeaders, selectedHeader, headersHelper, GENERAL_CONSTANTS) {
 
 	//Default to not adding to favorites.
@@ -109,7 +109,7 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 			var id = Date.now();
 			if (currentHeader && currentHeader.id) {
 				//Editing a standard header.
-				id = currentHeader.id
+				id = currentHeader.id;
 			}
 			newHeader = {
 				id: id,
@@ -187,7 +187,7 @@ clientApp.service('headersHelper', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS) 
 
 			//Prepare the headers for display.
 			savedHeaders = helper.prepareHeadersForDisplay(savedHeaders, "Custom");
-			var exampleHeaders = helper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples")
+			var exampleHeaders = helper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples");
 
 			//Merge the custom headers and example headers.
 			$scope.customHeaders = savedHeaders.concat(exampleHeaders);

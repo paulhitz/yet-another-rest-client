@@ -36,25 +36,16 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	 *
 	 * Note: Imported favorites will replace existing favorites with the same ID.
 	 */
-	helper.saveFavorite = function(data, callback) {
-		//Prepare the data for storage.
-		var entry = {
-			id: data.id,
-			date: Date(),
-			name: data.name,
-			url: data.url,
-			method: data.method,
-			payload: data.payload,
-			headers: data.headers
-		};
+	helper.saveFavorite = function(favorite, callback) {
+		favorite['date'] = Date();
 
 		//Add to Chrome (Sync) Storage.
-		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + data.id;
+		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + favorite.id;
 		var keyValue = {};
-		keyValue[key] = entry;
+		keyValue[key] = favorite;
 		chrome.storage.sync.set(keyValue, function() {
 			console.log("Test Chrome Storage error: ", chrome.runtime.lastError);
-			favorites.push(entry);
+			favorites.push(favorite);
 			if (typeof(callback) === "function") { //TODO is the callback still needed?
 				callback(favorites.length);
 			}
@@ -79,7 +70,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 				}
 			}
 		});
-	}
+	};
 
 
 	/**

@@ -26,7 +26,7 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 
 		//Call the Service.
 		$scope.progress = ProgressbarService.PROGRESS_STATES.START;
-		clientAppHelper.callService($scope)
+		clientAppHelper.callService($scope);
 	};
 
 	//Copy the request or response to the clipboard.
@@ -47,7 +47,7 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 		//Add the details to user favorites using the specified name.
 		modalInstance.result.then(function(name) {
 			var data = {
-				'id': Date.now(), 'name': name, 'url': $scope.requestUrl, 
+				'id': Date.now(), 'name': name, 'url': url,
 				'method': $scope.requestMethod, 'payload': $scope.payload, 'headers': []
 			};
 			favorites.saveFavorite(data, function(count){

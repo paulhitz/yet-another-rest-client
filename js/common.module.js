@@ -37,7 +37,7 @@ common.service('utils', function() {
 	 * such as Objects (JSON) and Strings (HTML/XML).
 	 */
 	utils.stringify = function (input) {
-		var returnValue = input
+		var returnValue = input;
 		if (angular.isObject(input)) {
 			returnValue = angular.toJson(input, true);
 		}
