@@ -11,8 +11,12 @@
   font-size: small;
 }
 
-
-
+.legend ul {
+  list-style-type: none;
+}
+.legend li {
+  padding-top: 5px;
+}
 
 
  .input-group-addon input.glyphicon:before {
@@ -142,14 +146,14 @@ div.json-content pre {
   padding: 10px;
   padding-bottom: 0;
 }
-#history-modal div.json-content {
+#history-modal div.json-content, #favorite-modal div.json-content {
   margin-top: 0px;
   max-height: 250px;
 }
-#history-modal div.json-content-small {
+#history-modal div.json-content-small, #favorite-modal div.json-content-small {
   max-height: 150px;
 }
-#history-modal div.json-content pre {
+#history-modal div.json-content pre, #favorite-modal div.json-content pre {
   padding: 0;
   font-size: inherit;
 }
@@ -222,20 +226,20 @@ select#customServices {
 .clickable {
   cursor: pointer;
 }
-table#history td, table#history th {
+table#history td, table#history th, table#favorites td, table#favorites th {
   white-space: nowrap;
 }
 td.break-row {
   word-break: break-all;
   white-space: normal !important;
 }
-table#history {
+table#history, table#favorites {
   margin-bottom: 2px;
 }
 .pagination a:hover {
   cursor: pointer;
 }
-#history-modal dl {
+#history-modal dl, #favorite-modal dl {
   margin-bottom: 0;
 }
 dd {

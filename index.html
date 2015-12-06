@@ -19,6 +19,7 @@
 
 	<data-ng-include src="'partials/main.html'" data-ng-hide="currentTab && currentTab !== 'main'"></data-ng-include>
 	<data-ng-include src="'partials/history.html'" data-ng-show="currentTab === 'history'"></data-ng-include>
+	<data-ng-include src="'partials/favorites.html'" data-ng-show="currentTab === 'favorites'"></data-ng-include>
 	<data-ng-include src="'partials/help.html'" data-ng-show="currentTab === 'help'"></data-ng-include>
 	<data-ng-include src="'partials/changelog.html'" data-ng-show="currentTab === 'log'"></data-ng-include>
 
@@ -44,6 +45,7 @@
 <script src="js/favorites.service.js"></script>
 <script src="js/progressbar.service.js"></script>
 <script src="js/favorites.ctrl.js"></script>
+<script src="js/manageFavorites.ctrl.js"></script>
 <script src="js/headers.ctrl.js"></script>
 <script src="js/auth.ctrl.js"></script>
 <script src="js/history.ctrl.js"></script>

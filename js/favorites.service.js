@@ -50,7 +50,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	 * Note: Imported favorites will replace existing favorites with the same ID.
 	 */
 	helper.saveFavorite = function(favorite, callback) {
-		favorite['date'] = Date();
+		favorite['date'] = Date.now();
 
 		//Add to Chrome (Sync) Storage.
 		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + favorite.id;
@@ -87,8 +87,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		//Delete the entry from Chrome Storage.
 		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + id;
 		chrome.storage.sync.remove(key, function() {
-			console.log("Test Chrome Storage error: ", chrome.runtime.lastError);
-			//Remove it from the local array which updates the UI. TODO confirm this works correctly.
+			//Remove it from the local array which updates the UI.
 			for (var i = favorites.length - 1; i >= 0; i--) {
 				if (favorites[i].id === id) {
 					favorites.splice(i, 1);

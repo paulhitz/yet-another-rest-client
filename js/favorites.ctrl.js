@@ -5,16 +5,6 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 
 	$scope.favorites = favorites.get();
 
-	//Open a modal dialog to allow the user to mange their favorites.
-	$scope.openManageFavoritesModal = function() {
-		var modalInstance = $modal.open({
-			templateUrl: 'partials/manageFavoritesModal.html',
-			controller: 'ManageFavoritesModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static'
-		});
-	};
-
 	//Open a modal dialog to allow the user to import favorites.
 	$scope.openImportFavoritesModal = function() {
 		var modalInstance = $modal.open({
@@ -36,23 +26,6 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 	//Use the specified favorite to configure the tool.
 	$scope.applyFavorite = function(index) {
 		console.log("apply fav...", $scope.favorites[index]);
-	};
-});
-
-
-/**
- * Simple modal controller for managing favorites.
- */
-clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $modalInstance) {
-
-	$scope.alerts = [{type: 'danger', msg: "Not yet implemented."}];
-
-	$scope.ok = function() {
-
-	};
-
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
 	};
 });
 

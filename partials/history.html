@@ -4,8 +4,8 @@
 		<h2 class="panel-title">History</h2>
 	</div>
 	<div class="panel-body">
-		<p>Previous requests are displayed below. Click on the 'More Information' icon to view additional information (including the service responses). Click on the column headers to sort.</p>
-		<p><strong>Total number of requests: </strong>{{numberOfEntries}}</p>
+		<p>Previous requests are displayed below. Click on the 'More Information' icon to view additional information (including the service responses).</p>
+		<p><strong>Total number of requests: </strong>{{numberOfEntries}} <span class="text-info" ng-show="numberOfEntries >= 50">(That's a lot of requests! Why not consider donating?)</span></p>
 	</div>
 	<table id="history" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
 		<thead>
