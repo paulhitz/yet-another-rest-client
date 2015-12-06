@@ -3,7 +3,7 @@
  * Various helper functions for the application.
  */
 clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, favorites, GENERAL_CONSTANTS,
-			$rootScope, auth) {
+			$rootScope, auth, headerService) {
 	var helper = this;
 
 	/**
@@ -54,6 +54,7 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 
 		//TODO test auth field
 		console.log("auth = ", auth.get());
+		console.log("headerService = ", headerService.get());
 
 
 
