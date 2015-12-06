@@ -35,7 +35,17 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 		utils.copyToClipboard(text);
 	};
 
-	//Add the current URL to favorites. TODO should this be in the favorite controller?
+	//Listen for an event indicating that the current request should be saved.
+	$scope.$on("addFavorite", function(event, args) {
+		if ($scope.requestUrl) {
+			$scope.openAddFavoriteModal($scope.requestUrl);
+		} else {
+			//TODO show error message.
+			console.log("no request url");
+		}
+	});
+
+	//Add the current URL to favorites. TODO should this be in the favorites controller?
 	$scope.openAddFavoriteModal = function(url) {
 		var modalInstance = $modal.open({
 			templateUrl: 'partials/addFavoriteModal.html',
@@ -46,14 +56,18 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 
 		//Add the details to user favorites using the specified name.
 		modalInstance.result.then(function(name) {
-			var data = {
-				'id': Date.now(), 'name': name, 'url': url,
-				'method': $scope.requestMethod, 'payload': $scope.payload, 'headers': []
-			};
-			favorites.saveFavorite(data, function(count){
-				//TODO Display success/fail message. Where? need a new notification area?
-				//$rootScope.notification = [{type: 'success', msg: "Successfully added to Favorites"}];
-			});
+			$scope.favoriteCheckbox = false;
+
+			if (name) {
+				var data = {
+					'id': Date.now(), 'name': name, 'url': url,
+					'method': $scope.requestMethod, 'payload': $scope.payload, 'headers': []
+				};
+				favorites.saveFavorite(data, function(count){
+					//TODO Display success/fail message. Where? need a new notification area?
+					//$rootScope.notification = [{type: 'success', msg: "Successfully added to Favorites"}];
+				});
+			}
 		});
 	};
 });
@@ -69,6 +83,6 @@ clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $modalIns
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$modalInstance.close();
 	};
 });

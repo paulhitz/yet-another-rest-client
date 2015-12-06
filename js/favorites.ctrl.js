@@ -15,6 +15,12 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 		});
 	};
 
+	//Broadcast an event to indicate that the current request should be saved.
+	$scope.addFavorite = function() {
+		$rootScope.$broadcast('addFavorite');
+		$rootScope.loadTab('main');
+	};
+
 	//Export a JSON file containing the current favorites.
 	$scope.exportFavorites = function() {
 		//Construct a Blob object from the array of favorites and download it.
