@@ -48,7 +48,6 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $modal, favorites, 
 clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorite, utils, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.favorite = angular.copy(favorite);
-	$scope.favorite.payload = utils.stringify($scope.favorite.payload); //TODO check this
 
 	$scope.apply = function(id) {
 		$modalInstance.close(id);

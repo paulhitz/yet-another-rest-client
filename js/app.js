@@ -1,4 +1,4 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'ngSanitize', 'ui.select', 'bootstrap.fileField']);
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'bootstrap.fileField']);
 
 /**
  * Main application controller. Prepares the page and submits the Service Request.

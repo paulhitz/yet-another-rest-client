@@ -44,54 +44,8 @@
 							</div>
 						</div>
 					</div>
-
-
-
-
-
-
-
-				<!--
-					<div class="form-group">
-						<label for="payload" class="col-md-1 control-label">URL:</label>
-						<div class="col-md-11">
-							<div class="row">
-								<div class="col-md-12">
-								<div class="input-group">
-
-    <ui-select ng-model="endpoint.selected" reset-search-input="false">
-    <ui-select-match placeholder="Enter URL...">{{$select.selected.url}}</ui-select-match>
-    <ui-select-choices repeat="endpoint in endpoints | filter: $select.search">
-      <div ng-bind-html="endpoint.url | highlight: $select.search"></div>
-    </ui-select-choices>
-  </ui-select>
-
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#">GET</a></li>
-          <li><a href="#">POST</a></li>
-          <li><a href="#">PUT</a></li>
-        </ul>
-			</div>
-							</div>
-							</div>
-						</div>
-					</div>
 				</div>
-				-->
-
-
-
-
-				</section>
-
-
-
-
-
-
-
+			</section>
 
 			<section class="panel panel-primary" data-ng-controller="HeadersCtrl">
 				<div class="panel-heading" >
@@ -154,14 +108,10 @@
 								</tr>
 							</tbody>
 						</table>
-
 						<p data-ng-hide="isEmptyObject(headers)">The above header(s) will be added to the next request.</p>
-
 					</div>
 				</div>
 			</section>
-
-
 
 			<section class="panel panel-primary" data-ng-controller="AuthCtrl">
 				<div class="panel-heading" >
@@ -182,7 +132,7 @@
 							<div class="col-md-7">
 								<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" data-ng-model="authValue">
 							</div>
-							<div class="col-md-3"">
+							<div class="col-md-3">
 								<button type="button" class="btn btn-default full-width" data-ng-click="openAuthModal();">Add Credentials</button>
 							</div>
 						</div>

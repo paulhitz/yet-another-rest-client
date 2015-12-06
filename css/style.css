@@ -18,15 +18,17 @@
   padding-top: 5px;
 }
 
-
- .input-group-addon input.glyphicon:before {
- visibility: visible;
+.input-group-addon input.glyphicon {
+  cursor: pointer;
 }
- .input-group-addon input.glyphicon.glyphicon-star-empty:checked:before {
+.input-group-addon input.glyphicon:before {
+  visibility: visible;
+}
+.input-group-addon input.glyphicon.glyphicon-star-empty:checked:before {
    content: "\e006";
 }
- .input-group-addon input[type=checkbox].glyphicon{
-    visibility: hidden;
+.input-group-addon input[type=checkbox].glyphicon{
+  visibility: hidden;
 }
 
 .positive-message {
