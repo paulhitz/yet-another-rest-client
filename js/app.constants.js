@@ -21,10 +21,6 @@ clientApp.constant('EXAMPLE_HEADERS', [ {
 		name : "Accept",
 		value : "application/json"
 	}, {
-		id : "accept_charset",
-		name : "Accept-Charset",
-		value : "utf-8"
-	}, {
 		id : "app_id",
 		name : "ApplicationId",
 		value : "36"
@@ -40,9 +36,5 @@ clientApp.constant('EXAMPLE_HEADERS', [ {
 		id : "content",
 		name : "Content-Type",
 		value : "application/json"
-	}, {
-		id : "user_agent",
-		name : "User-Agent",
-		value : "yarc-rest-client"
 	} ]
 );

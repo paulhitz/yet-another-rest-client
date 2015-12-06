@@ -233,7 +233,7 @@ select#customServices {
 .clickable {
   cursor: pointer;
 }
-table#history td, table#history th, table#favorites td, table#favorites th {
+table#history td, table#history th, table#favorites td, table#favorites th, section#headers th {
   white-space: nowrap;
 }
 td.break-row {

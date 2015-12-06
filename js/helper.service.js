@@ -12,9 +12,10 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	helper.callService = function($scope) {
 		$scope.progress = ProgressbarService.PROGRESS_STATES.IN_PROGRESS;
 
-		var requestConfig = helper.addHeaders($scope.payload);
+		var requestConfig = {'headers': helper.addHeaders($scope.payload)};
 
 		//Determine the request method to use (GET/POST/PUT/DELETE/HEAD/PATCH).
+		//TODO is there an alternative way to do this? That allows a user to specify an arbitrary request method?
 		var promise;
 		$scope.timerStart = Date.now();
 		switch ($scope.requestMethod) {
@@ -48,43 +49,46 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * TODO Add the custom user defined headers.
+	 * Add custom headers, auth header and payload headers.
 	 */
 	helper.addHeaders = function(payload) {
+		var headers = {};
 
-		//TODO test auth field
-		console.log("auth = ", auth.get());
-		console.log("headerService = ", headerService.get());
+		//Add custom headers.
+		var customHeaders = headerService.get();
+		for (var key in customHeaders) {
+			var customHeader = customHeaders[key];
+			headers[customHeader.name] = customHeader.value;
+		}
 
-
-
-
-
-		//testing...
-		console.log("test");
-		console.log(utils.stringify(headers));
-		console.log(headers);
-
-
-		//Add custom headers. TODO use a service to get them from HeadersCtrl.
-		var headers = { headers: {} };
-
+		//Add Auth header (if available).
+		if (auth.get().value) {
+			headers['Authorization'] = auth.get().value;
+		}
 
 		//Add specific payload headers if a payload exists.
 		if (payload) {
-			helper.addPayloadHeaders(headers);
+			headers = helper.addPayloadHeaders(headers);
 		}
+		console.log("headers", headers);
 		return headers;
 	};
 
 	/**
 	 * Add request headers indicating the type of payload. Used by POST/PUT/PATCH operations.
+	 *
+	 * TODO Confirm if they're really needed. Are they added automatically?
 	 */
 	helper.addPayloadHeaders = function(headers) {
-		//TODO only add them if not already present. I.e. any user defined ones take precedence.
-		//TODO Confirm if they're really needed. Are they added automatically?
-		headers['Accept'] = "application/json";
-		headers['Content-Type'] = "application/json";
+
+		//Only add them automatically if the user hasn't manually specified them already.
+		if (!headers['Accept']) {
+			headers['Accept'] = "application/json";
+		}
+		if (!headers['Content-Type']) {
+			headers['Content-Type'] = "application/json";
+		}
+		return headers;
 	};
 
 	/**
@@ -102,6 +106,8 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	helper.populateView = function($scope, response) {
 		$scope.timerEnd = Date.now();
 		$scope.progress = ProgressbarService.PROGRESS_STATES.COMPLETE;
+		$scope.responseRequestUrl = $scope.requestUrl;
+		$scope.responseRequestMethod = $scope.requestMethod;
 		response.headers().status = response.status;
 		$scope.responseBody = utils.stringify(response.data);
 		$scope.responseHeaders = utils.stringify(response.headers());
