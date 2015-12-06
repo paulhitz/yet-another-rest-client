@@ -1,4 +1,3 @@
-
 /**
  * Handles CRUD operations for Favorites.
  */

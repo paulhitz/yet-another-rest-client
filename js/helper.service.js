@@ -2,7 +2,8 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, favorites, GENERAL_CONSTANTS, $rootScope) {
+clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, favorites, GENERAL_CONSTANTS,
+			$rootScope, auth) {
 	var helper = this;
 
 	/**
@@ -50,6 +51,13 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	 * TODO Add the custom user defined headers.
 	 */
 	helper.addHeaders = function(payload) {
+
+		//TODO test auth field
+		console.log("auth = ", auth.get());
+
+
+
+
 
 		//testing...
 		console.log("test");
