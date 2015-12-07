@@ -1,12 +1,12 @@
 
-<section role="form" id="favorite-modal" class="modal-tabs">
+<section id="favorite-modal" class="modal-tabs">
 	<div class="modal-header">
 		<button class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
 		<h4 class="modal-title">More Details</h4>
 	</div>
 	<div class="modal-body">
 		<tabset justified="true">
-			<tab heading="Details">
+			<tab heading="General">
 				<dl>
 					<dt>Date: </dt>
 					<dd>{{favorite.date | date:dateFormat}}</dd>
@@ -22,11 +22,14 @@
 				</dl>
 			</tab>
 
-			<tab heading="Payload" ng-show="favorite.payload">
+			<tab heading="Payload" disable="!favorite.payload">
 				<div data-hljs data-source="favorite.payload" class="json-content small"></div>
 			</tab>
 
-			<tab heading="Headers" ng-show="showHeaders();">
+			<tab disable="countHeaders(favorite.headers) == 0">
+				<tab-heading>
+					Headers <span class="badge">{{countHeaders(favorite.headers)}}</span>
+				</tab-heading>
 				<table class="table table-striped">
 					<thead>
 						<tr>

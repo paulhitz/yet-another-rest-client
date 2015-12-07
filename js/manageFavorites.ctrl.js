@@ -57,8 +57,11 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $moda
 		$modalInstance.dismiss('cancel');
 	};
 
-	//Only show the headers tab if the content is a non-empty object.
-	$scope.showHeaders = function() {
-		return angular.isObject(favorite.headers) && !angular.equals({}, favorite.headers);
+	$scope.countHeaders = function(headers) {
+		var numHeaders = 0;
+		if (angular.isObject(headers)) {
+			numHeaders = Object.keys(headers).length;
+		}
+		return numHeaders;
 	};
 });

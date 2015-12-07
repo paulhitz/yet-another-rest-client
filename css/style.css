@@ -153,10 +153,7 @@ div.json-content pre {
 }
 #history-modal div.json-content, #favorite-modal div.json-content {
   margin-top: 0px;
-  max-height: 250px;
-}
-#history-modal div.json-content-small, #favorite-modal div.json-content-small {
-  max-height: 150px;
+  max-height: 400px;
 }
 #history-modal div.json-content pre, #favorite-modal div.json-content pre {
   padding: 0;

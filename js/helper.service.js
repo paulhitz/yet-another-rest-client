@@ -76,8 +76,6 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 
 	/**
 	 * Add request headers indicating the type of payload. Used by POST/PUT/PATCH operations.
-	 *
-	 * TODO Confirm if they're really needed. Are they added automatically?
 	 */
 	helper.addPayloadHeaders = function(headers) {
 
@@ -133,7 +131,8 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 			response: helper.excludeLargeObjects(response),
 			method: $scope.requestMethod,
 			payload: $scope.payload,
-			timer: $scope.timerEnd - $scope.timerStart
+			timer: $scope.timerEnd - $scope.timerStart,
+			headers: helper.addHeaders($scope.payload) //TODO should we cache this?
 		};
 
 //TODO if (tooLarge) save flag; else save response.

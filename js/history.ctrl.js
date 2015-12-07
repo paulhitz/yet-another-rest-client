@@ -100,4 +100,12 @@ clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstanc
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
+
+	$scope.countHeaders = function(headers) {
+		var numHeaders = 0;
+		if (angular.isObject(headers)) {
+			numHeaders = Object.keys(headers).length;
+		}
+		return numHeaders;
+	};
 });
