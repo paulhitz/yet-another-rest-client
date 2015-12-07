@@ -128,12 +128,10 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 			return false;
 		}
 
-		//If it contains a HEADERS field, then check those are valid.
-		if (angular.isDefined(fav.headers)) {
-			//TODO check the headers are in the correct format. An array?
+		//If it contains a HEADERS field, then check it's valid.
+		if (angular.isDefined(fav.headers) && !angular.isObject(fav.headers)) {
+			return false;
 		}
-
-		//TODO Do we need to check for a valid payload field?
 
 		return true;
 	};

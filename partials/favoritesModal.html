@@ -1,31 +1,48 @@
 
-<form role="form" id="favorite-modal">
+<section role="form" id="favorite-modal" class="modal-tabs">
 	<div class="modal-header">
 		<button class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
 		<h4 class="modal-title">More Details</h4>
 	</div>
-	<div class="modal-body small">
-		<dl>
-			<dt>Date: </dt>
-			<dd>{{favorite.date | date:dateFormat}}</dd>
+	<div class="modal-body">
+		<tabset justified="true">
+			<tab heading="Details">
+				<dl>
+					<dt>Date: </dt>
+					<dd>{{favorite.date | date:dateFormat}}</dd>
 
-			<dt>Name: </dt>
-			<dd>{{favorite.name}}</dd>
+					<dt>Name: </dt>
+					<dd>{{favorite.name}}</dd>
 
-			<dt>Request URL: </dt>
-			<dd style="word-break: break-all;">{{favorite.url}}</dd>
+					<dt>Request URL: </dt>
+					<dd style="word-break: break-all;">{{favorite.url}}</dd>
 
-			<dt>Request Method: </dt>
-			<dd>{{favorite.method | uppercase}}</dd>
+					<dt>Request Method: </dt>
+					<dd>{{favorite.method | uppercase}}</dd>
+				</dl>
+			</tab>
 
-			<dt data-ng-show="favorite.payload">Payload: </dt>
-			<dd data-ng-show="favorite.payload">
-				<div data-hljs data-source="favorite.payload" class="json-content"></div>
-			</dd>
+			<tab heading="Payload" ng-show="favorite.payload">
+				<div data-hljs data-source="favorite.payload" class="json-content small"></div>
+			</tab>
 
-			<dt data-ng-show="favorite.headers">Headers: </dt>
-			<dd data-ng-show="favorite.headers">TODO iterate through the array of headers. Create table? or some other representation? {{favorite.headers}}</dd>
-		</dl>
+			<tab heading="Headers" ng-show="showHeaders();">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="header in favorite.headers">
+							<td class="break-row">{{header.name}}</td>
+							<td class="break-row">{{header.value}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</tab>
+		</tabset>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-success" data-ng-click="apply(favorite.id)">
@@ -33,4 +50,4 @@
 		</button>
 		<button class="btn btn-default" data-ng-click="cancel()">Close</button>
 	</div>
-</form>
+</section>

@@ -11,10 +11,10 @@
 				<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" accesskey="f">Favorites <span class="badge">{{favorites.length}}</span><span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a href="" data-ng-click="loadTab('favorites');">Manage Favorites</a></li>
-					<li><a href="" data-ng-click="addFavorite()">Add Favorite</a></li>
+					<li><a href="" data-ng-click="addFavorite()">Save Current Request</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="" data-ng-click="openImportFavoritesModal();">Import</a></li>
-					<li><a href="" data-ng-click="exportFavorites();" ng-hide="favorites.length == 0">Export</a></li>
+					<li><a href="" data-ng-click="openImportFavoritesModal();">Import Favorites</a></li>
+					<li><a href="" data-ng-click="exportFavorites();" ng-hide="favorites.length == 0">Export Favorites</a></li>
 					<li role="separator" class="divider" ng-hide="favorites.length == 0"></li>
 					<li class="dropdown-header" ng-hide="favorites.length == 0">Apply Favorite...</li>
 					<li ng-repeat="favorite in favorites">

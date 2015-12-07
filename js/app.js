@@ -1,12 +1,13 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'bootstrap.fileField']);
 
 /**
- * Main application controller. Prepares the page and submits the Service Request.
+ * Main application controller. Prepares the page and submits the request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites, $modal) {
+clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites,
+		$modal, headerService) {
 
 	//Set up the page.
-	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs.
+	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need the pass by reference?
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
@@ -61,9 +62,9 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 			if (name) {
 				var data = {
 					'id': Date.now(), 'name': name, 'url': url,
-					'method': $scope.requestMethod, 'payload': $scope.payload, 'headers': []
+					'method': $scope.requestMethod, 'payload': $scope.payload, 'headers': headerService.get()
 				};
-				favorites.saveFavorite(data, function(count){
+				favorites.saveFavorite(data, function(count) {
 					//TODO Display success/fail message. Where? need a new notification area?
 					//$rootScope.notification = [{type: 'success', msg: "Successfully added to Favorites"}];
 				});
@@ -77,12 +78,7 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
  * Simple modal controller for adding a favorite.
  */
 clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $modalInstance) {
-
 	$scope.ok = function(name) {
 		$modalInstance.close(name);
-	};
-
-	$scope.cancel = function() {
-		$modalInstance.close();
 	};
 });
