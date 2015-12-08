@@ -10,7 +10,11 @@ clientApp.service('auth', function() {
 	};
 
 	helper.set = function(value) {
-		authToken['value'] = value;
+		if (angular.isObject(value)) {
+			authToken['value'] = value.value;
+		} else {
+			authToken['value'] = value;
+		}
 	};
 
 	/**

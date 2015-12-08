@@ -57,10 +57,13 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $moda
 		$modalInstance.dismiss('cancel');
 	};
 
-	$scope.countHeaders = function(headers) {
+	$scope.countHeaders = function(headers, auth) {
 		var numHeaders = 0;
 		if (angular.isObject(headers)) {
 			numHeaders = Object.keys(headers).length;
+		}
+		if (angular.isObject(auth)) {
+			numHeaders++;
 		}
 		return numHeaders;
 	};

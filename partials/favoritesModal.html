@@ -26,12 +26,12 @@
 				<div data-hljs data-source="favorite.payload" class="json-content small"></div>
 			</tab>
 
-			<tab disable="countHeaders(favorite.headers) == 0">
+			<tab disable="countHeaders(favorite.headers, favorite.auth) == 0">
 				<tab-heading>
-					Headers <span class="badge">{{countHeaders(favorite.headers)}}</span>
+					Headers <span class="badge">{{countHeaders(favorite.headers, favorite.auth)}}</span>
 				</tab-heading>
 				<table class="table table-striped">
-					<thead>
+					<thead ng-show="countHeaders(favorite.headers) > 0">
 						<tr>
 							<th>Name</th>
 							<th>Value</th>
@@ -41,6 +41,12 @@
 						<tr ng-repeat="header in favorite.headers">
 							<td class="break-row">{{header.name}}</td>
 							<td class="break-row">{{header.value}}</td>
+						</tr>
+						<tr ng-show="favorite.auth">
+							<th colspan="2">Authorization (Basic Authentication)</th>
+						</tr>
+						<tr ng-show="favorite.auth">
+							<td colspan="2">{{favorite.auth.value}}</td>
 						</tr>
 					</tbody>
 				</table>
