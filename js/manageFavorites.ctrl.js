@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the management of favorite requests.
  */
-clientApp.controller('ManageFavoritesCtrl', function($scope, $modal, favorites, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $modal, favorites, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.rowCollection = favorites.get();
 	$scope.displayedCollection = [].concat($scope.rowCollection);
@@ -17,8 +17,8 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $modal, favorites, 
 
 	//Apply the selected favorite.
 	$scope.apply = function(id) {
-		console.log("apply fav: ", id);
-		$scope.alerts = [{type: 'warning', msg: "Not yet implemented."}];
+		$rootScope.$broadcast('applyFavorite', id);
+		$rootScope.loadTab('main');
 	};
 
 	//Open a modal dialog to view more details about the selected item.

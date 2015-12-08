@@ -53,6 +53,15 @@ common.service('utils', function() {
 		downloadLink.attr('download', fileName);
 		downloadLink[0].click();
 	};
+
+	/**
+	 * Empties the supplied object without destroying the object so references will still work.
+	 */
+	utils.emptyObject = function (obj) {
+		for (var property in obj) {
+			delete obj[property];
+		}
+	};
 });
 
 /**

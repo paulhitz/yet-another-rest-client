@@ -18,12 +18,14 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	 * Add the specified favorite. If it's a duplicate, it should replace the existing entry.
 	 */
 	helper.add = function(input) {
+		//Replace...
 		for (var i = 0; i < favorites.length; i++) {
 			if (favorites[i].id == input.id) {
 				favorites[i] = input;
 				return;
 			}
 		}
+		//or add a new one...
 		favorites.push(input);
 	};
 
@@ -98,6 +100,18 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 
 
 	/**
+	 * Find the favorite with the matching ID.
+	 */
+	helper.findById = function(id) {
+		for (var i = 0; i < favorites.length; i++) {
+			if (favorites[i].id == id) {
+				return favorites[i];
+			}
+		}
+	};
+
+
+	/**
 	 * Ensure that the specified key is in the correct format.
 	 */
 	helper.isValidKey = function(key) {
@@ -130,6 +144,11 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 
 		//If it contains a HEADERS field, then check it's valid.
 		if (angular.isDefined(fav.headers) && !angular.isObject(fav.headers)) {
+			return false;
+		}
+
+		//If it contains an AUTH field, then check it's valid.
+		if (angular.isDefined(fav.auth) && !angular.isObject(fav.auth)) {
 			return false;
 		}
 

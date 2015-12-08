@@ -30,8 +30,9 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 	};
 
 	//Use the specified favorite to configure the tool.
-	$scope.applyFavorite = function(index) {
-		console.log("apply fav...", $scope.favorites[index]);
+	$scope.applyFavorite = function(id) {
+		$rootScope.$broadcast('applyFavorite', id);
+		$rootScope.loadTab('main');
 	};
 });
 

@@ -4,7 +4,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites,
-		$modal, headerService) {
+		$modal, headerService, auth) {
 
 	//Set up the page.
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need the pass by reference?
@@ -46,6 +46,19 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 		}
 	});
 
+	//Listen for an event indicating that the specified favorite should be applied.
+	$scope.$on("applyFavorite", function(event, args) {
+		//Populate the form...
+		if (angular.isNumber(args)) {
+			var favorite = favorites.findById(args);
+			$scope.requestUrl = favorite.url;
+			$scope.requestMethod = favorite.method;
+			$scope.payload = favorite.payload;
+			headerService.set(favorite.headers);
+			auth.set(favorite.auth);
+		}
+	});
+
 	//Add the current URL to favorites. TODO should this be in the favorites controller?
 	$scope.openAddFavoriteModal = function(url) {
 		var modalInstance = $modal.open({
@@ -61,8 +74,8 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 
 			if (name) {
 				var data = {
-					'id': Date.now(), 'name': name, 'url': url,
-					'method': $scope.requestMethod, 'payload': $scope.payload, 'headers': headerService.get()
+					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod,
+					'payload': $scope.payload, 'headers': headerService.get(), 'auth': auth.get()
 				};
 				favorites.saveFavorite(data, function(count) {
 					//TODO Display success/fail message. Where? need a new notification area?

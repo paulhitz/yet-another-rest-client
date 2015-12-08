@@ -3,7 +3,7 @@
  *
  * TODO rename after the ctrl is cleaned up.
  */
-clientApp.service('headerService', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS) {
+clientApp.service('headerService', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS, utils) {
 	var helper = this;
 	var headers = {};
 
@@ -12,7 +12,8 @@ clientApp.service('headerService', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS) 
 	};
 
 	helper.set = function(value) {
-		headers = value;
+		utils.emptyObject(headers);
+		angular.extend(headers, value);
 	};
 
 	/**

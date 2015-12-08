@@ -5,6 +5,13 @@
 
 
 
+
+
+
+#favorite-modal table th, #history-modal table th {
+  min-width: 150px;
+}
+
 .dropdown-menu .favorite-list {
   padding: 1px 20px;
   font-size: small;
