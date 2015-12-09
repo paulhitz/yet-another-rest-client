@@ -1,10 +1,10 @@
-var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'bootstrap.fileField']);
+var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table', 'bootstrap.fileField', 'toaster', 'ngAnimate']);
 
 /**
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites,
-		$modal, headerService, auth) {
+		$modal, headerService, auth, toaster) {
 
 	//Set up the page.
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need the pass by reference?
@@ -32,8 +32,8 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 
 	//Copy the request or response to the clipboard.
 	$scope.copy = function(text) {
-		$scope.copyMessage = "Successfully copied to the Clipboard.";
 		utils.copyToClipboard(text);
+		toaster.success("", "Successfully copied to the Clipboard.");
 	};
 
 	//Listen for an event indicating that the current request should be saved.
@@ -41,8 +41,7 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 		if ($scope.requestUrl) {
 			$scope.openAddFavoriteModal($scope.requestUrl);
 		} else {
-			//TODO show error message.
-			console.log("no request url");
+			toaster.warning("No URL", "There's no request URL to save. Please enter a Request URL and try again.");
 		}
 	});
 
@@ -56,6 +55,7 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 			$scope.payload = favorite.payload;
 			headerService.set(favorite.headers);
 			auth.set(favorite.auth);
+			toaster.success("", "The selected favorite has been applied.");
 		}
 	});
 
@@ -77,9 +77,8 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod,
 					'payload': $scope.payload, 'headers': headerService.get(), 'auth': auth.get()
 				};
-				favorites.saveFavorite(data, function(count) {
-					//TODO Display success/fail message. Where? need a new notification area?
-					//$rootScope.notification = [{type: 'success', msg: "Successfully added to Favorites"}];
+				favorites.saveFavorite(data, function() {
+					toaster.success("", "Successfully added to Favorites");
 				});
 			}
 		});

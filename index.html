@@ -10,6 +10,7 @@
 	<link href="lib/components/bootswatch-dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="lib/components/angular/angular-csp.css" rel="stylesheet">
 	<link href="lib/components/highlightjs/styles/default.css" rel="stylesheet">
+	<link href="lib/components/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -21,6 +22,9 @@
 	<data-ng-include src="'partials/favorites.html'" data-ng-show="currentTab === 'favorites'"></data-ng-include>
 	<data-ng-include src="'partials/help.html'" data-ng-show="currentTab === 'help'"></data-ng-include>
 	<data-ng-include src="'partials/changelog.html'" data-ng-show="currentTab === 'log'"></data-ng-include>
+
+	<!-- Global Notifications -->
+	<toaster-container toaster-options="{'time-out': 5000, 'close-button': true, 'position-class': 'toast-bottom-full-width'}"></toaster-container>
 
 	<data-ng-include src="'partials/footer.html'"></data-ng-include>
 </div>
@@ -35,6 +39,8 @@
 <script src="lib/components/sizeof/sizeof.min.js"></script>
 <script src="lib/components/angular-smart-table/dist/smart-table.min.js"></script>
 <script src="lib/components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js"></script>
+<script src="lib/components/angular-animate/angular-animate.min.js"></script>
+<script src="lib/components/AngularJS-Toaster/toaster.min.js"></script>
 
 <script src="js/app.ctrl.js"></script>
 <script src="js/app.constants.js"></script>

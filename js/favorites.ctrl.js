@@ -1,7 +1,7 @@
 /**
  * A controller responsible for variious actions related to Favorites. E.g. Import, export etc.
  */
-clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils, GENERAL_CONSTANTS, $rootScope) {
+clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils, GENERAL_CONSTANTS, $rootScope, toaster) {
 
 	$scope.favorites = favorites.get();
 
@@ -27,6 +27,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 		var json = utils.stringify(favorites.get());
 		var blob = new Blob([json], {type: 'application/json'});
 		utils.download(blob, GENERAL_CONSTANTS.EXPORT_FILE_NAME);
+		toaster.success("", "Export Complete. File Name: " + GENERAL_CONSTANTS.EXPORT_FILE_NAME);
 	};
 
 	//Use the specified favorite to configure the tool.
@@ -40,7 +41,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 /**
  * Simple modal controller for importing favorites.
  */
-clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorites, fileImport) {
+clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorites, fileImport, toaster) {
 
 	$scope.ok = function() {
 		//Validate the File.
@@ -51,9 +52,13 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 
 		//Import the contents of the file.
 		fileImport.importFile($scope.uploadFile, function(message) {
-			//TODO if it's a success, then close the modal and display global success message. Otherwise display error in modal.
-			$scope.alerts = message;
-			$scope.$apply();
+			if (message[0].type == "success") {
+				toaster.success("", message[0].msg);
+				$modalInstance.close();
+			} else {
+				$scope.alerts = message;
+				$scope.$apply();
+			}
 		});
 	};
 

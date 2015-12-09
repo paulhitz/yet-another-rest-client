@@ -29,6 +29,8 @@
     "bootswatch-dist": "spacelab",
     "highlightjs": "~8.7.0",
     "sizeof": "git+https://gist.github.com/paulhitz/1832969af1c6e821c6d6",
-    "angular-bootstrap-file-field": "git+https://github.com/paulhitz/angular-bootstrap-file-field#accept-attribue-support"
+    "angular-bootstrap-file-field": "git+https://github.com/paulhitz/angular-bootstrap-file-field#accept-attribue-support",
+    "AngularJS-Toaster": "angularjs-toaster#~0.4.181",
+    "angular-animate": "~1.4.8"
   }
 }

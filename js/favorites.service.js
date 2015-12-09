@@ -59,6 +59,9 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		keyValue[key] = favorite;
 		chrome.storage.sync.set(keyValue, function() {
 			helper.add(favorite);
+			if (typeof(callback) === "function") {
+				callback();
+			}
 		});
 	};
 
