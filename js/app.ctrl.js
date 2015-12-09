@@ -41,7 +41,7 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 		if ($scope.requestUrl) {
 			$scope.openAddFavoriteModal($scope.requestUrl);
 		} else {
-			toaster.warning("No URL", "There's no request URL to save. Please enter a Request URL and try again.");
+			toaster.info("No URL", "There's no request URL to save. Please enter a Request URL and try again.");
 		}
 	});
 
