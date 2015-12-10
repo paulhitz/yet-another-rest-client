@@ -1,0 +1,43 @@
+{
+  "name": "angulartics",
+  "version": "0.20.2",
+  "main": [
+    "src/angulartics.js",
+    "src/angulartics-clicky.js",
+    "src/angulartics-cnzz.js",
+    "src/angulartics-ga-cordova.js",
+    "src/angulartics-gtm.js",
+    "src/angulartics-piwik.js",
+    "src/angulartics-scroll.js",
+    "src/angulartics-splunk.js",
+    "src/angulartics-woopra.js",
+    "src/angulartics-marketo.js",
+    "src/angulartics-intercom.js",
+    "src/angulartics-inspectlet.js",
+    "src/angulartics-newrelic-insights.js"
+  ],
+  "dependencies": {
+    "angular": ">= 1.1.5",
+    "waypoints": "~3.1.1",
+    "SHA-1": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": ">= 1.1.5",
+    "angular-route": "~1.2",
+    "angular-ui-router": "~0.2"
+  },
+  "resolutions": {
+    "angular": ">= 1.1.5"
+  },
+  "homepage": "https://github.com/angulartics/angulartics",
+  "_release": "0.20.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.20.2",
+    "commit": "e5b87a20bd5c4cd4419c9b7afd50595fa1eb375f"
+  },
+  "_source": "git://github.com/angulartics/angulartics.git",
+  "_target": "~0.20.2",
+  "_originalSource": "angulartics",
+  "_direct": true
+}

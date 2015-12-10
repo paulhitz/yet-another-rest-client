@@ -142,7 +142,7 @@
 				</div>
 			</section>
 
-			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing || !requestUrl">Send Request</button>
+			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing || !requestUrl" analytics-on="click" analytics-event="Submit Request" analytics-label="{{requestUrl}}" analytics-category="Requests">Send Request</button>
 		</form>
 	</article>
 
