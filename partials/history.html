@@ -5,6 +5,21 @@
 	</div>
 	<div class="panel-body">
 		<p>Previous requests are displayed below. Click on the 'More Information' icon to view additional information (including the service responses).</p>
+		<div class="legend">
+			<strong>Legend:</strong><br>
+			<ul class="list-inline">
+				<li>
+					<button type="button" class="btn btn-xs btn-danger" title="Delete">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button> Delete Request History
+				</li>
+				<li>
+					<button type="button" class="btn btn-xs btn-primary" title="Display more details">
+						<span class="glyphicon glyphicon-info-sign"></span>
+					</button> More Information
+				</li>
+			</ul>
+		</div>
 		<p><strong>Total number of requests: </strong>{{numberOfEntries}} <span class="text-info" ng-show="numberOfEntries >= 50">(That's a lot of requests! Why not consider donating?)</span></p>
 	</div>
 	<table id="history" st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
