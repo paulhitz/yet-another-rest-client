@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the Request History.
  */
-clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, historyHelper, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.numberOfEntries = 0;
 
@@ -64,11 +64,21 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 				}
 			}
 		});
+
+		//Apply the selected request.
+		modalInstance.result.then(function() {
+			$rootScope.$broadcast('applyFavorite', {
+				'url': row.request, 'method': row.method,
+				'payload': row.payload, 'headers': historyHelper.convertRequestHeaders(row.headers)});
+			$rootScope.loadTab('main');
+		});
 	};
 });
 
 /**
  * Various helper functions for the History functionality.
+ *
+ * TODO This service should handle more of the business logic. Including accessing Chrome Storage.
  */
 clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 	var helper = this;
@@ -78,6 +88,17 @@ clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 		if (key.indexOf(GENERAL_CONSTANTS.HISTORY_KEY_FORMAT) > -1) {
 			return true;
 		}
+	};
+
+	//Convert the Request Headers into a format that the tool can use.
+	helper.convertRequestHeaders = function(requestHeaders) {
+		var headers = {};
+		var id = Date.now();
+		for (var name in requestHeaders) {
+			id++;
+			headers[id] = {'id': id, 'name': name, 'value': requestHeaders[name]};
+		}
+		return headers;
 	};
 });
 
@@ -95,6 +116,10 @@ clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstanc
 	$scope.copy = function(text) {
 		$scope.alerts = [{type: 'success', msg: "Successfully copied to the Clipboard."}];
 		utils.copyToClipboard(text);
+	};
+
+	$scope.apply = function() {
+		$modalInstance.close();
 	};
 
 	$scope.cancel = function() {

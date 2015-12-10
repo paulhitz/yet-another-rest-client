@@ -56,6 +56,12 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 			headerService.set(favorite.headers);
 			auth.set(favorite.auth);
 			toaster.success("", "The selected favorite has been applied.");
+		} else {
+			$scope.requestUrl = args.url;
+			$scope.requestMethod = args.method;
+			$scope.payload = args.payload;
+			headerService.set(args.headers);
+			toaster.success("", "The selected request has been applied.");
 		}
 	});
 

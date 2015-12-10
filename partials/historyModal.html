@@ -53,12 +53,18 @@
 		</tabset>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-default" data-ng-click="copy(history.request)">
-			<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Request
+		<button type="button" class="btn btn-default" data-ng-click="apply()">
+			<span class="glyphicon glyphicon-play"></span> Apply Favorite
 		</button>
-		<button type="button" class="btn btn-default" data-ng-click="copy(history.response)">
-			<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Response
-		</button>
+		<div class="btn-group" dropdown is-open="status.isopen">
+			<button type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+				<span class="glyphicon glyphicon-save"></span> Copy <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#" data-ng-click="copy(history.request)">Copy Request</a></li>
+				<li><a href="#" data-ng-click="copy(history.response)">Copy Response</a></li>
+			</ul>
+		</div>
 		<button class="btn btn-default" data-ng-click="cancel()">Close</button>
 	</div>
 </section>
