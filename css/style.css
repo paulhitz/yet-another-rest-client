@@ -6,6 +6,21 @@
 
 
 
+
+
+
+button#requestMethodButton {
+  min-width: 100px;
+  font-weight: bold;
+}
+
+
+
+.toast-bottom-full-width {
+  bottom: 25px;
+}
+
+
 /* Media Queries*/
 @media (max-width: 767px) {
   footer.container {

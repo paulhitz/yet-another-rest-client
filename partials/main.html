@@ -19,7 +19,7 @@
 										</span>
 										<input id="requestUrl" type="url" ng-model="requestUrl" typeahead="favorite.url for favorite in favorites | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
 										<div class="input-group-btn" title="Select the request method to use.">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
+											<button id="requestMethodButton" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
 												<li><a href="#" ng-click="changeRequestMethod('GET')" ng-hide="requestMethod === 'GET'">GET</a></li>
 												<li><a href="#" ng-click="changeRequestMethod('POST')" ng-hide="requestMethod === 'POST'">POST</a></li>
