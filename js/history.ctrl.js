@@ -116,6 +116,7 @@ clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstanc
 	//Add the history object to the scope so it can be used in the modal.
 	$scope.history = angular.copy(history);
 	$scope.history.response = utils.stringify($scope.history.response);
+	$scope.history.maxSize = GENERAL_CONSTANTS.MAX_OBJECT_SIZE;
 
 	//Copy the request or response to the clipboard.
 	$scope.copy = function(text) {

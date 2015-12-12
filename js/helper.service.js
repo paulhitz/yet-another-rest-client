@@ -127,14 +127,19 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 		var entry = {
 			date: Date(),
 			request: $scope.requestUrl,
-			response: helper.excludeLargeObjects(response),
 			method: $scope.requestMethod,
 			payload: $scope.payload,
 			timer: $scope.timerEnd - $scope.timerStart,
 			headers: helper.addHeaders($scope.payload) //TODO should we cache this?
 		};
 
-//TODO if (tooLarge) save flag; else save response.
+		//Don't save overly large responses.
+		var responseSize = helper.calculateObjectSize(response);
+		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
+			entry['size'] = responseSize;
+		} else{
+			entry['response'] = response;
+		}
 
 		//Persist it using Chrome Storage. Supports objects.
 		var key = GENERAL_CONSTANTS.HISTORY_KEY_FORMAT + Date.now();
@@ -146,19 +151,11 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	};
 
 	/**
-	 * Storing large responses (e.g. base64 encoded PDFs) can lead to performance issues
-	 * so we explicitly exclude them.
-	 *
-	 * TODO just persist a flag rather than the text. The client can determine the text to display.
+	 * Return an approximation of the object size. Storing large responses (e.g. base64 encoded PDFs)
+	 * can lead to performance issues.
 	 */
-	helper.excludeLargeObjects = function(response) {
-		var responseSize = sizeof(response);
-		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
-			return "The response was too large to store. Only responses less than "
-				+ GENERAL_CONSTANTS.MAX_OBJECT_SIZE + " bytes in size will be stored. This response was approx "
-				+ responseSize + " bytes.";
-		}
-		return response;
+	helper.calculateObjectSize = function(response) {
+		return sizeof(response);
 	};
 
 	/**
