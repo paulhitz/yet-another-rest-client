@@ -48,7 +48,7 @@
 			</tab>
 
 			<tab heading="Response">
-				<div data-hljs data-source="history.response" class="json-content small"></div>
+				<div data-hljs data-source="history.response || '\'No Response Data\''" class="json-content small"></div>
 			</tab>
 		</tabset>
 	</div>
@@ -62,7 +62,7 @@
 			</button>
 			<ul class="dropdown-menu">
 				<li><a href="#" data-ng-click="copy(history.request)">Copy Request</a></li>
-				<li><a href="#" data-ng-click="copy(history.response)">Copy Response</a></li>
+				<li><a href="#" data-ng-click="copy(history.response)" data-ng-show="history.response">Copy Response</a></li>
 			</ul>
 		</div>
 		<button class="btn btn-default" data-ng-click="cancel()">Close</button>

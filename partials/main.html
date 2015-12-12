@@ -170,7 +170,7 @@
 
 					<tabset class="json-tabs">
 						<tab heading="Response Body">
-							<div data-hljs data-source="responseBody" class="json-content"></div>
+							<div data-hljs data-source="responseBody || '\'No Response Data\''" class="json-content"></div>
 						</tab>
 						<tab heading="Response Body (RAW)">
 							<div class="json-content"><pre>{{responseBody}}</pre></div>
@@ -187,7 +187,7 @@
 						<button type="button" class="btn btn-primary" data-ng-click="copy(requestUrl);">
 							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Request
 						</button>
-						<button type="button" class="btn btn-primary" data-ng-click="copy(responseBody);">
+						<button type="button" class="btn btn-primary" data-ng-click="copy(responseBody);" data-ng-disabled="!responseBody">
 							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Response
 						</button>
 					</div>
