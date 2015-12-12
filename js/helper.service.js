@@ -70,7 +70,6 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 		if (payload) {
 			headers = helper.addPayloadHeaders(headers);
 		}
-		console.log("headers", headers);
 		return headers;
 	};
 

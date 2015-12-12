@@ -4,11 +4,11 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Prepares the page and submits the request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, ProgressbarService, favorites,
+clientApp.controller('ClientAppCtrl', function($scope, $analytics, clientAppHelper, utils, ProgressbarService, favorites,
 		$modal, headerService, auth, toaster) {
 
 	//Set up the page.
-	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need the pass by reference?
+	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need to pass by reference?
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
@@ -86,6 +86,7 @@ clientApp.controller('ClientAppCtrl', function($scope, clientAppHelper, utils, P
 				};
 				favorites.saveFavorite(data, function() {
 					toaster.success("", "Successfully added to Favorites");
+					$analytics.eventTrack('Favorite Added');
 				});
 			}
 		});
