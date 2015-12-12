@@ -51,6 +51,14 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 		}
 	};
 
+	//Populate the form with the request details of the specified row.
+	$scope.apply = function(row) {
+		$rootScope.$broadcast('applyFavorite', {
+			'url': row.request, 'method': row.method,
+			'payload': row.payload, 'headers': historyHelper.convertRequestHeaders(row.headers)});
+		$rootScope.loadTab('main');
+	};
+
 	//Open a modal dialog to view more details about the selected item.
 	$scope.openRowModal = function(row) {
 		var modalInstance = $modal.open({
@@ -67,10 +75,7 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 
 		//Apply the selected request.
 		modalInstance.result.then(function() {
-			$rootScope.$broadcast('applyFavorite', {
-				'url': row.request, 'method': row.method,
-				'payload': row.payload, 'headers': historyHelper.convertRequestHeaders(row.headers)});
-			$rootScope.loadTab('main');
+			$scope.apply(row);
 		});
 	};
 });

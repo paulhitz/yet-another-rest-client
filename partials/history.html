@@ -9,6 +9,11 @@
 			<strong>Legend:</strong><br>
 			<ul class="list-inline">
 				<li>
+					<button type="button" class="btn btn-xs btn-success" title="Apply">
+						<span class="glyphicon glyphicon-play"></span>
+					</button> Rerun Request
+				</li>
+				<li>
 					<button type="button" class="btn btn-xs btn-danger" title="Delete">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button> Delete Request History
@@ -48,10 +53,13 @@
 				<td>{{row.method | uppercase}}</td>
 				<td>{{row.timer / 1000}} seconds</td>
 				<td>
-					<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
+					<button type="button" data-ng-click="apply(row)" class="btn btn-xs btn-success" title="Rerun Request">
+						<span class="glyphicon glyphicon-play"></span>
+					</button>
+					<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
-					<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details.">
+					<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</button>
 				</td>
