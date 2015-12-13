@@ -1,25 +1,60 @@
+/*
+ * Various custom styles for the YARC site. Bootstrap provides the bulk of the Look and Feel.
+ */
 
 
 body {
-  padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+  padding-top: 70px;
 }
 
-.feature {
-  margin-bottom: 30px;
+
+.navbar-brand h1 {
+  font-size: 30px;
+  display: inline;
+  color: #ddd;
+  line-height: 0.5;
+}
+.navbar-brand sup {
+  top: -1.3em;
+}
+.navbar-brand:hover sup {
+  color: #ddd;
 }
 
-.navbar-brand {
-  font-size: 20px;
+
+#fixed-top-chrome-image {
+  position: fixed;
+  top: 69px;
+  right: 0px;
+  z-index: 1000;
 }
 
 .item img {
   max-height: 500px;
   width: 100%;
 }
-
 .carousel-caption {
   background: #D1D1D1;
   padding-top: 0;
   padding-bottom: 20px;
   color: #000;
+}
+
+
+#features, #info {
+  padding-top: 60px;
+}
+
+
+footer .text-muted {
+  opacity: 0.5;
+}
+
+
+/* Media Queries*/
+@media (max-width: 768px) {
+  img#large-chrome-banner {
+    width: 100%;
+    max-width: 496px;
+  }
 }
