@@ -9,7 +9,7 @@ clientApp.controller('ClientAppCtrl', function($scope, $analytics, clientAppHelp
 
 	//Set up the page.
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need to pass by reference?
-	$scope.alerts = [];
+	$scope.alerts = []
 	$scope.requestMethod = "GET";
 	$scope.changeRequestMethod = function(method) {
 		$scope.requestMethod = method;
