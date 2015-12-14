@@ -12,33 +12,16 @@ clientApp.service('clientAppHelper', function($http, utils, ProgressbarService, 
 	helper.callService = function($scope) {
 		$scope.progress = ProgressbarService.PROGRESS_STATES.IN_PROGRESS;
 
-		var requestConfig = {'headers': helper.addHeaders($scope.payload)};
-
-		//Determine the request method to use (GET/POST/PUT/DELETE/HEAD/PATCH).
-		//TODO is there an alternative way to do this? That allows a user to specify an arbitrary request method?
+		//Configure the HTTP call and send the request.
+		var headers = helper.addHeaders($scope.payload);
 		var promise;
 		$scope.timerStart = Date.now();
-		switch ($scope.requestMethod) {
-			case "POST":
-				promise = $http.post($scope.requestUrl, $scope.payload, requestConfig);
-				break;
-			case "PUT":
-				promise = $http.put($scope.requestUrl, $scope.payload, requestConfig);
-				break;
-			case "PATCH":
-				promise = $http.patch($scope.requestUrl, $scope.payload, requestConfig);
-				break;
-			case "DELETE":
-				promise = $http.delete($scope.requestUrl, requestConfig);
-				break;
-			case "HEAD":
-				promise = $http.head($scope.requestUrl, requestConfig);
-				break;
-			case "GET":
-				/* falls through */
-			default:
-				promise = $http.get($scope.requestUrl, requestConfig);
-		}
+		promise = $http({
+			method: $scope.requestMethod,
+			url: $scope.requestUrl,
+			headers: headers,
+			data: $scope.payload
+		});
 
 		//Handle the service response.
 		promise.then(function(success) {
