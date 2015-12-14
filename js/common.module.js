@@ -62,6 +62,14 @@ common.service('utils', function() {
 			delete obj[property];
 		}
 	};
+
+	/**
+	 * Determine if a value is an object with a null prototype.
+	 */
+	utils.isBlankObject = function (obj) {
+		return typeof obj === 'undefined'
+				|| (obj !== null && typeof obj === 'object' && Object.getOwnPropertyNames(obj).length === 0);
+	};
 });
 
 /**

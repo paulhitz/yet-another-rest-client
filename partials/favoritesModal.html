@@ -42,10 +42,10 @@
 							<td class="break-row">{{header.name}}</td>
 							<td class="break-row">{{header.value}}</td>
 						</tr>
-						<tr ng-show="favorite.auth">
+						<tr ng-show="favorite.auth && favorite.auth.value">
 							<th colspan="2">Authorization (Basic Authentication)</th>
 						</tr>
-						<tr ng-show="favorite.auth">
+						<tr ng-show="favorite.auth && favorite.auth.value">
 							<td colspan="2">{{favorite.auth.value}}</td>
 						</tr>
 					</tbody>

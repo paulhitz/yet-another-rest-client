@@ -59,10 +59,10 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $moda
 
 	$scope.countHeaders = function(headers, auth) {
 		var numHeaders = 0;
-		if (angular.isObject(headers)) {
+		if (!utils.isBlankObject(headers)) {
 			numHeaders = Object.keys(headers).length;
 		}
-		if (angular.isObject(auth)) {
+		if (!utils.isBlankObject(auth)) {
 			numHeaders++;
 		}
 		return numHeaders;
