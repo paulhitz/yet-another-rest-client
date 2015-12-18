@@ -3,8 +3,8 @@
 	<div class="panel-heading">
 		<h2 class="panel-title">About</h2>
 	</div>
-	<div class="panel-body">
-		<img src="../img/about/photo.jpg" alt="Photo of the creator of the tool" class="pull-right">
+	<div class="panel-body text-justify">
+		<img id="photo" src="../img/about/photo.jpg" alt="Photo of the creator of the tool" class="pull-right">
 		<p>Hi there</p>
 		<p>The inspiration for this tool came from frustration with the quality of the tools available to debug RESTful services. Each REST Client I used had issues and never quite worked the way I would have liked it to. In the end, I decided to attempt to build something useful myself.</p>
 		<p>This tool is that attempt. It's the result of many late evenings and long weekends. Whether it successfully delivers or is yet another second-rate tool is something I leave to the user to decide :)</p>
@@ -13,20 +13,24 @@
 		<img src="../img/about/signature.png">
 
 		<h3>Contributors</h3>
-		<p>Thanks to all the awesome contributors that have made this possible. In random order...</p>
-		<ul>
-			<li>Frederico Alves III</li>
-			<li>Augusto Marchez I</li>
-			<li>Snr. Jimenez IV</li>
-		</ul>
 		<p>If you would like to contribute, please have a look at the <a href="https://github.com/paulhitz/yet-another-rest-client/issues" target="_blank">GitHub issues page</a>.</p>
 
+		<h3>Feedback</h3>
+		<p>Visit the YARC <a href="" target="_blank">extension page</a> on the Chrome Web Store to leave feedback. Reviews and ratings can also be added. These help to promote the tool so, if you can spare the time, it would be great if you could add one.</p>
+
 		<h3>Donate</h3>
-		<p>This tool is completely free but donations are appreciated and help fund future development. TODO include PayPal link.</p>
+		<p>This tool is completely free but donations are appreciated and help fund future development.</p>
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+		">
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+		</form>
 		<p>Alternatively, please consider <a href="" target="_blank">adding a review or rating</a>.</p>
 
 		<h3>License</h3>
-		<p>MIT</p>
+		<p>MIT license.</p>
 
 		<h3>More Information</h3>
 		<p>Visit the <a href="http://paulhitz.com/yet-another-rest-client/" target="_blank">Official Site</a>.</p>
