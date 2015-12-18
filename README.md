@@ -30,13 +30,30 @@ It has a number of powerful features...
 * 100% Free!
 
 
+
+
 ## Installation
 The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  TODO
+
+
 
 ## Tech
 This is a AngularJS application packaged as a Chrome extension to avoid CORS (Cross-Origin Resource Sharing) issues. Bower is used to handle dependencies.
 
+
+
+## Site
+[Official Project Site](http://paulhitz.com/yet-another-rest-client/)
+
+
+
 ## Screenshots
+
+### Main
 ![Main Screenshot](/img/screenshots/screenshot_main.png)
+
+### Request Response
 ![Response Screenshot](/img/screenshots/screenshot_response.png)
+
+### History
 ![History Screenshot](/img/screenshots/screenshot_history.png)

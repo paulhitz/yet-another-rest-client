@@ -114,7 +114,7 @@ header .navbar-brand img {
   -webkit-filter: grayscale(100%);
 }
 header .navbar-brand img:hover {
-  /*-webkit-filter: initial;*/
+  -webkit-filter: initial;
   transition: all 1s;
   transform: rotate(360deg);
 }
