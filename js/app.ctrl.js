@@ -4,10 +4,12 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Prepares the page and submits the request.
  */
-clientApp.controller('ClientAppCtrl', function($scope, $analytics, clientAppHelper, utils, ProgressbarService, favorites,
-		$modal, headerService, auth, toaster) {
+clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, ProgressbarService,
+		favorites, $modal, headerService, auth, toaster, requests) {
 
 	//Set up the page.
+	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
+	favorites.retrieveFavorites();
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need to pass by reference?
 	$scope.alerts = [];
 	$scope.requestMethod = "GET";
@@ -15,19 +17,26 @@ clientApp.controller('ClientAppCtrl', function($scope, $analytics, clientAppHelp
 		$scope.requestMethod = method;
 	};
 
-	//Chrome specific operations. E.g. Chrome Storage related functionality.
-	clientAppHelper.performChromeOperations($scope);
-
 	//Submit the Service Request.
 	$scope.submit = function() {
 		//Remove any previous errors/alerts and hide the previous response.
 		$scope.alerts = [];
-		$scope.copyMessage = "";
 		$scope.displayResponse = false;
 		$scope.processing = true;
 
-		//Call the Service.
-		clientAppHelper.callService($scope);
+		//Send the request.
+		$scope.progress = ProgressbarService.PROGRESS_STATES.IN_PROGRESS;
+		requests.call($scope).then(function(success) {
+			appHelper.handleResponse($scope, success);
+		}, function(error) {
+			appHelper.handleResponse($scope, error);
+		});
+	};
+
+	//Cancel the current request.
+	$scope.cancel = function() {
+		requests.cancel();
+		toaster.error("", "The request was cancelled.");
 	};
 
 	//Copy the request or response to the clipboard.

@@ -1,5 +1,5 @@
 
-<div data-ng-controller="ClientAppCtrl">
+<div data-ng-controller="AppCtrl">
 	<article class="row clearfix">
 		<form class="col-md-12 column" id="requestForm">
 			<section class="panel panel-primary">
@@ -144,7 +144,7 @@
 			</section>
 
 			<div id="request-form-buttons" class="pull-right">
-				<button type="button" class="btn btn-default" data-ng-click="" data-ng-show="processing" title="Cancel the current request">Cancel</button>
+				<button type="button" class="btn btn-default" data-ng-click="cancel();" data-ng-show="processing" title="Cancel the current request">Cancel</button>
 				<button type="submit" class="btn btn-success" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing || !requestUrl" analytics-on>Send Request</button>
 			</div>
 		</form>
@@ -182,7 +182,7 @@
 						<tab heading="Response Headers">
 							<div data-hljs data-source="responseHeaders" class="json-content"></div>
 						</tab>
-						<tab heading="Request Headers">
+						<tab heading="Request Details">
 							<div data-hljs data-source="requestHeaders" class="json-content"></div>
 						</tab>
 					</tabset>
