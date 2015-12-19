@@ -156,8 +156,11 @@ sup {
 
 
 
-#submitFormButton {
+#request-form-buttons {
   margin-bottom: 30px;
+}
+#request-form-buttons button {
+  margin-left: 10px;
 }
 
 [data-ng-click] {

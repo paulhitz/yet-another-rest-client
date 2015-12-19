@@ -62,10 +62,10 @@
 					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
 
 						<div class="form-group">
-							<label for="headers" class="col-md-1 control-label">Headers:</label>
+							<label for="select-header" class="col-md-1 control-label">Headers:</label>
 							<div class="col-md-9">
 								<div class="input-group">
-									<select class="form-control" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in customHeaders"></select>
+									<select id="select-header" class="form-control" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in customHeaders"></select>
 									<div class="input-group-btn">
 										<button class="btn btn-default" type="button" data-ng-click="useCustomHeader(selectedHeader);">Add Selected Header</button>
 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Edit/Delete Custom Headers." data-ng-disabled="selectedHeader.group === 'Examples'">
@@ -143,7 +143,10 @@
 				</div>
 			</section>
 
-			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing || !requestUrl" analytics-on>Send Request</button>
+			<div id="request-form-buttons" class="pull-right">
+				<button type="button" class="btn btn-default" data-ng-click="" data-ng-show="processing" title="Cancel the current request">Cancel</button>
+				<button type="submit" class="btn btn-success" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing || !requestUrl" analytics-on>Send Request</button>
+			</div>
 		</form>
 	</article>
 
