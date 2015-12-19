@@ -27,7 +27,7 @@ It has a number of powerful features...
 * Supports GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods.
 * HTTP Basic Authentication
 * Responsive Design
-* 100% Free!
+* 100% Free. No strings attached.
 
 
 
