@@ -1,5 +1,5 @@
 
-<section class="panel panel-primary" data-ng-controller="HistoryCtrl">
+<section class="panel panel-primary" ng-controller="HistoryCtrl">
 	<div class="panel-heading">
 		<h2 class="panel-title">History</h2>
 	</div>
@@ -36,30 +36,30 @@
 				<th st-sort="timer" st-skip-natural="true" class="clickable">Response Time</th>
 				<th>Actions</th>
 			</tr>
-			<tr data-ng-show="numberOfEntries > 10">
+			<tr ng-show="numberOfEntries > 10">
 				<th colspan="5"><input st-search="request" class="form-control" placeholder="Filter by Request URL..." type="text"/></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr data-ng-hide="displayedCollection != null">
+			<tr ng-hide="displayedCollection != null">
 				<td colspan="5" class="text-center"><span class="glyphicon glyphicon-refresh spinning"></span> Loading...</td>
 			</tr>
-			<tr data-ng-show="displayedCollection.length === 0">
+			<tr ng-show="displayedCollection.length === 0">
 				<td colspan="5">There are no entries to display.</td>
 			</tr>
-			<tr data-ng-repeat="row in displayedCollection" class="small">
+			<tr ng-repeat="row in displayedCollection" class="small">
 				<td>{{row.date | date:dateFormat}}</td>
 				<td class="break-row">{{row.request}}</td>
 				<td>{{row.method | uppercase}}</td>
 				<td>{{row.timer / 1000}} seconds</td>
 				<td>
-					<button type="button" data-ng-click="apply(row)" class="btn btn-xs btn-success" title="Rerun Request">
+					<button type="button" ng-click="apply(row)" class="btn btn-xs btn-success" title="Rerun Request">
 						<span class="glyphicon glyphicon-play"></span>
 					</button>
-					<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry">
+					<button type="button" ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete this entry">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
-					<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details">
+					<button type="button" ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</button>
 				</td>

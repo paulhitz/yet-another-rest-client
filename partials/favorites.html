@@ -1,5 +1,5 @@
 
-<section class="panel panel-primary" data-ng-controller="ManageFavoritesCtrl">
+<section class="panel panel-primary" ng-controller="ManageFavoritesCtrl">
 	<div class="panel-heading">
 		<h2 class="panel-title">Manage Favorites</h2>
 	</div>
@@ -35,27 +35,27 @@
 				<th st-sort="method" st-skip-natural="true" class="clickable">Type</th>
 				<th>Actions</th>
 			</tr>
-			<tr data-ng-show="rowCollection.length > 10">
+			<tr ng-show="rowCollection.length > 10">
 				<th colspan="5"><input st-search="url" class="form-control" placeholder="Filter by Request URL..." type="text"/></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr data-ng-show="displayedCollection.length === 0">
+			<tr ng-show="displayedCollection.length === 0">
 				<td colspan="5">There are no entries to display.</td>
 			</tr>
-			<tr data-ng-repeat="row in displayedCollection" class="small">
+			<tr ng-repeat="row in displayedCollection" class="small">
 				<td>{{row.date | date:dateFormat}}</td>
 				<td>{{row.name}}</td>
 				<td class="break-row">{{row.url}}</td>
 				<td>{{row.method | uppercase}}</td>
 				<td>
-					<button type="button" data-ng-click="apply(row.id)" class="btn btn-xs btn-success" title="Apply">
+					<button type="button" ng-click="apply(row.id)" class="btn btn-xs btn-success" title="Apply">
 						<span class="glyphicon glyphicon-play"></span>
 					</button>
-					<button type="button" data-ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete">
+					<button type="button" ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
-					<button type="button" data-ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details">
+					<button type="button" ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</button>
 				</td>

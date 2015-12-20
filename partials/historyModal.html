@@ -1,11 +1,11 @@
 
 <section id="history-modal" class="modal-tabs">
 	<div class="modal-header">
-		<button class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<button class="close" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
 		<h4 class="modal-title">More Details</h4>
 	</div>
 	<div class="modal-body">
-		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<tabset justified="true">
 			<tab heading="Request">
 				<dl>
@@ -55,7 +55,7 @@
 		</tabset>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-default" data-ng-click="apply()">
+		<button type="button" class="btn btn-default" ng-click="apply()">
 			<span class="glyphicon glyphicon-play"></span> Rerun Request
 		</button>
 		<div class="btn-group" dropdown is-open="status.isopen">
@@ -63,10 +63,10 @@
 				<span class="glyphicon glyphicon-save"></span> Copy <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu">
-				<li><a href="#" data-ng-click="copy(history.request)">Copy Request</a></li>
-				<li><a href="#" data-ng-click="copy(history.response)" data-ng-show="history.response">Copy Response</a></li>
+				<li><a href="" ng-click="copy(history.request)">Copy Request</a></li>
+				<li><a href="" ng-click="copy(history.response)" ng-show="history.response">Copy Response</a></li>
 			</ul>
 		</div>
-		<button class="btn btn-default" data-ng-click="cancel()">Close</button>
+		<button class="btn btn-default" ng-click="cancel()">Close</button>
 	</div>
 </section>
