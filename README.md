@@ -31,8 +31,9 @@ It has a number of powerful features...
 
 
 ## Installation
-The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store.
-![Install](https://raw.githubusercontent.com/paulhitz/yet-another-rest-client/gh-pages/img/ChromeWebStore_BadgeWBorder_v2_206x58.png)
+The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store...
+
+[![Install](img/ChromeWebStore_Badge_v2_496x150.png)](https://chrome.google.com/webstore/detail/yarc-yet-another-rest-cli/ehafadccdcdedbhcbddihehiodgcddpl)
 
 
 ## Tech
