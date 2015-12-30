@@ -1,13 +1,15 @@
 /**
  * A controller responsible for handling the Request Headers.
+ *
+ * TODO This entire controller is a complete mess. It needs to be refactored.
  */
-clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, utils, GENERAL_CONSTANTS) {
 
 	//The headers that should be added to subsequent requests.
-	$scope.headers = {};
+	$scope.headers = headerService.get();
 
 	//Display example headers and any saved custom headers.
-	headersHelper.displayCustomAndExampleHeaders($scope);
+	headerService.displayCustomAndExampleHeaders($scope);
 
 	//Add the selected custom header to the headers for the next request.
 	$scope.useCustomHeader = function(header) {
@@ -22,7 +24,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 
 	//Remove the selected header from the list of headers.
 	$scope.removeHeader = function(header) {
-		delete $scope.headers[header.id]
+		delete $scope.headers[header.id];
 	};
 
 	//Delete the selected custom header.
@@ -41,8 +43,8 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 
 	//Identifies if the supplied object is empty.
 	$scope.isEmptyObject = function(object) {
-		return angular.equals({}, object);
-	}
+		return utils.isEmptyObject(object);
+	};
 
 	//Open a modal dialog to allow a new header to be entered or an existing header to be edited.
 	$scope.openHeaderModal = function(row) {
@@ -78,8 +80,8 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headersHelper, GENE
 /**
  * Controller for Adding or Editing a Request Header.
  */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, headers, 
-		customHeaders, selectedHeader, headersHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, headers,
+		customHeaders, selectedHeader, headerService, GENERAL_CONSTANTS) {
 
 	//Default to not adding to favorites.
 	$scope.favorite = false;
@@ -109,7 +111,7 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 			var id = Date.now();
 			if (currentHeader && currentHeader.id) {
 				//Editing a standard header.
-				id = currentHeader.id
+				id = currentHeader.id;
 			}
 			newHeader = {
 				id: id,
@@ -126,7 +128,7 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 			saveCopy.id = Date.now();
 
 			//Persist the custom header.
-			saveCopy = headersHelper.prepareHeaderForDisplay(saveCopy, "Custom");
+			saveCopy = headerService.prepareHeaderForDisplay(saveCopy, "Custom");
 			var keyValue = {};
 			keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + saveCopy.id] = saveCopy;
 			chrome.storage.sync.set(keyValue);
@@ -141,66 +143,5 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
-	};
-});
-
-
-/**
- * Various helper functions for the Headers functionality.
- */
-clientApp.service('headersHelper', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS) {
-	var helper = this;
-
-	/**
-	 * Add the specified group name to each header object and generate a label used to display them.
-	 */
-	helper.prepareHeadersForDisplay = function(headers, group) {
-		for (var header of headers) {
-			helper.prepareHeaderForDisplay(header, group);
-		}
-		return headers;
-	};
-
-	/**
-	 * Add the specified group name to the specified header object and generate a label used to display them.
-	 */
-	helper.prepareHeaderForDisplay = function(header, group) {
-		header['group'] = group;
-		header['label'] = header.name + ": " + header.value;
-		return header;
-	};
-
-	/**
-	 * Display a combined list of example headers and any saved custom headers.
-	 */
-	helper.displayCustomAndExampleHeaders = function($scope) {
-
-		//Load the saved custom request headers from Chrome Storage.
-		chrome.storage.sync.get(null, function (objects) {
-			//Add each valid custom header object to the array.
-			var savedHeaders = [];
-			for (var key in objects) {
-				if (helper.isHeaderKey(key)) {
-					savedHeaders.push(objects[key]);
-				}
-			}
-
-			//Prepare the headers for display.
-			savedHeaders = helper.prepareHeadersForDisplay(savedHeaders, "Custom");
-			var exampleHeaders = helper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples")
-
-			//Merge the custom headers and example headers.
-			$scope.customHeaders = savedHeaders.concat(exampleHeaders);
-			$scope.selectedHeader = $scope.customHeaders[0];
-		});
-	};
-
-	/**
-	 * Ensure that the specified key is in the correct format for a key used to store header objects.
-	 */
-	helper.isHeaderKey = function(key) {
-		if (key.indexOf(GENERAL_CONSTANTS.HEADER_KEY_FORMAT) > -1) {
-			return true;
-		}
 	};
 });

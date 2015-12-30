@@ -1,0 +1,26 @@
+
+<form class="form-horizontal">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<h4 class="modal-title">Import Favorites</h4>
+	</div>
+	<div class="modal-body">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<div class="panel-body">
+			<div class="form-group">
+				<label for="inputFile">Select Import File:</label>
+				<div class="input-group">
+					<span class="input-group-btn">
+						<file-field ng-model="uploadFile" class="btn btn-primary" id="inputFile" accept=".json">Browse…</file-field>
+					</span>
+					<input type="text" class="form-control" value="{{uploadFile.name}}" placeholder="Example: favorites.json" readonly>
+				</div>
+				<p class="help-block">Select a JSON file to import the contents into your favorites.</p>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" ng-click="ok()" ng-disabled="!uploadFile.name">Import</button>
+		<button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+	</div>
+</form>

@@ -1,7 +1,7 @@
 
 <form class="form-horizontal">
 	<div class="modal-header">
-		<button type="button" class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<button type="button" class="close" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
 		<h4 class="modal-title">Basic Authorization</h4>
 	</div>
 	<div class="modal-body">
@@ -9,19 +9,19 @@
 			<div class="form-group">
 				<label for="userName" class="col-sm-2 control-label">Username:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="userName" placeholder="Username" data-ng-model="auth.name" autofocus>
+					<input type="text" class="form-control" id="userName" placeholder="Username" ng-model="auth.name" autofocus>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="password" class="col-sm-2 control-label">Password:</label>
 				<div class="col-sm-10">
-					<input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="auth.password">
+					<input type="password" class="form-control" id="password" placeholder="Password" ng-model="auth.password">
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" data-ng-click="ok()" data-ng-disabled="!auth.name || !auth.password">Save</button>
-		<button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>
+		<button type="submit" class="btn btn-primary" ng-click="ok()" ng-disabled="!auth.name || !auth.password">Save</button>
+		<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
 	</div>
 </form>

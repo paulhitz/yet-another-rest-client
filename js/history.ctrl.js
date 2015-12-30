@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the Request History.
  */
-clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, historyHelper, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.numberOfEntries = 0;
 
@@ -51,6 +51,14 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 		}
 	};
 
+	//Populate the form with the request details of the specified row.
+	$scope.apply = function(row) {
+		$rootScope.$broadcast('applyFavorite', {
+			'url': row.request, 'method': row.method,
+			'payload': row.payload, 'headers': historyHelper.convertRequestHeaders(row.headers)});
+		$rootScope.loadTab('main');
+	};
+
 	//Open a modal dialog to view more details about the selected item.
 	$scope.openRowModal = function(row) {
 		var modalInstance = $modal.open({
@@ -64,11 +72,18 @@ clientApp.controller('HistoryCtrl', function($scope, $modal, historyHelper, GENE
 				}
 			}
 		});
+
+		//Apply the selected request.
+		modalInstance.result.then(function() {
+			$scope.apply(row);
+		});
 	};
 });
 
 /**
  * Various helper functions for the History functionality.
+ *
+ * TODO This service should handle more of the business logic. Including accessing Chrome Storage.
  */
 clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 	var helper = this;
@@ -79,19 +94,49 @@ clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
 			return true;
 		}
 	};
+
+	//Convert the Request Headers into a format that the tool can use.
+	helper.convertRequestHeaders = function(requestHeaders) {
+		var headers = {};
+		var id = Date.now();
+		for (var name in requestHeaders) {
+			id++;
+			headers[id] = {'id': id, 'name': name, 'value': requestHeaders[name]};
+		}
+		return headers;
+	};
 });
 
 /**
- * Controller for displaying more details about a specific history record.
+ * Modal controller for displaying more details about a specific history record.
  */
-clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, utils, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
-	history.response = JSON.stringify(history.response, null, GENERAL_CONSTANTS.INDENTATION_LEVEL);
 
 	//Add the history object to the scope so it can be used in the modal.
-	$scope.history = history;
+	$scope.history = angular.copy(history);
+	$scope.history.response = utils.stringify($scope.history.response);
+	$scope.history.maxSize = GENERAL_CONSTANTS.MAX_OBJECT_SIZE;
+
+	//Copy the request or response to the clipboard.
+	$scope.copy = function(text) {
+		$scope.alerts = [{type: 'success', msg: "Successfully copied to the Clipboard."}];
+		utils.copyToClipboard(text);
+	};
+
+	$scope.apply = function() {
+		$modalInstance.close();
+	};
 
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
+	};
+
+	$scope.countHeaders = function(headers) {
+		var numHeaders = 0;
+		if (angular.isObject(headers)) {
+			numHeaders = Object.keys(headers).length;
+		}
+		return numHeaders;
 	};
 });

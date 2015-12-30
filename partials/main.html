@@ -1,7 +1,7 @@
 
-<div data-ng-controller="ClientAppCtrl">
+<div ng-controller="AppCtrl">
 	<article class="row clearfix">
-		<form class="col-md-12 column">
+		<form class="col-md-12 column" id="requestForm">
 			<section class="panel panel-primary">
 				<div class="panel-heading">
 					<h2 class="panel-title">Request Settings</h2>
@@ -9,24 +9,25 @@
 
 				<div class="form-horizontal panel-body" role="form">
 					<div class="form-group">
-						<label for="requestUrl" class="col-md-1 control-label">URL:</label>
+						<label for="requestUrl" class="col-md-1 control-label" accesskey="u">URL:</label>
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
 									<div class="input-group">
 										<span class="input-group-addon" title="Add to favorites.">
-											<input type="checkbox" class="glyphicon glyphicon-star-empty">
+											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openAddFavoriteModal(requestUrl)">
 										</span>
-										<input id="requestUrl" type="text" ng-model="requestUrl" typeahead="endpoint.url for endpoint in endpoints | filter:$viewValue | limitTo:8" class="form-control" placeholder="http://www.example.com" autofocus>
+										<input id="requestUrl" type="url" ng-model="requestUrl" typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
 										<div class="input-group-btn" title="Select the request method to use.">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
+											<button id="requestMethodButton" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
-												<li><a href="#" ng-click="changeRequestMethod('GET')">GET</a></li>
-												<li><a href="#" ng-click="changeRequestMethod('POST')">POST</a></li>
-												<li><a href="#" ng-click="changeRequestMethod('PUT')">PUT</a></li>
-												<li><a href="#" ng-click="changeRequestMethod('PATCH')">PATCH</a></li>
-												<li><a href="#" ng-click="changeRequestMethod('DELETE')">DELETE</a></li>
-												<li><a href="#" ng-click="changeRequestMethod('HEAD')">HEAD</a></li>
+												<li><a href="" ng-click="changeRequestMethod('GET')" ng-hide="requestMethod === 'GET'">GET</a></li>
+												<li><a href="" ng-click="changeRequestMethod('POST')" ng-hide="requestMethod === 'POST'">POST</a></li>
+												<li><a href="" ng-click="changeRequestMethod('PUT')" ng-hide="requestMethod === 'PUT'">PUT</a></li>
+												<li><a href="" ng-click="changeRequestMethod('PATCH')" ng-hide="requestMethod === 'PATCH'">PATCH</a></li>
+												<li><a href="" ng-click="changeRequestMethod('DELETE')" ng-hide="requestMethod === 'DELETE'">DELETE</a></li>
+												<li><a href="" ng-click="changeRequestMethod('HEAD')" ng-hide="requestMethod === 'HEAD'">HEAD</a></li>
+												<li><a href="" ng-click="changeRequestMethod('OPTIONS')" ng-hide="requestMethod === 'OPTIONS'">OPTIONS</a></li>
 											</ul>
 										</div>
 									</div>
@@ -35,174 +36,129 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="payload" class="col-md-1 control-label">Payload:<br><span data-ng-show="requestMethod !== 'POST' && requestMethod !== 'PUT' && requestMethod !== 'PATCH'">(Optional)</span></label>
+						<label for="payload" class="col-md-1 control-label" accesskey="p">Payload:</label>
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
-									<textarea class="form-control" rows="10" id="payload" placeholder="application/json" data-ng-model="payload"></textarea>
+									<textarea class="form-control" rows="{{payloadHeight || 5}}" id="payload" placeholder="application/json" ng-model="payload" ng-click="payloadHeight = 10" ng-blur="payloadHeight = 5"></textarea>
 								</div>
 							</div>
 						</div>
 					</div>
-
-				
-				
-				
-				
-				
-				
-				<!--
-					<div class="form-group">
-						<label for="payload" class="col-md-1 control-label">URL:</label>
-						<div class="col-md-11">
-							<div class="row">
-								<div class="col-md-12">
-								<div class="input-group">
-								
-    <ui-select ng-model="endpoint.selected" reset-search-input="false">
-    <ui-select-match placeholder="Enter URL...">{{$select.selected.url}}</ui-select-match>
-    <ui-select-choices repeat="endpoint in endpoints | filter: $select.search">
-      <div ng-bind-html="endpoint.url | highlight: $select.search"></div>
-    </ui-select-choices>
-  </ui-select>							
-								
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request Method <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#">GET</a></li>
-          <li><a href="#">POST</a></li>
-          <li><a href="#">PUT</a></li>
-        </ul>
-			</div>					
-							</div>	
-							</div>
-						</div>
-					</div>	
 				</div>
-				-->
-				
-				
+			</section>
 
-
-				</section>
-
-
-  
-
-
-  
-  
-
-			<section class="panel panel-primary" data-ng-controller="HeadersCtrl">
-				<div class="panel-heading" >
+			<section id="headers" class="panel panel-primary" ng-controller="HeadersCtrl">
+				<div class="panel-heading">
 					<h2 class="panel-title">
-						<a data-ng-click="showHeaderSection = !showHeaderSection">
+						<a href="" ng-click="showHeaderSection = !showHeaderSection">
 							Custom Headers
-							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': showHeaderSection, 'glyphicon-chevron-right': !showHeaderSection}"></i>
+							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': showHeaderSection, 'glyphicon-chevron-right': !showHeaderSection}"></i>
 						</a>
 					</h2>
 				</div>
 
-				<div id="headers" class="panel-collapse collapse" collapse="!showHeaderSection">
-					<div class="form-horizontal panel-body" role="form" data-ng-model="headers">
-					
+				<div class="panel-collapse collapse" collapse="!showHeaderSection">
+					<div class="form-horizontal panel-body" role="form" ng-model="headers">
+
 						<div class="form-group">
-							<label for="headers" class="col-md-1 control-label">Headers:</label>
+							<label for="select-header" class="col-md-1 control-label">Headers:</label>
 							<div class="col-md-9">
 								<div class="input-group">
-									<select class="form-control" id="headers" data-ng-model="selectedHeader" data-ng-options="header as header.label group by header.group for header in customHeaders"></select>
+									<select id="select-header" class="form-control" ng-model="selectedHeader" ng-options="header as header.label group by header.group for header in customHeaders"></select>
 									<div class="input-group-btn">
-										<button class="btn btn-default" type="button" data-ng-click="useCustomHeader(selectedHeader);">Add Selected Header</button>
-										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Edit/Delete Custom Headers." data-ng-disabled="selectedHeader.group === 'Examples'">
+										<button class="btn btn-default" type="button" ng-click="useCustomHeader(selectedHeader);">Add Selected Header</button>
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Edit/Delete Custom Headers." ng-disabled="selectedHeader.group === 'Examples'">
 											<span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<li><a data-ng-click="openHeaderModal(selectedHeader);">Edit Favorite</a></li>
-											<li><a data-ng-click="deleteCustomHeader(selectedHeader);">Delete Favorite</a></li>
+											<li><a ng-click="openHeaderModal(selectedHeader);">Edit Favorite</a></li>
+											<li><a ng-click="deleteCustomHeader(selectedHeader);">Delete Favorite</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2" data-ng-controller="AddServiceModalCtrl">
-								<button type="button" class="btn btn-primary full-width" data-ng-click="openHeaderModal();">Add New Header</button>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-primary full-width" ng-click="openHeaderModal();">Add New Header</button>
 							</div>
 						</div>
-						
+
 						<table class="table table-bordered">
 							<thead>
 								<tr>
 									<th>Header Name</th>
 									<th>Header Value</th>
-									<th width="100" class="text-center">Actions</th>
+									<th style="width: 100px;" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr data-ng-show="isEmptyObject(headers)">
+								<tr ng-show="isEmptyObject(headers)">
 									<td colspan="3">There are no headers to display.</td>
 								</tr>
-								<tr data-ng-repeat="row in headers">
+								<tr ng-repeat="row in headers">
 									<td>{{row.name}}</td>
 									<td class="break-row">{{row.value}}</td>
 									<td class="text-center">
-										<button type="button" data-ng-click="removeHeader(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
+										<button type="button" ng-click="removeHeader(row)" class="btn btn-xs btn-danger" title="Delete this entry.">
 											<span class="glyphicon glyphicon-remove"></span>
 										</button>
-										<button type="button" data-ng-click="openHeaderModal(row);" class="btn btn-xs btn-primary" title="Edit this entry.">
+										<button type="button" ng-click="openHeaderModal(row);" class="btn btn-xs btn-primary" title="Edit this entry.">
 											<span class="glyphicon glyphicon-edit"></span>
 										</button>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						
-						<p data-ng-hide="isEmptyObject(headers)">The above header(s) will be added to the next request.</p>
-						
+						<p ng-hide="isEmptyObject(headers)">The above header(s) will be added to the next request.</p>
 					</div>
 				</div>
 			</section>
 
-
-
-			<section class="panel panel-primary" data-ng-controller="AuthCtrl">
+			<section class="panel panel-primary" ng-controller="AuthCtrl">
 				<div class="panel-heading" >
 					<h2 class="panel-title">
-						<a data-ng-click="showAuthSection = !showAuthSection">
+						<a href="" ng-click="showAuthSection = !showAuthSection">
 							Authentication
-							<i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': showAuthSection, 'glyphicon-chevron-right': !showAuthSection}"></i>
+							<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': showAuthSection, 'glyphicon-chevron-right': !showAuthSection}"></i>
 						</a>
 					</h2>
 				</div>
 
-				<div id="authentication" class="panel-collapse collapse panel-body" collapse="!showAuthSection">
-					<p>Basic Authentication is supported. Enter a username and password and the Authorization Header will be generated and sent with the request.</p>
+				<div id="authentication" class="panel-collapse collapse" collapse="!showAuthSection">
+					<div class="panel-body">
+						<p>Basic Authentication is supported. Enter a username and password and the Authorization Header will be generated and sent with the request.</p>
 
-					<div class="form-horizontal" role="form">
-						<div class="form-group">
-							<label for="auth" class="col-md-2 control-label">Authorization:</label>
-							<div class="col-md-7">
-								<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" data-ng-model="authValue">
-							</div>
-							<div class="col-md-3"">
-								<button type="button" class="btn btn-default full-width" data-ng-click="openAuthModal();">Add Credentials</button>
+						<div class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="auth" class="col-md-2 control-label">Authorization:</label>
+								<div class="col-md-7">
+									<input type="text" class="form-control" id="auth" placeholder="Example: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" ng-model="authToken.value">
+								</div>
+								<div class="col-md-3">
+									<button type="button" class="btn btn-default full-width" ng-click="openAuthModal();">Add Credentials</button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<button type="submit" class="btn btn-success pull-right" id="submitFormButton" data-ng-click="submit();" data-ng-disabled="processing">Send Request</button>
+			<div id="request-form-buttons" class="pull-right">
+				<button type="button" class="btn btn-default" ng-click="cancel();" ng-show="processing" title="Cancel the current request">Cancel</button>
+				<button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="processing || !requestUrl" analytics-on>Send Request</button>
+			</div>
 		</form>
 	</article>
 
-	<div class="clearfix" data-ng-model="progress" data-ng-hide="displayResponse" data-ng-cloak>
+	<div class="clearfix" ng-model="progress" ng-hide="displayResponse" ng-cloak>
 		<progressbar class="progress-striped active" value="progress.value || 0">{{progress.label}}</progressbar>
 	</div>
 
-	<div class="clearfix" data-ng-cloak>
-		<alert data-ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	<div class="clearfix" ng-cloak>
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 	</div>
 
-	<div id="response" class="row clearfix" data-ng-show="displayResponse" data-ng-cloak>
+	<div id="response" class="row clearfix" ng-show="displayResponse" ng-cloak>
 		<div id="responseBody" class="col-md-12 column">
 			<section class="panel panel-info">
 				<div class="panel-heading">
@@ -210,35 +166,34 @@
 				</div>
 
 				<div class="panel-body">
-					<div class="well">
-						<strong>Request URL:</strong> <a href="{{requestUrl}}" target="_blank">{{requestUrl}}</a><br>
-						<strong>Request Method:</strong> {{requestMethod}}<br>
+					<div class="well small">
+						<strong>Request URL:</strong> <a href="{{responseRequestUrl}}" target="_blank">{{responseRequestUrl}}</a><br>
+						<strong>Request Method:</strong> {{responseRequestMethod}}<br>
 						<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
 					</div>
-					
+
 					<tabset class="json-tabs">
 						<tab heading="Response Body">
-							<div data-hljs data-source="responseBody" class="json-content"></div>
+							<div data-hljs data-source="responseBody || '\'No Response Data\''" class="json-content"></div>
+						</tab>
+						<tab heading="Response Body (RAW)">
+							<div class="json-content"><pre>{{responseBody}}</pre></div>
 						</tab>
 						<tab heading="Response Headers">
 							<div data-hljs data-source="responseHeaders" class="json-content"></div>
 						</tab>
-						<tab heading="Request Headers">
+						<tab heading="Request Details">
 							<div data-hljs data-source="requestHeaders" class="json-content"></div>
 						</tab>
 					</tabset>
 
 					<div id="copy-buttons">
-						<button type="button" class="btn btn-primary" data-ng-click="copy(requestUrl);">
+						<button type="button" class="btn btn-primary" ng-click="copy(requestUrl);">
 							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Request
 						</button>
-						<button type="button" class="btn btn-primary" data-ng-click="copy(responseBody);">
+						<button type="button" class="btn btn-primary" ng-click="copy(responseBody);" ng-disabled="!responseBody">
 							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Response
 						</button>
-						<br>
-						<span class="label label-success" data-ng-show="copyMessage">
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> {{copyMessage}}
-						</span>
 					</div>
 				</div>
 			</section>

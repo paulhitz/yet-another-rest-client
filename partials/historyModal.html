@@ -1,35 +1,72 @@
 
-<form role="form" id="history-modal">
+<section id="history-modal" class="modal-tabs">
 	<div class="modal-header">
-		<button class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<button class="close" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
 		<h4 class="modal-title">More Details</h4>
 	</div>
-	<div class="modal-body small">
-		<dl id="history">
-			<dt>Date: </dt>
-			<dd>{{history.date | date:dateFormat}}</dd>
+	<div class="modal-body">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<tabset justified="true">
+			<tab heading="Request">
+				<dl>
+					<dt>Date: </dt>
+					<dd>{{history.date | date:dateFormat}}</dd>
 
-			<dt>Request URL: </dt>
-			<dd style="word-break: break-all;">{{history.request}}</dd>
+					<dt>Request URL: </dt>
+					<dd style="word-break: break-all;">{{history.request}}</dd>
 
-			<dt>Request Method: </dt>
-			<dd>{{history.method | uppercase}}</dd>
+					<dt>Request Method: </dt>
+					<dd>{{history.method | uppercase}}</dd>
 
-			<dt>Response Time: </dt>
-			<dd>{{history.timer / 1000}} seconds</dd>
+					<dt>Response Time: </dt>
+					<dd>{{history.timer / 1000}} seconds</dd>
+				</dl>
+			</tab>
 
-			<dt data-ng-show="history.payload">Payload: </dt>
-			<dd data-ng-show="history.payload">
-				<div data-hljs data-source="history.payload" class="json-content json-content-small"></div>
-			</dd>
+			<tab heading="Payload" disable="!history.payload">
+				<div data-hljs data-source="history.payload" class="json-content small"></div>
+			</tab>
 
-			<dt>Response: </dt>
-			<dd>
-				<div data-hljs data-source="history.response" class="json-content"></div>
-			</dd>
-		</dl>
+			<tab disable="countHeaders(history.headers) == 0">
+				<tab-heading>
+					Headers <span class="badge">{{countHeaders(history.headers)}}</span>
+				</tab-heading>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(name, value) in history.headers">
+							<td class="break-row">{{name}}</td>
+							<td class="break-row">{{value}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="small"><strong>Note:</strong> An ACCEPT header is automatically added to every request.</p>
+			</tab>
+
+			<tab heading="Response">
+				<div data-hljs data-source="history.response || '\'No Response Data\''" class="json-content small" ng-hide="history.size"></div>
+				<alert type="info" ng-show="history.size">The response was too large to store. Only responses less than {{history.maxSize / 1000}} kilobytes in size will be stored. This response was approximately {{history.size / 1000}} kilobytes.</alert>
+			</tab>
+		</tabset>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-default" data-ng-click="cancel()">Close</button>
+		<button type="button" class="btn btn-default" ng-click="apply()">
+			<span class="glyphicon glyphicon-play"></span> Rerun Request
+		</button>
+		<div class="btn-group" dropdown is-open="status.isopen">
+			<button type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+				<span class="glyphicon glyphicon-save"></span> Copy <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="" ng-click="copy(history.request)">Copy Request</a></li>
+				<li><a href="" ng-click="copy(history.response)" ng-show="history.response">Copy Response</a></li>
+			</ul>
+		</div>
+		<button class="btn btn-default" ng-click="cancel()">Close</button>
 	</div>
-</form>
+</section>

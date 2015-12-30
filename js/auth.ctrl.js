@@ -1,10 +1,10 @@
 /**
  * A controller responsible for handling Basic Authorization.
  */
-clientApp.controller('AuthCtrl', function($scope, $modal) {
+clientApp.controller('AuthCtrl', function($scope, $modal, auth) {
 
 	//The Basic Authorization value to use in requests.
-	$scope.authValue = "";
+	$scope.authToken = auth.get();
 
 	//Open a modal dialog to allow the user to enter credentials.
 	$scope.openAuthModal = function() {
@@ -16,41 +16,23 @@ clientApp.controller('AuthCtrl', function($scope, $modal) {
 		});
 
 		//Update the authorization value.
-		modalInstance.result.then(function (value) {
-			$scope.authValue = value;
+		modalInstance.result.then(function(value) {
+			auth.set(value);
 		});
 	};
 });
 
-
 /**
  * Controller for handling the username and password used for Basic Authorization.
  */
-clientApp.controller('AuthModalInstanceCtrl', function ($scope, $modalInstance, authHelper) {
+clientApp.controller('AuthModalInstanceCtrl', function ($scope, $modalInstance, auth) {
 
 	$scope.ok = function() {
-		var authValue = authHelper.generateBasicAuthHeader($scope.auth.name, $scope.auth.password);
+		var authValue = auth.generateBasicAuthHeader($scope.auth.name, $scope.auth.password);
 		$modalInstance.close(authValue);
 	};
 
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
-	};
-});
-
-
-/**
- * Various helper functions for the Authorization functionality.
- */
-clientApp.service('authHelper', function() {
-	var helper = this;
-
-	/**
-	 * Generates a 'Basic Authorization' value.
-	 */
-	helper.generateBasicAuthHeader = function(name, password) {
-		var unencoded = name + ":" + password;
-		var encoded = btoa(unencoded);
-		return "Basic " + encoded;
 	};
 });
