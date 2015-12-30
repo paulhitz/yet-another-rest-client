@@ -23,7 +23,7 @@ clientApp.controller('AuthCtrl', function($scope, $modal, auth) {
 });
 
 /**
- * Controller for handling the username and password used for Basic Authorization.
+ * Simple modal controller for handling the username and password used for Basic Authorization.
  */
 clientApp.controller('AuthModalInstanceCtrl', function ($scope, $modalInstance, auth) {
 
