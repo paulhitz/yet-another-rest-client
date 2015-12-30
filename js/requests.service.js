@@ -1,7 +1,7 @@
 /**
  * Constructs the HTTP request and allows cancellation of requests.
  */
-clientApp.service('requests', function($http, $q, appHelper, auth, headerService) {
+clientApp.service('requests', function($http, $q, appHelper, auth, headers) {
 	var helper = this;
 	var canceller;
 
@@ -18,13 +18,13 @@ clientApp.service('requests', function($http, $q, appHelper, auth, headerService
 	 * Configure the HTTP call and return the promise.
 	 */
 	helper.call = function($scope) {
-		var headers = helper.addHeaders($scope.payload);
+		var requestHeaders = helper.addHeaders($scope.payload);
 		canceller = $q.defer();
 		$scope.timerStart = Date.now();
 		var promise = $http({
 			method: $scope.requestMethod,
 			url: $scope.requestUrl,
-			headers: headers,
+			headers: requestHeaders,
 			data: $scope.payload,
 			timeout: canceller.promise
 		});
@@ -35,19 +35,19 @@ clientApp.service('requests', function($http, $q, appHelper, auth, headerService
 	 * Add custom headers, auth header and payload headers.
 	 */
 	helper.addHeaders = function(payload) {
-		var headers = {};
+		var requestHeaders = {};
 
 		//Add custom headers.
-		var customHeaders = headerService.get();
+		var customHeaders = headers.get();
 		for (var key in customHeaders) {
 			var customHeader = customHeaders[key];
-			headers[customHeader.name] = customHeader.value;
+			requestHeaders[customHeader.name] = customHeader.value;
 		}
 
 		//Add Auth header (if available).
 		if (auth.get().value) {
-			headers['Authorization'] = auth.get().value;
+			requestHeaders['Authorization'] = auth.get().value;
 		}
-		return headers;
+		return requestHeaders;
 	};
 });
