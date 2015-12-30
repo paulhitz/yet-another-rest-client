@@ -30,21 +30,17 @@ It has a number of powerful features...
 * 100% Free. No strings attached.
 
 
-
-
 ## Installation
-The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store:  TODO
-
+The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store.
+![Install](https://raw.githubusercontent.com/paulhitz/yet-another-rest-client/gh-pages/img/ChromeWebStore_BadgeWBorder_v2_206x58.png)
 
 
 ## Tech
 This is a AngularJS application packaged as a Chrome extension to avoid CORS (Cross-Origin Resource Sharing) issues. Bower is used to handle dependencies.
 
 
-
 ## Site
 [Official Project Site](http://paulhitz.com/yet-another-rest-client/)
-
 
 
 ## Screenshots
