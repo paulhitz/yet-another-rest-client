@@ -5,7 +5,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, ProgressbarService,
-		favorites, $modal, headerService, auth, toaster, requests) {
+		favorites, $modal, headers, auth, toaster, requests) {
 
 	//Set up the page.
 	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
@@ -62,14 +62,14 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			$scope.requestUrl = favorite.url;
 			$scope.requestMethod = favorite.method;
 			$scope.payload = favorite.payload;
-			headerService.set(favorite.headers);
+			headers.set(favorite.headers);
 			auth.set(favorite.auth);
 			toaster.success("", "The selected favorite has been applied.");
 		} else {
 			$scope.requestUrl = args.url;
 			$scope.requestMethod = args.method;
 			$scope.payload = args.payload;
-			headerService.set(args.headers);
+			headers.set(args.headers);
 			toaster.success("", "The selected request has been applied.");
 		}
 	});
@@ -90,7 +90,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			if (name) {
 				var data = {
 					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod,
-					'payload': $scope.payload, 'headers': headerService.get(), 'auth': auth.get()
+					'payload': $scope.payload, 'headers': headers.get(), 'auth': auth.get()
 				};
 				favorites.saveFavorite(data, function() {
 					toaster.success("", "Successfully added to Favorites");

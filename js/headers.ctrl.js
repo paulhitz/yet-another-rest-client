@@ -1,13 +1,13 @@
 /**
  * A controller responsible for handling CRUD operations on custom request headers.
  */
-clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, utils, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('HeadersCtrl', function($scope, $modal, headers, utils, toaster, GENERAL_CONSTANTS) {
 
 	//The headers that should be added to subsequent requests.
-	$scope.headers = headerService.get();
+	$scope.headers = headers.get();
 
 	//Display example headers and any saved custom headers.
-	headerService.displayCustomAndExampleHeaders($scope);
+	headers.displayCustomAndExampleHeaders($scope);
 
 	//Add the selected custom header to the headers for the next request.
 	$scope.useCustomHeader = function(header) {
@@ -23,11 +23,12 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, util
 			//Remove it from the UI.
 			$scope.customHeaders.splice(index, 1);
 			$scope.selectedHeader = $scope.customHeaders[0];
-			toaster.success("", "The selected custom header has been deleted.");
 
-			//Delete the entry from Chrome Storage. //TODO this should be in the service.
-			var key = GENERAL_CONSTANTS.HEADER_KEY_FORMAT + header.id;
-			chrome.storage.sync.remove(key);
+			//Delete the entry from Chrome Storage.
+			headers.delete(header.id, function() {
+				toaster.success("", "The selected custom header has been deleted.");
+				$scope.$apply();
+			});
 		}
 	};
 
@@ -49,55 +50,46 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, util
 			backdropClass: 'modalBackdrop',
 			backdrop: 'static',
 			resolve: {
-				//Used for editing an existing header.
-				currentHeader: function() {
-					return currentHeader;
-				}
+				//Used when editing an existing header.
+				currentHeader: currentHeader
 			}
 		});
 
 		//Add the new/updated header to the UI and, if required, persist it.
-		//TODO change 'favorite' to 'persist' everywhere.
 		modalInstance.result.then(function(arr) {
 			var name = arr[0];
 			var value = arr[1];
-			var favorite = arr[2];
+			var persist = arr[2];
 			var newHeader = {name: name, value: value};
 
 			//Editing a persisted custom header.
 			if (currentHeader && currentHeader.group) {
 				//Ensure the updated custom header is persisted.
-				favorite = true;
-				newHeader[id] = currentHeader.id;
+				persist = true;
+				newHeader['id'] = currentHeader.id;
 
-				//Remove the older version from the UI.
+				//Remove the older version from the dropdown.
 				var index = $scope.customHeaders.indexOf(currentHeader);
 				$scope.customHeaders.splice(index, 1);
 			} else {
 				//Adding a new custom header or editing an existing (non-persisted) header.
 				var id = Date.now();
 				if (currentHeader && currentHeader.id) {
-					//This is an edit operation.
 					id = currentHeader.id;
 				}
-				newHeader[id] = id;
+				newHeader['id'] = id;
 
 				//Update the main UI.
 				$scope.headers[id] = newHeader;
 			}
 
-			if (favorite) {
-				var saveCopy = angular.copy(newHeader);
-				saveCopy.id = Date.now(); //TODO what if it's an existing persisted header? BUG
-
-				//Persist the custom header. TODO add to service.
-				saveCopy = headerService.prepareHeaderForDisplay(saveCopy, "Custom");
-				var keyValue = {};
-				keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + saveCopy.id] = saveCopy;
-				chrome.storage.sync.set(keyValue);
+			if (persist) {
+				//Persist the custom header.
+				var copy = headers.prepareHeaderForDisplay(angular.copy(newHeader), "Custom");
+				headers.save(copy);
 
 				//Update the dropdown.
-				$scope.customHeaders.unshift(saveCopy);
+				$scope.customHeaders.unshift(copy);
 				$scope.selectedHeader = $scope.customHeaders[0];
 			}
 		});
@@ -110,8 +102,8 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, util
  */
 clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader) {
 
-	//Default to not adding to favorites.
-	$scope.favorite = false;
+	//Default to not persisting.
+	$scope.persist = false;
 
 	//Check if this is an edit operation. Add the current values to the modal if it is.
 	if (currentHeader) {
@@ -119,9 +111,9 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 		$scope.header = angular.copy(currentHeader);
 	}
 
-	//Return the header name, header value and favorite flag.
+	//Return the header name, header value and persist flag.
 	$scope.ok = function() {
-		$modalInstance.close([$scope.header.name, $scope.header.value, $scope.favorite]);
+		$modalInstance.close([$scope.header.name, $scope.header.value, $scope.persist]);
 	};
 
 	$scope.cancel = function() {
