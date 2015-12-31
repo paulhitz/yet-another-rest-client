@@ -21,10 +21,6 @@ clientApp.constant('EXAMPLE_HEADERS', [ {
 		name : "Accept",
 		value : "application/json"
 	}, {
-		id : "app_id",
-		name : "ApplicationId",
-		value : "36"
-	}, {
 		id : "auth",
 		name : "Authorization",
 		value : "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=="

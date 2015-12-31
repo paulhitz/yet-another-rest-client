@@ -54,7 +54,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		}
 	});
 
-	//Listen for an event indicating that the specified favorite should be applied.
+	//Listen for an event indicating that the specified favorite (or a previous request) should be applied.
 	$scope.$on("applyFavorite", function(event, args) {
 		//Populate the form...
 		if (angular.isNumber(args)) {
@@ -70,6 +70,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			$scope.requestMethod = args.method;
 			$scope.payload = args.payload;
 			headers.set(args.headers);
+			auth.set("");
 			toaster.success("", "The selected request has been applied.");
 		}
 	});
@@ -91,7 +92,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			if (name) {
 				var data = {
 					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod,
-					'payload': $scope.payload, 'headers': headers.get(), 'auth': auth.get()
+					'payload': $scope.payload, 'headers': angular.copy(headers.get()), 'auth': angular.copy(auth.get())
 				};
 				favorites.saveFavorite(data, function() {
 					toaster.success("", "Successfully added to Favorites");
