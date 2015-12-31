@@ -277,6 +277,10 @@ footer p {
   margin: 2px;
 }
 
+footer a, footer a:hover, footer a:focus {
+    color: #555;
+}
+
 
 /* Media Queries*/
 @media (max-width: 767px) {
