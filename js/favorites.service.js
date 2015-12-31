@@ -86,7 +86,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 	/**
 	 * Delete a favorite based on ID.
 	 */
-	helper.deleteFavorite = function(id) {
+	helper.deleteFavorite = function(id, callback) {
 
 		//Delete the entry from Chrome Storage.
 		var key = GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + id;
@@ -97,6 +97,9 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 					favorites.splice(i, 1);
 					break;
 				}
+			}
+			if (typeof(callback) === "function") {
+				callback();
 			}
 		});
 	};

@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the management of favorite requests.
  */
-clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $modal, favorites, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $modal, favorites, toaster, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.rowCollection = favorites.get();
 	$scope.displayedCollection = [].concat($scope.rowCollection);
@@ -11,7 +11,10 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $modal,
 		var index = $scope.rowCollection.indexOf(row);
 		if (index > -1) {
 			$scope.rowCollection.splice(index, 1);
-			favorites.deleteFavorite(row.id);
+			favorites.deleteFavorite(row.id, function() {
+				toaster.success("", "The selected favorite has been deleted.");
+				$scope.$apply();
+			});
 		}
 	};
 

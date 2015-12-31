@@ -74,13 +74,14 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		}
 	});
 
-	//Add the current URL to favorites. TODO should this be in the favorites controller?
+	//Add the current URL to favorites.
 	$scope.openAddFavoriteModal = function(url) {
 		var modalInstance = $modal.open({
 			templateUrl: 'partials/addFavoriteModal.html',
 			controller: 'AddFavoriteModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
-			backdrop: 'static'
+			backdrop: 'static',
+			keyboard: false
 		});
 
 		//Add the details to user favorites using the specified name.
@@ -98,15 +99,5 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 				});
 			}
 		});
-	};
-});
-
-
-/**
- * Simple modal controller for adding a favorite.
- */
-clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $modalInstance) {
-	$scope.ok = function(name) {
-		$modalInstance.close(name);
 	};
 });
