@@ -5,15 +5,17 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, ProgressbarService,
-		favorites, $modal, headers, auth, toaster, requests) {
+		favorites, $modal, headers, auth, toaster, requests, REQUEST_METHODS) {
 
 	//Set up the page.
 	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
 	favorites.retrieveFavorites();
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need to pass by reference?
 	$scope.alerts = [];
-	$scope.requestMethod = "GET";
+	$scope.requestMethod = REQUEST_METHODS[0];
+	$scope.requestMethods = REQUEST_METHODS;
 	$scope.changeRequestMethod = function(method) {
+		//TODO only if not blank. add custom method to array. reset input (should be its own form?).
 		$scope.requestMethod = method;
 	};
 

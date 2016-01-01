@@ -12,6 +12,10 @@ clientApp.constant('GENERAL_CONSTANTS', {
 	MAX_IMPORT_FILE_SIZE: 50000
 });
 
+/**
+ * Request Methods.
+ */
+clientApp.constant('REQUEST_METHODS', ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]);
 
 /**
  * Common request headers.

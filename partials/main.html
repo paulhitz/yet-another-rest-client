@@ -21,13 +21,8 @@
 										<div class="input-group-btn" title="Select the request method to use.">
 											<button id="requestMethodButton" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
-												<li><a href="" ng-click="changeRequestMethod('GET')" ng-hide="requestMethod === 'GET'">GET</a></li>
-												<li><a href="" ng-click="changeRequestMethod('POST')" ng-hide="requestMethod === 'POST'">POST</a></li>
-												<li><a href="" ng-click="changeRequestMethod('PUT')" ng-hide="requestMethod === 'PUT'">PUT</a></li>
-												<li><a href="" ng-click="changeRequestMethod('PATCH')" ng-hide="requestMethod === 'PATCH'">PATCH</a></li>
-												<li><a href="" ng-click="changeRequestMethod('DELETE')" ng-hide="requestMethod === 'DELETE'">DELETE</a></li>
-												<li><a href="" ng-click="changeRequestMethod('HEAD')" ng-hide="requestMethod === 'HEAD'">HEAD</a></li>
-												<li><a href="" ng-click="changeRequestMethod('OPTIONS')" ng-hide="requestMethod === 'OPTIONS'">OPTIONS</a></li>
+												<li ng-repeat="type in requestMethods"><a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod === type">{{type}}</a></li>
+												<li><input type="text" ng-model="customRequestMethod" placeholder="Custom" ng-blur="changeRequestMethod(customRequestMethod)" style="margin: 0 20px; max-width: 118px; border-width: 0px;" title="Enter a Custom request method"></li>
 											</ul>
 										</div>
 									</div>
