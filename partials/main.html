@@ -18,11 +18,16 @@
 											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openAddFavoriteModal(requestUrl)">
 										</span>
 										<input id="requestUrl" type="url" ng-model="requestUrl" typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
-										<div class="input-group-btn" title="Select the request method to use.">
-											<button id="requestMethodButton" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
+										<div class="input-group-btn" title="Select the request method to use." dropdown auto-close="outsideClick" is-open="requestMethodDropdown.isopen">
+											<button id="requestMethodButton" type="button" class="btn btn-default" dropdown-toggle>{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
-												<li ng-repeat="type in requestMethods"><a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod === type">{{type}}</a></li>
-												<li><input type="text" ng-model="customRequestMethod" placeholder="Custom" ng-blur="changeRequestMethod(customRequestMethod)" style="margin: 0 20px; max-width: 118px; border-width: 0px;" title="Enter a Custom request method"></li>
+												<li ng-repeat="type in requestMethods">
+													<a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod === type">{{type}}</a>
+												</li>
+												<li>
+													<input type="text" placeholder="Custom" form="" ng-model="customRequestMethod" ng-keyup="$event.keyCode == 13 && changeRequestMethod(customRequestMethod)" title="Enter a custom request method">
+													<span class="glyphicon glyphicon-menu-right clickable" ng-click="changeRequestMethod(customRequestMethod)" title="Apply custom request method"></span>
+												</li>
 											</ul>
 										</div>
 									</div>

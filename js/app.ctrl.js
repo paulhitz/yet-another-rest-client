@@ -15,8 +15,14 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 	$scope.requestMethod = REQUEST_METHODS[0];
 	$scope.requestMethods = REQUEST_METHODS;
 	$scope.changeRequestMethod = function(method) {
-		//TODO only if not blank. add custom method to array. reset input (should be its own form?).
-		$scope.requestMethod = method;
+		if (method) {
+			if ($scope.requestMethods.indexOf(method) == -1) {
+					$scope.requestMethods.push(method);
+			}
+			$scope.customRequestMethod = "";
+			$scope.requestMethod = method;
+			$scope.requestMethodDropdown.isopen = false;
+		}
 	};
 
 	//Submit the Service Request.
