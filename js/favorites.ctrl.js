@@ -69,3 +69,13 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 		$modalInstance.dismiss('cancel');
 	};
 });
+
+
+/**
+ * Simple modal controller for adding a favorite.
+ */
+clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $modalInstance) {
+	$scope.ok = function(name) {
+		$modalInstance.close(name);
+	};
+});

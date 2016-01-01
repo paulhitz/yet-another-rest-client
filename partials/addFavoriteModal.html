@@ -1,7 +1,7 @@
 
 <form class="form-horizontal" id="add-favorite-modal">
 	<div class="modal-header">
-		<button type="button" class="close" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<button type="button" class="close" ng-click="ok()"><span class="glyphicon glyphicon-remove"></span></button>
 		<h4 class="modal-title">Add Favorite</h4>
 	</div>
 	<div class="modal-body">
@@ -10,14 +10,14 @@
 			<div class="form-group">
 				<label for="name" class="col-sm-2 control-label">Name:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="name" placeholder="Example: Auth Service (QA)" data-ng-model="name" maxlength="50" autofocus>
+					<input type="text" class="form-control" id="name" placeholder="Example: Auth Service (QA)" ng-model="name" maxlength="50" autofocus>
 					<p class="help-block">Enter a name for the new favorite.</p>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" data-ng-click="ok(name)" data-ng-disabled="!name">Add</button>
-		<button class="btn btn-default" data-ng-click="ok()">Cancel</button>
+		<button type="submit" class="btn btn-primary" ng-click="ok(name)" ng-disabled="!name">Add</button>
+		<button class="btn btn-default" ng-click="ok()">Cancel</button>
 	</div>
 </form>

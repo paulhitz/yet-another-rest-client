@@ -1,30 +1,19 @@
 /**
- * A controller responsible for handling the Request Headers.
- *
- * TODO This entire controller is a complete mess. It needs to be refactored.
+ * A controller responsible for handling CRUD operations on custom request headers.
  */
-clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, utils, GENERAL_CONSTANTS) {
+clientApp.controller('HeadersCtrl', function($scope, $modal, headers, utils, toaster, GENERAL_CONSTANTS) {
 
 	//The headers that should be added to subsequent requests.
-	$scope.headers = headerService.get();
+	$scope.headers = headers.get();
 
 	//Display example headers and any saved custom headers.
-	headerService.displayCustomAndExampleHeaders($scope);
+	headers.displayCustomAndExampleHeaders($scope);
 
 	//Add the selected custom header to the headers for the next request.
 	$scope.useCustomHeader = function(header) {
-		//TODO possible issue with header value being the wrong selection.
-		//Copy the header and change the ID so it can be manipulated independently.
-		var headerCopy = angular.copy(header);
-		var id = Date.now();
-		headerCopy.id = id;
-		delete headerCopy.group;
+		//Don't use the custom header directly so it can still be manipulated independently.
+		var headerCopy = {id: Date.now(), name: header.name, value: header.value};
 		$scope.headers[headerCopy.id] = headerCopy;
-	};
-
-	//Remove the selected header from the list of headers.
-	$scope.removeHeader = function(header) {
-		delete $scope.headers[header.id];
 	};
 
 	//Delete the selected custom header.
@@ -36,9 +25,16 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, util
 			$scope.selectedHeader = $scope.customHeaders[0];
 
 			//Delete the entry from Chrome Storage.
-			var key = GENERAL_CONSTANTS.HEADER_KEY_FORMAT + header.id;
-			chrome.storage.sync.remove(key);
+			headers.delete(header.id, function() {
+				toaster.success("", "The selected custom header has been deleted.");
+				$scope.$apply();
+			});
 		}
+	};
+
+	//Remove the selected header from the list of headers.
+	$scope.removeCustomHeader = function(header) {
+		delete $scope.headers[header.id];
 	};
 
 	//Identifies if the supplied object is empty.
@@ -47,30 +43,54 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, util
 	};
 
 	//Open a modal dialog to allow a new header to be entered or an existing header to be edited.
-	$scope.openHeaderModal = function(row) {
+	$scope.openHeaderModal = function(currentHeader) {
 		var modalInstance = $modal.open({
 			templateUrl: 'partials/headersModal.html',
 			controller: 'HeaderModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
 			backdrop: 'static',
 			resolve: {
-				//Used for editing an existing header.
-				currentHeader: function() {
-					if (typeof row !== 'undefined' && !row.group) {
-						//Not a custom header so use a copy.
-						row = angular.copy(row);
-					}
-					return row;
-				},
-				headers: function() {
-					return $scope.headers;
-				},
-				customHeaders: function() {
-					return $scope.customHeaders;
-				},
-				selectedHeader: function() {
-					return $scope.selectedHeader;
+				//Used when editing an existing header.
+				currentHeader: currentHeader
+			}
+		});
+
+		//Add the new/updated header to the UI and, if required, persist it.
+		modalInstance.result.then(function(arr) {
+			var name = arr[0];
+			var value = arr[1];
+			var persist = arr[2];
+			var newHeader = {name: name, value: value};
+
+			//Editing a persisted custom header.
+			if (currentHeader && currentHeader.group) {
+				//Ensure the updated custom header is persisted.
+				persist = true;
+				newHeader['id'] = currentHeader.id;
+
+				//Remove the older version from the dropdown.
+				var index = $scope.customHeaders.indexOf(currentHeader);
+				$scope.customHeaders.splice(index, 1);
+			} else {
+				//Adding a new custom header or editing an existing (non-persisted) header.
+				var id = Date.now();
+				if (currentHeader && currentHeader.id) {
+					id = currentHeader.id;
 				}
+				newHeader['id'] = id;
+
+				//Update the main UI.
+				$scope.headers[id] = newHeader;
+			}
+
+			if (persist) {
+				//Persist the custom header.
+				var copy = headers.prepareHeaderForDisplay(angular.copy(newHeader), "Custom");
+				headers.save(copy);
+
+				//Update the dropdown.
+				$scope.customHeaders.unshift(copy);
+				$scope.selectedHeader = $scope.customHeaders[0];
 			}
 		});
 	};
@@ -78,67 +98,22 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headerService, util
 
 
 /**
- * Controller for Adding or Editing a Request Header.
+ * Simple modal controller for Adding or Editing a custom request Header.
  */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, headers,
-		customHeaders, selectedHeader, headerService, GENERAL_CONSTANTS) {
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader) {
 
-	//Default to not adding to favorites.
-	$scope.favorite = false;
+	//Default to not persisting.
+	$scope.persist = false;
 
-	//Check if this is an edit operation.
+	//Check if this is an edit operation. Add the current values to the modal if it is.
 	if (currentHeader) {
-		//Add the existing header object to the scope so it can be used in the modal.
-		$scope.header = currentHeader;
+		//Use a copy to break the data binding. Otherwise the UI is updated as the user types.
+		$scope.header = angular.copy(currentHeader);
 	}
 
-	//Add the header to the main UI and, if required, persist it.
+	//Return the header name, header value and persist flag.
 	$scope.ok = function() {
-
-		//The object that will contain the new or updated header.
-		var newHeader = {};
-
-		//Editing a custom header.
-		if (currentHeader && currentHeader.group) {
-			//Ensure the updated custom header is persisted.
-			$scope.favorite = true;
-			newHeader = currentHeader;
-
-			//Remove the older version from the UI.
-			var index = customHeaders.indexOf(currentHeader);
-			customHeaders.splice(index, 1);
-		} else {
-			var id = Date.now();
-			if (currentHeader && currentHeader.id) {
-				//Editing a standard header.
-				id = currentHeader.id;
-			}
-			newHeader = {
-				id: id,
-				name: $scope.header.name,
-				value: $scope.header.value
-			};
-
-			//Add to the main UI.
-			headers[id] = newHeader;
-		}
-
-		if ($scope.favorite) {
-			var saveCopy = angular.copy(newHeader);
-			saveCopy.id = Date.now();
-
-			//Persist the custom header.
-			saveCopy = headerService.prepareHeaderForDisplay(saveCopy, "Custom");
-			var keyValue = {};
-			keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + saveCopy.id] = saveCopy;
-			chrome.storage.sync.set(keyValue);
-
-			//Update the dropdown.
-			//TODO Some issues here. E.g. When editing a custom header, we'll get an empty selection in the dropdown.
-			customHeaders.unshift(saveCopy);
-			selectedHeader = customHeaders[0];
-		}
-		$modalInstance.close();
+		$modalInstance.close([$scope.header.name, $scope.header.value, $scope.persist]);
 	};
 
 	$scope.cancel = function() {

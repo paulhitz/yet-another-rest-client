@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the Request History.
  */
-clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, historyHelper, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history, toaster, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.numberOfEntries = 0;
 
@@ -11,23 +11,9 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 		$scope.loadData();
 	});
 
-	//Get the data from chrome storage.
+	//Retrieve all previous requests.
 	$scope.loadData = function() {
-		chrome.storage.local.get(null, function (history) {
-			//Add each history object to an array.
-			var values = [];
-			for (var key in history) {
-				var entry = history[key];
-				if (historyHelper.isHistoryKey(key)) {
-					//Add the key to the object so we can identify it later.
-					entry['key'] = key;
-
-					//Fix up the date format to enable simpler sorting and formatting.
-					entry['date'] = new Date(entry['date']);
-					values.push(entry);
-				}
-			}
-
+		history.get(function(values) {
 			//Update the UI.
 			$scope.numberOfEntries = values.length;
 			$scope.rowCollection = values;
@@ -44,10 +30,11 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 			$scope.rowCollection.splice(index, 1);
 			$scope.numberOfEntries = $scope.rowCollection.length;
 
-			//Delete the entry from Chrome Storage.
-			if (typeof chrome !== 'undefined') {
-				chrome.storage.local.remove(row.key);
-			}
+			//Delete the entry.
+			history.delete(row.key, function() {
+				toaster.success("", "The selected request has been deleted.");
+				$scope.$apply();
+			});
 		}
 	};
 
@@ -55,7 +42,7 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 	$scope.apply = function(row) {
 		$rootScope.$broadcast('applyFavorite', {
 			'url': row.request, 'method': row.method,
-			'payload': row.payload, 'headers': historyHelper.convertRequestHeaders(row.headers)});
+			'payload': row.payload, 'headers': history.convertRequestHeaders(row.headers)});
 		$rootScope.loadTab('main');
 	};
 
@@ -67,9 +54,7 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 			backdropClass: 'modalBackdrop',
 			backdrop: 'static',
 			resolve: {
-				history: function() {
-					return row;
-				}
+				record: row
 			}
 		});
 
@@ -80,41 +65,15 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 	};
 });
 
-/**
- * Various helper functions for the History functionality.
- *
- * TODO This service should handle more of the business logic. Including accessing Chrome Storage.
- */
-clientApp.service('historyHelper', function(GENERAL_CONSTANTS) {
-	var helper = this;
-
-	//Ensure that the specified key is in the correct format for a key used to store history objects.
-	helper.isHistoryKey = function(key) {
-		if (key.indexOf(GENERAL_CONSTANTS.HISTORY_KEY_FORMAT) > -1) {
-			return true;
-		}
-	};
-
-	//Convert the Request Headers into a format that the tool can use.
-	helper.convertRequestHeaders = function(requestHeaders) {
-		var headers = {};
-		var id = Date.now();
-		for (var name in requestHeaders) {
-			id++;
-			headers[id] = {'id': id, 'name': name, 'value': requestHeaders[name]};
-		}
-		return headers;
-	};
-});
 
 /**
- * Modal controller for displaying more details about a specific history record.
+ * Simple modal controller for displaying more details about a specific history record.
  */
-clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, history, utils, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, record, utils, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 
 	//Add the history object to the scope so it can be used in the modal.
-	$scope.history = angular.copy(history);
+	$scope.history = angular.copy(record);
 	$scope.history.response = utils.stringify($scope.history.response);
 	$scope.history.maxSize = GENERAL_CONSTANTS.MAX_OBJECT_SIZE;
 

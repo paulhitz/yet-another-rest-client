@@ -1,9 +1,7 @@
 /**
- * Various helper functions for the Headers functionality.
- *
- * TODO rename after the ctrl is cleaned up.
+ * Various helper functions for the custom request headers functionality.
  */
-clientApp.service('headerService', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS, utils) {
+clientApp.service('headers', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS, utils) {
 	var helper = this;
 	var headers = {};
 
@@ -14,6 +12,31 @@ clientApp.service('headerService', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS, 
 	helper.set = function(value) {
 		utils.emptyObject(headers);
 		angular.extend(headers, value);
+	};
+
+	/**
+	 * Add the custom header to Chrome (Sync) Storage.
+	 */
+	helper.save = function(header, callback) {
+		var keyValue = {};
+		keyValue[GENERAL_CONSTANTS.HEADER_KEY_FORMAT + header.id] = header;
+		chrome.storage.sync.set(keyValue, function() {
+			if (typeof(callback) === "function") {
+				callback();
+			}
+		});
+	};
+
+	/**
+	 * Delete a custom header from Chrome Storage based on ID.
+	 */
+	helper.delete = function(id, callback) {
+		var key = GENERAL_CONSTANTS.HEADER_KEY_FORMAT + id;
+		chrome.storage.sync.remove(key, function() {
+			if (typeof(callback) === "function") {
+				callback();
+			}
+		});
 	};
 
 	/**
