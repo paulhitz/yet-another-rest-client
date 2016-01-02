@@ -1,7 +1,7 @@
 /**
  * Various helper functions for the custom request headers functionality.
  */
-clientApp.service('headers', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS, utils) {
+clientApp.service('headers', function(GENERAL_CONSTANTS, COMMON_HEADERS, utils) {
 	var helper = this;
 	var headers = {};
 
@@ -75,7 +75,7 @@ clientApp.service('headers', function(GENERAL_CONSTANTS, EXAMPLE_HEADERS, utils)
 
 			//Prepare the headers for display.
 			savedHeaders = helper.prepareHeadersForDisplay(savedHeaders, "Custom");
-			var exampleHeaders = helper.prepareHeadersForDisplay(EXAMPLE_HEADERS, "Examples");
+			var exampleHeaders = helper.prepareHeadersForDisplay(COMMON_HEADERS.EXAMPLES, "Examples");
 
 			//Merge the custom headers and example headers.
 			$scope.customHeaders = savedHeaders.concat(exampleHeaders);

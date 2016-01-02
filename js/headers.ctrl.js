@@ -100,10 +100,13 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headers, utils, toa
 /**
  * Simple modal controller for Adding or Editing a custom request Header.
  */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader) {
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, COMMON_HEADERS) {
 
 	//Default to not persisting.
 	$scope.persist = false;
+
+	//Provide some common header names to help the user.
+	$scope.commonHeaderNames = COMMON_HEADERS.NAMES;
 
 	//Check if this is an edit operation. Add the current values to the modal if it is.
 	if (currentHeader) {

@@ -18,9 +18,12 @@ clientApp.constant('GENERAL_CONSTANTS', {
 clientApp.constant('REQUEST_METHODS', ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]);
 
 /**
- * Common request headers.
+ * Common headers used to assist the user when entering request headers.
  */
-clientApp.constant('EXAMPLE_HEADERS', [ {
+clientApp.constant('COMMON_HEADERS', {
+
+	//Some example request headers.
+	EXAMPLES: [ {
 		id : "accept",
 		name : "Accept",
 		value : "application/json"
@@ -36,5 +39,30 @@ clientApp.constant('EXAMPLE_HEADERS', [ {
 		id : "content",
 		name : "Content-Type",
 		value : "application/json"
-	} ]
-);
+	} ],
+
+	//Common header names.
+	NAMES: [
+		"Accept",
+	  "Accept-Encoding",
+	  "Accept-Language",
+	  "Authorization",
+	  "Cache-Control",
+	  "Connection",
+	  "Cookie",
+	  "Content-Length",
+	  "Content-Type",
+	  "Date",
+	  "From",
+	  "Host",
+	  "Max-Forwards",
+	  "Origin",
+	  "Pragma",
+	  "Proxy-Authorization",
+	  "Referer",
+	  "TE",
+	  "Upgrade",
+	  "Via",
+	  "Warning"
+	]
+});
