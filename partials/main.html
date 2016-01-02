@@ -18,16 +18,16 @@
 											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openAddFavoriteModal(requestUrl)">
 										</span>
 										<input id="requestUrl" type="url" ng-model="requestUrl" typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
-										<div class="input-group-btn" title="Select the request method to use.">
-											<button id="requestMethodButton" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
+										<div class="input-group-btn" title="Select the request method to use." dropdown auto-close="outsideClick" is-open="requestMethod.isopen">
+											<button id="requestMethodButton" type="button" class="btn btn-default" dropdown-toggle>{{requestMethod.selected}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
-												<li><a href="" ng-click="changeRequestMethod('GET')" ng-hide="requestMethod === 'GET'">GET</a></li>
-												<li><a href="" ng-click="changeRequestMethod('POST')" ng-hide="requestMethod === 'POST'">POST</a></li>
-												<li><a href="" ng-click="changeRequestMethod('PUT')" ng-hide="requestMethod === 'PUT'">PUT</a></li>
-												<li><a href="" ng-click="changeRequestMethod('PATCH')" ng-hide="requestMethod === 'PATCH'">PATCH</a></li>
-												<li><a href="" ng-click="changeRequestMethod('DELETE')" ng-hide="requestMethod === 'DELETE'">DELETE</a></li>
-												<li><a href="" ng-click="changeRequestMethod('HEAD')" ng-hide="requestMethod === 'HEAD'">HEAD</a></li>
-												<li><a href="" ng-click="changeRequestMethod('OPTIONS')" ng-hide="requestMethod === 'OPTIONS'">OPTIONS</a></li>
+												<li ng-repeat="type in requestMethod.methods">
+													<a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod.selected === type">{{type}}</a>
+												</li>
+												<li>
+													<input type="text" placeholder="Custom" form="" ng-model="requestMethod.custom" ng-keyup="$event.keyCode == 13 && changeRequestMethod(requestMethod.custom)" title="Enter a custom request method">
+													<span class="glyphicon glyphicon-menu-right clickable" ng-click="changeRequestMethod(requestMethod.custom)" title="Apply custom request method"></span>
+												</li>
 											</ul>
 										</div>
 									</div>

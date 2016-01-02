@@ -4,17 +4,30 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 /**
  * Main application controller. Prepares the page and submits the request.
  */
-clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, ProgressbarService,
-		favorites, $modal, headers, auth, toaster, requests) {
+clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, progressbar,
+		favorites, $modal, headers, auth, toaster, requests, REQUEST_METHODS) {
 
 	//Set up the page.
 	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
 	favorites.retrieveFavorites();
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need to pass by reference?
 	$scope.alerts = [];
-	$scope.requestMethod = "GET";
+
+	//Set up the request methods.
+	$scope.requestMethod = {
+		selected: REQUEST_METHODS[0],
+		methods: REQUEST_METHODS
+	};
 	$scope.changeRequestMethod = function(method) {
-		$scope.requestMethod = method;
+		if (method) {
+			if ($scope.requestMethod.methods.indexOf(method) == -1) {
+				//Add the custom request method to the dropdown so it can easily be re-used.
+				$scope.requestMethod.methods.push(method);
+			}
+			$scope.requestMethod.custom = "";
+			$scope.requestMethod.selected = method;
+			$scope.requestMethod.isopen = false;
+		}
 	};
 
 	//Submit the Service Request.
@@ -25,7 +38,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		$scope.processing = true;
 
 		//Send the request.
-		$scope.progress = ProgressbarService.PROGRESS_STATES.IN_PROGRESS;
+		$scope.progress = progressbar.PROGRESS_STATES.IN_PROGRESS;
 		requests.call($scope).then(function(success) {
 			appHelper.handleResponse($scope, success);
 		}, function(error) {
@@ -60,14 +73,14 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		if (angular.isNumber(args)) {
 			var favorite = favorites.findById(args);
 			$scope.requestUrl = favorite.url;
-			$scope.requestMethod = favorite.method;
+			$scope.requestMethod.selected = favorite.method;
 			$scope.payload = favorite.payload;
 			headers.set(favorite.headers);
 			auth.set(favorite.auth);
 			toaster.success("", "The selected favorite has been applied.");
 		} else {
 			$scope.requestUrl = args.url;
-			$scope.requestMethod = args.method;
+			$scope.requestMethod.selected = args.method;
 			$scope.payload = args.payload;
 			headers.set(args.headers);
 			auth.set("");
@@ -91,7 +104,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 
 			if (name) {
 				var data = {
-					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod,
+					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod.selected,
 					'payload': $scope.payload, 'headers': angular.copy(headers.get()), 'auth': angular.copy(auth.get())
 				};
 				favorites.saveFavorite(data, function() {

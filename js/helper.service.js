@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('appHelper', function(utils, ProgressbarService, GENERAL_CONSTANTS) {
+clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	/**
@@ -11,20 +11,28 @@ clientApp.service('appHelper', function(utils, ProgressbarService, GENERAL_CONST
 	helper.handleResponse = function($scope, response) {
 		$scope.timerEnd = Date.now();
 		helper.updateView($scope, response);
-		helper.storeResponseDetails($scope, response);
+		if (helper.isValidResponse(response)) {
+			helper.storeResponseDetails($scope, response);
+		}
 	};
 
 	/**
 	 * Update the UI with the data received from the service.
 	 */
 	helper.updateView = function($scope, response) {
-		$scope.progress = ProgressbarService.PROGRESS_STATES.COMPLETE;
+		$scope.progress = progressbar.PROGRESS_STATES.COMPLETE;
 		$scope.responseRequestUrl = $scope.requestUrl;
-		$scope.responseRequestMethod = $scope.requestMethod;
-		response.headers().status = response.status;
-		$scope.responseBody = utils.stringify(response.data);
-		$scope.responseHeaders = utils.stringify(response.headers());
-		$scope.requestHeaders = utils.stringify(response.config);
+		$scope.responseRequestMethod = $scope.requestMethod.selected;
+		if (helper.isValidResponse(response)) {
+			response.headers().status = response.status;
+			$scope.responseBody = utils.stringify(response.data);
+			$scope.responseHeaders = utils.stringify(response.headers());
+			$scope.requestHeaders = utils.stringify(response.config);
+		} else {
+			$scope.responseBody = "'Invalid Request/Response'";
+			$scope.responseHeaders = "";
+			$scope.requestHeaders = "";
+		}
 
 		//Show the view.
 		$scope.displayResponse = true;
@@ -35,11 +43,10 @@ clientApp.service('appHelper', function(utils, ProgressbarService, GENERAL_CONST
 	 * Persist the request/response so we have a history of them. Uses Chrome Storage.
 	 */
 	helper.storeResponseDetails = function($scope, response) {
-		//Construct the new entry.
 		var entry = {
 			date: Date(),
 			request: $scope.requestUrl,
-			method: $scope.requestMethod,
+			method: $scope.requestMethod.selected,
 			payload: $scope.payload,
 			timer: $scope.timerEnd - $scope.timerStart,
 			headers: response.config.headers
@@ -68,5 +75,12 @@ clientApp.service('appHelper', function(utils, ProgressbarService, GENERAL_CONST
 	 */
 	helper.calculateObjectSize = function(response) {
 		return sizeof(response);
+	};
+
+	/**
+	 * Check that the response is a valid object.
+	 */
+	helper.isValidResponse = function(response) {
+		return angular.isObject(response) && response.status && response.config;
 	};
 });

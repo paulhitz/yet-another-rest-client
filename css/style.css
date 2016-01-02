@@ -89,7 +89,18 @@ sup {
 }
 
 button#requestMethodButton {
-  min-width: 100px;
+  min-width: 110px;
+}
+.dropdown-menu input {
+  margin-left: 20px;
+  max-width: 60px;
+  border-width: 0;
+}
+.dropdown-menu-right {
+  min-width: 110px;
+}
+.dropdown-menu .glyphicon-menu-right {
+  font-size: smaller;
 }
 
 #request-form-buttons {
