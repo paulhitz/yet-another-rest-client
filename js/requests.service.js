@@ -22,7 +22,7 @@ clientApp.service('requests', function($http, $q, appHelper, auth, headers) {
 		canceller = $q.defer();
 		$scope.timerStart = Date.now();
 		var promise = $http({
-			method: $scope.requestMethod,
+			method: $scope.requestMethod.selected,
 			url: $scope.requestUrl,
 			headers: requestHeaders,
 			data: $scope.payload,

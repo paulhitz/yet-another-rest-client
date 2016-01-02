@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('appHelper', function(utils, ProgressbarService, GENERAL_CONSTANTS) {
+clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	/**
@@ -20,9 +20,9 @@ clientApp.service('appHelper', function(utils, ProgressbarService, GENERAL_CONST
 	 * Update the UI with the data received from the service.
 	 */
 	helper.updateView = function($scope, response) {
-		$scope.progress = ProgressbarService.PROGRESS_STATES.COMPLETE;
+		$scope.progress = progressbar.PROGRESS_STATES.COMPLETE;
 		$scope.responseRequestUrl = $scope.requestUrl;
-		$scope.responseRequestMethod = $scope.requestMethod;
+		$scope.responseRequestMethod = $scope.requestMethod.selected;
 		if (helper.isValidResponse(response)) {
 			response.headers().status = response.status;
 			$scope.responseBody = utils.stringify(response.data);
@@ -46,7 +46,7 @@ clientApp.service('appHelper', function(utils, ProgressbarService, GENERAL_CONST
 		var entry = {
 			date: Date(),
 			request: $scope.requestUrl,
-			method: $scope.requestMethod,
+			method: $scope.requestMethod.selected,
 			payload: $scope.payload,
 			timer: $scope.timerEnd - $scope.timerStart,
 			headers: response.config.headers

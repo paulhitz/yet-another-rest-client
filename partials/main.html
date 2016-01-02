@@ -18,15 +18,15 @@
 											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openAddFavoriteModal(requestUrl)">
 										</span>
 										<input id="requestUrl" type="url" ng-model="requestUrl" typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
-										<div class="input-group-btn" title="Select the request method to use." dropdown auto-close="outsideClick" is-open="requestMethodDropdown.isopen">
-											<button id="requestMethodButton" type="button" class="btn btn-default" dropdown-toggle>{{requestMethod}}&nbsp;&nbsp;<span class="caret"></span></button>
+										<div class="input-group-btn" title="Select the request method to use." dropdown auto-close="outsideClick" is-open="requestMethod.isopen">
+											<button id="requestMethodButton" type="button" class="btn btn-default" dropdown-toggle>{{requestMethod.selected}}&nbsp;&nbsp;<span class="caret"></span></button>
 											<ul class="dropdown-menu dropdown-menu-right">
-												<li ng-repeat="type in requestMethods">
-													<a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod === type">{{type}}</a>
+												<li ng-repeat="type in requestMethod.methods">
+													<a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod.selected === type">{{type}}</a>
 												</li>
 												<li>
-													<input type="text" placeholder="Custom" form="" ng-model="customRequestMethod" ng-keyup="$event.keyCode == 13 && changeRequestMethod(customRequestMethod)" title="Enter a custom request method">
-													<span class="glyphicon glyphicon-menu-right clickable" ng-click="changeRequestMethod(customRequestMethod)" title="Apply custom request method"></span>
+													<input type="text" placeholder="Custom" form="" ng-model="requestMethod.custom" ng-keyup="$event.keyCode == 13 && changeRequestMethod(requestMethod.custom)" title="Enter a custom request method">
+													<span class="glyphicon glyphicon-menu-right clickable" ng-click="changeRequestMethod(requestMethod.custom)" title="Apply custom request method"></span>
 												</li>
 											</ul>
 										</div>
