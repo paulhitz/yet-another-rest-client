@@ -26,7 +26,7 @@
 												</li>
 												<li>
 													<input type="text" placeholder="Custom" form="" ng-model="requestMethod.custom" ng-keyup="$event.keyCode == 13 && changeRequestMethod(requestMethod.custom)" title="Enter a custom request method">
-													<span class="glyphicon glyphicon-menu-right clickable" ng-click="changeRequestMethod(requestMethod.custom)" title="Apply custom request method"></span>
+													<span class="glyphicon glyphicon-plus clickable" ng-click="changeRequestMethod(requestMethod.custom)" title="Apply the specified custom request method"></span>
 												</li>
 											</ul>
 										</div>
@@ -189,10 +189,10 @@
 
 					<div id="copy-buttons">
 						<button type="button" class="btn btn-primary" ng-click="copy(requestUrl);">
-							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Request
+							<span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy Request
 						</button>
 						<button type="button" class="btn btn-primary" ng-click="copy(responseBody);" ng-disabled="!responseBody">
-							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Copy Response
+							<span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy Response
 						</button>
 					</div>
 				</div>

@@ -24,7 +24,7 @@ It has a number of powerful features...
 ###More...
 * View the request response in beautiful syntax highlighting (including JSON, XML, HTML, CSS and 130+ other languages!).
 * See how long each request took to complete.
-* Supports GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods.
+* Supports GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods. Custom request methods can also be added by the user.
 * HTTP Basic Authentication
 * Responsive Design
 * 100% Free. No strings attached.
