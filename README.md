@@ -41,7 +41,7 @@ This is a AngularJS application packaged as a Chrome extension to avoid CORS (Cr
 
 
 ## Site
-[Official Project Site](http://paulhitz.com/yet-another-rest-client/)
+[Official Project Site](http://yet-another-rest-client.com/)
 
 
 ## Screenshots
