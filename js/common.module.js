@@ -34,11 +34,13 @@ common.service('utils', function() {
 
 	/**
 	 * Stringify the input using standard spacing. Handles different input types
-	 * such as Objects (JSON) and Strings (HTML/XML).
+	 * such as Objects (JSON), Strings (HTML/XML) and Numbers.
 	 */
 	utils.stringify = function (input) {
 		var returnValue = input;
-		if (angular.isObject(input)) {
+		if (angular.isNumber(input)) {
+			returnValue = "" + input;
+		} else if (angular.isObject(input)) {
 			returnValue = angular.toJson(input, true);
 		}
 		return returnValue;

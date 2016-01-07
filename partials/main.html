@@ -174,7 +174,10 @@
 
 					<tabset class="json-tabs">
 						<tab heading="Response Body">
-							<div data-hljs data-source="responseBody || '\'No Response Data\''" class="json-content"></div>
+							<ng-switch on="!!responseBody">
+								<div data-hljs ng-switch-when="true" data-source="responseBody" class="json-content"></div>
+								<div ng-switch-default class="json-content"><pre>No Response Data</pre></div>
+							</ng-switch>
 						</tab>
 						<tab heading="Response Body (RAW)">
 							<div class="json-content"><pre>{{responseBody}}</pre></div>
