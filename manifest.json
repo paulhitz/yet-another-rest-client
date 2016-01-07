@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Y.A.R.C. (Yet Another REST Client)",
-  "version": "0.0.3",
+  "version": "0.0.4",
 
   "description": "An easy-to-use REST Client for Google Chrome.",
   "short_name": "Yet Another REST Client",
