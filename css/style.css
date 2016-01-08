@@ -55,7 +55,7 @@ sup {
   padding-top: 24px;
 }
 .navbar-default .navbar-nav li.navbar-link-container > a:hover, .navbar-default .navbar-nav li.navbar-link-container > a:focus,
-.navbar-default .navbar-nav .open > a:hover, .navbar-default .navbar-nav .open > a:focus {
+.navbar-default .navbar-nav .open > a:hover, .navbar-default .navbar-nav .open > a:focus, .navbar-default .navbar-nav > .open > a {
     color: #777;
 }
 .navbar-default ul.navbar-nav {
