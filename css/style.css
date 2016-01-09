@@ -96,6 +96,10 @@ button#requestMethodButton {
   max-width: 60px;
   border-width: 0;
 }
+
+.dropdown-menu input:hover {
+  outline: -webkit-focus-ring-color auto 5px;
+}
 .dropdown-menu-right {
   min-width: 110px;
 }
