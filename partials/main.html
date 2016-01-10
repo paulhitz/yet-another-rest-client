@@ -25,7 +25,7 @@
 													<a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod.selected === type">{{type}}</a>
 												</li>
 												<li>
-													<input type="text" placeholder="Custom" form="" ng-model="requestMethod.custom" ng-keyup="$event.keyCode == 13 && changeRequestMethod(requestMethod.custom)" title="Enter a custom request method">
+													<input type="text" placeholder="Custom" form="" ng-model="requestMethod.custom" ng-keyup="$event.keyCode == 13 && changeRequestMethod(requestMethod.custom)" title="Click here to enter a custom request method">
 													<span class="glyphicon glyphicon-plus clickable" ng-click="changeRequestMethod(requestMethod.custom)" title="Apply the specified custom request method"></span>
 												</li>
 											</ul>
