@@ -40,6 +40,10 @@ body {
   color: #000;
 }
 
+#mobile-desc {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
 
 #features, #info {
   padding-top: 60px;
