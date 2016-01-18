@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "Y.A.R.C. (Yet Another REST Client)",
-  "version": "0.0.4",
+  "name": "Yet Another REST Client",
+  "version": "0.0.5",
 
-  "description": "An easy-to-use REST Client for Google Chrome.",
-  "short_name": "Yet Another REST Client",
+  "description": "A free and easy-to-use REST Client. Use it to develop, test and debug RESTful services.",
+  "short_name": "YARC",
   "author": "Paul Hitz",
 
   "icons": { "16": "img/logo_16x16.png",
