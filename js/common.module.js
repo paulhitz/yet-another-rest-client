@@ -9,14 +9,14 @@ common.service('utils', function() {
 	/**
 	 * Replace all occurrences of the target value with the replacement value.
 	 */
-	utils.replaceAll = function (input, target, replacement) {
+	utils.replaceAll = function(input, target, replacement) {
 		return input.split(target).join(replacement);
 	};
 
 	/**
 	 * Copies the specified text to the clipboard.
 	 */
-	utils.copyToClipboard = function (text) {
+	utils.copyToClipboard = function(text) {
 		var copyFrom = $('<textarea/>');
 		copyFrom.text(text);
 		$('body').append(copyFrom);
@@ -36,7 +36,7 @@ common.service('utils', function() {
 	 * Stringify the input using standard spacing. Handles different input types
 	 * such as Objects (JSON), Strings (HTML/XML) and Numbers.
 	 */
-	utils.stringify = function (input) {
+	utils.stringify = function(input) {
 		var returnValue = input;
 		if (angular.isNumber(input)) {
 			returnValue = "" + input;
@@ -49,7 +49,7 @@ common.service('utils', function() {
 	/**
 	 * Trigger a download of the specifed data.
 	 */
-	utils.download = function (blob, fileName) {
+	utils.download = function(blob, fileName) {
 		var downloadLink = angular.element('<a></a>');
 		downloadLink.attr('href', window.URL.createObjectURL(blob));
 		downloadLink.attr('download', fileName);
@@ -59,7 +59,7 @@ common.service('utils', function() {
 	/**
 	 * Empties the supplied object without destroying the object so references will still work.
 	 */
-	utils.emptyObject = function (obj) {
+	utils.emptyObject = function(obj) {
 		for (var property in obj) {
 			delete obj[property];
 		}
@@ -68,17 +68,27 @@ common.service('utils', function() {
 	/**
 	 * Determine if a value is an object with a null prototype.
 	 */
-	utils.isBlankObject = function (obj) {
+	utils.isBlankObject = function(obj) {
 		return typeof obj === 'undefined'
 				|| (obj !== null && typeof obj === 'object' && Object.getOwnPropertyNames(obj).length === 0);
 	};
 });
 
+
 /**
  * A custom filter to convert a date to a format that Angular recognises.
  */
-common.filter("asDate", function () {
-	return function (input) {
+common.filter("asDate", function() {
+	return function(input) {
 		return new Date(input);
+	};
+});
+
+/**
+ * Returns an object that is trusted by Angular for injecting into a page.
+ */
+common.filter('asTrusted', function($sce) {
+	return function(input) {
+		return $sce.trustAsHtml(input);
 	};
 });
