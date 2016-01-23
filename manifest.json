@@ -4,7 +4,7 @@
   "version": "0.0.5",
 
   "description": "A free and easy-to-use REST Client. Use it to develop, test and debug RESTful services.",
-  "short_name": "YARC",
+  "short_name": "Yet Another REST Client",
   "author": "Paul Hitz",
 
   "icons": { "16": "img/logo_16x16.png",
