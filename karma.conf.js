@@ -82,9 +82,10 @@ module.exports = function(config) {
     concurrency: Infinity
   };
 
-  if (process.env.TRAVIS) {
-      cfg.browsers = ['Chrome_travis_ci'];
-  }
+  //Uncomment to use Chromium for the tests on TravisCI.
+  // if (process.env.TRAVIS) {
+  //     cfg.browsers = ['Chrome_travis_ci'];
+  // }
 
   config.set(cfg);
 };
