@@ -44,11 +44,10 @@ describe('common utility functions', function() {
         {object: {foo: 'bar'}}
       ];
 
-      //TODO Temp commenting out. PhantomJS doesn't like for..of
-      // for (var obj of exampleObjects) {
-      //   utils.emptyObject(obj);
-      //   expect(obj).toEqual({});
-      // }
+      for (var obj of exampleObjects) {
+        utils.emptyObject(obj);
+        expect(obj).toEqual({});
+      }
     });
 
     it('should ensure that the object reference is maintained', function() {
