@@ -13,7 +13,9 @@
     "karma-jasmine": "^0.3.6"
   },
   "devDependencies": {
-    "karma-coverage": "^0.5.3"
+    "karma-coverage": "^0.5.3",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "phantomjs": "^2.1.2"
   },
   "scripts": {
     "test": "karma start"
