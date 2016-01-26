@@ -18,7 +18,7 @@ module.exports = function(config) {
       'lib/components/angular/angular.js',
       'lib/components/angular-mocks/angular-mocks.js',
       'js/app.ctrl.js',
-      'js/common.module.js',
+      'js/*.js',
       'tests/*.spec.js'
     ],
 
@@ -64,7 +64,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeCanary'],
+    browsers: ['Firefox'],
 
     customLaunchers: {
         Chrome_travis_ci: {

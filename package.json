@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "karma-coverage": "^0.5.3",
+    "karma-firefox-launcher": "^0.1.7",
     "karma-phantomjs-launcher": "^0.2.3",
     "phantomjs": "^2.1.2"
   },
