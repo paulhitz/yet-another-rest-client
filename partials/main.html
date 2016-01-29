@@ -182,6 +182,9 @@
 						<tab heading="Response Body (RAW)">
 							<div class="json-content"><pre>{{responseBody}}</pre></div>
 						</tab>
+						<tab ng-if="responsePreviewFlag" heading="Response Preview">
+							<iframe ng-attr-srcdoc="{{responseBody | asTrusted}}" src="partials/preview.html"></iframe>
+						</tab>
 						<tab heading="Response Headers">
 							<div data-hljs data-source="responseHeaders" class="json-content"></div>
 						</tab>

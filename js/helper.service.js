@@ -28,6 +28,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 			$scope.responseBody = utils.stringify(response.data);
 			$scope.responseHeaders = utils.stringify(response.headers());
 			$scope.requestHeaders = utils.stringify(response.config);
+			$scope.responsePreviewFlag = helper.isHtml(response.headers()['content-type']);
 		} else {
 			$scope.responseBody = "'Invalid Request/Response'";
 			$scope.responseHeaders = "";
@@ -57,7 +58,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
 			entry['size'] = responseSize;
 		} else{
-			entry['response'] = response.data;
+			entry['response'] = utils.stringify(response.data);
 		}
 
 		//Persist it using Chrome Storage. Supports objects.
@@ -82,5 +83,12 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	 */
 	helper.isValidResponse = function(response) {
 		return angular.isObject(response) && response.status && response.config;
+	};
+
+	/**
+	 * Check that the response is a valid object.
+	 */
+	helper.isHtml = function(type) {
+		return type && type.indexOf(GENERAL_CONSTANTS.HTML_CONTENT_TYPE) > -1;
 	};
 });

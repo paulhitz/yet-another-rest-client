@@ -1,5 +1,6 @@
 # Yet Another REST Client
 [![Code Climate](https://codeclimate.com/github/paulhitz/yet-another-rest-client/badges/gpa.svg)](https://codeclimate.com/github/paulhitz/yet-another-rest-client)
+[![Build Status](https://travis-ci.org/paulhitz/yet-another-rest-client.svg?branch=master)](https://travis-ci.org/paulhitz/yet-another-rest-client)
 
 YARC (Yet Another REST Client) is an easy-to-use REST Client for Google Chrome.
 
