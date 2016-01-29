@@ -1,4 +1,4 @@
-describe('common utility functions', function() {
+describe('Common Utils', function() {
   beforeEach(module('common'));
 
   var utils;
