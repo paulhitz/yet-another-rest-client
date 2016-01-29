@@ -17,6 +17,16 @@ module.exports = function(config) {
     files: [
       'lib/components/angular/angular.js',
       'lib/components/angular-mocks/angular-mocks.js',
+
+      'lib/components/angular-highlightjs/build/angular-highlightjs.min.js',
+      'lib/components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+      'lib/components/angular-smart-table/dist/smart-table.min.js',
+      'lib/components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js',
+      'lib/components/angular-animate/angular-animate.min.js',
+      'lib/components/AngularJS-Toaster/toaster.min.js',
+      'lib/components/angulartics/dist/angulartics.min.js',
+      'lib/components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
+
       'js/app.ctrl.js',
       'js/*.js',
       'tests/*.spec.js'
