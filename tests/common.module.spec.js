@@ -1,9 +1,10 @@
 describe('Common Utils', function() {
   beforeEach(module('common'));
 
-  var utils;
-  beforeEach(inject(function(_utils_){
+  var utils, $filter;
+  beforeEach(inject(function(_utils_, _$filter_){
     utils = _utils_;
+    $filter = _$filter_;
   }));
 
 
@@ -93,12 +94,26 @@ describe('Common Utils', function() {
   });
 
 
+  describe('asTrusted filter', function() {
+    it('should return a trusted object', function() {
+      var asTrusted = $filter('asTrusted');
+      var input = '<!DOCTYPE html><html lang="en"><head><title>Foo</title></head><body></body></html>';
+      expect(typeof input).not.toEqual('object');
+      expect(typeof asTrusted(input)).toEqual('object');
+    });
+  });
+
+
   xdescribe('copyToClipboard', function() {
-    //No idea how to test this.
+    xit('should copy to the system clipboard', function() {
+      //No idea how to test this.
+    });
   });
 
 
   xdescribe('download', function() {
-    //No idea how to test this.
+    xit('should trigger a download', function() {
+      //No idea how to test this.
+    });
   });
 });
