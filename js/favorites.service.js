@@ -140,7 +140,7 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 			return false;
 		}
 
-		//Check it contains all manadatory fields.
+		//Check it contains all mandatory fields.
 		if (angular.isUndefined(fav.id)
 				|| angular.isUndefined(fav.name)
 				|| angular.isUndefined(fav.url)
