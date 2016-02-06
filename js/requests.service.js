@@ -18,7 +18,7 @@ clientApp.service('requests', function($http, $q, appHelper, auth, headers) {
 	 * Configure the HTTP call and return the promise.
 	 */
 	helper.call = function($scope) {
-		var requestHeaders = helper.addHeaders($scope.payload);
+		var requestHeaders = helper.addHeaders();
 		canceller = $q.defer();
 		$scope.timerStart = Date.now();
 		var promise = $http({
@@ -32,9 +32,9 @@ clientApp.service('requests', function($http, $q, appHelper, auth, headers) {
 	};
 
 	/**
-	 * Add custom headers, auth header and payload headers.
+	 * Add the custom headers and the auth header.
 	 */
-	helper.addHeaders = function(payload) {
+	helper.addHeaders = function() {
 		var requestHeaders = {};
 
 		//Add custom headers.
