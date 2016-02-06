@@ -105,15 +105,15 @@ describe('Common Utils', function() {
 
 
   xdescribe('copyToClipboard', function() {
-    xit('should copy to the system clipboard', function() {
-      //No idea how to test this.
-    });
+    // xit('should copy to the system clipboard', function() {
+    //   //No idea how to test this.
+    // });
   });
 
 
   xdescribe('download', function() {
-    xit('should trigger a download', function() {
-      //No idea how to test this.
-    });
+    // xit('should trigger a download', function() {
+    //   //No idea how to test this.
+    // });
   });
 });

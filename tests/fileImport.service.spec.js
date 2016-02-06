@@ -1,24 +1,9 @@
-describe('File Import', function() {
+describe('File Import Service', function() {
   beforeEach(module('clientApp'));
 
-  var fileImport, foo;
+  var fileImport;
   beforeEach(inject(function(_fileImport_){
     fileImport = _fileImport_;
-    // foo = {
-    //   MAX_IMPORT_FILE_SIZE: 1,
-    // };
-    // spyOn(foo, "getBar").and.returnValue(745);
-    //    foo.setBar(123);
-
-
-
-
-    // foo = jasmine.createSpy('GENERAL_CONSTANTS');
-    // foo(1);
-
-
-
-
   }));
 
 
@@ -39,18 +24,14 @@ describe('File Import', function() {
       expect(fileImport.isValidFile(invalidFile)).toBeFalsy();
     });
 
-    it('should be under a max size', function() {
-      //TODO mock GENERAL_CONSTANTS.MAX_IMPORT_FILE_SIZE to a tiny size and test
-      var largeFile = new File(["lorem ipsum dolar sumit. lorem ipsum dolar sumit. lorem ipsum dolar sumit. "],
-          "filename.json", {type: 'application/json'});
-      //expect(fileImport.isValidFile(largeFile)).toBeFalsy();
-
-      var tinyFile = new File([""], "filename.json", {type: 'application/json'});
-      expect(fileImport.isValidFile(tinyFile)).toBeTruthy();
-
-
-      //expect(bar).toEqual(1234);
-    });
+    // it('should be under a max size', function() {
+    //   var largeFile = new File(["lorem ipsum dolar sumit. lorem ipsum dolar sumit. lorem ipsum dolar sumit. "],
+    //       "filename.json", {type: 'application/json'});
+    //   expect(fileImport.isValidFile(largeFile)).toBeFalsy();
+    //
+    //   var tinyFile = new File([""], "filename.json", {type: 'application/json'});
+    //   expect(fileImport.isValidFile(tinyFile)).toBeTruthy();
+    // });
   });
 
 
@@ -61,32 +42,14 @@ describe('File Import', function() {
         [{}, {}],
         []
       ];
-      var invalid = [
-        "",
-        "foo",
-        "[]",
-        {foo: 'bar'},
-        {},
-        12345,
-        0,
-        true,
-        null,
-        undefined
-      ];
-
       for (var validInput of valid) {
         expect(fileImport.hasValidContent(validInput)).toBeTruthy();
       }
 
+      var invalid = ["", "foo", "[]", {foo: 'bar'}, {}, 12345, 0, true, null, undefined];
       for (var invalidInput of invalid) {
         expect(fileImport.hasValidContent(invalidInput)).toBeFalsy();
       }
     });
-  });
-
-
-  xdescribe('importFile', function() {
-    //TODO mock favorites and FileReader
-
   });
 });
