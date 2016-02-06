@@ -76,15 +76,6 @@ common.service('utils', function() {
 
 
 /**
- * A custom filter to convert a date to a format that Angular recognises.
- */
-common.filter("asDate", function() {
-	return function(input) {
-		return new Date(input);
-	};
-});
-
-/**
  * Returns an object that is trusted by Angular for injecting into a page.
  */
 common.filter('asTrusted', function($sce) {
