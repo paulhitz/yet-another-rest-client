@@ -12,11 +12,11 @@ describe('Headers Service', function() {
       var headersReference = headers.get();
       expect(utils.isEmptyObject(headersReference)).toBeTruthy();
 
-      headers.set({id: 0, method: "", name: "", url: ""});
+      headers.set({id: 0, name: "", value: ""});
       expect(utils.isEmptyObject(headersReference)).toBeFalsy();
       expect(headersReference.id).toBe(0);
 
-      headers.set({id: 1, method: "", name: "", url: ""});
+      headers.set({id: 1, name: "", value: ""});
       expect(headersReference.id).toBe(1);
     });
   });
