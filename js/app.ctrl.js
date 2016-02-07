@@ -8,7 +8,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		favorites, $modal, headers, auth, toaster, requests, REQUEST_METHODS) {
 
 	//Set up the page.
-	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
+	$rootScope.version = "v" + chrome.runtime.getManifest()['version'] + " (Chrome App)";
 	favorites.retrieveFavorites();
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need to pass by reference?
 	$scope.alerts = [];
