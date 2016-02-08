@@ -75,12 +75,15 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Firefox'],
+    browsers: ['Chrome'],
 
     customLaunchers: {
-        Chrome_travis_ci: {
+        Chrome_Travis_CI: {
             base: 'Chrome',
             flags: ['--no-sandbox']
+        },
+        Firefox_Travis_CI: {
+            base: 'Firefox'
         }
     },
 
@@ -93,10 +96,10 @@ module.exports = function(config) {
     concurrency: Infinity
   };
 
-  //Uncomment to use Chromium for the tests on TravisCI.
-  // if (process.env.TRAVIS) {
-  //     cfg.browsers = ['Chrome_travis_ci'];
-  // }
+  //Use Firefox for the tests on TravisCI.
+  if (process.env.TRAVIS) {
+      cfg.browsers = ['Firefox_Travis_CI'];
+  }
 
   config.set(cfg);
 };
