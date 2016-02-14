@@ -26,14 +26,10 @@ clientApp.service('fileImport', function(favorites, GENERAL_CONSTANTS) {
 	};
 
 	/**
-	 * Check that the specified content matches is in the expected format.
+	 * Check that the specified content is in the expected format.
 	 */
 	helper.hasValidContent = function(content) {
-		var valid = true;
-		if (!angular.isObject(content) || !angular.isArray(content)) {
-			valid = false;
-		}
-		return valid;
+		return angular.isObject(content) && angular.isArray(content);
 	};
 
 	/**

@@ -58,7 +58,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
 			entry['size'] = responseSize;
 		} else{
-			entry['response'] = response.data;
+			entry['response'] = utils.stringify(response.data);
 		}
 
 		//Persist it using Chrome Storage. Supports objects.
