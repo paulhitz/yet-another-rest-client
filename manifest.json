@@ -12,26 +12,17 @@
              "128": "img/logo_128x128.png"
   },
 
-  "background": {
-    "scripts": ["extension/background.js"]
+  "app": {
+    "background": {
+      "scripts": ["app/background.js"]
+    }
   },
-
-  "incognito": "split",
 
   "permissions": [
     "<all_urls>",
     "clipboardWrite",
-    "cookies",
     "storage",
-    "unlimitedStorage"
-  ],
-
-  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
-
-  "browser_action": {
-    "default_icon": {
-      "19": "img/logo_19x19.png",
-      "38": "img/logo_38x38.png"
-    }
-  }
+    "unlimitedStorage",
+    "browser"
+  ]
 }
