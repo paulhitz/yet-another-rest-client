@@ -34,6 +34,10 @@
     "angular-animate": "~1.4.8",
     "angulartics": "~0.20.2",
     "angulartics-google-analytics": "~0.1.3",
-    "chrome-platform-analytics": "~1.3.0"
+    "chrome-platform-analytics": "~1.3.0",
+    "angulartics-chrome-platform-analytics": "git+https://github.com/paulhitz/angulartics-google-analytics#master"
+  },
+  "resolutions": {
+    "bootswatch-dist": "spacelab"
   }
 }

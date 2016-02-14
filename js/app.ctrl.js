@@ -1,5 +1,5 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table',
-	'bootstrap.fileField', 'toaster', 'ngAnimate', 'angulartics', 'angulartics.google.analytics']);
+	'bootstrap.fileField', 'toaster', 'ngAnimate', 'angulartics', 'angulartics.chrome.platform.analytics']);
 
 /**
  * Main application controller. Prepares the page and submits the request.
