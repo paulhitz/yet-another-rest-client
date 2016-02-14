@@ -25,7 +25,7 @@ module.exports = function(config) {
       'lib/components/angular-animate/angular-animate.min.js',
       'lib/components/AngularJS-Toaster/toaster.min.js',
       'lib/components/angulartics/dist/angulartics.min.js',
-      'lib/components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
+      'lib/components/angulartics-chrome-platform-analytics/lib/angulartics-chrome-platform-analytics.js',
       'lib/components/sizeof/sizeof.min.js',
 
       'js/app.ctrl.js',
@@ -36,6 +36,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
+      'js/analytics.js'
     ],
 
 
