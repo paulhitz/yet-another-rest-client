@@ -12,8 +12,6 @@ describe('Authentication', function() {
         {name: "foo", password: "bar", value: "Basic Zm9vOmJhcg=="},
         {name: "Aladdin", password: "OpenSesame", value: "Basic QWxhZGRpbjpPcGVuU2VzYW1l"},
         {name: "", password: "", value: "Basic Og=="},
-        {name: "545()*()][.'@:UGJjkHJKHJ%^£$", password: "dfsdS'DFSDFD'SF564564()$%\"£!£dg",
-            value: "Basic NTQ1KCkqKCldWy4nQDpVR0pqa0hKS0hKJV6jJDpkZnNkUydERlNERkQnU0Y1NjQ1NjQoKSQlIqMho2Rn"},
         {name: "someone@example.com", password: "password1", value: "Basic c29tZW9uZUBleGFtcGxlLmNvbTpwYXNzd29yZDE="},
         {name: "L160000003", password: "10:aa835a32d3:cb0fded500", value: "Basic TDE2MDAwMDAwMzoxMDphYTgzNWEzMmQzOmNiMGZkZWQ1MDA="},
         {name: "name", value: "Basic bmFtZTp1bmRlZmluZWQ="},
