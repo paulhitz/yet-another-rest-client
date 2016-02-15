@@ -174,21 +174,27 @@
 
 					<tabset class="json-tabs">
 						<tab heading="Response Body">
-							<ng-switch on="!!responseBody">
+							<div class="json-content" ng-hide="validResponse">
+								<alert type="danger">
+									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+									<span>There was a error in the response. This is often due to a mis-configured service.</span>
+								</alert>
+							</div>
+							<ng-switch on="!!responseBody" ng-show="validResponse">
 								<div data-hljs ng-switch-when="true" data-source="responseBody" class="json-content"></div>
-								<div ng-switch-default class="json-content"><pre>No Response Data</pre></div>
+								<div ng-switch-default class="json-content"><pre>(No Response Data)</pre></div>
 							</ng-switch>
 						</tab>
-						<tab heading="Response Body (RAW)">
+						<tab heading="Response Body (RAW)" ng-show="validResponse">
 							<div class="json-content"><pre>{{responseBody}}</pre></div>
 						</tab>
-						<tab ng-if="responsePreviewFlag" heading="Response Preview">
+						<tab ng-if="responsePreviewFlag" heading="Response Preview" ng-show="validResponse">
 							<iframe ng-attr-srcdoc="{{responseBody | asTrusted}}" src="partials/preview.html"></iframe>
 						</tab>
-						<tab heading="Response Headers">
+						<tab heading="Response Headers" ng-show="validResponse">
 							<div data-hljs data-source="responseHeaders" class="json-content"></div>
 						</tab>
-						<tab heading="Request Details">
+						<tab heading="Request Details" ng-show="validResponse">
 							<div data-hljs data-source="requestHeaders" class="json-content"></div>
 						</tab>
 					</tabset>
