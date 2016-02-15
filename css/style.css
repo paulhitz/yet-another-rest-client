@@ -3,12 +3,15 @@
  */
 
 
-/* Add scrolling for Chrome App. */
+/*
+ * Fix Chrome App issues. E.g. scrolling, text selection etc.
+ */
  html {
-   overflow-y:scroll;
+   overflow-y: scroll;
  }
  body {
-   overflow: visible;;
+   overflow: visible;
+   -webkit-user-select: text;
  }
 
 
