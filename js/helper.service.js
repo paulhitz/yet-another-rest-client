@@ -10,8 +10,9 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	 */
 	helper.handleResponse = function($scope, response) {
 		$scope.timerEnd = Date.now();
+		$scope.validResponse = helper.isValidResponse(response);
 		helper.updateView($scope, response);
-		if (helper.isValidResponse(response)) {
+		if ($scope.validResponse) {
 			helper.storeResponseDetails($scope, response);
 		}
 	};
@@ -23,19 +24,20 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 		$scope.progress = progressbar.PROGRESS_STATES.COMPLETE;
 		$scope.responseRequestUrl = $scope.requestUrl;
 		$scope.responseRequestMethod = $scope.requestMethod.selected;
-		if (helper.isValidResponse(response)) {
+		if ($scope.validResponse) {
 			response.headers().status = response.status;
 			$scope.responseBody = utils.stringify(response.data);
 			$scope.responseHeaders = utils.stringify(response.headers());
 			$scope.requestHeaders = utils.stringify(response.config);
 			$scope.responsePreviewFlag = helper.isHtml(response.headers()['content-type']);
 		} else {
-			$scope.responseBody = "'Invalid Request/Response'";
+			$scope.responseBody = "";
 			$scope.responseHeaders = "";
 			$scope.requestHeaders = "";
 		}
 
 		//Show the view.
+		$scope.firstTab = {active: true};
 		$scope.displayResponse = true;
 		$scope.processing = false;
 	};
