@@ -37,6 +37,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 		}
 
 		//Show the view.
+		$scope.firstTab = {active: true};
 		$scope.displayResponse = true;
 		$scope.processing = false;
 	};
