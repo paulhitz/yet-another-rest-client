@@ -36,6 +36,8 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
+      'js/analytics.js',
+      'js/app.config.js'
     ],
 
 
