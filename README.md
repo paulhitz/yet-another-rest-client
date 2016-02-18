@@ -32,13 +32,13 @@ It has a number of powerful features...
 
 
 ## Installation
-The tool is packaged as a Chrome extension. Installation is trivial. It can be installed from the Chrome Web Store...
+The tool is packaged as a Chrome App. Installation is trivial. It can be installed from the Chrome Web Store...
 
-[![Install](img/ChromeWebStore_Badge_v2_496x150.png)](https://chrome.google.com/webstore/detail/yarc-yet-another-rest-cli/ehafadccdcdedbhcbddihehiodgcddpl)
+[![Install](img/ChromeWebStore_Badge_v2_496x150.png)](https://chrome.google.com/webstore/detail/yet-another-rest-client-c/oaelcicjdkdkcioniblhpnanpnhegoad)
 
 
 ## Tech
-This is a AngularJS application packaged as a Chrome extension to avoid CORS (Cross-Origin Resource Sharing) issues. Bower is used to handle dependencies.
+This is a AngularJS application packaged as a Chrome App to avoid CORS (Cross-Origin Resource Sharing) issues. Bower is used to handle dependencies.
 
 
 ## Site
