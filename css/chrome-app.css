@@ -1,0 +1,10 @@
+/*
+ * Fix Chrome App issues. E.g. scrolling, text selection etc.
+ */
+html {
+  overflow-y: scroll;
+}
+body {
+  overflow: visible;
+  -webkit-user-select: text;
+}
