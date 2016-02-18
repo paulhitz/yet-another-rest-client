@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Yet Another REST Client",
-  "version": "0.0.6",
+  "name": "Yet Another REST Client (Chrome App)",
+  "version": "0.0.7",
 
   "description": "A free and easy-to-use REST Client. Use it to develop, test and debug RESTful services.",
   "short_name": "Yet Another REST Client",
@@ -23,6 +23,7 @@
     "clipboardWrite",
     "storage",
     "unlimitedStorage",
-    "browser"
+    "browser",
+    "fullscreen"
   ]
 }
