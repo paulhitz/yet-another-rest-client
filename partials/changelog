@@ -1,4 +1,155 @@
-aaf3772 (HEAD, origin/master, origin/HEAD, master) Update Logos
+f407709 (HEAD, origin/develop, develop) Version Bump
+d733ff7 Merge pull request #33 from paulhitz/master
+015a7c5 Revert "Merge branch 'chrome-app' into develop"
+6aad189 Revert "resolve merge issue"
+9849604 (master) Merge pull request #32 from paulhitz/feature/handle-errors
+63ebb53 (feature/handle-errors) Automatically select the first tab after a request
+8b110c6 Improved handling of request errors
+cb1aae7 Merge pull request #31 from paulhitz/develop
+7eca689 resolve merge issue
+f83e562 Merge branch 'chrome-app' into develop
+ad7183c Add Analytics to Chrome App
+2ab515a Update Karma Conf
+d94b2c5 Suppress Browser History Errors in App
+b4840a6 Fix trivial JSHint issue
+d9372c5 Version Bump
+2825a1e Merge pull request #29 from paulhitz/develop
+a4a4747 Merge pull request #27 from paulhitz/unit-tests
+3988e8a (origin/unit-tests, unit-tests) Add Tests
+2e599d5 Add Tests
+56cd901 Add Tests
+865604c Add Tests
+c5da09b Add Tests
+9bfac67 Add Unit Tests
+d34323e Update TravisCI config
+5f5f8c2 (tag: v0.0.5) Merge pull request #28 from paulhitz/develop
+04c5f97 Add Unit Tests for Auth Service
+a8ee58f Update Karma dependencies so the main module can be tested
+f12b330 Switch to Firefox for tests
+6774902 Switch to Firefox for tests
+80b4710 Try Chrome Canary with Travis
+5d02c63 Update README.md
+35e506e Remove JS test code not supported by TravisCI browser
+838fc68 TravisCI doesn't like one of the JS files
+e6cb621 Undo PhantomJS Changes
+2a5f499 TravisCI Experimentation
+8fec80a Experiment with TravisCI Chrome Support
+4547d2e TravisCI Experimentation
+ab3316c Temporarily switch from Chrome to PhantomJS
+a141527 Add Karma config and some tests
+59b774d Fix menu dropdown display issue
+c2adf08 Update the Chrome App Icon
+6b38485 Fix Chrome App Issues
+88bc09f Scrolling for Chrome App
+e45e5e3 Enable Chrome App
+86b7759 FIX: JSON formatting in History UI
+03fcd22 Merge pull request #23 from paulhitz/feature/response-preview
+97c8c08 (feature/response-preview) Version Bump
+cf18803 Implement Preview for HTML
+19a4644 Merge pull request #21 from paulhitz/master
+b3b9625 (tag: v0.0.4) Merge pull request #20 from paulhitz/develop
+47d121e Add dev flag
+53593ca Merge pull request #19 from Ashley-Waldron/master
+3068cd3 (pr/19) Fixed issue 18 (Add custom method feature a bit confusing). Added CSS to highlight border on hover and updated the alt text.
+222b19e Minor text and colour changes
+99031c6 Version Bump
+10409d7 Update Domain URL
+8402c14 Version Bump
+8b7fe02 Fix for numeric responses breaking highlight.js
+836d15f Custom Request Methods
+88516bf Add some example header names
+89ce63f Merge pull request #15 from paulhitz/request_methods
+e698cdb (request_methods) Tidy the code
+c34555b Custom Request Method
+4d764c6 Allow custom request methods
+257195a Merge remote-tracking branch 'refs/remotes/origin/master' into request_methods
+e18f0d2 Fix some Pass by Reference Bugs
+3125609 Fix some TODOs
+660a46f Refactor Request History
+c9d6713 Update links
+7a726d1 Merge pull request #8 from paulhitz/custom_headers
+eb615aa (custom_headers) Refactor custom headers
+321c1d9 Refactor the custom headers functionality
+3107c4f Merge remote-tracking branch 'refs/remotes/origin/master' into custom_headers
+258af23 Update Readme
+7320b5a Update Text
+d4cc4e5 Clean up the code
+eed27c8 Allow cancelling of requests
+01cffa4 Add cancel button
+4edc749 Minor updates
+a14e22d Typeahead precision
+55d5cac Paypal
+a2ff61e Update Text
+ef4fae3 Update Images
+906ce7e Update description and promotional images
+65b665e Reduce info collected by Analytics
+217131f About Page
+9a9df55 Version Bump
+b66a3d7 Remove the 'optional' qualifier from payload label
+fdafbe0 Remove duplicate request method
+3bbc311 Code Climate Test
+7815a4f Merge pull request #7 from paulhitz/request_methods
+61e6b2f Additional Request Methods
+8d3fda3 Bug Fixes
+4e2e395 Minor Tweaks
+20ffea1 Large Response Flag
+ceaafa2 Re-run previous requests
+e86fd68 Handle responses with no data
+511c3eb Configure Analytics
+d3ff4d0 Update Analytics
+4acab0d Early Analytics Code
+7342b80 Responsive Design + About Page
+d8c956b Allow requests to be re-run from History UI
+b228b2d Update the Help
+d10d0c5 Add general notification area
+689f4e1 Add Basic Auth to Favorites
+a3820d1 Implement Apply Favorite Functionality
+a079647 Add headers to history
+f0bb2f9 Include Headers with Favorites
+e09daf4 Add Custom Headers to Requests
+36f590a Changes to headers to handle integration
+2e2bc8b Changes to Auth to handle integration
+181c490 Add Favorite Functionality
+be4ac2c Remove unused dependencies
+6ea21ac Manage Favorites
+f346769 Add a raw response tab
+be1872e Complete Import Favorites
+8e4e4f0 Import favorites is restricted to JSON files
+1756b09 Validate Import File
+e65abde Caught some code violations
+a723fc1 Implement Favorites Functionality
+1b57823 List Favorites in Header
+8f85be2 Import Favorites Functionality
+4378587 Export Favorites Functionality
+2f367a4 Ignore temporary files
+b76df51 Expand payload textarea on select
+8d37fb7 Update favorites count
+749f73c Add accesskeys
+04ce08f Allow copying Requests/Responses from History UI
+b59fac8 Add Logo
+6553b97 Add to Favorites Functionality
+68e36e2 Update Logo
+556e4a7 Improve the Google Analytics Code
+efe6fed Tidy
+25b7a67 Fix display issue with HTML/XML responses
+7226a02 Remove unused code
+fce47e8 Tidy
+f7bf76a Add Example Request Header
+afeaac7 Fix bug with history response
+57de1ee Merge pull request #1 from paulhitz/custom_headers
+d13e504 Complete Basic Auth Functionality
+e70011a Add Basic Auth
+026dcc3 Custom Header Defect Fixes
+2b754e3 Deleting and Editing of Custom Headers
+4800d32 Persist and Load Headers
+5ccb216 Headers UI
+83df864 Add Headers Modal
+1c06582 Headers UI
+4bf38dc Add Headers to Table
+6ca5791 Custom Headers Functionality
+a1db456 Add ChangeLog
+88ac683 Add Changelog
+aaf3772 Update Logos
 9b3ec6d Update Logos
 119f2ac Update Logos
 f2e102d Update screenshot
