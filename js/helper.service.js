@@ -19,6 +19,8 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 
 	/**
 	 * Update the UI with the data received from the service.
+	 *
+	 * TODO consider returning a response object here. E.g. $scope.response = {body: "", headers: ""};
 	 */
 	helper.updateView = function($scope, response) {
 		$scope.progress = progressbar.PROGRESS_STATES.COMPLETE;
