@@ -37,6 +37,7 @@
     "angular-mocks": "~1.4.9"
   },
   "resolutions": {
-    "angular": "~1.4.5"
+    "angular": "~1.4.5",
+    "bootswatch-dist": "spacelab"
   }
 }

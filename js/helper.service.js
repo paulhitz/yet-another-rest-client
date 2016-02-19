@@ -6,13 +6,15 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	/**
-	 * Handle the service response. Update UI, store details etc.
+	 * Handle the service response. Check it's valid, update UI, store details etc.
 	 */
 	helper.handleResponse = function($scope, response) {
 		$scope.timerEnd = Date.now();
-		$scope.validResponse = helper.isValidResponse(response);
+
+		$scope.response = {};
+		$scope.response.valid = helper.isValidResponse(response);
 		helper.updateView($scope, response);
-		if ($scope.validResponse) {
+		if ($scope.response.valid) {
 			helper.storeResponseDetails($scope, response);
 		}
 	};
@@ -22,18 +24,23 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	 */
 	helper.updateView = function($scope, response) {
 		$scope.progress = progressbar.PROGRESS_STATES.COMPLETE;
-		$scope.responseRequestUrl = $scope.requestUrl;
-		$scope.responseRequestMethod = $scope.requestMethod.selected;
-		if ($scope.validResponse) {
+		$scope.response.requestUrl = $scope.requestUrl;
+		$scope.response.requestMethod = $scope.requestMethod.selected;
+
+		if ($scope.response.valid) {
 			response.headers().status = response.status;
-			$scope.responseBody = utils.stringify(response.data);
-			$scope.responseHeaders = utils.stringify(response.headers());
-			$scope.requestHeaders = utils.stringify(response.config);
-			$scope.responsePreviewFlag = helper.isHtml(response.headers()['content-type']);
+			angular.extend($scope.response, {
+				'body': utils.stringify(response.data),
+				'headers': utils.stringify(response.headers()),
+				'requestHeaders': utils.stringify(response.config),
+				'previewFlag': helper.isHtml(response.headers()['content-type'])
+			});
 		} else {
-			$scope.responseBody = "";
-			$scope.responseHeaders = "";
-			$scope.requestHeaders = "";
+			angular.extend($scope.response, {
+				'body': "",
+				'headers': "",
+				'requestHeaders': ""
+			});
 		}
 
 		//Show the view.
