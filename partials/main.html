@@ -167,43 +167,43 @@
 
 				<div class="panel-body">
 					<div class="well small">
-						<strong>Request URL:</strong> <a href="{{responseRequestUrl}}" target="_blank">{{responseRequestUrl}}</a><br>
-						<strong>Request Method:</strong> {{responseRequestMethod}}<br>
+						<strong>Request URL:</strong> <a href="{{response.requestUrl}}" target="_blank">{{response.requestUrl}}</a><br>
+						<strong>Request Method:</strong> {{response.requestMethod}}<br>
 						<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
 					</div>
 
 					<tabset class="json-tabs">
 						<tab heading="Response Body" active="firstTab.active">
-							<div class="json-content" ng-hide="validResponse">
+							<div class="json-content" ng-hide="response.valid">
 								<alert type="danger">
 									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 									<span>There was a error in the response. This is often due to a mis-configured service.</span>
 								</alert>
 							</div>
-							<ng-switch on="!!responseBody" ng-show="validResponse">
-								<div data-hljs ng-switch-when="true" data-source="responseBody" class="json-content"></div>
+							<ng-switch on="!!response.body" ng-show="response.valid">
+								<div data-hljs ng-switch-when="true" data-source="response.body" class="json-content"></div>
 								<div ng-switch-default class="json-content"><pre>(No Response Data)</pre></div>
 							</ng-switch>
 						</tab>
-						<tab heading="Response Body (RAW)" ng-show="validResponse">
-							<div class="json-content"><pre>{{responseBody}}</pre></div>
+						<tab heading="Response Body (RAW)" ng-show="response.valid">
+							<div class="json-content"><pre>{{response.body}}</pre></div>
 						</tab>
-						<tab ng-if="responsePreviewFlag" heading="Response Preview" ng-show="validResponse">
-							<iframe ng-attr-srcdoc="{{responseBody | asTrusted}}" src="partials/preview.html"></iframe>
+						<tab ng-if="response.previewFlag" heading="Response Preview" ng-show="response.valid">
+							<iframe ng-attr-srcdoc="{{response.body | asTrusted}}" src="partials/preview.html"></iframe>
 						</tab>
-						<tab heading="Response Headers" ng-show="validResponse">
-							<div data-hljs data-source="responseHeaders" class="json-content"></div>
+						<tab heading="Response Headers" ng-show="response.valid">
+							<div data-hljs data-source="response.headers" class="json-content"></div>
 						</tab>
-						<tab heading="Request Details" ng-show="validResponse">
-							<div data-hljs data-source="requestHeaders" class="json-content"></div>
+						<tab heading="Request Details" ng-show="response.valid">
+							<div data-hljs data-source="response.requestHeaders" class="json-content"></div>
 						</tab>
 					</tabset>
 
 					<div id="copy-buttons">
-						<button type="button" class="btn btn-primary" ng-click="copy(requestUrl);" title="Copy Request URL">
+						<button type="button" class="btn btn-primary" ng-click="copy(response.requestUrl);" title="Copy Request URL">
 							<span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy Request
 						</button>
-						<button type="button" class="btn btn-primary" ng-click="copy(responseBody);" ng-disabled="!responseBody" title="Copy Response Body">
+						<button type="button" class="btn btn-primary" ng-click="copy(response.body);" ng-disabled="!response.body" title="Copy Response Body">
 							<span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy Response
 						</button>
 					</div>
