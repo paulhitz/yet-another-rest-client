@@ -1,10 +1,16 @@
 AngularJS-Toaster
 =================
 
-**AngularJS Toaster** is an AngularJS port of the **toastr** non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations. 
-(I would suggest to use /1.2.8/angular-animate.js, there is a weird blinking in newer versions.)
+**AngularJS Toaster** is an AngularJS port of the **toastr** non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
 
-### Current Version 0.4.18
+[![Build Status](https://travis-ci.org/jirikavi/AngularJS-Toaster.svg)](https://travis-ci.org/jirikavi/AngularJS-Toaster)
+[![Coverage Status](https://coveralls.io/repos/jirikavi/AngularJS-Toaster/badge.svg?branch=master&service=github&busting=3)](https://coveralls.io/github/jirikavi/AngularJS-Toaster?branch=master)
+
+### Current Version 1.2.0
+
+## Angular Compatibility
+AngularJS-Toaster requires AngularJS v1.2.6 or higher and specifically targets AngularJS, not Angular 2, although it could be used via ngUpgrade.  
+If you are looking for the Angular 2 port of AngularJS-Toaster, it is located [here](https://github.com/Stabzs/Angular2-Toaster).
 
 ## Demo
 - Simple demo is at http://plnkr.co/edit/HKTC1a
@@ -26,10 +32,10 @@ npm install --save angularjs-toaster
 * Link scripts:
 
 ```html
-<link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.16/toaster.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js" ></script>
 <script src="https://code.angularjs.org/1.2.0/angular-animate.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.16/toaster.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.js"></script>
 ```
 
 * Add toaster container directive: 
@@ -127,6 +133,8 @@ There are four types of body renderings: trustedHtml', 'template', 'templateWith
 
  - directive 
 	 - Will use the `toast.body` argument to represent the name of a directive that you want to render as the toast's body, else it will fallback to the template bound to the `'body-template': 'toasterBodyTmpl.html'` configuration option.
+    The directive name being passed to the `body` argument should appear as it exists in the markup, 
+     not camelCased as it would appear in the directive declaration (`cool-directive-name` instead of `coolDirectiveName`). The directive must be usable as an attribute.
     
       ```js
     // The toast pop call, passing in a directive name to be rendered
@@ -145,7 +153,8 @@ There are four types of body renderings: trustedHtml', 'template', 'templateWith
             };
     }])
     ```
-     - Will use the `toast.directiveData` argument to accept data that will be bound to the directive's scope.
+     - Will use the `toast.directiveData` argument to accept data that will be bound to the directive's scope. The directive cannot use isolateScope and will
+     throw an exception if isolateScope is detected.  All data must be passed via the directiveData argument.
     
         ```js
       // The toast pop call, passing in a directive name to be rendered
@@ -187,21 +196,68 @@ All four options can be configured either globally for all toasts or individuall
     });
     ```
 
-### On Hide Callback
-A callback function can be attached to each toast instance.  The callback will be invoked upon toast removal.  This can be used to chain toast calls.
+### On Show Callback
+An onShow callback function can be attached to each toast instance.  The callback will be invoked upon toast add.
 
 ```js
 toaster.pop({
             title: 'A toast',
-		    body: 'with a callback',
-			onHideCallback: function () { 
+		    body: 'with an onShow callback',
+			onShowCallback: function () { 
 			    toaster.pop({
 			        title: 'A toast',
-				    body: 'invoked as a callback'
+				    body: 'invoked as an onShow callback'
 				});
 			}
 });
 ```
+
+### On Hide Callback
+An onHide callback function can be attached to each toast instance.  The callback will be invoked upon toast removal.  This can be used to chain toast calls.
+
+```js
+toaster.pop({
+            title: 'A toast',
+		    body: 'with an onHide callback',
+			onHideCallback: function () { 
+			    toaster.pop({
+			        title: 'A toast',
+				    body: 'invoked as an onHide callback'
+				});
+			}
+});
+```
+
+### Multiple Toaster Containers
+If desired, you can include multiple `<toaster-container></toaster-container>` 
+elements in your DOM.  The library will register an event handler for every instance 
+of the container that it identifies.  By default, when there are multiple registered 
+containers, each container will receive a toast notification and display it when a toast 
+is popped.  
+
+To target a specific container, you need to register that container with a unique `toaster-id`.
+
+```html
+<toaster-container toaster-options="{'toaster-id': 1, 
+    'animation-class': 'toast-top-left'}"></toaster-container>
+<toaster-container toaster-options="{'toaster-id': 2}"></toaster-container>
+```
+
+This gives you the ability to specifically target a unique container rather than broadcasting 
+new toast events to any containers that are currently registered.
+
+```js
+vm.popContainerOne = function () {
+    toaster.pop({ type: 'info', body: 'One', toasterId: 1 });
+}
+      
+vm.popContainerTwo = function () {
+    toaster.pop({ type: 'info', body: 'Two', toasterId: 2 });
+}
+```
+
+[This plnkr](http://plnkr.co/edit/4ICtcrpTSoAB9Vo5bRvN?p=preview) demonstrates this behavior 
+and it is documented in these [tests](test/toasterContainerSpec.js#L430).
 
 
 ### Other Options
@@ -220,6 +276,21 @@ angular.module('main', ['toaster', 'ngAnimate']);
 ```
 If you do not want to use animations, you can safely remove the angular-animate.min.js reference as well as the injection of ngAnimate.  Toasts will be displayed without animations.
 
+
+### Common Issues
+- Toaster always shows up as "info"
+    - Your `<toaster-container></toaster-container` might be placed inside of your routing directive.
+    - You have multiple `<toaster-container></toaster-container` elements without unique `toaster-id` configuration arguments.
+- [$sce:itype] Attempted to trust a non-string value in a content requiring a string 
+    - You have not specified: `bodyOutputType: 'trustedHtml'` when passing html as a body argument.
+- My toasts do not show up when I pop them, but after I perform another action.
+    - You are calling `toaster.pop()` outside of AngularJS scope and a digest cycle is not being triggered.
+    Wrap your `toaster.pop()` call in `$timeout` to force a digest cycle.
+    ```js
+     $timeout(function () {
+        toaster.pop();
+     }, 0);
+    ```
 		
 ## Author
 **Jiri Kavulak**
@@ -228,7 +299,7 @@ If you do not want to use animations, you can safely remove the angular-animate.
 Inspired by http://codeseven.github.io/toastr/demo.html.
 
 ## Copyright
-Copyright © 2013-2015 [Jiri Kavulak](https://twitter.com/jirikavi).
+Copyright © 2013-2016 [Jiri Kavulak](https://twitter.com/jirikavi).
 
 ## License 
 AngularJS-Toaster is under MIT license - http://www.opensource.org/licenses/mit-license.php

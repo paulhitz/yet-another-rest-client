@@ -2,11 +2,11 @@
 
 [![NPM version][npm-image]][npm-url] [![NPM downloads][npm-downloads-image]][npm-downloads-url] [![Bower version][bower-image]][bower-url] [![Dependencies status][dep-status-image]][dep-status-url] [![MIT license][license-image]][license-url] [![Join the Slack chat][slack-image]][slack-url]
 
-Google Analytics plugin for [Angulartics](http://github.com/luisfarzati/angulartics).
+Google Analytics plugin for [Angulartics](https://github.com/angulartics/angulartics).
 
 ## Install
 
-First make sure you've read installation and setup instructions for [Angulartics](https://github.com/luisfarzati/angulartics#install).
+First make sure you've read installation and setup instructions for [Angulartics](https://github.com/angulartics/angulartics#install).
 
 Then you can install this package either with `npm` or with `bower`.
 
@@ -66,6 +66,12 @@ Done. Open your app, browse across the different routes and check [the realtime 
 ## Documentation
 
 Documentation is available on the [Angulartics site](http://luisfarzati.github.io/angulartics).
+
+### Settings
+Module settings are done via the `$analyticsProvider.settings.ga` property.  The following are GA-specific properties:
+* `transport`
+  _(Default: `undefined`)_ -
+  sets the `transport` property for the `ga` function call.  See the [GA Transport Documentation](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#transport) for more information how to properly set this value.  This should be a string.
 
 ## Development
 
