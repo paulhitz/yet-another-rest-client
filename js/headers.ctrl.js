@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling CRUD operations on custom request headers.
  */
-clientApp.controller('HeadersCtrl', function($scope, $modal, headers, utils, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('HeadersCtrl', function($scope, $uibModal, headers, utils, toaster, GENERAL_CONSTANTS) {
 
 	//The headers that should be added to subsequent requests.
 	$scope.headers = headers.get();
@@ -44,7 +44,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headers, utils, toa
 
 	//Open a modal dialog to allow a new header to be entered or an existing header to be edited.
 	$scope.openHeaderModal = function(currentHeader) {
-		var modalInstance = $modal.open({
+		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/headersModal.html',
 			controller: 'HeaderModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
@@ -100,7 +100,7 @@ clientApp.controller('HeadersCtrl', function($scope, $modal, headers, utils, toa
 /**
  * Simple modal controller for Adding or Editing a custom request Header.
  */
-clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance, currentHeader, COMMON_HEADERS) {
+clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $uibModalInstance, currentHeader, COMMON_HEADERS) {
 
 	//Default to not persisting.
 	$scope.persist = false;
@@ -116,10 +116,10 @@ clientApp.controller('HeaderModalInstanceCtrl', function ($scope, $modalInstance
 
 	//Return the header name, header value and persist flag.
 	$scope.ok = function() {
-		$modalInstance.close([$scope.header.name, $scope.header.value, $scope.persist]);
+		$uibModalInstance.close([$scope.header.name, $scope.header.value, $scope.persist]);
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 });

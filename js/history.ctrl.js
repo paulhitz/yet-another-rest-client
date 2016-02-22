@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the Request History.
  */
-clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, history, toaster, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.numberOfEntries = 0;
 
@@ -48,7 +48,7 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 
 	//Open a modal dialog to view more details about the selected item.
 	$scope.openRowModal = function(row) {
-		var modalInstance = $modal.open({
+		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/historyModal.html',
 			controller: 'HistoryModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
@@ -69,7 +69,7 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $modal, history
 /**
  * Simple modal controller for displaying more details about a specific history record.
  */
-clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstance, record, utils, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $uibModalInstance, record, utils, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 
 	//Add the history object to the scope so it can be used in the modal.
@@ -84,11 +84,11 @@ clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $modalInstanc
 	};
 
 	$scope.apply = function() {
-		$modalInstance.close();
+		$uibModalInstance.close();
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 
 	$scope.countHeaders = function(headers) {

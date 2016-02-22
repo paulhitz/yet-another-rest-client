@@ -1,14 +1,14 @@
 /**
  * A controller responsible for handling Basic Authorization.
  */
-clientApp.controller('AuthCtrl', function($scope, $modal, auth) {
+clientApp.controller('AuthCtrl', function($scope, $uibModal, auth) {
 
 	//The Basic Authorization value to use in requests.
 	$scope.authToken = auth.get();
 
 	//Open a modal dialog to allow the user to enter credentials.
 	$scope.openAuthModal = function() {
-		var modalInstance = $modal.open({
+		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/authModal.html',
 			controller: 'AuthModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
@@ -25,14 +25,14 @@ clientApp.controller('AuthCtrl', function($scope, $modal, auth) {
 /**
  * Simple modal controller for handling the username and password used for Basic Authorization.
  */
-clientApp.controller('AuthModalInstanceCtrl', function ($scope, $modalInstance, auth) {
+clientApp.controller('AuthModalInstanceCtrl', function ($scope, $uibModalInstance, auth) {
 
 	$scope.ok = function() {
 		var authValue = auth.generateBasicAuthHeader($scope.auth.name, $scope.auth.password);
-		$modalInstance.close(authValue);
+		$uibModalInstance.close(authValue);
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 });

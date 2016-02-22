@@ -91,7 +91,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	 * Check that the response is a valid object.
 	 */
 	helper.isValidResponse = function(response) {
-		return angular.isObject(response) && response.status && response.config;
+		return false;
 	};
 
 	/**
