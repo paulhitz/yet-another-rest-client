@@ -146,6 +146,8 @@ form#add-favorite-modal div.form-group {
 
 #photo {
   margin-left: 20px;
+  width: 100%;
+  max-width: 358px;
 }
 
 div.json-tabs {
