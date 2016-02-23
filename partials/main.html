@@ -17,10 +17,10 @@
 										<span class="input-group-addon" title="Add to favorites.">
 											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openAddFavoriteModal(requestUrl)">
 										</span>
-										<input id="requestUrl" type="url" ng-model="requestUrl" typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
-										<div class="input-group-btn" title="Select the request method to use." dropdown auto-close="outsideClick" is-open="requestMethod.isopen">
-											<button id="requestMethodButton" type="button" class="btn btn-default" dropdown-toggle>{{requestMethod.selected}}&nbsp;&nbsp;<span class="caret"></span></button>
-											<ul class="dropdown-menu dropdown-menu-right">
+										<input id="requestUrl" type="url" ng-model="requestUrl" uib-typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
+										<div class="input-group-btn" title="Select the request method to use." uib-dropdown auto-close="outsideClick" is-open="requestMethod.isopen">
+											<button id="requestMethodButton" type="button" class="btn btn-default" uib-dropdown-toggle>{{requestMethod.selected}}&nbsp;&nbsp;<span class="caret"></span></button>
+											<ul uib-dropdown-menu class="dropdown-menu-right">
 												<li ng-repeat="type in requestMethod.methods">
 													<a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod.selected === type">{{type}}</a>
 												</li>
@@ -58,7 +58,7 @@
 					</h2>
 				</div>
 
-				<div class="panel-collapse collapse" collapse="!showHeaderSection">
+				<div class="panel-collapse collapse" uib-collapse="!showHeaderSection">
 					<div class="form-horizontal panel-body" role="form" ng-model="headers">
 
 						<div class="form-group">
@@ -124,7 +124,7 @@
 					</h2>
 				</div>
 
-				<div id="authentication" class="panel-collapse collapse" collapse="!showAuthSection">
+				<div id="authentication" class="panel-collapse collapse" uib-collapse="!showAuthSection">
 					<div class="panel-body">
 						<p>Basic Authentication is supported. Enter a username and password and the Authorization Header will be generated and sent with the request.</p>
 
@@ -151,11 +151,11 @@
 	</article>
 
 	<div class="clearfix" ng-model="progress" ng-hide="displayResponse" ng-cloak>
-		<progressbar class="progress-striped active" value="progress.value || 0">{{progress.label}}</progressbar>
+		<uib-progressbar class="progress-striped active" value="progress.value || 0">{{progress.label}}</uib-progressbar>
 	</div>
 
 	<div class="clearfix" ng-cloak>
-		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</uib-alert>
 	</div>
 
 	<div id="response" class="row clearfix" ng-show="displayResponse" ng-cloak>
@@ -172,32 +172,32 @@
 						<strong>Service Response Time:</strong> {{(timerEnd - timerStart) / 1000}} seconds
 					</div>
 
-					<tabset class="json-tabs">
-						<tab heading="Response Body" active="firstTab.active">
+					<uib-tabset class="json-tabs">
+						<uib-tab heading="Response Body" active="firstTab.active">
 							<div class="json-content" ng-hide="response.valid">
-								<alert type="danger">
+								<uib-alert type="danger">
 									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 									<span>There was a error in the response. This is often due to a mis-configured service.</span>
-								</alert>
+								</uib-alert>
 							</div>
 							<ng-switch on="!!response.body" ng-show="response.valid">
 								<div data-hljs ng-switch-when="true" data-source="response.body" class="json-content"></div>
 								<div ng-switch-default class="json-content"><pre>(No Response Data)</pre></div>
 							</ng-switch>
-						</tab>
-						<tab heading="Response Body (RAW)" ng-show="response.valid">
+						</uib-tab>
+						<uib-tab heading="Response Body (RAW)" ng-show="response.valid">
 							<div class="json-content"><pre>{{response.body}}</pre></div>
-						</tab>
-						<tab ng-if="response.previewFlag" heading="Response Preview" ng-show="response.valid">
+						</uib-tab>
+						<uib-tab ng-if="response.previewFlag" heading="Response Preview" ng-show="response.valid">
 							<iframe ng-attr-srcdoc="{{response.body | asTrusted}}" src="partials/preview.html"></iframe>
-						</tab>
-						<tab heading="Response Headers" ng-show="response.valid">
+						</uib-tab>
+						<uib-tab heading="Response Headers" ng-show="response.valid">
 							<div data-hljs data-source="response.headers" class="json-content"></div>
-						</tab>
-						<tab heading="Request Details" ng-show="response.valid">
+						</uib-tab>
+						<uib-tab heading="Request Details" ng-show="response.valid">
 							<div data-hljs data-source="response.requestHeaders" class="json-content"></div>
-						</tab>
-					</tabset>
+						</uib-tab>
+					</uib-tabset>
 
 					<div id="copy-buttons">
 						<button type="button" class="btn btn-primary" ng-click="copy(response.requestUrl);" title="Copy Request URL">

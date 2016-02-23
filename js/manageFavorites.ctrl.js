@@ -1,7 +1,7 @@
 /**
  * A controller responsible for handling the management of favorite requests.
  */
-clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $modal, favorites, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibModal, favorites, toaster, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.rowCollection = favorites.get();
 	$scope.displayedCollection = [].concat($scope.rowCollection);
@@ -26,7 +26,7 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $modal,
 
 	//Open a modal dialog to view more details about the selected item.
 	$scope.openRowModal = function(row) {
-		var modalInstance = $modal.open({
+		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/favoritesModal.html',
 			controller: 'ManageFavoritesModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
@@ -48,16 +48,16 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $modal,
 /**
  * Modal controller for displaying more details about a specific favorite.
  */
-clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $modalInstance, favorite, utils, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, favorite, utils, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.favorite = angular.copy(favorite);
 
 	$scope.apply = function(id) {
-		$modalInstance.close(id);
+		$uibModalInstance.close(id);
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 
 	$scope.countHeaders = function(headers, auth) {
