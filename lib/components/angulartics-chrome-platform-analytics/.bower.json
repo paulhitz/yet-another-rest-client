@@ -28,14 +28,13 @@
     "lib/index.js"
   ],
   "homepage": "https://github.com/paulhitz/angulartics-google-analytics",
-  "_release": "8edff9a0fe",
+  "_release": "124671cb04",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "8edff9a0feade53d1972b69705f1a1fc9514cb99"
+    "commit": "124671cb04112e2a43f3ae3342ce5b7797cd0651"
   },
   "_source": "https://github.com/paulhitz/angulartics-google-analytics.git",
   "_target": "master",
-  "_originalSource": "git+https://github.com/paulhitz/angulartics-google-analytics",
-  "_direct": true
+  "_originalSource": "git+https://github.com/paulhitz/angulartics-google-analytics"
 }

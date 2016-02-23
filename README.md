@@ -15,8 +15,8 @@ It has a number of powerful features...
 
 ###History
 * View all your previous requests *and responses*.
-* Easily run them again.
-* Easily filter out the requests you're not interested in.
+* Easily execute previous requests.
+* Easily filter your previous requests.
 
 ###Custom Headers
 * Choose from a large range of existing request headers.
@@ -32,13 +32,16 @@ It has a number of powerful features...
 
 
 ## Installation
-The tool is packaged as a Chrome App. Installation is trivial. It can be installed from the Chrome Web Store...
+The tool is available as either a Chrome Extension or a Chrome App. Installation is trivial. It can be installed from the Chrome Web Store...
+
+* [Install the Extension](https://chrome.google.com/webstore/detail/yarc-yet-another-rest-cli/ehafadccdcdedbhcbddihehiodgcddpl)
+* [Install the Chrome App](https://chrome.google.com/webstore/detail/yet-another-rest-client-c/oaelcicjdkdkcioniblhpnanpnhegoad)
 
 [![Install](img/ChromeWebStore_Badge_v2_496x150.png)](https://chrome.google.com/webstore/detail/yet-another-rest-client-c/oaelcicjdkdkcioniblhpnanpnhegoad)
 
 
 ## Tech
-This is a AngularJS application packaged as a Chrome App to avoid CORS (Cross-Origin Resource Sharing) issues. Bower is used to handle dependencies.
+This is a AngularJS application packaged as a Chrome Extension/App to avoid CORS (Cross-Origin Resource Sharing) issues. Bower is used to handle dependencies.
 
 
 ## Site

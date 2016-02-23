@@ -5,9 +5,9 @@
 		<h4 class="modal-title">More Details</h4>
 	</div>
 	<div class="modal-body">
-		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
-		<tabset justified="true">
-			<tab heading="Request">
+		<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</uib-alert>
+		<uib-tabset justified="true">
+			<uib-tab heading="Request">
 				<dl>
 					<dt>Date: </dt>
 					<dd>{{history.date | date:dateFormat}}</dd>
@@ -21,16 +21,16 @@
 					<dt>Response Time: </dt>
 					<dd>{{history.timer / 1000}} seconds</dd>
 				</dl>
-			</tab>
+			</uib-tab>
 
-			<tab heading="Payload" disable="!history.payload">
+			<uib-tab heading="Payload" disable="!history.payload">
 				<div data-hljs data-source="history.payload" class="json-content small"></div>
-			</tab>
+			</uib-tab>
 
-			<tab disable="countHeaders(history.headers) == 0">
-				<tab-heading>
+			<uib-tab disable="countHeaders(history.headers) == 0">
+				<uib-tab-heading>
 					Headers <span class="badge">{{countHeaders(history.headers)}}</span>
-				</tab-heading>
+				</uib-tab-heading>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -46,26 +46,26 @@
 					</tbody>
 				</table>
 				<p class="small"><strong>Note:</strong> An ACCEPT header is automatically added to every request.</p>
-			</tab>
+			</uib-tab>
 
-			<tab heading="Response">
+			<uib-tab heading="Response">
 				<div ng-switch on="!!history.response" ng-hide="history.size">
 					<div data-hljs ng-switch-when="true" data-source="history.response" class="json-content small"></div>
 					<div ng-switch-default class="small"><pre>(No Response Data)</pre></div>
 				</div>
-				<alert type="info" ng-show="history.size">The response was too large to store. Only responses less than {{history.maxSize / 1000}} kilobytes in size will be stored. This response was approximately {{history.size / 1000}} kilobytes.</alert>
-			</tab>
-		</tabset>
+				<uib-alert type="info" ng-show="history.size">The response was too large to store. Only responses less than {{history.maxSize / 1000}} kilobytes in size will be stored. This response was approximately {{history.size / 1000}} kilobytes.</uib-alert>
+			</uib-tab>
+		</uib-tabset>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" ng-click="apply()">
 			<span class="glyphicon glyphicon-play"></span> Rerun Request
 		</button>
-		<div class="btn-group" dropdown is-open="status.isopen">
-			<button type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+		<div class="btn-group" uib-dropdown is-open="status.isopen">
+			<button type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
 				<span class="glyphicon glyphicon-copy"></span> Copy <span class="caret"></span>
 			</button>
-			<ul class="dropdown-menu">
+			<ul uib-dropdown-menu>
 				<li><a href="" ng-click="copy(history.request)">Copy Request</a></li>
 				<li><a href="" ng-click="copy(history.response)" ng-show="history.response">Copy Response</a></li>
 			</ul>

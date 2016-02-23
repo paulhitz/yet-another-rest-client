@@ -54,8 +54,11 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      type : 'html',
-      dir : 'node_modules/coverage/'
+      dir: 'reports/coverage',
+      reporters: [
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcov', subdir: 'report-lcov' }
+      ]
     },
 
     // web server port

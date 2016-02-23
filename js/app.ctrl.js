@@ -5,7 +5,7 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, progressbar,
-		favorites, $modal, headers, auth, toaster, requests, REQUEST_METHODS) {
+		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS) {
 
 	//Set up the page.
 	$rootScope.version = "v" + chrome.runtime.getManifest()['version'] + " (Chrome App)";
@@ -91,7 +91,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 
 	//Add the current URL to favorites.
 	$scope.openAddFavoriteModal = function(url) {
-		var modalInstance = $modal.open({
+		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/addFavoriteModal.html',
 			controller: 'AddFavoriteModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',

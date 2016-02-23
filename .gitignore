@@ -2,3 +2,4 @@
 # Used for temporary files
 /temp
 /node_modules
+/reports

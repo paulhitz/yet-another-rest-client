@@ -1,13 +1,13 @@
 /**
  * A controller responsible for variious actions related to Favorites. E.g. Import, export etc.
  */
-clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils, GENERAL_CONSTANTS, $rootScope, toaster) {
+clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, utils, GENERAL_CONSTANTS, $rootScope, toaster) {
 
 	$scope.favorites = favorites.get();
 
 	//Open a modal dialog to allow the user to import favorites.
 	$scope.openImportFavoritesModal = function() {
-		var modalInstance = $modal.open({
+		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/importFavoritesModal.html',
 			controller: 'ImportFavoritesModalInstanceCtrl',
 			backdropClass: 'modalBackdrop',
@@ -41,7 +41,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $modal, favorites, utils,
 /**
  * Simple modal controller for importing favorites.
  */
-clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $modalInstance, $analytics, favorites, fileImport, toaster) {
+clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, $analytics, favorites, fileImport, toaster) {
 
 	$scope.ok = function() {
 		//Validate the File.
@@ -56,7 +56,7 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 			if (message[0].type == "success") {
 				toaster.success("", message[0].msg);
 				$analytics.eventTrack('Import Favorites');
-				$modalInstance.close();
+				$uibModalInstance.close();
 			} else {
 				$scope.alerts = message;
 				$scope.$apply();
@@ -66,7 +66,7 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 });
 
@@ -74,8 +74,8 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $moda
 /**
  * Simple modal controller for adding a favorite.
  */
-clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $modalInstance) {
+clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $uibModalInstance) {
 	$scope.ok = function(name) {
-		$modalInstance.close(name);
+		$uibModalInstance.close(name);
 	};
 });
