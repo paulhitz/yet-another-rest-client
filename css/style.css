@@ -88,6 +88,10 @@ sup {
   visibility: hidden;
 }
 
+[uib-typeahead-popup].dropdown-menu {
+    display: block;
+}
+
 button#requestMethodButton {
   min-width: 110px;
 }

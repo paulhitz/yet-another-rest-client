@@ -17,10 +17,10 @@
 										<span class="input-group-addon" title="Add to favorites.">
 											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openAddFavoriteModal(requestUrl)">
 										</span>
-										<input id="requestUrl" type="url" ng-model="requestUrl" uib-typeahead="favorite.url for favorite in favorites" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
+										<input id="requestUrl" type="url" ng-model="requestUrl" uib-typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
 										<div class="input-group-btn" title="Select the request method to use." uib-dropdown auto-close="outsideClick" is-open="requestMethod.isopen">
 											<button id="requestMethodButton" type="button" class="btn btn-default" uib-dropdown-toggle>{{requestMethod.selected}}&nbsp;&nbsp;<span class="caret"></span></button>
-											<ul uib-dropdown-menu class="dropdown-menu dropdown-menu-right">
+											<ul uib-dropdown-menu class="dropdown-menu-right">
 												<li ng-repeat="type in requestMethod.methods">
 													<a href="" ng-click="changeRequestMethod(type)" ng-hide="requestMethod.selected === type">{{type}}</a>
 												</li>
