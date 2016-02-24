@@ -174,7 +174,7 @@
 
 					<uib-tabset class="json-tabs">
 						<uib-tab heading="Response Body" active="firstTab.active">
-							<div class="json-content" ng-hide="response.valid">
+							<div class="json-content" ng-if="!response.valid">
 								<uib-alert type="danger">
 									<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 									<span>There was a error in the response. This is often due to a mis-configured service.</span>
