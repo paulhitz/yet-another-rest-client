@@ -150,7 +150,7 @@
 		</form>
 	</article>
 
-	<div class="clearfix" ng-model="progress" ng-hide="displayResponse" ng-cloak>
+	<div class="clearfix" ng-model="progress" ng-if="!displayResponse" ng-cloak>
 		<uib-progressbar class="progress-striped active" value="progress.value || 0">{{progress.label}}</uib-progressbar>
 	</div>
 
