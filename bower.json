@@ -22,7 +22,7 @@
   "dependencies": {
     "angular": "~1.5.0",
     "angular-bootstrap": "~1.1.2",
-    "angular-highlightjs": "~0.5.1",
+    "angular-highlightjs": "~0.4.3",
     "angular-resource": "~1.5.0",
     "angular-smart-table": "~2.1.7",
     "bootstrap": "~3.3.6",
