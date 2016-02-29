@@ -181,7 +181,7 @@
 								</uib-alert>
 							</div>
 							<ng-switch on="!!response.body" ng-show="response.valid">
-								<div data-hljs ng-switch-when="true" data-source="response.body" class="json-content"></div>
+								<div ng-switch-when="true" hljs source="response.body" class="json-content"></div>
 								<div ng-switch-default class="json-content"><pre>(No Response Data)</pre></div>
 							</ng-switch>
 						</uib-tab>
@@ -192,10 +192,10 @@
 							<iframe ng-attr-srcdoc="{{response.body | asTrusted}}" src="partials/preview.html"></iframe>
 						</uib-tab>
 						<uib-tab heading="Response Headers" ng-show="response.valid">
-							<div data-hljs data-source="response.headers" class="json-content"></div>
+							<div hljs source="response.headers" class="json-content"></div>
 						</uib-tab>
 						<uib-tab heading="Request Details" ng-show="response.valid">
-							<div data-hljs data-source="response.requestHeaders" class="json-content"></div>
+							<div hljs source="response.requestHeaders" class="json-content"></div>
 						</uib-tab>
 					</uib-tabset>
 

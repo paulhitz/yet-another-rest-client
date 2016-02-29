@@ -24,7 +24,7 @@
 			</uib-tab>
 
 			<uib-tab heading="Payload" disable="!history.payload">
-				<div data-hljs data-source="history.payload" class="json-content small"></div>
+				<div hljs source="history.payload" class="json-content small"></div>
 			</uib-tab>
 
 			<uib-tab disable="countHeaders(history.headers) == 0">
@@ -50,7 +50,7 @@
 
 			<uib-tab heading="Response">
 				<div ng-switch on="!!history.response" ng-hide="history.size">
-					<div data-hljs ng-switch-when="true" data-source="history.response" class="json-content small"></div>
+					<div ng-switch-when="true" hljs source="history.response" class="json-content small"></div>
 					<div ng-switch-default class="small"><pre>(No Response Data)</pre></div>
 				</div>
 				<uib-alert type="info" ng-show="history.size">The response was too large to store. Only responses less than {{history.maxSize / 1000}} kilobytes in size will be stored. This response was approximately {{history.size / 1000}} kilobytes.</uib-alert>

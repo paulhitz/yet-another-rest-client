@@ -23,7 +23,7 @@ It has a number of powerful features...
 * Create and save your own custom request headers.
 
 ###More...
-* View the request response in beautiful syntax highlighting (including JSON, XML, HTML, CSS and 130+ other languages!).
+* View the request response in beautiful syntax highlighting (including JSON, XML, HTML and CSS).
 * See how long each request took to complete.
 * Supports GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods. Custom request methods can also be added by the user.
 * HTTP Basic Authentication
