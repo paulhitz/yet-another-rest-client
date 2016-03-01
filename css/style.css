@@ -88,6 +88,10 @@ sup {
   visibility: hidden;
 }
 
+[uib-typeahead-popup].dropdown-menu {
+    display: block;
+}
+
 button#requestMethodButton {
   min-width: 110px;
 }
@@ -142,6 +146,8 @@ form#add-favorite-modal div.form-group {
 
 #photo {
   margin-left: 20px;
+  width: 100%;
+  max-width: 358px;
 }
 
 div.json-tabs {

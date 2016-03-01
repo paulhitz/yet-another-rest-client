@@ -5,8 +5,8 @@
 		<h4 class="modal-title">More Details</h4>
 	</div>
 	<div class="modal-body">
-		<tabset justified="true">
-			<tab heading="General">
+		<uib-tabset justified="true">
+			<uib-tab heading="General">
 				<dl>
 					<dt>Date: </dt>
 					<dd>{{favorite.date | date:dateFormat}}</dd>
@@ -20,16 +20,16 @@
 					<dt>Request Method: </dt>
 					<dd>{{favorite.method | uppercase}}</dd>
 				</dl>
-			</tab>
+			</uib-tab>
 
-			<tab heading="Payload" disable="!favorite.payload">
-				<div data-hljs data-source="favorite.payload" class="json-content small"></div>
-			</tab>
+			<uib-tab heading="Payload" disable="!favorite.payload">
+				<div hljs source="favorite.payload" class="json-content small"></div>
+			</uib-tab>
 
-			<tab disable="countHeaders(favorite.headers, favorite.auth) == 0">
-				<tab-heading>
+			<uib-tab disable="countHeaders(favorite.headers, favorite.auth) == 0">
+				<uib-tab-heading>
 					Headers <span class="badge">{{countHeaders(favorite.headers, favorite.auth)}}</span>
-				</tab-heading>
+				</uib-tab-heading>
 				<table class="table table-striped">
 					<thead ng-show="countHeaders(favorite.headers) > 0">
 						<tr>
@@ -50,8 +50,8 @@
 						</tr>
 					</tbody>
 				</table>
-			</tab>
-		</tabset>
+			</uib-tab>
+		</uib-tabset>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-success" ng-click="apply(favorite.id)">
