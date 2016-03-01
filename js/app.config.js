@@ -2,7 +2,7 @@
 /**
  * Configuration settings.
  */
-clientApp.config(function ($analyticsProvider, $provide) {
+clientApp.config(function ($analyticsProvider, $provide, hljsServiceProvider) {
 	$analyticsProvider.virtualPageviews(false);
 
 	//Prevent Angular from sniffing for the history API since it's not supported in packaged apps.
@@ -10,5 +10,11 @@ clientApp.config(function ($analyticsProvider, $provide) {
 	$provide.decorator('$window', function($delegate) {
 		Object.defineProperty($delegate, 'history', {get: function(){ return null; }});
 		return $delegate;
+	});
+
+	//Specifically limit the languages supported by the Syntax highlighter.
+	//Without limiting the supported languages, large responses will kill performance.
+	hljsServiceProvider.setOptions({
+		languages: ['json', 'html', 'js', 'css', 'http']
 	});
 });
