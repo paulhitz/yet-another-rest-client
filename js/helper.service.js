@@ -84,7 +84,6 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	 * can lead to performance issues so we need to be able to identify large objects.
 	 */
 	helper.calculateObjectSize = function(response) {
- 		console.time('new');
 		var size;
 		try {
 			size = utils.estimateObjectSize(response);
@@ -92,8 +91,6 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 			//Play it safe in case there are edge cases that cause the funtion to misbehave.
 			size = -1;
 		}
-		console.timeEnd('new');
-		console.log("object size = ", size);
 		return size;
 	};
 

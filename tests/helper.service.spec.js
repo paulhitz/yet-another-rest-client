@@ -45,7 +45,10 @@ describe('Helper Service', function() {
       for (var x = 0; x <= 100; x++) {
         largeObject[x] = new Date().toUTCString();
       }
-      expect(appHelper.calculateObjectSize(largeObject)).toBeGreaterThan(100);
+      expect(appHelper.calculateObjectSize(largeObject)).toBeGreaterThan(1000);
+
+      //TODO trigger an exception to test -1 is returned
+      //expect(appHelper.calculateObjectSize({})).toBe(-1);
     });
   });
 });

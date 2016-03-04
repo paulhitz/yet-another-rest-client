@@ -79,7 +79,7 @@ common.service('utils', function() {
 	 * Note: This sacrifices accuracy for speed. It will typically over-estimate object size.
 	 */
 	utils.estimateObjectSize = function(object) {
-		const ECMA_SIZE_STRING = 2;
+		const ECMA_SIZE_CHAR = 2;
 		const ECMA_SIZE_BOOLEAN = 4;
 		const ECMA_SIZE_NUMBER = 8;
 
@@ -92,7 +92,7 @@ common.service('utils', function() {
 			return bytes;
 
 		} else if (angular.isString(object)) {
-				return object.length * ECMA_SIZE_STRING;
+				return ECMA_SIZE_CHAR * object.length;
 
 		} else if (angular.isNumber(object)) {
 				return ECMA_SIZE_NUMBER;
