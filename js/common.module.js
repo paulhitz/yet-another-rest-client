@@ -72,6 +72,36 @@ common.service('utils', function() {
 		return typeof obj === 'undefined'
 				|| (obj !== null && typeof obj === 'object' && Object.getOwnPropertyNames(obj).length === 0);
 	};
+
+	/**
+	 * Roughly calculates the size of the specified object using ECMA specified byte sizes.
+	 *
+	 * Note: This sacrifices accuracy for speed. It will typically over-estimate object size.
+	 */
+	utils.estimateObjectSize = function(object) {
+		const ECMA_SIZE_CHAR = 2;
+		const ECMA_SIZE_BOOLEAN = 4;
+		const ECMA_SIZE_NUMBER = 8;
+
+		if (angular.isObject(object)) {
+			var bytes = 0;
+			for (var key in object) {
+				bytes += utils.estimateObjectSize(key);
+				bytes += utils.estimateObjectSize(object[key]);
+			}
+			return bytes;
+
+		} else if (angular.isString(object)) {
+				return ECMA_SIZE_CHAR * object.length;
+
+		} else if (angular.isNumber(object)) {
+				return ECMA_SIZE_NUMBER;
+
+		} else if (typeof object === 'boolean') {
+				return ECMA_SIZE_BOOLEAN;
+		}
+		return 0;
+	};
 });
 
 

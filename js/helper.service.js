@@ -64,7 +64,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 
 		//Don't save overly large responses.
 		var responseSize = helper.calculateObjectSize(response.data);
-		if (responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
+		if (responseSize === -1 || responseSize > GENERAL_CONSTANTS.MAX_OBJECT_SIZE) {
 			entry['size'] = responseSize;
 		} else{
 			entry['response'] = utils.stringify(response.data);
@@ -81,10 +81,17 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 
 	/**
 	 * Return an approximation of the object size. Storing large responses (e.g. base64 encoded PDFs)
-	 * can lead to performance issues.
+	 * can lead to performance issues so we need to be able to identify large objects.
 	 */
 	helper.calculateObjectSize = function(response) {
-		return sizeof(response);
+		var size;
+		try {
+			size = utils.estimateObjectSize(response);
+		} catch (e) {
+			//Play it safe in case there are edge cases that cause the funtion to misbehave.
+			size = -1;
+		}
+		return size;
 	};
 
 	/**
