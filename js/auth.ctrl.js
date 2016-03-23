@@ -26,6 +26,7 @@ clientApp.controller('AuthCtrl', function($scope, $uibModal, auth) {
  * Simple modal controller for handling the username and password used for Basic Authorization.
  */
 clientApp.controller('AuthModalInstanceCtrl', function ($scope, $uibModalInstance, auth) {
+	$scope.auth = auth.decodeAuthValue();
 
 	$scope.ok = function() {
 		var authValue = auth.generateBasicAuthHeader($scope.auth.name, $scope.auth.password);
