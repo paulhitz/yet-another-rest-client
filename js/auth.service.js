@@ -47,12 +47,11 @@ clientApp.service('auth', function() {
 		} catch (e) {}
 
 		//Separate the username and password.
-		console.log(unencoded);
-		var credentials = unencoded.split(":"); //TODO just split on the first ":".
-		console.log(credentials);
-		if (credentials.length <= 1) {
-			return {};
+		if (unencoded.indexOf(":") != -1) {
+			var name = unencoded.substring(0, unencoded.indexOf(":"));
+			var password = unencoded.substring(unencoded.indexOf(":") + 1);
+			return {'name': name, 'password': password};
 		}
-		return {name: credentials[0], password: credentials[1]};
+		return {};
 	};
 });

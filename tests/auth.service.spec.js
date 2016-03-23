@@ -39,7 +39,7 @@ describe('Authentication', function() {
 
   describe('decodeAuthValue', function() {
     it('should handle invalid values', function() {
-      var invalid = ["", " ", undefined, "1234567890", null, "-1"];
+      var invalid = ["", " ", undefined, "1234567890", null, "-1", "Basic 1234567890"];
 
       for (var value of invalid) {
         auth.set(value);
@@ -48,7 +48,7 @@ describe('Authentication', function() {
     });
 
     it('should correctly decode auth values', function() {
-      var exampleAuthValues = [
+      var exampleCredentials = [
         {name: "foo", password: "bar"},
         {name: "Aladdin", password: "OpenSesame"},
         {name: "", password: ""},
@@ -56,10 +56,10 @@ describe('Authentication', function() {
         {name: "L160000003", password: "10:aa835a32d3:cb0fded500"}
       ];
 
-      for (var obj of exampleAuthValues) {
-        var header = auth.generateBasicAuthHeader(obj.name, obj.password);
+      for (var credentials of exampleCredentials) {
+        var header = auth.generateBasicAuthHeader(credentials.name, credentials.password);
         auth.set(header);
-        expect(auth.decodeAuthValue()).toEqual(obj);
+        expect(auth.decodeAuthValue()).toEqual(credentials);
       }
     });
   });
