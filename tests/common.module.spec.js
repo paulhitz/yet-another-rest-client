@@ -1,3 +1,5 @@
+/* jshint maxcomplexity: false */
+
 describe('Common Utils', function() {
   beforeEach(module('common'));
 
