@@ -4,7 +4,10 @@
 clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, utils, GENERAL_CONSTANTS, $rootScope, toaster) {
 
 	$scope.favorites = favorites.get();
-	$scope.favoritesLimit = GENERAL_CONSTANTS.MAX_NUM_DROPDOWN_FAVORITES;
+	$scope.dropdown = {
+		open: false,
+		numFavorites: GENERAL_CONSTANTS.MAX_NUM_DROPDOWN_FAVORITES
+	};
 
 	//Open a modal dialog to allow the user to import favorites.
 	$scope.openImportFavoritesModal = function() {
@@ -39,7 +42,12 @@ clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, uti
 
 	//Show all favorites in the dropdown. No limit is set.
 	$scope.showAll = function(id) {
-		$scope.favoritesLimit = undefined;
+		$scope.dropdown.numFavorites = undefined;
+	};
+
+	//Close the favorites dropdown.
+	$scope.close = function(id) {
+		$scope.dropdown.open = false;
 	};
 });
 
