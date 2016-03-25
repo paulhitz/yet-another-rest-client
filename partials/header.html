@@ -22,9 +22,10 @@
 					<li><a href="" ng-click="exportFavorites();" ng-hide="favorites.length == 0" analytics-on>Export Favorites</a></li>
 					<li role="separator" class="divider" ng-hide="favorites.length == 0"></li>
 					<li class="dropdown-header" ng-hide="favorites.length == 0">Apply Favorite...</li>
-					<li ng-repeat="favorite in favorites">
+					<li ng-repeat="favorite in favorites | limitTo:favoritesLimit">
 						<a href="" ng-click="applyFavorite(favorite.id);" class="favorite-list">{{favorite.name}}</a>
 					</li>
+					<li ng-show="favorites.length > favoritesLimit"><a href="" ng-click="showAll();" class="dropdown-header"><em>Show all...</em></a></li>
 				</ul>
 			</li>
 			<li class="navbar-link-container"><a href="" ng-click="loadTab('history');" accesskey="h">History</a></li>
