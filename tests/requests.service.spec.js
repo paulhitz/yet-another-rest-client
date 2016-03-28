@@ -37,7 +37,7 @@ describe('Requests Service', function() {
       requests.call(exampleRequest).then(function(response) {
         expect(response.status).toBe(200);
         expect(response.data).toBe("YARC!");
-  		});
+      });
       httpBackend.flush();
     });
   });
