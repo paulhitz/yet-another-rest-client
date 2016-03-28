@@ -26,7 +26,6 @@ module.exports = function(config) {
       'lib/components/AngularJS-Toaster/toaster.min.js',
       'lib/components/angulartics/dist/angulartics.min.js',
       'lib/components/angulartics-chrome-platform-analytics/lib/angulartics-chrome-platform-analytics.js',
-      'lib/components/sizeof/sizeof.min.js',
 
       'js/app.ctrl.js',
       'js/*.js',

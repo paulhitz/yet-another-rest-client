@@ -15,6 +15,6 @@ clientApp.config(function ($analyticsProvider, $provide, hljsServiceProvider) {
 	//Specifically limit the languages supported by the Syntax highlighter.
 	//Without limiting the supported languages, large responses will kill performance.
 	hljsServiceProvider.setOptions({
-		languages: ['json', 'html', 'js', 'css', 'http']
+		languages: ['json', 'html', 'js', 'css', 'http', 'accesslog']
 	});
 });

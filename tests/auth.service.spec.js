@@ -6,6 +6,18 @@ describe('Authentication', function() {
     auth = _auth_;
   }));
 
+  describe('set', function() {
+    it('should use the value property of an object', function() {
+      auth.set({value: 'foo'});
+      expect(auth.get().value).toBe("foo");
+    });
+
+    it('should set the value', function() {
+      auth.set("foo");
+      expect(auth.get().value).toBe("foo");
+    });
+  });
+
   describe('generateBasicAuthHeader', function() {
     it('should generate correct auth values', function() {
       var exampleAuthValues = [
@@ -25,15 +37,30 @@ describe('Authentication', function() {
     });
   });
 
-  describe('set', function() {
-    it('should use the value property of an object', function() {
-      auth.set({value: 'foo'});
-      expect(auth.get().value).toBe("foo");
+  describe('decodeAuthValue', function() {
+    it('should handle invalid values', function() {
+      var invalid = ["", " ", undefined, "1234567890", null, "-1", "Basic 1234567890"];
+
+      for (var value of invalid) {
+        auth.set(value);
+        expect(auth.decodeAuthValue()).toEqual({});
+      }
     });
 
-    it('should set the value', function() {
-      auth.set("foo");
-      expect(auth.get().value).toBe("foo");
+    it('should correctly decode auth values', function() {
+      var exampleCredentials = [
+        {name: "foo", password: "bar"},
+        {name: "Aladdin", password: "OpenSesame"},
+        {name: "", password: ""},
+        {name: "someone@example.com", password: "password1"},
+        {name: "L160000003", password: "10:aa835a32d3:cb0fded500"}
+      ];
+
+      for (var credentials of exampleCredentials) {
+        var header = auth.generateBasicAuthHeader(credentials.name, credentials.password);
+        auth.set(header);
+        expect(auth.decodeAuthValue()).toEqual(credentials);
+      }
     });
   });
 });

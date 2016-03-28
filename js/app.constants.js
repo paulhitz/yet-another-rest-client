@@ -2,7 +2,7 @@
  * General constants used within the application.
  */
 clientApp.constant('GENERAL_CONSTANTS', {
-	MAX_OBJECT_SIZE: 100000,
+	MAX_OBJECT_SIZE: 128000,
 	INDENTATION_LEVEL: 2,
 	DATE_FORMAT: 'MMM dd, yyyy HH:mm',
 	HISTORY_KEY_FORMAT: 'yarc.history.',
@@ -10,7 +10,8 @@ clientApp.constant('GENERAL_CONSTANTS', {
 	FAVORITE_KEY_FORMAT: 'yarc.favorite.',
 	EXPORT_FILE_NAME: 'yarc_favorites.json',
 	MAX_IMPORT_FILE_SIZE: 50000,
-	HTML_CONTENT_TYPE: 'text/html'
+	HTML_CONTENT_TYPE: 'text/html',
+	MAX_NUM_DROPDOWN_FAVORITES: 20
 });
 
 /**

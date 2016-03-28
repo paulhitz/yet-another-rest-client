@@ -15,5 +15,8 @@
   "trailing": true,
 
   //Custom Globals.
-  "predef": [ "chrome", "angular" ]
+  "predef": [ "chrome", "angular" ],
+
+  //Allow complex tests.
+  "maxcomplexity": false
 }

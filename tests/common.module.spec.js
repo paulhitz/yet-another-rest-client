@@ -94,6 +94,40 @@ describe('Common Utils', function() {
   });
 
 
+  describe('estimateObjectSize', function() {
+    it('should roughly estimate object size', function() {
+      expect(utils.estimateObjectSize({})).toBe(0);
+
+      var input = {
+        foo: "bar",
+        bar: 123,
+        boolean: true,
+        complex: {foo: "bar"}
+      };
+      expect(utils.estimateObjectSize(input)).toBe(70);
+    });
+    it('should return 8 for a number', function() {
+      expect(utils.estimateObjectSize(0)).toBe(8);
+      expect(utils.estimateObjectSize(1)).toBe(8);
+      expect(utils.estimateObjectSize(100)).toBe(8);
+      expect(utils.estimateObjectSize(10000000)).toBe(8);
+      expect(utils.estimateObjectSize(99999999)).toBe(8);
+    });
+    it('should return 4 for a Boolean', function() {
+      expect(utils.estimateObjectSize(true)).toBe(4);
+      expect(utils.estimateObjectSize(false)).toBe(4);
+    });
+    it('should return twice the length for a String', function() {
+      expect(utils.estimateObjectSize("")).toBe(0);
+      expect(utils.estimateObjectSize(" ")).toBe(2);
+      expect(utils.estimateObjectSize("Foo")).toBe(6);
+      expect(utils.estimateObjectSize("Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo "
+        + "Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo "
+        + "Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo ")).toBe(456);
+    });
+  });
+
+
   describe('asTrusted filter', function() {
     it('should return a trusted object', function() {
       var asTrusted = $filter('asTrusted');
