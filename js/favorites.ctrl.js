@@ -1,5 +1,5 @@
 /**
- * A controller responsible for variious actions related to Favorites. E.g. Import, export etc.
+ * A controller responsible for various actions related to Favorites. E.g. Import, export etc.
  */
 clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, utils, GENERAL_CONSTANTS, $rootScope, toaster) {
 
@@ -27,10 +27,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, uti
 
 	//Export a JSON file containing the current favorites.
 	$scope.exportFavorites = function() {
-		//Construct a Blob object from the array of favorites and download it.
-		var json = utils.stringify(favorites.get());
-		var blob = new Blob([json], {type: 'application/json'});
-		utils.download(blob, GENERAL_CONSTANTS.EXPORT_FILE_NAME);
+		favorites.exportFavorites(favorites.get(), GENERAL_CONSTANTS.EXPORT_FILE_NAME);
 		toaster.success("", "Export Complete. File Name: " + GENERAL_CONSTANTS.EXPORT_FILE_NAME);
 	};
 
@@ -55,7 +52,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, uti
 /**
  * Simple modal controller for importing favorites.
  */
-clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, $analytics, favorites, fileImport, toaster) {
+clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, $analytics, fileImport, toaster) {
 
 	$scope.ok = function() {
 		//Validate the File.

@@ -24,6 +24,12 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		$rootScope.loadTab('main');
 	};
 
+	//Export a JSON file containing the selected favorite.
+	$scope.export = function(row) {
+		favorites.exportFavorites([row], row.name + GENERAL_CONSTANTS.EXPORT_FILE_TYPE);
+		toaster.success("", "Export Complete.");
+	};
+
 	//Open a modal dialog to view more details about the selected item.
 	$scope.openRowModal = function(row) {
 		var modalInstance = $uibModal.open({
@@ -48,12 +54,18 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 /**
  * Modal controller for displaying more details about a specific favorite.
  */
-clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, favorite, utils, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, favorite, utils,
+		favorites, toaster, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.favorite = angular.copy(favorite);
 
 	$scope.apply = function(id) {
 		$uibModalInstance.close(id);
+	};
+
+	$scope.export = function() {
+		favorites.exportFavorites([favorite], favorite.name + GENERAL_CONSTANTS.EXPORT_FILE_TYPE);
+		toaster.success("", "Export Complete.");
 	};
 
 	$scope.cancel = function() {

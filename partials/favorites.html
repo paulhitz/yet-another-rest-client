@@ -19,7 +19,12 @@
 					</button> Delete Favorite
 				</li>
 				<li>
-					<button type="button" class="btn btn-xs btn-primary" title="Display more details">
+					<button type="button" class="btn btn-xs btn-default" title="Export">
+						<span class="glyphicon glyphicon-export"></span>
+					</button> Export Favorite
+				</li>
+				<li>
+					<button type="button" class="btn btn-xs btn-primary" title="More Information">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</button> More Information
 				</li>
@@ -55,7 +60,10 @@
 					<button type="button" ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
-					<button type="button" ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details">
+					<button type="button" ng-click="export(row);" class="btn btn-xs btn-default" title="Export">
+						<span class="glyphicon glyphicon-export"></span>
+					</button>
+					<button type="button" ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="More Information">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</button>
 				</td>
