@@ -1,7 +1,8 @@
 /**
  * A controller responsible for handling the management of favorite requests.
  */
-clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibModal, favorites, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibModal, $analytics, favorites, toaster,
+		GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.rowCollection = favorites.get();
 	$scope.displayedCollection = [].concat($scope.rowCollection);
@@ -28,6 +29,7 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 	$scope.export = function(row) {
 		favorites.exportFavorites([row], row.name + GENERAL_CONSTANTS.EXPORT_FILE_TYPE);
 		toaster.success("", "Export Complete.");
+		$analytics.eventTrack('Export Single Favorite');
 	};
 
 	//Open a modal dialog to view more details about the selected item.
@@ -54,8 +56,8 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 /**
  * Modal controller for displaying more details about a specific favorite.
  */
-clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, favorite, utils,
-		favorites, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, $analytics, favorite,
+		utils, favorites, toaster, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.favorite = angular.copy(favorite);
 
@@ -66,6 +68,7 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibM
 	$scope.export = function() {
 		favorites.exportFavorites([favorite], favorite.name + GENERAL_CONSTANTS.EXPORT_FILE_TYPE);
 		toaster.success("", "Export Complete.");
+		$analytics.eventTrack('Export Single Favorite');
 	};
 
 	$scope.cancel = function() {

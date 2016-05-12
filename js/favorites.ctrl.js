@@ -1,7 +1,7 @@
 /**
  * A controller responsible for various actions related to Favorites. E.g. Import, export etc.
  */
-clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, utils, GENERAL_CONSTANTS, $rootScope, toaster) {
+clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, GENERAL_CONSTANTS, $rootScope, toaster) {
 
 	$scope.favorites = favorites.get();
 	$scope.dropdown = {
