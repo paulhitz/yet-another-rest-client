@@ -245,6 +245,9 @@ input.form-control[disabled] {
 .clickable {
   cursor: pointer;
 }
+.not-clickable {
+  cursor: default;
+}
 table#history td, table#history th, table#favorites td, table#favorites th, section#headers th {
   white-space: nowrap;
 }
