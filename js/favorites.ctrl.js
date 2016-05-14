@@ -85,7 +85,11 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibM
 /**
  * Simple modal controller for adding a favorite.
  */
-clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $uibModalInstance) {
+clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $uibModalInstance, favorites) {
+
+	//Use existing favorites as typeahead suggestions when naming new favorites.
+	$scope.favorites = favorites.get();
+
 	$scope.ok = function(name) {
 		$uibModalInstance.close(name);
 	};
