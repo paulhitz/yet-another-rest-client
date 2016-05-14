@@ -62,7 +62,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 	//Listen for an event indicating that the current request should be saved.
 	$scope.$on("addFavorite", function(event, args) {
 		if ($scope.requestUrl) {
-			$scope.openAddFavoriteModal($scope.requestUrl);
+			$scope.openUpdateFavoriteModal();
 		} else {
 			toaster.info("No URL", "There's no request URL to save. Please enter a Request URL and try again.");
 		}
@@ -89,23 +89,50 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		}
 	});
 
-	//Add the current URL to favorites.
-	$scope.openAddFavoriteModal = function(url) {
+	//Query the user on whether to update the current favorite or add a new one.
+	$scope.openUpdateFavoriteModal = function() {
+		var modalInstance = $uibModal.open({
+			templateUrl: 'partials/updateFavoriteModal.html',
+			controller: 'updateFavoriteModalInstanceCtrl',
+			keyboard: false
+		});
+
+		modalInstance.result.then(function(add) {
+			if (add) {
+				$scope.openAddFavoriteModal();
+			} else {
+				//Update
+			  console.log("auto update the favorite");
+				/*
+				TODO:
+				-update the current favorite
+				-flag the current favorite. if any.
+				-only open the update window if that flag is set. ******************
+				-use the name of the current favorite in the modal
+				-clear the current favorite if the history functionality is used?
+				*/
+			}
+		});
+
+		modalInstance.closed.then(function(name) {
+			//Uncheck the checkbox indicating a favorite is being added.
+			$scope.favoriteCheckbox = false;
+		});
+	};
+
+	//Allow the user to enter a name for the new favorite request.
+	$scope.openAddFavoriteModal = function() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/addFavoriteModal.html',
 			controller: 'AddFavoriteModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static',
 			keyboard: false
 		});
 
 		//Add the details to user favorites using the specified name.
 		modalInstance.result.then(function(name) {
-			$scope.favoriteCheckbox = false;
-
 			if (name) {
 				var data = {
-					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod.selected,
+					'id': Date.now(), 'name': name, 'url': $scope.requestUrl, 'method': $scope.requestMethod.selected,
 					'payload': $scope.payload, 'headers': angular.copy(headers.get()), 'auth': angular.copy(auth.get())
 				};
 				favorites.saveFavorite(data, function() {

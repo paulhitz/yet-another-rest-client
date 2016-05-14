@@ -51,8 +51,6 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, hist
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/historyModal.html',
 			controller: 'HistoryModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static',
 			resolve: {
 				record: row
 			}

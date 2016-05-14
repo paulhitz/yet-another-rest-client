@@ -94,3 +94,16 @@ clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $uibModal
 		$uibModalInstance.close(name);
 	};
 });
+
+
+/**
+ * Simple modal controller to determine whether to add or update a favorite.
+ */
+clientApp.controller('updateFavoriteModalInstanceCtrl', function ($scope, $uibModalInstance) {
+	$scope.add = function(status) {
+		$uibModalInstance.close(status);
+	};
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss('cancel');
+	};
+});

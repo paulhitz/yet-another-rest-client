@@ -10,9 +10,7 @@ clientApp.controller('AuthCtrl', function($scope, $uibModal, auth) {
 	$scope.openAuthModal = function() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/authModal.html',
-			controller: 'AuthModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static'
+			controller: 'AuthModalInstanceCtrl'
 		});
 
 		//Update the authorization value.

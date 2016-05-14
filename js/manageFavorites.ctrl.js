@@ -37,8 +37,6 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/favoritesModal.html',
 			controller: 'ManageFavoritesModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static',
 			resolve: {
 				favorite: function() {
 					return row;
