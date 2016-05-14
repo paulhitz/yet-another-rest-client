@@ -69,7 +69,8 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, hist
 /**
  * Simple modal controller for displaying more details about a specific history record.
  */
-clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $uibModalInstance, record, utils, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $uibModalInstance, record, utils, toaster,
+		GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 
 	//Add the history object to the scope so it can be used in the modal.
@@ -79,8 +80,8 @@ clientApp.controller('HistoryModalInstanceCtrl', function ($scope, $uibModalInst
 
 	//Copy the request or response to the clipboard.
 	$scope.copy = function(text) {
-		$scope.alerts = [{type: 'success', msg: "Successfully copied to the Clipboard."}];
 		utils.copyToClipboard(text);
+		toaster.success("", "Successfully copied to the Clipboard.");
 	};
 
 	$scope.apply = function() {
