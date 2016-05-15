@@ -81,7 +81,6 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibM
 		if (!utils.isBlankObject(headers)) {
 			numHeaders = Object.keys(headers).length;
 		}
-		if (!utils.isBlankObject(auth) && !utils.isBlankObject(auth.value)) {
 			numHeaders++;
 		}
 		return numHeaders;

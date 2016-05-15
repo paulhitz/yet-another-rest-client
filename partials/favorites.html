@@ -48,7 +48,7 @@
 			<tr ng-show="displayedCollection.length === 0">
 				<td colspan="5">There are no entries to display.</td>
 			</tr>
-			<tr ng-repeat="row in displayedCollection" class="small">
+			<tr ng-repeat="row in displayedCollection track by row.id" class="small">
 				<td>{{row.date | date:dateFormat}}</td>
 				<td>{{row.name}}</td>
 				<td class="break-row">{{row.url}}</td>

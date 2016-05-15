@@ -97,7 +97,12 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			'id': id, 'name': name, 'url': $scope.requestUrl, 'method': $scope.requestMethod.selected,
 			'payload': $scope.payload, 'headers': angular.copy(headers.get()), 'auth': angular.copy(auth.get())
 		};
-		favorites.saveFavorite(data, callback);
+		favorites.saveFavorite(data, function() {
+			$scope.appliedFavorite = data;
+			if (typeof(callback) === "function") {
+				callback();
+			}
+		});
 	};
 
 	//Check if a favorite was previously applied and open the appropriate modal.
