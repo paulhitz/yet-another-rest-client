@@ -15,7 +15,7 @@
 								<div class="col-md-12">
 									<div class="input-group">
 										<span class="input-group-addon" title="Add to favorites.">
-											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openUpdateFavoriteModal()">
+											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="addOrUpdateFavorite()">
 										</span>
 										<input id="requestUrl" type="url" ng-model="requestUrl" uib-typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
 										<div class="input-group-btn" title="Select the request method to use." uib-dropdown auto-close="outsideClick" is-open="requestMethod.isopen">

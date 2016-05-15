@@ -42,7 +42,8 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, hist
 	$scope.apply = function(row) {
 		$rootScope.$broadcast('applyFavorite', {
 			'url': row.request, 'method': row.method,
-			'payload': row.payload, 'headers': history.convertRequestHeaders(row.headers)});
+			'payload': row.payload, 'headers': history.convertRequestHeaders(row.headers)
+		});
 		$rootScope.loadTab('main');
 	};
 
