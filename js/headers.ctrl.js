@@ -47,8 +47,6 @@ clientApp.controller('HeadersCtrl', function($scope, $uibModal, headers, utils, 
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/headersModal.html',
 			controller: 'HeaderModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static',
 			resolve: {
 				//Used when editing an existing header.
 				currentHeader: currentHeader

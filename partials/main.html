@@ -15,7 +15,7 @@
 								<div class="col-md-12">
 									<div class="input-group">
 										<span class="input-group-addon" title="Add to favorites.">
-											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="openAddFavoriteModal(requestUrl)">
+											<input type="checkbox" class="glyphicon glyphicon-star-empty" ng-model="favoriteCheckbox" ng-disabled="!requestUrl" ng-click="addOrUpdateFavorite()">
 										</span>
 										<input id="requestUrl" type="url" ng-model="requestUrl" uib-typeahead="favorite.url for favorite in favorites | filter:{url:$viewValue} | limitTo:8" class="form-control" placeholder="http://www.example.com/resource/123" autofocus>
 										<div class="input-group-btn" title="Select the request method to use." uib-dropdown auto-close="outsideClick" is-open="requestMethod.isopen">
@@ -40,7 +40,7 @@
 						<div class="col-md-11">
 							<div class="row">
 								<div class="col-md-12">
-									<textarea class="form-control" rows="{{payloadHeight || 5}}" id="payload" placeholder="application/json" ng-model="payload" ng-click="payloadHeight = 10" ng-blur="payloadHeight = 5"></textarea>
+									<textarea class="form-control" rows="{{payloadHeight || 5}}" id="payload" placeholder="application/json" ng-model="payload" ng-click="payloadHeight = 10"></textarea>
 								</div>
 							</div>
 						</div>
@@ -145,7 +145,7 @@
 
 			<div id="request-form-buttons" class="pull-right">
 				<button type="button" class="btn btn-default" ng-click="cancel();" ng-show="processing" title="Cancel the current request">Cancel</button>
-				<button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="processing || !requestUrl" analytics-on>Send Request</button>
+				<button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="processing || !requestUrl" analytics-on analytics-label="{{requestMethod.selected}}">Send Request</button>
 			</div>
 		</form>
 	</article>

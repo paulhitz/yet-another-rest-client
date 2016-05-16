@@ -9,6 +9,7 @@ clientApp.constant('GENERAL_CONSTANTS', {
 	HEADER_KEY_FORMAT: 'yarc.header.',
 	FAVORITE_KEY_FORMAT: 'yarc.favorite.',
 	EXPORT_FILE_NAME: 'yarc_favorites.json',
+	EXPORT_FILE_TYPE: '.json',
 	MAX_IMPORT_FILE_SIZE: 50000,
 	HTML_CONTENT_TYPE: 'text/html',
 	MAX_NUM_DROPDOWN_FAVORITES: 20
