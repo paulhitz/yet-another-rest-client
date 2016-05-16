@@ -6,7 +6,7 @@ describe('Favorites Service', function() {
     favorites = _favorites_;
   }));
 
-  //TODO also test that updating a favorite desn't break the element reference.
+
   describe('add', function() {
     it('should add a favorites object', function() {
       expect(favorites.get().length).toBe(0);

@@ -60,6 +60,39 @@ describe('Common Utils', function() {
   });
 
 
+  describe('updateObject', function() {
+    it('should update the properties of an object', function() {
+      var exampleOriginalObjects = [
+        {foo: 'bar'},
+        {foo: 'bar', test: 'test'},
+        {foo: 'bar', test: 'test', object: {foo: 'bar'}},
+        {object: {foo: 'bar'}}
+      ];
+      var exampleReplacementObjects = [
+        {},
+        {bar: 'foo'},
+        {foo: 'foo', test: 'test', object: {foo: 'bar', bar: 0}},
+        {object: {bar: 'foo'}}
+      ];
+
+      for (var original of exampleOriginalObjects) {
+        for (var replacement of exampleReplacementObjects) {
+          utils.updateObject(original, replacement);
+          expect(original).toEqual(replacement);
+        }
+      }
+    });
+
+    it('should ensure that the object reference is maintained', function() {
+      var original = {foo: 'bar'};
+      var replacement = {bar: 'foo'};
+      var originalReference = original;
+      utils.updateObject(original, replacement);
+      expect(originalReference.bar).toEqual('foo');
+    });
+  });
+
+
   describe('isBlankObject', function() {
     it('should fail on objects with properties', function() {
       expect(utils.isBlankObject({foo: 'bar'})).not.toEqual(true);
