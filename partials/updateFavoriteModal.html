@@ -1,0 +1,16 @@
+
+<form class="form-horizontal">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+		<h4 class="modal-title">Save Options</h4>
+	</div>
+	<div class="modal-body">
+		<p>Current favorite: <strong>"{{name}}"</strong></p>
+		<p>Update current favorite or create a new favorite?</p>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" ng-click="add(true)">Create New Favorite</button>
+		<button type="submit" class="btn btn-primary" ng-click="add(false)">Update Current Favorite</button>
+		<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+	</div>
+</form>

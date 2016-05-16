@@ -37,8 +37,6 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/favoritesModal.html',
 			controller: 'ManageFavoritesModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static',
 			resolve: {
 				favorite: function() {
 					return row;
@@ -46,8 +44,13 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 			}
 		});
 
-		modalInstance.result.then(function(id) {
-			$scope.apply(id);
+		modalInstance.result.then(function(result) {
+			if (result.id) {
+				$scope.apply(result.id);
+			}
+			if (result.export) {
+				$scope.export(result.export);
+			}
 		});
 	};
 });
@@ -57,18 +60,16 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
  * Modal controller for displaying more details about a specific favorite.
  */
 clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, $analytics, favorite,
-		utils, favorites, toaster, GENERAL_CONSTANTS) {
+		utils, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.favorite = angular.copy(favorite);
 
 	$scope.apply = function(id) {
-		$uibModalInstance.close(id);
+		$uibModalInstance.close({'id': id});
 	};
 
 	$scope.export = function() {
-		favorites.exportFavorites([favorite], favorite.name + GENERAL_CONSTANTS.EXPORT_FILE_TYPE);
-		toaster.success("", "Export Complete.");
-		$analytics.eventTrack('Export Single Favorite');
+		$uibModalInstance.close({'export': favorite});
 	};
 
 	$scope.cancel = function() {
@@ -80,7 +81,7 @@ clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibM
 		if (!utils.isBlankObject(headers)) {
 			numHeaders = Object.keys(headers).length;
 		}
-		if (!utils.isBlankObject(auth) && !utils.isBlankObject(auth.value)) {
+		if (!utils.isBlankObject(auth) && !utils.isBlankObject(auth.value) && auth.value) {
 			numHeaders++;
 		}
 		return numHeaders;

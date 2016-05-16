@@ -21,7 +21,10 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 		//Replace...
 		for (var i = 0; i < favorites.length; i++) {
 			if (favorites[i].id == input.id) {
-				favorites[i] = input;
+				var favorite = favorites[i];
+
+				//Update the object but don't change the object reference. This is needed for Smart Tables to auto-update.
+				utils.updateObject(favorite, input);
 				return;
 			}
 		}

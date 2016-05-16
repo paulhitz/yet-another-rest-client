@@ -62,7 +62,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 	//Listen for an event indicating that the current request should be saved.
 	$scope.$on("addFavorite", function(event, args) {
 		if ($scope.requestUrl) {
-			$scope.openAddFavoriteModal($scope.requestUrl);
+			$scope.addOrUpdateFavorite();
 		} else {
 			toaster.info("No URL", "There's no request URL to save. Please enter a Request URL and try again.");
 		}
@@ -73,6 +73,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		//Populate the form...
 		if (angular.isNumber(args)) {
 			var favorite = favorites.findById(args);
+			$scope.appliedFavorite = favorite;
 			$scope.requestUrl = favorite.url;
 			$scope.requestMethod.selected = favorite.method;
 			$scope.payload = favorite.payload;
@@ -80,6 +81,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			auth.set(favorite.auth);
 			toaster.success("", "The selected favorite has been applied.");
 		} else {
+			$scope.appliedFavorite = null;
 			$scope.requestUrl = args.url;
 			$scope.requestMethod.selected = args.method;
 			$scope.payload = args.payload;
@@ -89,13 +91,65 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		}
 	});
 
-	//Add the current URL to favorites.
-	$scope.openAddFavoriteModal = function(url) {
+	//Save the current request as a favorite.
+	$scope.saveFavorite = function(id, name, callback) {
+		var data = {
+			'id': id, 'name': name, 'url': $scope.requestUrl, 'method': $scope.requestMethod.selected,
+			'payload': $scope.payload, 'headers': angular.copy(headers.get()), 'auth': angular.copy(auth.get())
+		};
+		favorites.saveFavorite(data, function() {
+			$scope.appliedFavorite = data;
+			if (typeof(callback) === "function") {
+				callback();
+			}
+		});
+	};
+
+	//Check if a favorite was previously applied and open the appropriate modal.
+	$scope.addOrUpdateFavorite = function() {
+		if ($scope.appliedFavorite) {
+			$scope.openUpdateFavoriteModal($scope.appliedFavorite.name);
+		} else {
+			$scope.openAddFavoriteModal();
+		}
+	};
+
+	//Query the user on whether to update the current favorite or add a new one.
+	$scope.openUpdateFavoriteModal = function(name) {
+		var modalInstance = $uibModal.open({
+			templateUrl: 'partials/updateFavoriteModal.html',
+			controller: 'updateFavoriteModalInstanceCtrl',
+			keyboard: false,
+			resolve: {
+				name: function() {
+					return name;
+				}
+			}
+		});
+
+		modalInstance.result.then(function(add) {
+			if (add) {
+				$scope.openAddFavoriteModal();
+			} else {
+				//Update the last selected favorite.
+				$scope.saveFavorite($scope.appliedFavorite.id, name, function() {
+					toaster.success("", "Successfully Updated Favorite.");
+					$analytics.eventTrack('Favorite Updated');
+				});
+			}
+		});
+
+		modalInstance.closed.then(function() {
+			//Uncheck the checkbox indicating a favorite is being added.
+			$scope.favoriteCheckbox = false;
+		});
+	};
+
+	//Allow the user to enter a name for the new favorite request.
+	$scope.openAddFavoriteModal = function() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/addFavoriteModal.html',
 			controller: 'AddFavoriteModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static',
 			keyboard: false
 		});
 
@@ -104,11 +158,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			$scope.favoriteCheckbox = false;
 
 			if (name) {
-				var data = {
-					'id': Date.now(), 'name': name, 'url': url, 'method': $scope.requestMethod.selected,
-					'payload': $scope.payload, 'headers': angular.copy(headers.get()), 'auth': angular.copy(auth.get())
-				};
-				favorites.saveFavorite(data, function() {
+				$scope.saveFavorite(Date.now(), name, function() {
 					toaster.success("", "Successfully added to Favorites");
 					$analytics.eventTrack('Favorite Added');
 				});

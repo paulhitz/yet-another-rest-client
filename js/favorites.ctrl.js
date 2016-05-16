@@ -13,9 +13,7 @@ clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, GEN
 	$scope.openImportFavoritesModal = function() {
 		var modalInstance = $uibModal.open({
 			templateUrl: 'partials/importFavoritesModal.html',
-			controller: 'ImportFavoritesModalInstanceCtrl',
-			backdropClass: 'modalBackdrop',
-			backdrop: 'static'
+			controller: 'ImportFavoritesModalInstanceCtrl'
 		});
 	};
 
@@ -85,8 +83,27 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibM
 /**
  * Simple modal controller for adding a favorite.
  */
-clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $uibModalInstance) {
+clientApp.controller('AddFavoriteModalInstanceCtrl', function ($scope, $uibModalInstance, favorites) {
+
+	//Use existing favorites as typeahead suggestions when naming new favorites.
+	$scope.favorites = favorites.get();
+
 	$scope.ok = function(name) {
 		$uibModalInstance.close(name);
+	};
+});
+
+
+/**
+ * Simple modal controller to determine whether to add or update a favorite.
+ */
+clientApp.controller('updateFavoriteModalInstanceCtrl', function ($scope, $uibModalInstance, name) {
+	$scope.name = name;
+
+	$scope.add = function(status) {
+		$uibModalInstance.close(status);
+	};
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss('cancel');
 	};
 });
