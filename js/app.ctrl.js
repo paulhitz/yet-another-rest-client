@@ -5,7 +5,8 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, progressbar,
-		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS) {
+		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG) {
+	$rootScope.config = YARC_CONFIG;
 
 	//Set up the page.
 	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];

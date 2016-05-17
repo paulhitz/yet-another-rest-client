@@ -16,6 +16,15 @@ clientApp.constant('GENERAL_CONSTANTS', {
 });
 
 /**
+ * URLs for the Chrome Web Store. These are different for the Extension and Chrome App.
+ */
+clientApp.constant('YARC_CONFIG', {
+	CHROME_STORE: "https://chrome.google.com/webstore/detail/yarc-yet-another-rest-cli/ehafadccdcdedbhcbddihehiodgcddpl",
+	CHROME_STORE_REVIEWS: "https://chrome.google.com/webstore/detail/yarc-yet-another-rest-cli/ehafadccdcdedbhcbddihehiodgcddpl/reviews",
+	CHROME_STORE_SUPPORT: "https://chrome.google.com/webstore/detail/yarc-yet-another-rest-cli/ehafadccdcdedbhcbddihehiodgcddpl/support"
+});
+
+/**
  * Request Methods.
  */
 clientApp.constant('REQUEST_METHODS', ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]);
