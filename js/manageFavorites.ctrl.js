@@ -59,8 +59,8 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 /**
  * Modal controller for displaying more details about a specific favorite.
  */
-clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, $analytics, favorite,
-		utils, GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, favorite, utils,
+		GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.favorite = angular.copy(favorite);
 

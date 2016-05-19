@@ -27,7 +27,7 @@
     "angular-smart-table": "~2.1.8",
     "bootstrap": "~3.3.6",
     "bootswatch-dist": "spacelab",
-    "highlightjs": "~9.2.0",
+    "highlightjs": "~9.3.0",
     "angular-bootstrap-file-field": "git+https://github.com/paulhitz/angular-bootstrap-file-field#master",
     "AngularJS-Toaster": "~2.0.0",
     "angular-animate": "~1.5.5",
