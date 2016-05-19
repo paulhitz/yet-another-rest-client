@@ -20,24 +20,24 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.5.0",
-    "angular-bootstrap": "~1.1.2",
-    "angular-highlightjs": "~0.4.3",
-    "angular-resource": "~1.5.0",
-    "angular-smart-table": "~2.1.7",
+    "angular": "~1.5.5",
+    "angular-bootstrap": "~1.3.2",
+    "angular-highlightjs": "0.4.3",
+    "angular-resource": "~1.5.5",
+    "angular-smart-table": "~2.1.8",
     "bootstrap": "~3.3.6",
     "bootswatch-dist": "spacelab",
-    "highlightjs": "~9.1.0",
+    "highlightjs": "~9.3.0",
     "angular-bootstrap-file-field": "git+https://github.com/paulhitz/angular-bootstrap-file-field#master",
-    "AngularJS-Toaster": "~1.2.0",
-    "angular-animate": "~1.5.0",
+    "AngularJS-Toaster": "~2.0.0",
+    "angular-animate": "~1.5.5",
     "angulartics": "~1.0.3",
     "chrome-platform-analytics": "~1.3.0",
     "angulartics-chrome-platform-analytics": "git+https://github.com/paulhitz/angulartics-google-analytics#master",
-    "angular-mocks": "~1.5.0"
-
+    "angular-mocks": "~1.5.5"
   },
   "resolutions": {
-    "bootswatch-dist": "spacelab"
+    "bootswatch-dist": "spacelab",
+    "angular-highlightjs": "0.4.3"
   }
 }

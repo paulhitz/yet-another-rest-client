@@ -26,7 +26,7 @@
     "tag": "v0.4.3",
     "commit": "36d4681465ec8bf2d1fdcd758fe9f842b73aaed2"
   },
-  "_source": "git://github.com/pc035860/angular-highlightjs.git",
-  "_target": "~0.4.3",
+  "_source": "https://github.com/pc035860/angular-highlightjs.git",
+  "_target": "0.4.3",
   "_originalSource": "angular-highlightjs"
 }

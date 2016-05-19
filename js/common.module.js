@@ -66,6 +66,16 @@ common.service('utils', function() {
 	};
 
 	/**
+	 * Update object properties without modifying the object reference.
+	 */
+	utils.updateObject = function(original, replacement) {
+		utils.emptyObject(original);
+		for (var property in replacement) {
+			original[property] = replacement[property];
+		}
+	};
+
+	/**
 	 * Determine if a value is an object with a null prototype.
 	 */
 	utils.isBlankObject = function(obj) {

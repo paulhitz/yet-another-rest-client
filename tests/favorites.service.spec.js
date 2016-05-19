@@ -6,6 +6,7 @@ describe('Favorites Service', function() {
     favorites = _favorites_;
   }));
 
+
   describe('add', function() {
     it('should add a favorites object', function() {
       expect(favorites.get().length).toBe(0);

@@ -9,17 +9,22 @@
 			<strong>Legend:</strong><br>
 			<ul class="list-inline">
 				<li>
-					<button type="button" class="btn btn-xs btn-success" title="Apply">
+					<button type="button" class="btn btn-xs btn-success not-clickable" title="Apply">
 						<span class="glyphicon glyphicon-play"></span>
 					</button> Apply Favorite
 				</li>
 				<li>
-					<button type="button" class="btn btn-xs btn-danger" title="Delete">
+					<button type="button" class="btn btn-xs btn-danger not-clickable" title="Delete">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button> Delete Favorite
 				</li>
 				<li>
-					<button type="button" class="btn btn-xs btn-primary" title="Display more details">
+					<button type="button" class="btn btn-xs btn-default not-clickable" title="Export">
+						<span class="glyphicon glyphicon-export"></span>
+					</button> Export Favorite
+				</li>
+				<li>
+					<button type="button" class="btn btn-xs btn-primary not-clickable" title="More Information">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</button> More Information
 				</li>
@@ -31,7 +36,7 @@
 			<tr>
 				<th st-sort="date" st-skip-natural="true" st-sort-default="reverse" class="clickable">Date</th>
 				<th st-sort="name" st-skip-natural="true" class="clickable">Name</th>
-				<th st-sort="request" st-skip-natural="true" class="clickable">Request URL</th>
+				<th st-sort="url" st-skip-natural="true" class="clickable">Request URL</th>
 				<th st-sort="method" st-skip-natural="true" class="clickable">Type</th>
 				<th>Actions</th>
 			</tr>
@@ -43,7 +48,7 @@
 			<tr ng-show="displayedCollection.length === 0">
 				<td colspan="5">There are no entries to display.</td>
 			</tr>
-			<tr ng-repeat="row in displayedCollection" class="small">
+			<tr ng-repeat="row in displayedCollection track by row.id" class="small">
 				<td>{{row.date | date:dateFormat}}</td>
 				<td>{{row.name}}</td>
 				<td class="break-row">{{row.url}}</td>
@@ -55,7 +60,10 @@
 					<button type="button" ng-click="removeItem(row)" class="btn btn-xs btn-danger" title="Delete">
 						<span class="glyphicon glyphicon-remove"></span>
 					</button>
-					<button type="button" ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="Display more details">
+					<button type="button" ng-click="export(row);" class="btn btn-xs btn-default" title="Export">
+						<span class="glyphicon glyphicon-export"></span>
+					</button>
+					<button type="button" ng-click="openRowModal(row);" class="btn btn-xs btn-primary" title="More Information">
 						<span class="glyphicon glyphicon-info-sign"></span>
 					</button>
 				</td>

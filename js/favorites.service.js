@@ -1,7 +1,7 @@
 /**
  * Handles CRUD operations for Favorites.
  */
-clientApp.service('favorites', function(GENERAL_CONSTANTS) {
+clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	//The list of user favorites.
@@ -21,7 +21,10 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 		//Replace...
 		for (var i = 0; i < favorites.length; i++) {
 			if (favorites[i].id == input.id) {
-				favorites[i] = input;
+				var favorite = favorites[i];
+
+				//Update the object but don't change the object reference. This is needed for Smart Tables to auto-update.
+				utils.updateObject(favorite, input);
 				return;
 			}
 		}
@@ -102,6 +105,17 @@ clientApp.service('favorites', function(GENERAL_CONSTANTS) {
 				callback();
 			}
 		});
+	};
+
+
+	/**
+	 * Export a JSON file containing favorites.
+	 */
+	helper.exportFavorites = function(exported, fileName) {
+		//Construct a Blob object from the array of favorites and download it.
+		var json = utils.stringify(exported);
+		var blob = new Blob([json], {type: 'application/json'});
+		utils.download(blob, fileName);
 	};
 
 

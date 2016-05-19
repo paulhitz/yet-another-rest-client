@@ -2,7 +2,7 @@
 /**
  * Configuration settings.
  */
-clientApp.config(function ($analyticsProvider, $provide, hljsServiceProvider) {
+clientApp.config(function ($analyticsProvider, $provide, $uibModalProvider, hljsServiceProvider) {
 	$analyticsProvider.virtualPageviews(false);
 
 	//Prevent Angular from sniffing for the history API since it's not supported in packaged apps.
@@ -17,4 +17,7 @@ clientApp.config(function ($analyticsProvider, $provide, hljsServiceProvider) {
 	hljsServiceProvider.setOptions({
 		languages: ['json', 'html', 'js', 'css', 'http', 'accesslog']
 	});
+
+	//Defaults for the application modals.
+	$uibModalProvider.options = { backdrop: 'static', backdropClass: 'modalBackdrop' };
 });
