@@ -285,6 +285,37 @@ dd {
   to { transform: scale(1) rotate(360deg);}
 }
 
+/* Response Status Codes */
+.status-code {
+  float: right;
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 1.1;
+  color: #fff;
+  padding: 0 10px;
+  margin: 5px 0 5px 5px;
+  border-radius: 5px;
+  background-color: black;
+}
+.http--1 {
+ background-color: #d9534f !important;
+}
+.http-100, .http-101, .http-102 {
+ background-color: #5bc0de !important;
+}
+.http-200, .http-201, .http-202, .http-203, .http-204, .http-205, .http-206, .http-207, .http-208, .http-226 {
+ background-color: #5cb85c !important;
+}
+.http-300, .http-301, .http-302, .http-303, .http-304, .http-305, .http-306, .http-307, .http-308 {
+ background-color: #f0ad4e !important;
+}
+.http-400, .http-401, .http-402, .http-403, .http-404, .http-405, .http-406, .http-407, .http-408, .http-409, .http-410, .http-411, .http-412, .http-413, .http-414, .http-415, .http-416, .http-417, .http-418, .http-421, .http-422, .http-423, .http-424, .http-426, .http-428, .http-429, .http-431, .http-451 {
+ background-color: #d9534f !important;
+}
+.http-500, .http-501, .http-502, .http-503, .http-504, .http-505, .http-506, .http-507, .http-508, .http-510, .http-511 {
+ background-color: #d9534f !important;
+}
+
 
 /*
  * Sticky footer styles

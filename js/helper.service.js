@@ -32,6 +32,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 			angular.extend($scope.response, {
 				'body': utils.stringify(response.data),
 				'headers': utils.stringify(response.headers()),
+				'status': response.status,
 				'requestHeaders': utils.stringify(response.config),
 				'previewFlag': helper.isHtml(response.headers()['content-type'])
 			});
