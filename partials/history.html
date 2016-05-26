@@ -30,7 +30,7 @@
 			<span class="text-muted">
 				<span ng-show="numberOfEntries == 0">(Nothing to see here yet. Submit some requests to see your request history below.)</span>
 				<span ng-show="numberOfEntries == 1">(Well done. The first of many!)</span>
-				<span ng-show="numberOfEntries >= 50 && numberOfEntries < 500">(If you like the tool, please consider <a href="https://chrome.google.com/webstore/detail/yarc-yet-another-rest-cli/ehafadccdcdedbhcbddihehiodgcddpl/reviews" target="_blank">adding a review or rating</a>.)</span>
+				<span ng-show="numberOfEntries >= 50 && numberOfEntries < 500">(If you like the tool, please consider <a href="{{config.CHROME_STORE_REVIEWS}}" target="_blank">adding a review or rating</a>.)</span>
 				<span ng-show="numberOfEntries >= 500 && numberOfEntries < 1000">(That's a lot of requests! Why not <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paulhitz%40gmail%2ecom&lc=IE&item_name=Yet%20Another%20REST%20Client&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank">consider donating</a>?)</span>
 				<span ng-show="numberOfEntries >= 1000 && numberOfEntries < 1500">(Thanks for being a YARC fan!)</span>
 				<span ng-show="numberOfEntries >= 1500">(YARC Superfan!)</span>
