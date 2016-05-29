@@ -60,6 +60,8 @@ clientApp.service('headers', function(GENERAL_CONSTANTS, COMMON_HEADERS, utils) 
 
 	/**
 	 * Display a combined list of example headers and any saved custom headers.
+	 *
+	 * TODO Consider refactoring this. Split it up (e.g. a retrieveHeaders() function) and use a callback.
 	 */
 	helper.displayCustomAndExampleHeaders = function($scope) {
 

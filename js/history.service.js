@@ -30,6 +30,16 @@ clientApp.service('history', function(GENERAL_CONSTANTS) {
 	};
 
 	/**
+	 * Save the provided data using Chrome Storage. Supports objects.
+	 */
+	helper.set = function(data) {
+		var key = GENERAL_CONSTANTS.HISTORY_KEY_FORMAT + Date.now();
+		var keyValue = {};
+		keyValue[key] = data;
+		chrome.storage.local.set(keyValue);
+	};
+
+	/**
 	 * Delete request history from Chrome Storage based on ID.
 	 */
 	helper.delete = function(id, callback) {
