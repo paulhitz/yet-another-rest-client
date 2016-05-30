@@ -104,6 +104,8 @@ describe('Headers Service', function() {
       expect(called).toBe(false);
 
       headers.delete(id, function() {
+        called = true;
+      });
       expect(called).toBe(true);
     });
   });
