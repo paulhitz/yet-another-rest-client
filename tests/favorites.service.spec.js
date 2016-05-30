@@ -4,7 +4,7 @@ describe('Favorites Service', function() {
   var favorites, mockChromeSyncStorage;
 
   beforeEach(function() {
-    var savedFavorites = {
+    var storage = {
       "yarc.favorite.0": {id: 0},
       "yarc.header.1": {id: 1},
       "yarc.favorite.2": {id: 2},
@@ -15,15 +15,16 @@ describe('Favorites Service', function() {
       storage: {
         sync: {
           get: function(foo, callback) {
-            callback(savedFavorites);
+            callback(storage);
           },
           set: function(keyValue, callback) {
             //No need to test the mock. Just execute the callback.
-            //Object.assign(savedFavorites, keyValue);
+            //Object.assign(storage, keyValue);
             callback();
           },
           remove: function(key, callback) {
             //No need to test the mock by removing the favorite. Just execute the callback.
+            //delete storage[key];
             callback();
           }
         }

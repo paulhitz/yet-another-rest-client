@@ -5,8 +5,8 @@ describe('History Service', function() {
 
   beforeEach(function() {
     var storage = {
-      "yarc.favorite.2": {id: 4},
-      "yarc.header.3": {id: 5},
+      "yarc.favorite.1": {id: 1},
+      "yarc.header.2": {id: 2},
     };
     mockChromeLocalStorage = {
       storage: {

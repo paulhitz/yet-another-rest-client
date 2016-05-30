@@ -51,7 +51,7 @@ clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CON
 	};
 
 	/**
-	 * Persist the request/response so we have a history of them. Uses Chrome Storage.
+	 * Persist the request/response so we have a history of them.
 	 */
 	helper.storeResponseDetails = function($scope, response) {
 		var entry = {

@@ -1,7 +1,7 @@
 /**
  * Various helper functions for the custom request headers functionality.
  */
-clientApp.service('headers', function(GENERAL_CONSTANTS, COMMON_HEADERS, utils) {
+clientApp.service('headers', function(GENERAL_CONSTANTS, utils) {
 	var helper = this;
 	var headers = {};
 
@@ -23,6 +23,25 @@ clientApp.service('headers', function(GENERAL_CONSTANTS, COMMON_HEADERS, utils) 
 		chrome.storage.sync.set(keyValue, function() {
 			if (typeof(callback) === "function") {
 				callback();
+			}
+		});
+	};
+
+	/**
+	 * Retrieve the saved custom request headers from Chrome Storage.
+	 */
+	helper.retrieve = function(callback) {
+		chrome.storage.sync.get(null, function(objects) {
+			var savedHeaders = [];
+
+			//Add each valid custom header object to the array.
+			for (var key in objects) {
+				if (helper.isHeaderKey(key)) {
+					savedHeaders.push(objects[key]);
+				}
+			}
+			if (typeof(callback) === "function") {
+				callback(savedHeaders);
 			}
 		});
 	};
@@ -56,33 +75,6 @@ clientApp.service('headers', function(GENERAL_CONSTANTS, COMMON_HEADERS, utils) 
 		header['group'] = group;
 		header['label'] = header.name + ": " + header.value;
 		return header;
-	};
-
-	/**
-	 * Display a combined list of example headers and any saved custom headers.
-	 *
-	 * TODO Consider refactoring this. Split it up (e.g. a retrieveHeaders() function) and use a callback.
-	 */
-	helper.displayCustomAndExampleHeaders = function($scope) {
-
-		//Load the saved custom request headers from Chrome Storage.
-		chrome.storage.sync.get(null, function (objects) {
-			//Add each valid custom header object to the array.
-			var savedHeaders = [];
-			for (var key in objects) {
-				if (helper.isHeaderKey(key)) {
-					savedHeaders.push(objects[key]);
-				}
-			}
-
-			//Prepare the headers for display.
-			savedHeaders = helper.prepareHeadersForDisplay(savedHeaders, "Custom");
-			var exampleHeaders = helper.prepareHeadersForDisplay(COMMON_HEADERS.EXAMPLES, "Examples");
-
-			//Merge the custom headers and example headers.
-			$scope.customHeaders = savedHeaders.concat(exampleHeaders);
-			$scope.selectedHeader = $scope.customHeaders[0];
-		});
 	};
 
 	/**
