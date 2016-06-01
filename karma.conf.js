@@ -29,7 +29,7 @@ module.exports = function(config) {
 
       'js/app.ctrl.js',
       'js/*.js',
-      'tests/*.spec.js'
+      'tests/*.js'
     ],
 
 
