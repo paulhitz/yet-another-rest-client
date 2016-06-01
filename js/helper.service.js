@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
+clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	/**
@@ -51,7 +51,7 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 	};
 
 	/**
-	 * Persist the request/response so we have a history of them. Uses Chrome Storage.
+	 * Persist the request/response so we have a history of them.
 	 */
 	helper.storeResponseDetails = function($scope, response) {
 		var entry = {
@@ -71,13 +71,8 @@ clientApp.service('appHelper', function(utils, progressbar, GENERAL_CONSTANTS) {
 			entry['response'] = utils.stringify(response.data);
 		}
 
-		//Persist it using Chrome Storage. Supports objects.
-		var key = GENERAL_CONSTANTS.HISTORY_KEY_FORMAT + Date.now();
-		if (typeof chrome !== 'undefined') {
-			var keyValue = {};
-			keyValue[key] = entry;
-			chrome.storage.local.set(keyValue);
-		}
+		//Persist it using Chrome Storage.
+		history.set(entry);
 	};
 
 	/**

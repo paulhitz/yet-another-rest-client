@@ -1,13 +1,23 @@
 /**
  * A controller responsible for handling CRUD operations on custom request headers.
  */
-clientApp.controller('HeadersCtrl', function($scope, $uibModal, headers, utils, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('HeadersCtrl', function($scope, $uibModal, headers, utils, toaster, GENERAL_CONSTANTS,
+		COMMON_HEADERS) {
 
 	//The headers that should be added to subsequent requests.
 	$scope.headers = headers.get();
 
-	//Display example headers and any saved custom headers.
-	headers.displayCustomAndExampleHeaders($scope);
+	//Load the saved custom request headers.
+	headers.retrieve(function(savedHeaders) {
+
+		//Prepare the headers for display.
+		savedHeaders = headers.prepareHeadersForDisplay(savedHeaders, "Custom");
+		var exampleHeaders = headers.prepareHeadersForDisplay(COMMON_HEADERS.EXAMPLES, "Examples");
+
+		//Display a combined list of example headers and any saved custom headers.
+		$scope.customHeaders = savedHeaders.concat(exampleHeaders);
+		$scope.selectedHeader = $scope.customHeaders[0];
+	});
 
 	//Add the selected custom header to the headers for the next request.
 	$scope.useCustomHeader = function(header) {
