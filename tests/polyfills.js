@@ -1,3 +1,5 @@
+
+//@see https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 if (typeof Object.assign != 'function') {
   Object.assign = function(target) {
     'use strict';
