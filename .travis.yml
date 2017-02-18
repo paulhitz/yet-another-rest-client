@@ -10,8 +10,10 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-script: node_modules/karma/bin/karma start karma.conf.js --single-run
-
-after_success:
+install:
+  - npm install
   - npm install codeclimate-test-reporter
+script: 
+    - node_modules/karma/bin/karma start karma.conf.js --single-run
+after_success:
   - codeclimate-test-reporter < reports/coverage/report-lcov/lcov.info
