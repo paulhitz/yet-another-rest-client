@@ -23,6 +23,25 @@ clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CON
 	 * Update the UI with the data received from the service.
 	 */
 	helper.updateView = function($scope, response) {
+
+
+		//TODO Identify and format an XML response. Should we use a custom tag for this and do the formatting at
+		//a later stage when populating the UI?
+		//NOTE: what about HTML? presumably this should also be formatted? (and any other XML subsets)
+		//No to HTML. Too many 'undefined' errors. So just focus on XML.
+		//Need to ensure that the original isn't impacted.
+
+		//Identify XML response
+		var contentType = response.headers()['content-type'];
+		if (helper.isXml(contentType)) {
+			response.data = helper.formatXml(response.data);
+		}
+
+
+
+
+
+
 		$scope.progress = progressbar.PROGRESS_STATES.COMPLETE;
 		$scope.response.requestUrl = $scope.requestUrl;
 		$scope.response.requestMethod = $scope.requestMethod.selected;
@@ -91,6 +110,20 @@ clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CON
 	};
 
 	/**
+	 * Format the supplied XML. Uses a third-party library (vkbeautify) for formatting.
+	 *
+	 */
+	helper.formatXml = function(original) {
+		var formatted;
+		try {
+			formatted = vkbeautify.xml(original);
+		} catch (e) {
+			formatted = original;
+		}
+		return formatted;
+	};
+
+	/**
 	 * Check that the response is a valid object.
 	 */
 	helper.isValidResponse = function(response) {
@@ -98,9 +131,16 @@ clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CON
 	};
 
 	/**
-	 * Check that the response is a valid object.
+	 * Check if it's a HTML response. Used to show a preview.
 	 */
 	helper.isHtml = function(type) {
 		return type && type.indexOf(GENERAL_CONSTANTS.HTML_CONTENT_TYPE) > -1;
+	};
+
+	/**
+	 * Check if it's an XML response. Custom formatting is applied to XML responses.
+	 */
+	helper.isXml = function(type) {
+		return type && type.indexOf("xml") > -1;
 	};
 });

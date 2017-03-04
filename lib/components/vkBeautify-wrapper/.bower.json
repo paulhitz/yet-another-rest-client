@@ -1,0 +1,23 @@
+{
+  "name": "vkBeautify-wrapper",
+  "main": "dist/vkbeautify.0.99.00.beta.js",
+  "ignore": [
+    ".bowerrc",
+    ".gitignore",
+    "bower.json",
+    "README.md"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/rt/vkbeautify-wrapper",
+  "_release": "b487a34530",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "b487a345309dc549179a57d24ea17d442517874e"
+  },
+  "_source": "https://github.com/rt/vkbeautify-wrapper.git",
+  "_target": "*",
+  "_originalSource": "vkbeautify-wrapper",
+  "_direct": true
+}

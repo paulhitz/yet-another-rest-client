@@ -14,6 +14,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 	$scope.favorites = favorites.get(); //TODO remove favs with duplicate URLs. Tough to do since we need to pass by reference?
 	$scope.alerts = [];
 	$scope.firstTab = {active: true};
+	$scope.payload = "";
 
 	//Set up the request methods.
 	$scope.requestMethod = {
@@ -41,11 +42,13 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 
 		//Send the request.
 		$scope.progress = progressbar.PROGRESS_STATES.IN_PROGRESS;
-		requests.call($scope).then(function(success) {
-			appHelper.handleResponse($scope, success);
-		}, function(error) {
-			appHelper.handleResponse($scope, error);
-		});
+		requests.call($scope).then(
+			function(success) {
+				appHelper.handleResponse($scope, success);
+			},
+			function(error) {
+				appHelper.handleResponse($scope, error);
+			});
 	};
 
 	//Cancel the current request.

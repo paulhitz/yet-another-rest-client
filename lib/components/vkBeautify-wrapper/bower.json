@@ -1,0 +1,16 @@
+{
+	"name": "vkBeautify-wrapper",
+	"version": "0.0.1",
+	"main": "dist/vkbeautify.0.99.00.beta.js",
+	"ignore": [
+		".bowerrc",
+		".gitignore",
+		"bower.json",
+		"README.md"
+		],
+	"dependencies": {
+	},
+	"devDependencies": {
+	}
+}
+
