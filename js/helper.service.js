@@ -112,6 +112,7 @@ clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CON
 	/**
 	 * Format the supplied XML. Uses a third-party library (vkbeautify) for formatting.
 	 *
+	 * Any issues will result in the original being returned.
 	 */
 	helper.formatXml = function(original) {
 		var formatted;
