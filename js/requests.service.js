@@ -25,7 +25,7 @@ clientApp.service('requests', function($http, $q, appHelper, auth, headers) {
 			method: $scope.requestMethod.selected,
 			url: $scope.requestUrl,
 			headers: requestHeaders,
-			data: $scope.payload,
+			data: $scope.payload || "",
 			timeout: canceller.promise
 		});
 		return promise;
