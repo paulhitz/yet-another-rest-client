@@ -19,17 +19,22 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		}
 	};
 
-	//Delete (permanently) all favorites.
-	$scope.deleteAll = function(list) {
-		//TODO should it delete everything or respect the current filter?
-		//TODO add delete all function to service
+	//Delete (permanently) all favorites. The current filter (if any) is respected.
+	$scope.deleteAll = function(favArray) {
+		//TODO should it delete everything or respect the current filter? Delete only current filtered list
 		//TODO Update UI
 
-		console.log("TODO Delete all favorites", list);
-
-		var confirmDialog = confirm('Are you sure?\n\nThis action cannot be undone.');
-    if(confirmDialog){
-    	toaster.success("", "All favorites have been deleted.");
+		var confirmDialog = confirm('This action cannot be undone.\n\nAre you sure?');
+    if(confirmDialog && favArray.length > 0){
+			var ids = [];
+			for (var fav of favArray) {
+				ids.push(fav.id);
+			}
+			console.log("ids = ", ids);
+			// favorites.deleteMultipleFavorites(keys, function() {
+			// 	toaster.success("", "All favorites have been deleted.");
+			// 	$scope.$apply();
+			// });
     }
 	};
 
