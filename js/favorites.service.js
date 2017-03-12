@@ -109,21 +109,19 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 
 
 	/**
-	 * Delete multiple favorites. Accepts an array of IDs.
+	 * Delete all favorites.
 	 */
-	helper.deleteMultipleFavorites = function(ids, callback) {
+	helper.deleteAllFavorites = function(callback) {
+		//Populate an array containing the Chrome Storage keys of all favorites.
 		var keys = [];
-		for (var id of ids) {
-			keys.push(GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + id);
+		for (var fav of favorites) {
+			keys.push(GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + fav.id);
 		}
 
-		//Delete the entry from Chrome Storage.
+		//Delete from Chrome Storage.
 		chrome.storage.sync.remove(keys, function() {
 			//Remove the favorites from the local array which will update the UI.
-			//utils.emptyObject(favorites);
-			
-
-
+			utils.emptyObject(favorites);
 			if (typeof(callback) === "function") {
 				callback();
 			}
