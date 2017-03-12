@@ -38,6 +38,17 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, hist
 		}
 	};
 
+	//Delete all request history. The current filter is ignored.
+	$scope.deleteAll = function() {
+		var userConfirmed = confirm('Are you sure? This action cannot be undone.\n\nThe current filter will be ignored.\nTHIS WILL DELETE ALL PREVIOUS REQUESTS.');
+		if (userConfirmed) {
+			history.deleteAll(function() {
+				toaster.success("", "All previous requests have been deleted.");
+				$scope.loadData();
+			});
+		}
+	};
+
 	//Populate the form with the request details of the specified row.
 	$scope.apply = function(row) {
 		$rootScope.$broadcast('applyFavorite', {
