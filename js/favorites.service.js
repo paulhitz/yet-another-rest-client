@@ -72,17 +72,32 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 	/**
 	 * Save multiple favorites. This is used for imports.
 	 *
-	 * TODO can chrome storage take a list of objects? So we don't have to import favorites individually?
+	 * Note: Currently YARC saves favorites individually to Chrome (Sync) Storage. In nearly all cases, this works well.
+	 * However, Chrome (Sync) Storage is throttled and has limits on the number of operations allowed.
+	 * E.g. More than 120 imported favorites may lead to a MAX_WRITE_OPERATIONS_PER_MINUTE Chrome Storage error.
+	 * We could use Chrome (Local) Storage or persist all favorites in a single object. Neither of these is ideal.
+	 * Consider handling this gracefully using chrome.runtime.lastError and flagging the 120 import limit.
+	 * @see https://developer.chrome.com/apps/storage#properties
 	 */
 	helper.saveMultipleFavorites = function(content) {
+		//TODO redo all of this. It incorrectly assumes the operations are synchronous. As a result, it will never fail.
+		var errorMessage;
+		var callback = function() {
+			console.log("in callback", chrome.runtime.lastError);
+			if (chrome.runtime.lastError) {
+				console.log("setting error message", chrome.runtime.lastError.message);
+				errorMessage = chrome.runtime.lastError.message;
+			}
+		};
+
 		var numValidFavorites = 0;
 		for (var fav of content) {
-			if (helper.isValidFavorite(fav)) {
+			if (helper.isValidFavorite(fav) && angular.isUndefined(errorMessage)) {
 				numValidFavorites++;
-				helper.saveFavorite(fav);
+				helper.saveFavorite(fav, callback);
 			}
 		}
-		return numValidFavorites;
+		return {'numValidFavorites': numValidFavorites, 'errorMessage': errorMessage};
 	};
 
 
@@ -121,7 +136,7 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 		//Delete from Chrome Storage.
 		chrome.storage.sync.remove(keys, function() {
 			//Remove the favorites from the local array which will update the UI.
-			utils.emptyObject(favorites);
+			favorites.length = 0;
 			if (typeof(callback) === "function") {
 				callback();
 			}

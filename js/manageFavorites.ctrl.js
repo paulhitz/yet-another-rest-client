@@ -25,7 +25,7 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		if (confirmDialog) {
 			favorites.deleteAllFavorites(function() {
 				toaster.success("", "All favorites have been deleted.");
-				//$scope.$apply();
+				$scope.$apply();
 			});
 		}
 	};

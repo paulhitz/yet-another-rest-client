@@ -52,8 +52,13 @@ clientApp.service('fileImport', function(favorites, GENERAL_CONSTANTS) {
 				message = [{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}];
 			} else {
 				//Add each valid entry from the import file to the list of favorites.
-				var numValidFavorites = favorites.saveMultipleFavorites(content);
-				message = [{type: 'success', msg: numValidFavorites + " favorites successfully imported from " + file.name}];
+				var result = favorites.saveMultipleFavorites(content);
+				console.log("results returned", result);
+				if (result.errorMessage) {
+					message = [{type: 'danger', msg: "Error Importing Favorites. " + result.errorMessage}];
+				} else {
+					message = [{type: 'success', msg: result.numValidFavorites + " favorites successfully imported from " + file.name}];
+				}
 			}
 
 			//Return a status message.
