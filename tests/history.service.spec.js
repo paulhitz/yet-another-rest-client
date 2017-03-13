@@ -15,10 +15,15 @@ describe('History Service', function() {
             callback(storage);
           },
           set: function(data) {
+            //Note: When running the tests, watch out for the generation of identical IDs (based on millisecs).
             Object.assign(storage, data);
           },
           remove: function(key, callback) {
             delete storage[key];
+            callback();
+          },
+          clear: function(callback) {
+            storage = {};
             callback();
           }
         }
@@ -113,6 +118,30 @@ describe('History Service', function() {
   });
 
 
+  describe('deleteAll', function() {
+    it('should remove all history objects', function() {
+      history.set({id: 100});
+      sleep(1);
+      history.set({id: 200});
+      history.get(function(values) {
+        expect(values.length).toBe(2);
+      });
+
+      history.deleteAll();
+      history.get(function(values) {
+        expect(values.length).toBe(0);
+      });
+    });
+    it('should execute the callback', function() {
+      var called = false;
+      history.deleteAll(function() {
+  			called = true;
+  		});
+      expect(called).toBe(true);
+    });
+  });
+
+
   describe('isHistoryKey', function() {
     it('should check that the specifed key is in the correct format', function() {
       var invalidKeys = ["", "favorite", "history", "yarc.*", "*"];
@@ -143,4 +172,13 @@ describe('History Service', function() {
       expect(property.id).not.toBe(undefined);
     });
   });
+
+  //Quick 'n' dirty hack to delay code execution. Only for testing purposes. This will kill performance.
+  function sleep(time) {
+    var past = Date.now();
+    var future;
+    do {
+      future = Date.now();
+    } while (future - past < time);
+  }
 });
