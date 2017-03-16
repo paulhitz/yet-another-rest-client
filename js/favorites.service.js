@@ -76,7 +76,7 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 	 * However, Chrome (Sync) Storage is throttled and has limits on the number of operations allowed.
 	 * E.g. More than 120 imported favorites may lead to a MAX_WRITE_OPERATIONS_PER_MINUTE Chrome Storage error.
 	 * We could use Chrome (Local) Storage or persist all favorites in a single object. Neither of these is ideal.
-	 * Consider handling this gracefully using chrome.runtime.lastError and flagging the 120 import limit.
+	 * For now we flag the 120 import limit and handle the failure gracefully using chrome.runtime.lastError.
 	 * @see https://developer.chrome.com/apps/storage#properties
 	 */
 	helper.saveMultipleFavorites = function(content) {
@@ -98,6 +98,34 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 			}
 		}
 		return {'numValidFavorites': numValidFavorites, 'errorMessage': errorMessage};
+	};
+
+
+
+
+
+	helper.foo = function(content, numValidFavorites, callback) {
+		if (content.length === 0) {
+			if (typeof(callback) === "function") {
+				callback({result: numValidFavorites});
+			}
+		} else {
+			var currentFavorite = content.shift();
+			if (helper.isValidFavorite(currentFavorite)) {
+				numValidFavorites++;
+				helper.saveFavorite(currentFavorite, function() {
+					if (chrome.runtime.lastError) {
+						if (typeof(callback) === "function") {
+							callback({result: chrome.runtime.lastError.message});
+						}
+					} else {
+						helper.foo(content, numValidFavorites, callback);
+					}
+				});
+			} else {
+				helper.foo(content, numValidFavorites, callback);
+			}
+		}
 	};
 
 

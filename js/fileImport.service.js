@@ -15,6 +15,7 @@ clientApp.service('fileImport', function(favorites, GENERAL_CONSTANTS) {
 
 		//Check file size.
 		if (angular.isUndefined(file.size) || file.size > GENERAL_CONSTANTS.MAX_IMPORT_FILE_SIZE) {
+			//TODO Consider the scenario where a user has exported a file greater than max import size.
 			return false;
 		}
 
@@ -49,21 +50,35 @@ clientApp.service('fileImport', function(favorites, GENERAL_CONSTANTS) {
 
 			var message;
 			if (!helper.hasValidContent(content)) {
-				message = [{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}];
+				callback([{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}]);
 			} else {
 				//Add each valid entry from the import file to the list of favorites.
-				var result = favorites.saveMultipleFavorites(content);
-				console.log("results returned", result);
-				if (result.errorMessage) {
-					message = [{type: 'danger', msg: "Error Importing Favorites. " + result.errorMessage}];
-				} else {
-					message = [{type: 'success', msg: result.numValidFavorites + " favorites successfully imported from " + file.name}];
-				}
+				// var result = favorites.saveMultipleFavorites(content);
+				// console.log("results returned", result);
+				// if (result.errorMessage) {
+				// 	message = [{type: 'danger', msg: "Error Importing Favorites. " + result.errorMessage}];
+				// } else {
+				// 	message = [{type: 'success', msg: result.numValidFavorites + " favorites successfully imported from " + file.name}];
+				// }
+
+				favorites.foo(content, 0, function(data) {
+					if (angular.isNumber(data.result)) {
+						message = [{type: 'success', msg: data.result + " favorites successfully imported."}];
+					} else {
+						message = [{type: 'danger', msg: "An Error Occurred: " + data.result}];
+					}
+					if (typeof(callback) === "function") {
+						callback(message);
+					}
+				});
+
+
+
 			}
 
 			//Return a status message.
 			if (typeof(callback) === "function") {
-				callback(message);
+				callback([{type: 'success', msg: "Test early callback + late calback."}]);
 			}
 		};
 		reader.readAsText(file);
