@@ -50,35 +50,16 @@ clientApp.service('fileImport', function(favorites, GENERAL_CONSTANTS) {
 
 			var message;
 			if (!helper.hasValidContent(content)) {
-				callback([{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}]);
+				message = [{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}];
 			} else {
 				//Add each valid entry from the import file to the list of favorites.
-				// var result = favorites.saveMultipleFavorites(content);
-				// console.log("results returned", result);
-				// if (result.errorMessage) {
-				// 	message = [{type: 'danger', msg: "Error Importing Favorites. " + result.errorMessage}];
-				// } else {
-				// 	message = [{type: 'success', msg: result.numValidFavorites + " favorites successfully imported from " + file.name}];
-				// }
-
-				favorites.foo(content, 0, function(data) {
-					if (angular.isNumber(data.result)) {
-						message = [{type: 'success', msg: data.result + " favorites successfully imported."}];
-					} else {
-						message = [{type: 'danger', msg: "An Error Occurred: " + data.result}];
-					}
-					if (typeof(callback) === "function") {
-						callback(message);
-					}
-				});
-
-
-
+				var numValidFavorites = favorites.saveMultipleFavorites(content);
+				message = [{type: 'success', msg: numValidFavorites + " favorites successfully imported from " + file.name}];
 			}
 
 			//Return a status message.
 			if (typeof(callback) === "function") {
-				callback([{type: 'success', msg: "Test early callback + late calback."}]);
+				callback(message);
 			}
 		};
 		reader.readAsText(file);

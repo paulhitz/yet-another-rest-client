@@ -155,8 +155,8 @@ describe('Favorites Service', function() {
     });
   });
 
-  //TODO Update this once the Chrome Storage throttling issue is solved.
-  xdescribe('saveMultipleFavorites', function() {
+
+  describe('saveMultipleFavorites', function() {
     it('should save all valid favorites', function() {
       var testFavorites = [
         {id: 200, name: "Valid Favorite", url: "", method: ""},
@@ -187,6 +187,24 @@ describe('Favorites Service', function() {
       favorites.deleteFavorite(300, function() {
   			called = true;
   		});
+      expect(called).toBe(true);
+    });
+  });
+
+
+  describe('deleteAllFavorites', function() {
+    it('should remove all favorites', function() {
+      favorites.retrieveFavorites();
+      expect(favorites.get().length).toBe(2);
+
+      favorites.deleteAllFavorites();
+      expect(favorites.get().length).toBe(0);
+    });
+    it('should execute the callback', function() {
+      var called = false;
+      favorites.deleteAllFavorites(function() {
+        called = true;
+      });
       expect(called).toBe(true);
     });
   });
