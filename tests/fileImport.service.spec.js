@@ -24,14 +24,15 @@ describe('File Import Service', function() {
       expect(fileImport.isValidFile(invalidFile)).toBeFalsy();
     });
 
-    // it('should be under a max size', function() {
-    //   var largeFile = new File(["lorem ipsum dolar sumit. lorem ipsum dolar sumit. lorem ipsum dolar sumit. "],
-    //       "filename.json", {type: 'application/json'});
-    //   expect(fileImport.isValidFile(largeFile)).toBeFalsy();
-    //
-    //   var tinyFile = new File([""], "filename.json", {type: 'application/json'});
-    //   expect(fileImport.isValidFile(tinyFile)).toBeTruthy();
-    // });
+    it('should be under a max size', function() {
+      var smallContent = "0123456789";
+      var tinyFile = new File([smallContent], "filename.json", {type: 'application/json'});
+      expect(fileImport.isValidFile(tinyFile)).toBeTruthy();
+
+      var largeContent = smallContent.repeat(5001);
+      var largeFile = new File([largeContent], "filename.json", {type: 'application/json'});
+      expect(fileImport.isValidFile(largeFile)).toBeFalsy();
+    });
   });
 
 
