@@ -72,7 +72,12 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 	/**
 	 * Save multiple favorites. This is used for imports.
 	 *
-	 * TODO can chrome storage take a list of objects? So we don't have to import favorites individually?
+	 * Note: Currently YARC saves favorites individually to Chrome (Sync) Storage. In nearly all cases, this works well.
+	 * However, Chrome (Sync) Storage is throttled and has limits on the number of operations allowed.
+	 * E.g. More than 120 imported favorites may lead to a MAX_WRITE_OPERATIONS_PER_MINUTE Chrome Storage error.
+	 * We could use Chrome (Local) Storage or persist all favorites in a single object. Neither of these is ideal.
+	 * Alternatively we could flag the 120 import limit and handle the failure gracefully using chrome.runtime.lastError.
+	 * @see https://developer.chrome.com/apps/storage#properties
 	 */
 	helper.saveMultipleFavorites = function(content) {
 		var numValidFavorites = 0;
@@ -101,6 +106,27 @@ clientApp.service('favorites', function(utils, GENERAL_CONSTANTS) {
 					break;
 				}
 			}
+			if (typeof(callback) === "function") {
+				callback();
+			}
+		});
+	};
+
+
+	/**
+	 * Delete all favorites.
+	 */
+	helper.deleteAllFavorites = function(callback) {
+		//Populate an array containing the Chrome Storage keys of all favorites.
+		var keys = [];
+		for (var fav of favorites) {
+			keys.push(GENERAL_CONSTANTS.FAVORITE_KEY_FORMAT + fav.id);
+		}
+
+		//Delete from Chrome Storage.
+		chrome.storage.sync.remove(keys, function() {
+			//Remove the favorites from the local array which will update the UI.
+			favorites.length = 0;
 			if (typeof(callback) === "function") {
 				callback();
 			}
