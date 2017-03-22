@@ -29,7 +29,7 @@ describe('File Import Service', function() {
       var tinyFile = new File([smallContent], "filename.json", {type: 'application/json'});
       expect(fileImport.isValidFile(tinyFile)).toBeTruthy();
 
-      var largeContent = smallContent.repeat(5001);
+      var largeContent = smallContent.repeat(25001);
       var largeFile = new File([largeContent], "filename.json", {type: 'application/json'});
       expect(fileImport.isValidFile(largeFile)).toBeFalsy();
     });

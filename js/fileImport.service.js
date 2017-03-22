@@ -15,7 +15,6 @@ clientApp.service('fileImport', function(favorites, GENERAL_CONSTANTS) {
 
 		//Check file size.
 		if (angular.isUndefined(file.size) || file.size > GENERAL_CONSTANTS.MAX_IMPORT_FILE_SIZE) {
-			//TODO Consider the scenario where a user has exported a file greater than max import size.
 			return false;
 		}
 

@@ -40,7 +40,7 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, hist
 
 	//Delete all request history. The current filter is ignored.
 	$scope.deleteAll = function() {
-		var userConfirmed = confirm('Are you sure? This action cannot be undone.\n\nThe current filter will be ignored.\nTHIS WILL DELETE ALL PREVIOUS REQUESTS.');
+		var userConfirmed = confirm('Are you sure? This action cannot be undone.\n\nThe current filter will be ignored.\n\nTHIS WILL DELETE ALL PREVIOUS REQUESTS.');
 		if (userConfirmed) {
 			history.deleteAll(function() {
 				toaster.success("", "All previous requests have been deleted.");
