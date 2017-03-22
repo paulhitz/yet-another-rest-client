@@ -190,4 +190,22 @@ describe('Favorites Service', function() {
       expect(called).toBe(true);
     });
   });
+
+
+  describe('deleteAllFavorites', function() {
+    it('should remove all favorites', function() {
+      favorites.retrieveFavorites();
+      expect(favorites.get().length).toBe(2);
+
+      favorites.deleteAllFavorites();
+      expect(favorites.get().length).toBe(0);
+    });
+    it('should execute the callback', function() {
+      var called = false;
+      favorites.deleteAllFavorites(function() {
+        called = true;
+      });
+      expect(called).toBe(true);
+    });
+  });
 });
