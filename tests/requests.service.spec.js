@@ -40,6 +40,25 @@ describe('Requests Service', function() {
       });
       httpBackend.flush();
     });
+
+    it('should send a Content-Type header even with no request payload', function() {
+      //Add a Content-Type request header.
+      headers.set({key: {id: 0, name: "Content-Type", value: "application/json"}});
+      requests.call(exampleRequest).then(function(response) {
+        expect(response.status).toBe(200);
+        expect(response.config.headers['Content-Type']).toBeDefined();
+      });
+
+      //Remove the payload field.
+      delete exampleRequest['payload'];
+      requests.call(exampleRequest).then(function(response) {
+        expect(response.status).toBe(200);
+
+        //The request header should still be present.
+        expect(response.config.headers['Content-Type']).toBeDefined();
+      });
+      httpBackend.flush();
+    });
   });
 
   describe('addHeaders', function() {

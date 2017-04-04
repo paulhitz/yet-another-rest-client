@@ -258,6 +258,9 @@ td.break-row {
 table#history, table#favorites {
   margin-bottom: 2px;
 }
+table#history .btn-xs {
+  margin-right: 12px;
+}
 .pagination a:hover {
   cursor: pointer;
 }

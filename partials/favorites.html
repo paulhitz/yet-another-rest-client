@@ -71,7 +71,12 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td class="text-center" st-pagination="" st-items-by-page="20" st-displayed-pages="5" colspan="5"></td>
+				<td class="text-center" st-pagination="" st-items-by-page="20" st-displayed-pages="5" colspan="4"></td>
+				<td>
+					<button type="button" class="btn btn-danger" ng-click="deleteAll()" ng-show="displayedCollection.length > 3">
+						<span class="glyphicon glyphicon-remove"></span> Delete All
+					</button>
+				</td>
 			</tr>
 		</tfoot>
 	</table>

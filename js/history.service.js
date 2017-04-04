@@ -51,6 +51,18 @@ clientApp.service('history', function(GENERAL_CONSTANTS) {
 	};
 
 	/**
+	 * Delete all request history. Since Chrome LOCAL Storage is only used for the request history,
+	 * we can simply clear it rather than specifying individual entries.
+	 */
+	helper.deleteAll = function(callback) {
+		chrome.storage.local.clear(function() {
+			if (typeof(callback) === "function") {
+				callback();
+			}
+		});
+	};
+
+	/**
 	 * Ensure that the specified key is in the correct format for a key used to store history objects.
 	 */
 	helper.isHistoryKey = function(key) {

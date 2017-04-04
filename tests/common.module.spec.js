@@ -158,6 +158,9 @@ describe('Common Utils', function() {
         + "Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo "
         + "Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo Foo ")).toBe(456);
     });
+    it('should return 0 for an unknown input', function() {
+      expect(utils.estimateObjectSize(function(){})).toBe(0);
+    });
   });
 
 

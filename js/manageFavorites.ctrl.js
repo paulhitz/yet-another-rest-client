@@ -19,6 +19,17 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		}
 	};
 
+	//Delete (permanently) all favorites. The current filter is ignored.
+	$scope.deleteAll = function() {
+		var userConfirmed = confirm('Are you sure? This will delete ALL favorites. This action cannot be undone.\n\nThe current filter will be ignored.');
+		if (userConfirmed) {
+			favorites.deleteAllFavorites(function() {
+				toaster.success("", "All favorites have been deleted.");
+				$scope.$apply();
+			});
+		}
+	};
+
 	//Apply the selected favorite.
 	$scope.apply = function(id) {
 		$rootScope.$broadcast('applyFavorite', id);
