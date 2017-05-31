@@ -24,6 +24,7 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		var userConfirmed = confirm('Are you sure? This will delete ALL favorites. This action cannot be undone.\n\nThe current filter will be ignored.');
 		if (userConfirmed) {
 			favorites.deleteAllFavorites(function() {
+				$analytics.eventTrack('Delete All Favorites');
 				toaster.success("", "All favorites have been deleted.");
 				$scope.$apply();
 			});
