@@ -56,25 +56,14 @@ clientApp.constant('COMMON_HEADERS', {
 	//Common header names.
 	NAMES: [
 		"Accept",
-	  "Accept-Encoding",
 	  "Accept-Language",
 	  "Authorization",
 	  "Cache-Control",
-	  "Connection",
-	  "Cookie",
-	  "Content-Length",
 	  "Content-Type",
-	  "Date",
 	  "From",
-	  "Host",
 	  "Max-Forwards",
-	  "Origin",
 	  "Pragma",
 	  "Proxy-Authorization",
-	  "Referer",
-	  "TE",
-	  "Upgrade",
-	  "Via",
 	  "Warning"
 	]
 });
