@@ -1,7 +1,8 @@
 /**
  * A controller responsible for handling the Request History.
  */
-clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, history, toaster, GENERAL_CONSTANTS) {
+clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, $analytics, history, toaster,
+		GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.numberOfEntries = 0;
 
@@ -43,6 +44,7 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, hist
 		var userConfirmed = confirm('Are you sure? This action cannot be undone.\n\nThe current filter will be ignored.\n\nTHIS WILL DELETE ALL PREVIOUS REQUESTS.');
 		if (userConfirmed) {
 			history.deleteAll(function() {
+				$analytics.eventTrack('Delete All History');
 				toaster.success("", "All previous requests have been deleted.");
 				$scope.loadData();
 			});
