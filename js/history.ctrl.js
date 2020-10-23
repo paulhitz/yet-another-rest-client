@@ -51,11 +51,14 @@ clientApp.controller('HistoryCtrl', function($scope, $rootScope, $uibModal, $ana
 		}
 	};
 
-	//Populate the form with the request details of the specified row.
+	//Populate the request settings with the details of the specified row.
 	$scope.apply = function(row) {
 		$rootScope.$broadcast('applyFavorite', {
-			'url': row.request, 'method': row.method,
-			'payload': row.payload, 'headers': history.convertRequestHeaders(row.headers)
+			'url': row.request,
+			'method': row.method,
+			'payload': row.payload,
+			'headers': history.convertRequestHeaders(row.headers),
+			'auth': row.auth
 		});
 		$rootScope.loadTab('main');
 	};
