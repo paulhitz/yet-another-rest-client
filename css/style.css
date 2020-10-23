@@ -84,8 +84,9 @@ sup {
 .input-group-addon input.glyphicon.glyphicon-star-empty:checked:before {
    content: "\e006";
 }
-.input-group-addon input[type=checkbox].glyphicon{
+.input-group-addon input[type=checkbox].glyphicon {
   visibility: hidden;
+  top: -1px;
 }
 
 [uib-typeahead-popup].dropdown-menu {
