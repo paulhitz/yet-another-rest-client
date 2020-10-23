@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CONSTANTS) {
+clientApp.service('appHelper', function(utils, progressbar, history, auth, GENERAL_CONSTANTS) {
 	var helper = this;
 
 	/**
@@ -55,13 +55,14 @@ clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CON
 	 */
 	helper.storeResponseDetails = function($scope, response) {
 		var entry = {
-			date: Date(),
-			request: $scope.requestUrl,
-			method: $scope.requestMethod.selected,
-			payload: $scope.payload,
-			timer: $scope.timerEnd - $scope.timerStart,
-			headers: response.config.headers,
-			status: response.status
+			'date': Date(),
+			'request': $scope.requestUrl,
+			'method': $scope.requestMethod.selected,
+			'payload': $scope.payload,
+			'timer': $scope.timerEnd - $scope.timerStart,
+			'headers': response.config.headers,
+			'status': response.status,
+			'auth': auth.get()
 		};
 
 		//Don't save overly large responses.

@@ -87,7 +87,7 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			$scope.requestMethod.selected = args.method;
 			$scope.payload = args.payload;
 			headers.set(args.headers);
-			auth.set("");
+			auth.set(args.auth);
 			toaster.success("", "The selected request has been applied.");
 		}
 	});
