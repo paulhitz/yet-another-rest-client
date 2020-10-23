@@ -21,7 +21,6 @@
   "permissions": [
     "<all_urls>",
     "clipboardWrite",
-    "cookies",
     "storage",
     "unlimitedStorage"
   ],
