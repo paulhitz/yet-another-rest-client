@@ -60,7 +60,8 @@ clientApp.service('appHelper', function(utils, progressbar, history, GENERAL_CON
 			method: $scope.requestMethod.selected,
 			payload: $scope.payload,
 			timer: $scope.timerEnd - $scope.timerStart,
-			headers: response.config.headers
+			headers: response.config.headers,
+			status: response.status
 		};
 
 		//Don't save overly large responses.

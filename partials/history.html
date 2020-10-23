@@ -42,8 +42,9 @@
 			<tr>
 				<th st-sort="date" st-skip-natural="true" st-sort-default="reverse" class="clickable">Date</th>
 				<th st-sort="request" st-skip-natural="true" class="clickable">Request URL</th>
+				<th st-sort="status" st-skip-natural="true" class="clickable">Status</th>
 				<th st-sort="method" st-skip-natural="true" class="clickable">Type</th>
-				<th st-sort="timer" st-skip-natural="true" class="clickable">Response Time</th>
+				<th st-sort="timer" st-skip-natural="true" class="clickable">Time</th>
 				<th>Actions</th>
 			</tr>
 			<tr ng-show="numberOfEntries > 10">
@@ -60,6 +61,7 @@
 			<tr ng-repeat="row in displayedCollection" class="small">
 				<td>{{row.date | date:dateFormat}}</td>
 				<td class="break-row">{{row.request}}</td>
+				<td><span class="http-{{row.status}} status-code">{{row.status}}</span></td>
 				<td>{{row.method | uppercase}}</td>
 				<td>{{row.timer / 1000}} seconds</td>
 				<td>
@@ -77,7 +79,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td class="text-center" st-pagination="" st-items-by-page="20" st-displayed-pages="5" colspan="4"></td>
+				<td class="text-center" st-pagination="" st-items-by-page="20" st-displayed-pages="5" colspan="5"></td>
 				<td>
 					<button type="button" class="btn btn-danger" ng-click="deleteAll()" ng-show="displayedCollection.length > 3">
 						<span class="glyphicon glyphicon-remove"></span> Delete All
