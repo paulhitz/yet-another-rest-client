@@ -30,7 +30,7 @@ header .navbar-brand img:hover {
   transform: rotate(360deg);
 }
 sup {
-    top: -1.5em;
+  top: -1.5em;
 }
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
   color: #777 !important;
@@ -56,7 +56,7 @@ sup {
 }
 .navbar-default .navbar-nav li.navbar-link-container > a:hover, .navbar-default .navbar-nav li.navbar-link-container > a:focus,
 .navbar-default .navbar-nav .open > a:hover, .navbar-default .navbar-nav .open > a:focus, .navbar-default .navbar-nav > .open > a {
-    color: #777;
+  color: #777;
 }
 .navbar-default ul.navbar-nav {
   line-height: initial;
@@ -90,7 +90,7 @@ sup {
 }
 
 [uib-typeahead-popup].dropdown-menu {
-    display: block;
+  display: block;
 }
 
 button#requestMethodButton {
@@ -135,6 +135,15 @@ form#add-favorite-modal div.form-group {
 
 .panel-title > a {
   text-decoration: initial;
+}
+
+/* Ugly fix for a padding/margin issue with bootstrap v3 panels and newer versions of Chrome. */
+.panel {
+  border-width: 2px;
+  border-radius: 6px;
+}
+.panel-info {
+  border-color: #d9edf7;
 }
 
 
@@ -225,14 +234,21 @@ input.form-control[disabled] {
 /* Remove these if changing theme. */
 .modal-header {
   background-color: #446e9b;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .modal-title {
   color: #fff;
 }
-
 .modal-body {
   padding-bottom: 0;
   margin-bottom: -1px;
+}
+.modal-content {
+  border-width: 0;
+}
+.nav-item {
+  display: inline;
 }
 
 
