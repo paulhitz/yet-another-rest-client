@@ -29,7 +29,7 @@
     "bootswatch-dist": "spacelab",
     "highlightjs": "~9.3.0",
     "angular-bootstrap-file-field": "git+https://github.com/paulhitz/angular-bootstrap-file-field#master",
-    "AngularJS-Toaster": "~2.0.0",
+    "AngularJS-Toaster": "~3.0.0",
     "angular-animate": "~1.5.5",
     "angulartics": "~1.0.3",
     "angulartics-google-analytics": "~0.1.4",
