@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/lorenzofox3/Smart-Table.svg?branch=master)](https://travis-ci.org/lorenzofox3/Smart-Table)
 
 # Smart Table
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/lorenzofox3/Smart-Table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Smart Table is a table module for angular js. It allows you to quickly compose your table in a declarative way including sorting, filtering, row selection, and pagination.
 It is lightweight (around 3kb minified) and has no other dependencies than Angular itself.
@@ -29,6 +28,8 @@ Any open issue which do not follow the steps above will be closed without invest
 
 The easiest way is to run `bower install angular-smart-table`, then you just have to add the script and register the module `smart-table` to you application.
 
+You can also install using NPM `npm install angular-smart-table`, so you can use with browserify or webpack
+
 ## Test
 
 Run `npm install` after you have installed the dependencies (`npm install` and `bower install`).
@@ -49,7 +50,7 @@ Note, I have closed all the issues related to these versions as people get confu
 
 Smart Table module is under MIT license:
 
-> Copyright (C) 2015 Laurent Renard.
+> Copyright (C) 2016 Laurent Renard.
 >
 > Permission is hereby granted, free of charge, to any person
 > obtaining a copy of this software and associated documentation files
