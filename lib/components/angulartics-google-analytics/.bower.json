@@ -1,8 +1,8 @@
 {
   "name": "angulartics-google-analytics",
-  "main": "lib/angulartics-google-analytics.js",
+  "main": "lib/angulartics-ga.js",
   "dependencies": {
-    "angulartics": "~1.0.0"
+    "angulartics": "^1.2.1"
   },
   "ignore": [
     "**/.*",
@@ -13,15 +13,14 @@
     "lib/index.js"
   ],
   "homepage": "https://github.com/angulartics/angulartics-google-analytics",
-  "version": "0.1.4",
-  "_release": "0.1.4",
+  "version": "0.5.0",
+  "_release": "0.5.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.4",
-    "commit": "505cd76db9bac8b402b7315e96880c1bc6bcaaa7"
+    "tag": "0.5.0",
+    "commit": "8593282c61b790f0fee0012319c3c23a3610bfcf"
   },
-  "_source": "git://github.com/angulartics/angulartics-google-analytics.git",
-  "_target": "~0.1.4",
-  "_originalSource": "angulartics-google-analytics",
-  "_direct": true
+  "_source": "https://github.com/angulartics/angulartics-google-analytics.git",
+  "_target": "~0.5.0",
+  "_originalSource": "angulartics-google-analytics"
 }
