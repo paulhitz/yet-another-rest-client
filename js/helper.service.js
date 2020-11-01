@@ -2,7 +2,7 @@
 /**
  * Various helper functions for the application.
  */
-clientApp.service('appHelper', function(utils, progressbar, history, auth, GENERAL_CONSTANTS) {
+clientApp.service('appHelper', function(utils, progressbar, history, auth, GENERAL_CONSTANTS, HTTP_STATUS_DESCRIPTIONS) {
 	var helper = this;
 
 	/**
@@ -28,14 +28,15 @@ clientApp.service('appHelper', function(utils, progressbar, history, auth, GENER
 		$scope.response.requestMethod = $scope.requestMethod.selected;
 
 		if ($scope.response.valid) {
-			response.headers().status = response.status;
+			//Prepare the response data so it can be shown in the UI.
 			angular.extend($scope.response, {
 				'body': utils.stringify(response.data),
 				'headers': utils.stringify(response.headers()),
-				'status': response.status,
+				'status': helper.determineStatus(response.status, response.xhrStatus),
 				'requestHeaders': utils.stringify(response.config),
 				'previewFlag': helper.isHtml(response.headers()['content-type'])
 			});
+			$scope.response.statusText = helper.determineStatusText($scope.response.status, response.statusText);
 		} else {
 			angular.extend($scope.response, {
 				'body': "",
@@ -51,6 +52,32 @@ clientApp.service('appHelper', function(utils, progressbar, history, auth, GENER
 	};
 
 	/**
+	 * Determine the status value. Replace the generic XMLHttpRequest error value (-1) with
+	 * something more descriptive.
+	 */
+	helper.determineStatus = function(status, xhrStatus) {
+		if (status == GENERAL_CONSTANTS.HTTP_REQUEST_ERROR_STATUS) {
+			return angular.isString(xhrStatus) ? xhrStatus.toUpperCase() : "";
+		}
+		return status;
+	};
+
+	/**
+	 * Determine the best description for the HTTP status value.
+	 */
+	helper.determineStatusText = function(status, responseStatusText) {
+		var statusText = HTTP_STATUS_DESCRIPTIONS[status];
+		if (!statusText) {
+			if (responseStatusText) {
+				statusText = responseStatusText;
+			} else {
+				statusText = HTTP_STATUS_DESCRIPTIONS.UNKNOWN;
+			}
+		}
+		return statusText;
+	};
+
+	/**
 	 * Persist the request/response so we have a history of them.
 	 */
 	helper.storeResponseDetails = function($scope, response) {
@@ -61,7 +88,8 @@ clientApp.service('appHelper', function(utils, progressbar, history, auth, GENER
 			'payload': $scope.payload,
 			'timer': $scope.timerEnd - $scope.timerStart,
 			'headers': response.config.headers,
-			'status': response.status,
+			'status': $scope.response.status,
+			'statusText': $scope.response.statusText,
 			'auth': auth.get()
 		};
 
