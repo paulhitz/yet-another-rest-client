@@ -60,22 +60,22 @@ describe('Helper Service', function() {
       expect(appHelper.determineStatus(-1, undefined)).toBe("");
     });
     it('should return the status value if the request succeeded', function() {
-      expect(appHelper.determineStatus(200, "foo")).toBe("200");
-      expect(appHelper.determineStatus(500, undefined)).toBe("500");
+      expect(appHelper.determineStatus(200, "foo")).toBe(200);
+      expect(appHelper.determineStatus(500, undefined)).toBe(500);
       expect(appHelper.determineStatus(undefined, "foo")).toBeUndefined();
     });
   });
 
   describe('determineStatusText', function() {
     it('should return an unknown status text if none is available', function() {
-      expect(appHelper.determineStatusText(999, undefined)).toBe(HTTP_STATUS_DESCRIPTIONS.UNKNOWN);
-      expect(appHelper.determineStatusText(999, "")).toBe(HTTP_STATUS_DESCRIPTIONS.UNKNOWN);
-      expect(appHelper.determineStatusText("", "")).toBe(HTTP_STATUS_DESCRIPTIONS.UNKNOWN);
+      expect(appHelper.determineStatusText(999, undefined)).toBe("Unknown HTTP Status Code.");
+      expect(appHelper.determineStatusText(999, "")).toBe("Unknown HTTP Status Code.");
+      expect(appHelper.determineStatusText("", "")).toBe("Unknown HTTP Status Code.");
     });
     it('should return a description for the provided status value', function() {
-      expect(appHelper.determineStatusText(200, "foo")).toBe(HTTP_STATUS_DESCRIPTIONS.200);
-      expect(appHelper.determineStatusText(500, "foo")).toBe(HTTP_STATUS_DESCRIPTIONS.500);
-      expect(appHelper.determineStatusText(ABORT, "foo")).toBe(HTTP_STATUS_DESCRIPTIONS.ABORT);
+      expect(appHelper.determineStatusText(200, "foo")).toBe("OK");
+      expect(appHelper.determineStatusText(500, "foo")).toBe("Internal Server Error");
+      expect(appHelper.determineStatusText("ABORT", "foo")).toBe("The request was cancelled.");
     });
     it('should return the status text from the response if no other status text is available', function() {
       expect(appHelper.determineStatusText(999, "foo")).toBe("foo");
