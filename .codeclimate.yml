@@ -1,6 +1,8 @@
+version: "2"
 languages:
   JavaScript: true
-exclude_paths:
+exclude_patterns:
 - "lib/*"
 - "extension/*"
 - "tests/*"
+- "js/*.ctrl.js"
