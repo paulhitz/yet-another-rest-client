@@ -61,7 +61,7 @@
 			<tr ng-repeat="row in displayedCollection" class="small">
 				<td>{{row.date | date:dateFormat}}</td>
 				<td class="break-row">{{row.request}}</td>
-				<td><span class="http-{{row.status}} status-code">{{row.status}}</span></td>
+				<td><span class="http-{{row.status}} status-code" title="{{row.statusText}}">{{row.status}}</span></td>
 				<td>{{row.method | uppercase}}</td>
 				<td>{{row.timer / 1000}} seconds</td>
 				<td>

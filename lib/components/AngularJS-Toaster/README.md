@@ -1,19 +1,19 @@
 AngularJS-Toaster
 =================
 
-**AngularJS Toaster** is an AngularJS port of the **toastr** non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.
+**AngularJS Toaster** is an AngularJS port of the **toastr** non-blocking notification jQuery library. It requires AngularJS v1.2.6 or higher and angular-animate for the CSS3 transformations.  `angular-sanitize` is required if using the `html` bodyOutputType.
 
 [![Build Status](https://travis-ci.org/jirikavi/AngularJS-Toaster.svg)](https://travis-ci.org/jirikavi/AngularJS-Toaster)
-[![Coverage Status](https://coveralls.io/repos/jirikavi/AngularJS-Toaster/badge.svg?branch=master&service=github&busted=1)](https://coveralls.io/github/jirikavi/AngularJS-Toaster?branch=master)
+[![Coverage Status](https://coveralls.io/repos/jirikavi/AngularJS-Toaster/badge.svg?branch=master&service=github&bust=3.0.0)](https://coveralls.io/github/jirikavi/AngularJS-Toaster?branch=master)
 
-### Current Version 2.0.0
+### Current Version 3.0.0
 
 ## Angular Compatibility
-AngularJS-Toaster requires AngularJS v1.2.6 or higher and specifically targets AngularJS, not Angular 2, although it could be used via ngUpgrade.  
-If you are looking for the Angular 2 port of AngularJS-Toaster, it is located [here](https://github.com/Stabzs/Angular2-Toaster).
+AngularJS-Toaster requires AngularJS v1.2.6 or higher and specifically targets AngularJS, not Angular 2-7, although it could be used via ngUpgrade.  
+If you are looking for the Angular 2-7 port of AngularJS-Toaster, it is located [here](https://github.com/Stabzs/Angular2-Toaster).
 
 ## Demo
-- Simple demo is at http://plnkr.co/edit/HKTC1a
+- Simple demo using the current version is at http://plnkr.co/edit/Esrdbl5S6hcmhiVmSjiF?p=preview
 - Older versions are http://plnkr.co/edit/1poa9A or http://plnkr.co/edit/4qpHwp or http://plnkr.co/edit/lzYaZt (with version 0.4.5)
 - Older version with Angular 1.2.0 is placed at http://plnkr.co/edit/mejR4h
 - Older version with Angular 1.2.0-rc.2 is placed at http://plnkr.co/edit/iaC2NY
@@ -32,10 +32,10 @@ npm install --save angularjs-toaster
 * Link scripts:
 
 ```html
-<link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js" ></script>
 <script src="https://code.angularjs.org/1.2.0/angular-animate.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/3.0.0/toaster.min.js"></script>
 ```
 
 * Add toaster container directive: 
@@ -51,7 +51,7 @@ npm install --save angularjs-toaster
 angular.module('main', ['toaster', 'ngAnimate'])
 	.controller('myController', function($scope, toaster) {
 	    $scope.pop = function(){
-	        toaster.pop('success', "title", "text");
+	        toaster.pop('info', "title", "text");
 	    };
 	});
 ```
@@ -64,11 +64,44 @@ angular.module('main', ['toaster', 'ngAnimate'])
 </div>
 ```
 
+* Close the toast:
+
+    The `toaster` service exposes a `clear` function that takes two parameters: 
+
+    - `toasterId`: the id of the toast container you would like to target
+    - `toastId`: the id of the toast you would like to close
+
+    The `toaster.pop()` function returns an object that contains both the toasterId and the toastId.
+    This object can be passed directly into the `clear` function to close a toast:
+
+    ```js
+    var toastInstance = toaster.pop({type: 'info', body: 'Hello'});
+    toaster.clear(toastInstance);
+    ```
+
+    You can also provide each argument individually:
+    `toaster.clear(1, toastInstance.toastId);`
+
+    The following rules apply to the parameters passed to the `clear` function.
+
+    - If the `toasterId` is undefined, null, or does not exist AND a toaster container has 
+    defined an Id, no toasts will be cleared for that container.
+    - If the `toasterId` is undefined or null, each toaster container without a defined Id will 
+    be affected.
+    - If the `toasterId` is passed as `*`, all containers will be affected.
+    - if the `toasterId` is passed as `*` and a `toastId` is not defined, all toasts in all 
+    containers will be removed.
+    - If the `toastId` is undefined or null, any container that is targeted via the above rules 
+    will have all toasts removed from that container.
+    - If the `toastId` is defined, any container that is targeted via the above rules will remove 
+    toasts that match the `toastId`.
+
+
 ### Timeout
 By default, toasts have a timeout setting of 5000, meaning that they are removed after 5000 
 milliseconds.  
 
-If the timeout is set to anything other than a number greater than 0, the toast will be considered
+If the timeout is set to 0, the toast will be considered
  "sticky" and will not automatically dismiss.
 
 The timeout can be configured at three different levels:
@@ -152,11 +185,12 @@ The close button html can be overridden either globally or per toast call.
 ### Body Output Type
 The rendering of the body content is configurable at both the Global level, which applies to all toasts, and the individual toast level when passed as an argument to the toast.
 
-There are four types of body renderings: trustedHtml', 'template', 'templateWithData', 'directive'.
+There are five types of body renderings: 'html', 'trustedHtml', 'template', 'templateWithData', 'directive'.
+
+ - html: When using this configuration, the toast will bind the toast.html to `ng-bind-html`.  If the `angular-sanitize` library is not loaded, an exception will be thrown.
 
  - trustedHtml:  When using this configuration, the toast will parse the body content using 
-	`$sce.trustAsHtml(toast.body)`.
-	If the html can be successfully parsed, it will be bound to the toast via `ng-bind-html`.  If it cannot be parsed as "trustable" html, an exception will be thrown.	
+	`$sce.trustAsHtml(toast.body)`.  It will bypass any sanitization.  Only use this option if you own and trust the html content!
 
  - template:  Will use the `toast.body` if passed as an argument, else it will fallback to the template bound to the `'body-template': 'toasterBodyTmpl.html'` configuration option.
  
@@ -210,7 +244,7 @@ There are four types of body renderings: trustedHtml', 'template', 'templateWith
         
     There are additional documented use cases in these [tests](test/directiveTemplateSpec.js).
     
-All four options can be configured either globally for all toasts or individually per toast.pop() call.  If the `body-output-type` option is configured on the toast, it will take precedence over the global configuration for that toast instance.
+All five options can be configured either globally for all toasts or individually per toast.pop() call.  If the `body-output-type` option is configured on the toast, it will take precedence over the global configuration for that toast instance.
 
  - Globally:
  
@@ -230,13 +264,13 @@ All four options can be configured either globally for all toasts or individuall
     ```
 
 ### On Show Callback
-An onShow callback function can be attached to each toast instance.  The callback will be invoked upon toast add.
+An onShow callback function can be attached to each toast instance, with the toast passed as a parameter when invoked.  The callback will be invoked upon toast add.
 
 ```js
 toaster.pop({
             title: 'A toast',
 		    body: 'with an onShow callback',
-			onShowCallback: function () { 
+			onShowCallback: function (toast) { 
 			    toaster.pop({
 			        title: 'A toast',
 				    body: 'invoked as an onShow callback'
@@ -246,13 +280,13 @@ toaster.pop({
 ```
 
 ### On Hide Callback
-An onHide callback function can be attached to each toast instance.  The callback will be invoked upon toast removal.  This can be used to chain toast calls.
+An onHide callback function can be attached to each toast instance, with the toast passed as a parameter when invoked.  The callback will be invoked upon toast removal.  This can be used to chain toast calls.
 
 ```js
 toaster.pop({
             title: 'A toast',
 		    body: 'with an onHide callback',
-			onHideCallback: function () { 
+			onHideCallback: function (toast) { 
 			    toaster.pop({
 			        title: 'A toast',
 				    body: 'invoked as an onHide callback'
@@ -313,6 +347,15 @@ and clicked:
 <toaster-container toaster-options="{'tap-to-dismiss':false}"></toaster-container>
 ```
 
+This configuration can also be overriden at the toast level via the `tapToDismiss` parameter:
+
+```js
+toaster.pop({ type: 'info', body: 'One', tapToDismiss: true });
+```
+
+The toast configuration will always take precedence over the toaster-container configuration.
+
+
 ### Newest Toasts on Top
 The `newest-on-top` option is defaulted to true, adding new toasts on top of other existing toasts. 
 If changed to false via the toaster-container configuration, toasts will be added to the bottom of 
@@ -354,14 +397,14 @@ If you do not want to use animations, you can safely remove the angular-animate.
      }, 0);
     ```
 		
-## Author
-**Jiri Kavulak**
+## Authors
+**Jiri Kavulak, Stabzs**
 
 ## Credits
 Inspired by http://codeseven.github.io/toastr/demo.html.
 
 ## Copyright
-Copyright © 2013-2016 [Jiri Kavulak](https://twitter.com/jirikavi).
+Copyright © 2013-2019 [Jiri Kavulak](https://twitter.com/jirikavi), [Stabzs](https://github.com/Stabzs).
 
 ## License 
 AngularJS-Toaster is under MIT license - http://www.opensource.org/licenses/mit-license.php

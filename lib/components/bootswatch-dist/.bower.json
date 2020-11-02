@@ -43,13 +43,13 @@
     "Gruntfile.js",
     ".gitignore"
   ],
-  "_release": "f2b32173de",
+  "_release": "03958a8e14",
   "_resolution": {
     "type": "branch",
     "branch": "spacelab",
-    "commit": "f2b32173de433b03e3dde4a0b8d14744fbfe1980"
+    "commit": "03958a8e14b55145c192d19dd5531737cf2bb72b"
   },
-  "_source": "git://github.com/dbtek/bootswatch-dist.git",
+  "_source": "https://github.com/dbtek/bootswatch-dist.git",
   "_target": "spacelab",
   "_originalSource": "bootswatch-dist"
 }

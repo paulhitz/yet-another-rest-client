@@ -7,15 +7,15 @@
     "test": "tests"
   },
   "dependencies": {
-    "karma": "^0.13.19",
-    "jasmine-core": "^2.4.1",
-    "karma-chrome-launcher": "^0.2.2",
-    "karma-jasmine": "^0.3.6"
+    "jasmine-core": "^2.99.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-jasmine": "^0.3.8"
   },
   "devDependencies": {
-    "coveralls": "^2.11.6",
-    "jshint": "^2.9.1",
-    "karma-coverage": "^0.5.3",
+    "coveralls": "^2.13.3",
+    "jshint": "^2.12.0",
+    "karma-coverage": "^0.5.5",
     "karma-firefox-launcher": "^0.1.7"
   },
   "scripts": {

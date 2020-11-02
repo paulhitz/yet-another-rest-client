@@ -51,4 +51,35 @@ describe('Helper Service', function() {
       //expect(appHelper.calculateObjectSize({})).toBe(-1);
     });
   });
+
+  describe('determineStatus', function() {
+    it('should return the XMLHttpRequest value if the request failed', function() {
+      expect(appHelper.determineStatus(-1, "error")).toBe("ERROR");
+      expect(appHelper.determineStatus(-1, "foo")).toBe("FOO");
+      expect(appHelper.determineStatus(-1, "")).toBe("");
+      expect(appHelper.determineStatus(-1, undefined)).toBe("");
+    });
+    it('should return the status value if the request succeeded', function() {
+      expect(appHelper.determineStatus(200, "foo")).toBe(200);
+      expect(appHelper.determineStatus(500, undefined)).toBe(500);
+      expect(appHelper.determineStatus(undefined, "foo")).toBeUndefined();
+    });
+  });
+
+  describe('determineStatusText', function() {
+    it('should return an unknown status text if none is available', function() {
+      expect(appHelper.determineStatusText(999, undefined)).toBe("Unknown HTTP Status Code.");
+      expect(appHelper.determineStatusText(999, "")).toBe("Unknown HTTP Status Code.");
+      expect(appHelper.determineStatusText("", "")).toBe("Unknown HTTP Status Code.");
+    });
+    it('should return a description for the provided status value', function() {
+      expect(appHelper.determineStatusText(200, "foo")).toBe("OK");
+      expect(appHelper.determineStatusText(500, "foo")).toBe("Internal Server Error");
+      expect(appHelper.determineStatusText("ABORT", "foo")).toBe("The request was cancelled.");
+    });
+    it('should return the status text from the response if no other status text is available', function() {
+      expect(appHelper.determineStatusText(999, "foo")).toBe("foo");
+      expect(appHelper.determineStatusText(undefined, "foo")).toBe("foo");
+    });
+  });
 });

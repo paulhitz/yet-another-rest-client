@@ -324,7 +324,7 @@ td .status-code {
 .http- {
   background-color: transparent !important;
 }
-.http--1 {
+.http--1, .http-ERROR, .http-ABORT, .http-TIMEOUT {
   background-color: #d9534f !important;
 }
 .http-100, .http-101, .http-102 {

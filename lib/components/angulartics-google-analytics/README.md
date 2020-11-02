@@ -1,6 +1,6 @@
 ## angulartics-google-analytics
 
-[![NPM version][npm-image]][npm-url] [![NPM downloads][npm-downloads-image]][npm-downloads-url] [![Bower version][bower-image]][bower-url] [![Dependencies status][dep-status-image]][dep-status-url] [![MIT license][license-image]][license-url] [![Join the Slack chat][slack-image]][slack-url]
+[![NPM version][npm-image]][npm-url] [![NPM downloads][npm-downloads-image]][npm-downloads-url] [![Bower version][bower-image]][bower-url] [![Dependencies status][dep-status-image]][dep-status-url] [![MIT license][license-image]][license-url] [![Join the Slack chat][slack-image]][slack-url] [![Build Status](https://travis-ci.org/angulartics/angulartics-google-analytics.svg?branch=master)](https://travis-ci.org/angulartics/angulartics-google-analytics)
 
 Google Analytics plugin for [Angulartics](https://github.com/angulartics/angulartics).
 
@@ -22,7 +22,7 @@ Then add `angulartics.google.analytics` as a dependency for your app:
 require('angulartics')
 
 angular.module('myApp', [
-  'angulartics', 
+  'angulartics',
   require('angulartics-google-analytics')
 ]);
 ```
@@ -38,14 +38,14 @@ bower install angulartics-google-analytics
 Add the `<script>` to your `index.html`:
 
 ```html
-<script src="/bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js"></script>
+<script src="/bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js"></script>
 ```
 
 Then add `angulartics.google.analytics` as a dependency for your app:
 
 ```javascript
 angular.module('myApp', [
-  'angulartics', 
+  'angulartics',
   'angulartics.google.analytics'
 ]);
 ```
@@ -65,7 +65,7 @@ Done. Open your app, browse across the different routes and check [the realtime 
 
 ## Documentation
 
-Documentation is available on the [Angulartics site](http://luisfarzati.github.io/angulartics).
+Documentation is available on the [Angulartics site](http://angulartics.github.io/).
 
 ### Settings
 Module settings are done via the `$analyticsProvider.settings.ga` property.  The following are GA-specific properties:
