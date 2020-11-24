@@ -158,6 +158,8 @@ form#add-favorite-modal div.form-group {
   margin-left: 20px;
   width: 100%;
   max-width: 358px;
+  border-radius: 15px;
+  box-shadow: 10px 10px 5px #ccc;
 }
 
 div.json-tabs {
