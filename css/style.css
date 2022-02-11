@@ -143,8 +143,7 @@ form#add-favorite-modal div.form-group {
   border-radius: 5px;
 }
 .panel-heading {
-  margin-top: -0.5px;
-  margin-bottom: -0.5px;
+  margin: -0.5px;
 }
 .panel-info {
   border-color: #d9edf7;
