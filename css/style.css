@@ -140,10 +140,10 @@ form#add-favorite-modal div.form-group {
 /* Ugly fix for a padding/margin issue with bootstrap v3 panels and newer versions of Chrome. */
 .panel {
   border-width: 2px;
-  border-radius: 5px;
 }
 .panel-heading {
-  margin: -0.5px;
+  margin: -1px;
+  margin-bottom: 0;
 }
 .panel-info {
   border-color: #d9edf7;
