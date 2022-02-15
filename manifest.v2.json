@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Yet Another REST Client",
   "version": "1.1.6",
 
@@ -13,27 +13,24 @@
   },
 
   "background": {
-    "service_worker": "extension/background.js"
+    "scripts": ["extension/background.js"]
   },
 
   "incognito": "split",
 
   "permissions": [
+    "<all_urls>",
     "clipboardWrite",
     "storage",
     "unlimitedStorage"
   ],
 
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
 
-  "action": {
+  "browser_action": {
     "default_icon": {
       "19": "img/logo_19x19.png",
       "38": "img/logo_38x38.png"
     }
   }
-
-
 }

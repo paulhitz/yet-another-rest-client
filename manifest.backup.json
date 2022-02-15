@@ -13,7 +13,7 @@
   },
 
   "background": {
-    "service_worker": "extension/background.js"
+    "scripts": ["extension/background.js"]
   },
 
   "incognito": "split",
@@ -21,13 +21,29 @@
   "permissions": [
     "clipboardWrite",
     "storage",
-    "unlimitedStorage"
+    "unlimitedStorage" TODO what is optional_permissions?
   ],
+  TODO what is optional_permissions and should you use it?
 
   "host_permissions": [
-    "<all_urls>"
+    "<all_urls>" //difference between this and "*://*/*"?
   ],
 
+TODO it looks like this isn't possible anymore? You can't call external domains? Need to embed the GA code?
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+
+  "content_security_policy": {
+    "extension_pages": "...",
+    "sandbox": "..."
+  }
+
+
+  "browser_action": {
+    "default_icon": {
+      "19": "img/logo_19x19.png",
+      "38": "img/logo_38x38.png"
+    }
+  }
   "action": {
     "default_icon": {
       "19": "img/logo_19x19.png",
