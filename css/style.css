@@ -235,6 +235,13 @@ input.form-control[disabled] {
   height: 100%;
 }
 
+.inline-emoji {
+  height: 1.2em;
+  width: 1.2em;
+  margin: 0 .05em 0.2em .5em;
+}
+
+
 /* Remove these if changing theme. */
 .modal-header {
   background-color: #446e9b;
