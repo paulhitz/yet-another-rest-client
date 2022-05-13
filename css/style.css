@@ -241,6 +241,12 @@ input.form-control[disabled] {
   margin: 0 .05em 0.2em .5em;
 }
 
+#license-text {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 600px;
+}
+
 
 /* Remove these if changing theme. */
 .modal-header {
