@@ -1,11 +1,11 @@
 
-<section class="panel panel-primary">
+<section class="panel panel-primary" ng-controller="SettingsCtrl">
 	<div class="panel-heading">
 		<h2 class="panel-title">Settings</h2>
 	</div>
 	<div class="panel-body">
-		<form class="form-horizontal">
 
+		<form class="form-horizontal">
 			<div class="form-group" ng-hide="header.group">
 				<label for="persist" class="col-sm-2 control-label">Enable Dark Mode?</label>
 				<div class="col-sm-10">
@@ -13,10 +13,11 @@
 						<button type="button" class="btn btn-default" ng-model="persist" uib-btn-radio="true">Yes</button>
 						<button type="button" class="btn btn-default" ng-model="persist" uib-btn-radio="false" id="persist">No</button>
 					</div>
+					<span class="positive-message" ng-show="persist == true">Restart the application for this setting to take effect.</span>
 					<p class="help-block">Dark mode is designed to be lorem ipsum dolar sumit. Lorem ipsum dolar sumit. Lorem ipsum dolar sumit. Lorem ipsum dolar sumit lorem ipsum dolar sumit lorem ipsum dolar sumit lorem ipsum dolar sumit.</p>
 				</div>
 			</div>
-
 		</form>
+
 	</div>
 </section>
