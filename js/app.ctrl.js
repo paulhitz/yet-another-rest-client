@@ -5,8 +5,16 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, progressbar,
-		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG) {
+		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG, settings) {
 	$rootScope.config = YARC_CONFIG;
+
+	//Load any saved settings. E.g. dark mode.
+	settings.load(function(savedSettings) {
+		console.log("loaded settings and added to rootscope = " + utils.stringify(savedSettings));
+		$rootScope.settings = savedSettings;
+		//TODO guard against empty object.
+		//TODO how to prevent the flicker? mask (ng-cloak) everything? display:none on the body until we have a value?
+	});
 
 	//Set up the page.
 	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
