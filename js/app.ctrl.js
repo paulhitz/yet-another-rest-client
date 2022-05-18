@@ -7,12 +7,13 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
 clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, progressbar,
 		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG, settings) {
 	$rootScope.config = YARC_CONFIG;
+	$rootScope.settings = {};
 
 	//Load any saved settings. E.g. dark mode.
 	settings.load(function(savedSettings) {
-		console.log("loaded settings and added to rootscope = " + utils.stringify(savedSettings));
-		$rootScope.settings = savedSettings;
-		//TODO guard against empty object.
+		if (!utils.isBlankObject(savedSettings)) {
+			$rootScope.settings = savedSettings;
+		}
 		//TODO how to prevent the flicker? mask (ng-cloak) everything? display:none on the body until we have a value?
 	});
 
