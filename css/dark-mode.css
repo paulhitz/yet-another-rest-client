@@ -1,0 +1,49 @@
+
+.navbar-default .navbar-nav .navbar-link-container {
+  border-left-width: 0;
+}
+
+.panel-primary {
+  border-color: rgb(122 130 136);
+}
+
+footer a, footer a:hover, footer a:focus {
+  color: #898c8f;
+}
+
+.form-control {
+  background-color: #e6e6e6;
+}
+
+.panel-primary .panel-heading, .panel-success .panel-heading, .panel-danger .panel-heading, .panel-warning .panel-heading, .panel-info .panel-heading {
+  border-color: transparent;
+}
+
+.modal-tabs .tab-content {
+  border-color: #1c1e22;
+}
+
+.panel-info {
+  border-color: #446e9b;
+}
+
+.panel-info > .panel-heading {
+  background-color: #446e9b;
+}
+
+#photo {
+  box-shadow: 10px 10px 5px #0c0c0c;
+}
+
+#signature {
+  display: none;
+}
+
+h1 {
+  color: inherit;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+  /* color: #777 !important;
+  background-color: transparent; */
+}
