@@ -36,7 +36,7 @@ footer a, footer a:hover, footer a:focus {
 }
 
 #signature {
-  display: none;
+  filter: invert(100%);
 }
 
 h1 {
@@ -44,6 +44,11 @@ h1 {
 }
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
-  /* color: #777 !important;
-  background-color: transparent; */
+  color: inherit !important;
+}
+
+li.first-menu-link {
+  border-left-width: 1px !important;
+  border-left-style: solid;
+  border-left-color: rgba(0, 0, 0, 0.2);
 }

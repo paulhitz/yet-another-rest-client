@@ -12,7 +12,7 @@
 	<nav class="collapse navbar-collapse" id="links">
 		<ul class="nav navbar-nav navbar-right" ng-controller="EventsCtrl">
 			<li class="navbar-text hidden-sm hidden-xs"><strong>Y</strong>et <strong>A</strong>nother <strong>R</strong>EST <strong>C</strong>lient</li>
-			<li class="navbar-link-container"><a href="" ng-click="loadTab('main');" accesskey="m">Main</a></li>
+			<li class="navbar-link-container first-menu-link"><a href="" ng-click="loadTab('main');" accesskey="m">Main</a></li>
 			<li class="navbar-link-container" ng-controller="FavoritesCtrl" uib-dropdown is-open="dropdown.open" auto-close="outsideClick">
 				<a href="" role="button" uib-dropdown-toggle>Favorites <span class="badge">{{favorites.length}}</span><span class="caret"></span></a>
 				<ul uib-dropdown-menu>

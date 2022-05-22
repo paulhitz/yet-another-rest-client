@@ -164,6 +164,11 @@ form#add-favorite-modal div.form-group {
   box-shadow: 10px 10px 5px #ccc;
 }
 
+#signature {
+  margin-bottom: 10px;
+  filter: invert(25%);
+}
+
 div.json-tabs {
   margin-bottom: 10px;
 }
