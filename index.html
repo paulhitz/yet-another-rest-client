@@ -6,19 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="YARC is an easy-to-use REST Client for Google Chrome. Use it to develop, test and debug RESTful APIs. {{version}}">
 	<meta name="author" content="Paul Hitz">
-	<!-- <link href="lib/components/bootswatch-dist/css/bootswatch_2.css" rel="stylesheet"> -->
-  <!-- <link href="lib/components/bootswatch-dist/css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="lib/components/angular/angular-csp.css" rel="stylesheet">
 
 	<link href="lib/components/bootswatch-dist/css/bootstrap.min.css" rel="stylesheet" ng-if="!settings.darkMode">
 	<link href="lib/components/bootswatch-dist/css/bootswatch_2.css" rel="stylesheet" ng-if="settings.darkMode">
 
-	<link href="lib/components/angular/angular-csp.css" rel="stylesheet">
 	<link href="lib/components/highlightjs/styles/default.css" rel="stylesheet">
 	<link href="lib/components/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/dark-mode.css" rel="stylesheet" ng-if="settings.darkMode">
 </head>
-<body>
+<body ng-show="pageReady">
 <div class="container">
 	<ng-include src="'partials/header.html'"></ng-include>
 

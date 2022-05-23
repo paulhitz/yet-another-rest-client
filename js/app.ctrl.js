@@ -14,7 +14,8 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 		if (!utils.isBlankObject(savedSettings)) {
 			$rootScope.settings = savedSettings;
 		}
-		//TODO how to prevent the flicker? mask (ng-cloak) everything? display:none on the body until we have a value?
+		//Minimise initial screen flicker.
+		$rootScope.pageReady = true;
 	});
 
 	//Set up the page.

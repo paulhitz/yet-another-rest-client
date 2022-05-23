@@ -11,7 +11,7 @@ footer a, footer a:hover, footer a:focus {
   color: #898c8f;
 }
 
-.form-control {
+.form-control, li > input {
   background-color: #e6e6e6;
 }
 
@@ -46,9 +46,6 @@ h1 {
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
   color: inherit !important;
 }
-
-li.first-menu-link {
-  border-left-width: 1px !important;
-  border-left-style: solid;
-  border-left-color: rgba(0, 0, 0, 0.2);
+.navbar-default .navbar-nav .navbar-link-container:hover {
+  background-image: none;
 }
