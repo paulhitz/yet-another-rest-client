@@ -252,14 +252,6 @@ input.form-control[disabled] {
   max-width: 600px;
 }
 
-.hamburger-menu-bar {
-  background-color: #cccccc;
-  display: block;
-  width: 22px;
-  height: 2px;
-  border-radius: 1px;
-}
-
 
 /* Remove these if changing theme. */
 .modal-header {

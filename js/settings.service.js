@@ -34,7 +34,7 @@ clientApp.service('settings', function(GENERAL_CONSTANTS, utils) {
 	/**
 	 * Retrieve the saved settings from Chrome Storage.
 	 */
-	 helper.load = function(callback) {
+	helper.load = function(callback) {
 		chrome.storage.local.get(key, function(object) {
 			var settings = object[key];
 			helper.set(settings);

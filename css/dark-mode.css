@@ -1,3 +1,8 @@
+/*
+ * The Bootswatch "Slate" theme provides 99% of the Look and Feel. The below styles correct some
+ * issues specific to YARC.
+ */
+
 
 .navbar-default .navbar-nav .navbar-link-container {
   border-left-width: 0;
