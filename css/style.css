@@ -164,6 +164,11 @@ form#add-favorite-modal div.form-group {
   box-shadow: 10px 10px 5px #ccc;
 }
 
+#signature {
+  margin-bottom: 10px;
+  filter: invert(25%);
+}
+
 div.json-tabs {
   margin-bottom: 10px;
 }
@@ -239,6 +244,12 @@ input.form-control[disabled] {
   height: 1.2em;
   width: 1.2em;
   margin: 0 .05em 0.2em .5em;
+}
+
+#license-text {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 600px;
 }
 
 
