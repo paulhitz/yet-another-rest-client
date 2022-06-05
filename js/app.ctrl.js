@@ -5,8 +5,18 @@ var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', '
  * Main application controller. Prepares the page and submits the request.
  */
 clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, progressbar,
-		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG) {
+		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG, settings) {
 	$rootScope.config = YARC_CONFIG;
+	$rootScope.settings = {};
+
+	//Load any saved settings. E.g. dark mode.
+	settings.load(function(savedSettings) {
+		if (!utils.isBlankObject(savedSettings)) {
+			$rootScope.settings = savedSettings;
+		}
+		//Minimise initial screen flicker.
+		$rootScope.pageReady = true;
+	});
 
 	//Set up the page.
 	$rootScope.version = "v" + chrome.runtime.getManifest()['version'];
