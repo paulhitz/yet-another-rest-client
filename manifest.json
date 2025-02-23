@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Yet Another REST Client",
-  "version": "1.1.6",
+  "version": "1.2.0",
 
   "description": "YARC (Yet Another REST Client) is an easy-to-use REST Client. Use it to develop, test and debug RESTful APIs.",
   "short_name": "YARC",

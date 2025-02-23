@@ -1,0 +1,30 @@
+
+<section class="panel panel-primary" ng-controller="SettingsCtrl">
+	<div class="panel-heading">
+		<h2 class="panel-title">Settings</h2>
+	</div>
+	<div class="panel-body">
+
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="darkMode" class="col-sm-2 control-label">Enable Dark Mode?</label>
+				<div class="col-sm-10">
+					<div class="btn-group" role="group" ng-click="save()">
+						<button type="button" class="btn btn-default" ng-model="settings.darkMode" uib-btn-radio="true" ng-disabled="settings.darkMode === true" analytics-on analytics-label="Dark Mode">Yes</button>
+						<button type="button" class="btn btn-default" ng-model="settings.darkMode" uib-btn-radio="false" id="darkMode" ng-disabled="settings.darkMode === false" analytics-on analytics-label="Dark Mode">No</button>
+					</div>
+					<p class="help-block">Dark mode is designed to provide enhanced accessibility for those that are sensitive to eye strain. It allows the user to choose the most comfortable way to view content.</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="version" class="col-sm-2 control-label">Version?</label>
+				<div class="col-sm-10" style="padding-top: 8px;">
+					<p>Yet Another REST Client <strong>{{version}}</strong>
+						<span class="help-block">Version updates are applied automatically.</span>
+					</p>
+				</div>
+			</div>
+		</form>
+
+	</div>
+</section>

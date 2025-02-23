@@ -14,9 +14,9 @@
 			<li class="navbar-text hidden-sm hidden-xs"><strong>Y</strong>et <strong>A</strong>nother <strong>R</strong>EST <strong>C</strong>lient</li>
 			<li class="navbar-link-container"><a href="" ng-click="loadTab('main');" accesskey="m">Main</a></li>
 			<li class="navbar-link-container" ng-controller="FavoritesCtrl" uib-dropdown is-open="dropdown.open" auto-close="outsideClick">
-				<a href="" role="button" uib-dropdown-toggle accesskey="f">Favorites <span class="badge">{{favorites.length}}</span><span class="caret"></span></a>
+				<a href="" role="button" uib-dropdown-toggle>Favorites <span class="badge">{{favorites.length}}</span><span class="caret"></span></a>
 				<ul uib-dropdown-menu>
-					<li><a href="" ng-click="loadTab('favorites'); close();">Manage Favorites</a></li>
+					<li><a href="" ng-click="loadTab('favorites'); close();" accesskey="f">Manage Favorites</a></li>
 					<li><a href="" ng-click="addFavorite(); close();">Save Current Request</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a href="" ng-click="openImportFavoritesModal(); close();">Import Favorites</a></li>
@@ -30,8 +30,16 @@
 				</ul>
 			</li>
 			<li class="navbar-link-container"><a href="" ng-click="loadTab('history');" accesskey="h">History</a></li>
-			<li class="navbar-link-container"><a href="" ng-click="loadTab('about');" accesskey="a">About</a></li>
-			<li class="navbar-link-container"><a href="" ng-click="loadTab('help');" accesskey="?">Help</a></li>
+			<li class="navbar-link-container" uib-dropdown is-open="dropdown.open">
+				<a href="" role="button" uib-dropdown-toggle>&#10247;</a>
+				<ul uib-dropdown-menu>
+					<li><a href="" ng-click="loadTab('about');" accesskey="a">About</a></li>
+					<li><a href="" ng-click="loadTab('settings');" accesskey="s">Settings</a></li>
+					<li><a href="" ng-click="loadTab('license');" accesskey="l">License</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="" ng-click="loadTab('help');" accesskey="?">Help</a></li>
+				</ul>
+			</li>
 		</ul>
 	</nav>
 </header>

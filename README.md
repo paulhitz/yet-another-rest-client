@@ -4,7 +4,7 @@
 
 YARC (Yet Another REST Client) is an easy-to-use REST Client for Google Chrome.
 
-Use it to develop, test and debug RESTful services.
+Use it to develop, test and debug RESTful APIs.
 
 It has a number of powerful features...
 
@@ -26,8 +26,9 @@ It has a number of powerful features...
 * View the request response in beautiful syntax highlighting (including JSON, XML, HTML and CSS).
 * See how long each request took to complete.
 * Supports GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods. Custom request methods can also be added by the user.
-* HTTP Basic Authentication
-* Responsive Design
+* HTTP Basic Authentication.
+* Responsive Design.
+* Dark Mode.
 * 100% Free. No strings attached.
 
 
@@ -58,3 +59,6 @@ This is a AngularJS application packaged as a Chrome Extension/App to avoid CORS
 
 ### History
 ![History Screenshot](/img/screenshots/screenshot_history.png)
+
+### Dark Mode
+![Dark Mode Screenshot](/img/screenshots/screenshot_dark_mode.png)

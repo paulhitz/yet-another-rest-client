@@ -9,7 +9,6 @@ clientApp.controller('HeadersCtrl', function($scope, $uibModal, headers, utils, 
 
 	//Load the saved custom request headers.
 	headers.retrieve(function(savedHeaders) {
-
 		//Prepare the headers for display.
 		savedHeaders = headers.prepareHeadersForDisplay(savedHeaders, "Custom");
 		var exampleHeaders = headers.prepareHeadersForDisplay(COMMON_HEADERS.EXAMPLES, "Examples");
