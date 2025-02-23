@@ -1,11 +1,11 @@
 var clientApp = angular.module('clientApp', ['ui.bootstrap', 'hljs', 'common', 'smart-table',
-	'bootstrap.fileField', 'toaster', 'ngAnimate', 'angulartics', 'angulartics.google.analytics']);
+	'bootstrap.fileField', 'toaster', 'ngAnimate']);
 
 /**
  * Main application controller. Prepares the page and submits the request.
  */
-clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelper, utils, progressbar,
-		favorites, $uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG, settings) {
+clientApp.controller('AppCtrl', function($scope, $rootScope, appHelper, utils, progressbar, favorites, 
+		$uibModal, headers, auth, toaster, requests, REQUEST_METHODS, YARC_CONFIG, settings) {
 	$rootScope.config = YARC_CONFIG;
 	$rootScope.settings = {};
 
@@ -145,7 +145,6 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 				//Update the last selected favorite.
 				$scope.saveFavorite($scope.appliedFavorite.id, name, function() {
 					toaster.success("", "Successfully Updated Favorite.");
-					$analytics.eventTrack('Favorite Updated');
 				});
 			}
 		});
@@ -171,7 +170,6 @@ clientApp.controller('AppCtrl', function($scope, $rootScope, $analytics, appHelp
 			if (name) {
 				$scope.saveFavorite(Date.now(), name, function() {
 					toaster.success("", "Successfully added to Favorites");
-					$analytics.eventTrack('Favorite Added');
 				});
 			}
 		});

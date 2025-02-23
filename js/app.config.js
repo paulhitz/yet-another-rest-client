@@ -2,8 +2,7 @@
 /**
  * Configuration settings.
  */
-clientApp.config(function ($analyticsProvider, $uibModalProvider, hljsServiceProvider, $qProvider) {
-	$analyticsProvider.virtualPageviews(false);
+clientApp.config(function ($uibModalProvider, hljsServiceProvider, $qProvider) {
 
 	//Specifically limit the languages supported by the syntax highlighter.
 	//Without limiting the supported languages, large responses will kill performance.
