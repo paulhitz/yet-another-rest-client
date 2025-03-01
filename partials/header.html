@@ -20,7 +20,7 @@
 					<li><a href="" ng-click="addFavorite(); close();">Save Current Request</a></li>
 					<li role="separator" class="divider"></li>
 					<li><a href="" ng-click="openImportFavoritesModal(); close();">Import Favorites</a></li>
-					<li><a href="" ng-click="exportFavorites(); close();" ng-hide="favorites.length == 0" analytics-on>Export Favorites</a></li>
+					<li><a href="" ng-click="exportFavorites(); close();" ng-hide="favorites.length == 0">Export Favorites</a></li>
 					<li role="separator" class="divider" ng-hide="favorites.length == 0"></li>
 					<li class="dropdown-header" ng-hide="favorites.length == 0">Apply Favorite...</li>
 					<li ng-repeat="favorite in favorites | limitTo: dropdown.numFavorites">

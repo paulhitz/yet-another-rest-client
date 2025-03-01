@@ -1,8 +1,7 @@
 /**
  * A controller responsible for handling the management of favorite requests.
  */
-clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibModal, $analytics, favorites, toaster,
-		GENERAL_CONSTANTS) {
+clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibModal, favorites, toaster, GENERAL_CONSTANTS) {
 	$scope.dateFormat = GENERAL_CONSTANTS.DATE_FORMAT;
 	$scope.rowCollection = favorites.get();
 	$scope.displayedCollection = [].concat($scope.rowCollection);
@@ -24,7 +23,6 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 		var userConfirmed = confirm('Are you sure? This will delete ALL favorites. This action cannot be undone.\n\nThe current filter will be ignored.');
 		if (userConfirmed) {
 			favorites.deleteAllFavorites(function() {
-				$analytics.eventTrack('Delete All Favorites');
 				toaster.success("", "All favorites have been deleted.");
 				$scope.$apply();
 			});
@@ -41,7 +39,6 @@ clientApp.controller('ManageFavoritesCtrl', function($scope, $rootScope, $uibMod
 	$scope.export = function(row) {
 		favorites.exportFavorites([row], row.name + GENERAL_CONSTANTS.EXPORT_FILE_TYPE);
 		toaster.success("", "Export Complete.");
-		$analytics.eventTrack('Export Single Favorite');
 	};
 
 	//Open a modal dialog to view more details about the selected item.

@@ -32,8 +32,6 @@
     "angular-bootstrap-file-field": "git+https://github.com/paulhitz/angular-bootstrap-file-field#master",
     "AngularJS-Toaster": "~3.0.0",
     "angular-animate": "~1.8.3",
-    "angulartics": "~1.6.0",
-    "angulartics-google-analytics": "~0.5.0",
     "angular-mocks": "~1.8.3"
   },
   "resolutions": {

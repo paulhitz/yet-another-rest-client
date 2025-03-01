@@ -50,13 +50,12 @@ clientApp.controller('FavoritesCtrl', function($scope, $uibModal, favorites, GEN
 /**
  * Simple modal controller for importing favorites.
  */
-clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, $analytics, fileImport, toaster) {
+clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibModalInstance, fileImport, toaster) {
 
 	$scope.ok = function() {
 		//Validate the File.
 		if (!fileImport.isValidFile($scope.uploadFile)) {
 			$scope.alerts = [{type: 'danger', msg: "Import Failed. The selected file is invalid. Please try again with a valid file."}];
-			$analytics.eventTrack('Import Favorites Failed', {category: 'Exception', label: 'Invalid Import File'});
 			return;
 		}
 
@@ -64,12 +63,10 @@ clientApp.controller('ImportFavoritesModalInstanceCtrl', function ($scope, $uibM
 		fileImport.importFile($scope.uploadFile, function(message) {
 			if (message[0].type == "success") {
 				toaster.success("", message[0].msg);
-				$analytics.eventTrack('Import Favorites');
 				$uibModalInstance.close();
 			} else {
 				$scope.alerts = message;
 				$scope.$apply();
-				$analytics.eventTrack('Import Favorites Failed', {category: 'Exception', label: 'Invalid Import File Content'});
 			}
 		});
 	};

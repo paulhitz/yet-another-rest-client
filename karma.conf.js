@@ -24,8 +24,6 @@ module.exports = function(config) {
       'lib/components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js',
       'lib/components/angular-animate/angular-animate.min.js',
       'lib/components/AngularJS-Toaster/toaster.min.js',
-      'lib/components/angulartics/dist/angulartics.min.js',
-      'lib/components/angulartics-google-analytics/dist/angulartics-ga.min.js',
 
       'js/app.ctrl.js',
       'js/*.js',
@@ -35,7 +33,6 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-      'js/analytics.js',
       'js/app.config.js'
     ],
 
